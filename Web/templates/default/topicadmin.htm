@@ -1,0 +1,676 @@
+﻿<%template _header%>
+<%if !{issubmit}%>
+<%if page_err==0%>
+<div id="floatlayout_mods">
+	<h3 class="flb"> 
+	<em id="return_mods">{operationtitle}</em>
+	<%if {infloat}==1%>
+		<span class="y">
+			<a title="关闭" onclick="hideWindow('mods')" class="flbc" href="javascript:;">关闭</a>
+		</span>
+	<%/if%>
+	</h3>
+	<div class="c cl">
+	<%if {infloat}==1%>
+	<form id="moderate_admin" name="moderate_admin" method="post" onsubmit="ajaxpost('moderate_admin', 'return_mods', 'return_mods', 'onerror');return false;" action="{rooturl}topicadmin.aspx?action=moderate&operation={operation}&infloat=1">
+	<%else%>
+	<form id="moderate_admin" name="moderate_admin" method="post" action="topicadmin.aspx?action=moderate&operation={operation}">
+	<%/if%>
+	<input type="hidden" name="topicid" value="{topiclist}" />
+	<input type="hidden" name="forumid" value="{forumid}" />
+    <%if {config.aspxrewrite}==1%>
+	<input type="hidden" id="referer" name="referer" value="showforum-{forumid}{config.extname}" />
+    <%else %>	
+	<input type="hidden" id="referer" name="referer" value="showforum.aspx?forumid={forumid}">
+    <%/if%>	
+    <script type="text/javascript">
+	    var re = getQueryString("referer");
+	    if (re != "")
+	    {
+		    $("referer").value = unescape(re);
+	    }
+    </script>
+	<!--操作面板开始-->	
+		<%if {operation}=="highlight"%>
+		<!--高亮开始-->
+	    <div class="topicadminlow detailopt">
+	        <span class="hasdropdownbtn">
+			    <input type="hidden" id="highlight_color" name="highlight_color" value="" />
+			    <span style="display:none">
+			    <input type="checkbox" id="highlight_style_b" name="highlight_style_b" value="B" />
+			    <input type="checkbox" id="highlight_style_i" name="highlight_style_i" value="I" />
+			    <input type="checkbox" id="highlight_style_u" name="highlight_style_u" value="U" />
+			    </span>
+			    <input id="color_bg" type="text" class="txt" readonly="readonly" />
+			    <a href="javascript:;" onclick="display('color_menu')" class="dropdownbtn">^</a>
+		    </span>
+		    <div id="color_menu" class="color_menu" style="display: none">
+			    <a href="javascript:;" onclick="switchhl(1,this,0)" title="取消高亮" style="background:#000;text-indent:0;color:#F00;text-decoration:none;">X</a>
+			    <a href="javascript:;" onclick="switchhl(1,this,0)" style="background:#EE1B2E;color:#EE1B2E;">#EE1B2E</a>
+			    <a href="javascript:;" onclick="switchhl(1,this,0)" style="background:#EE5023;color:#EE5023;">#EE5023</a>
+			    <a href="javascript:;" onclick="switchhl(1,this,0)" style="background:#996600;color:#996600;">#996600</a>
+			    <a href="javascript:;" onclick="switchhl(1,this,0)" style="background:#3C9D40;color:#3C9D40;">#3C9D40</a>
+			    <a href="javascript:;" onclick="switchhl(1,this,0)" style="background:#2897C5;color:#2897C5;">#2897C5</a>
+			    <a href="javascript:;" onclick="switchhl(1,this,0)" style="background:#2B65B7;color:#2B65B7;">#2B65B7</a>
+			    <a href="javascript:;" onclick="switchhl(1,this,0)" style="background:#8F2A90;color:#8F2A90;">#8F2A90</a>
+			    <a href="javascript:;" onclick="switchhl(1,this,0)" style="background:#EC1282;color:#EC1282;">#EC1282</a>
+
+                <a href="javascript:;" onclick="switchhl(1,this,0)" style="background:#FFFF00;color:#FFFF00;">#FFFF00</a>
+			    <a href="javascript:;" onclick="switchhl(1,this,0)" style="background:#00FFFF;color:#00FFFF;">#00FFFF</a>
+			    <a href="javascript:;" onclick="switchhl(1,this,0)" style="background:#808080;color:#808080;">#808080</a>
+		    </div>
+		    <a title="粗体" style="text-indent: 0pt; text-decoration: none; font-weight: 700;" class="detailopt_bold" onclick="switchhl(2, this, 'b')" id="highlight_op_1" href="javascript:;">B</a>
+            <a title="斜体" style="text-indent: 0pt; text-decoration: none; font-style: italic;" class="detailopt_italic" onclick="switchhl(2, this, 'i')" id="highlight_op_2" href="javascript:;">I</a>
+            <a title="下划线" style="text-indent: 0pt; text-decoration: underline;" class="detailopt_underline" onclick="switchhl(2, this, 'u')" id="highlight_op_3" href="javascript:;">U</a>
+		    <script type="text/javascript">
+		        function switchhl(op, obj, v)
+		        {
+		            if (op == 1)
+		            {
+		                $('highlight_color').value = obj.style.backgroundColor;
+		                $('color_bg').style.backgroundColor = obj.style.backgroundColor;
+		                $('color_menu').style.display = 'none';
+		            } else if (op == 2)
+		            {
+		                if ($('highlight_style_' + v).checked)
+		                {
+		                    $('highlight_style_' + v).checked = false;
+		                    obj.className = obj.className.replace(/ current/, '');
+		                } else
+		                {
+		                    $('highlight_style_' + v).checked = true;
+		                    obj.className += ' current';
+		                }
+		            }
+		        }
+            </script>
+        </div>
+		<!--高亮结束-->
+		<%/if%>
+		
+		<%if {operation}=="displayorder"%>
+		<!--置顶开始-->
+		<div class="topicadminlow">
+		    <ul class="inlinelist">
+                <%if {displayorder}>0%><li class="wide"><label><input type="radio" value="0" name="level" class="radio"/> 解除置顶</label></li><%/if%>
+                <li class="wide"><label><input type="radio" value="1" name="level" class="radio"<%if {displayorder}<=1%> checked="checked"<%/if%>/> 本版置顶</label></li>
+                <li class="wide"><label><input type="radio" value="2" name="level" class="radio"<%if {displayorder}==2%> checked="checked"<%/if%>/> 分类置顶</label></li>
+                <li class="wide"><label><input type="radio" value="3" name="level" class="radio"<%if {displayorder}==3%> checked="checked"<%/if%>/> 全局置顶</label></li>
+            </ul>
+		</div>
+		<!--置顶结束-->
+		<%/if%>
+		
+		<%if {operation}=="digest"%>
+		<!--精华开始-->
+		<div class="topicadminlow">
+		    <ul class="inlinelist">
+                <%if {digest}>0%><li class="wide"><label><input type="radio" value="0" name="level" class="radio"/> 解除精华</label></li><%/if%>
+                <li class="wide"><label><input type="radio" value="1" name="level" class="radio"<%if {digest}<=1%> checked="checked"<%/if%>/> 一级精华</label></li>
+                <li class="wide"><label><input type="radio" value="2" name="level" class="radio"<%if {digest}==2%> checked="checked"<%/if%>/> 二级精华</label></li>
+                <li class="wide"><label><input type="radio" value="3" name="level" class="radio"<%if {digest}==3%> checked="checked"<%/if%>/> 三级精华</label></li>
+            </ul>
+		</div>
+		<!--精华结束-->
+		<%/if%>
+		
+		<%if {operation}=="move"%>
+		<!--移动开始-->
+		<div class="topicadminlow cl">
+		    <p class="tah_body tah_fixiesel">
+                <label for="moveto">目标版块:</label> <select onchange="movetoOnchange(this);" name="moveto" id="moveto">
+                {forumlist}
+                </select>
+            </p>
+            <p id="movetopictypelist" class="tah_body tah_fixiesel cl">
+                 <label for="movettype">主题分类:</label> <select id="movettype" name="movetopictype">
+                 </select>
+            </p>
+            <p class="tah_body"></p>
+            <ul style="margin: 5px 0pt;display: none;" id="moveext" class="inlinelist cl">
+                <li class="wide"><label><input type="radio" checked="checked" value="normal" name="type" class="radio"/> 移动主题</label></li>
+                <li class="wide"><label><input type="radio" value="redirect" name="type" class="radio"/> 保留转向</label></li>
+            </ul>
+        </div>
+        <script type="text/javascript">
+            function movetoOnchange(obj){
+                if (obj.value)
+                    $('moveext').style.display = '';
+                else
+                    $('moveext').style.display = 'none';
+
+                var movselect = $('movettype');
+                while (movselect.length > 0) {
+                    movselect.options[movselect.length - 1] = null;
+                }
+                var forumid = obj.value;
+                _sendRequest('{forumpath}tools/ajax.ashx?t=getforumtopictypelist&fid=' + forumid + '&r=1' + Math.random(), function (responseText) {
+                    if (responseText) {
+                        var topictypes = eval('(' + responseText + ')');
+                        if (topictypes.length > 0) {
+                            for (var i in topictypes) {
+                                var option = document.createElement('option');
+                                option.appendChild(document.createTextNode(topictypes[i].typename));
+                                option.setAttribute('value', topictypes[i].typeid);
+                                movselect.appendChild(option);
+                            }
+                            $('movetopictypelist').style.display = '';
+                        }
+                        else {
+                            $('movetopictypelist').style.display = 'none';
+                        }
+                    }
+                });
+            }
+            movetoOnchange($('moveto'));
+        </script>
+		<!--移动结束-->
+		<%/if%>
+		
+		<%if {operation}=="close"%>
+		<!--关闭开始-->
+		<div class="topicadminlow">
+		    <ul style="margin: 5px 0pt;" class="inlinelist">
+		        <li class="wide"><label><input type="radio" checked="checked" value="0" name="close" class="radio"/> 打开主题</label></li>
+                <li class="wide"><label><input type="radio" value="1" name="close" class="radio"/> 关闭主题</label></li>
+		    </ul>
+		</div>
+		<!--关闭结束-->
+		<%/if%>
+		
+		<%if {operation}=="banpost"%>
+		<!--屏蔽开始-->
+		<div class="topicadminlow">
+		    <ul style="margin: 5px 0pt;" class="inlinelist">
+		    	<input type="hidden" size="10" name="postid" id="postid" value="{postidlist}" />
+		        <li class="wide"><label><input id="banpost1" type="radio" value="0" name="banpost" class="radio" checked="checked"/> 取消屏蔽</label></li>
+                <li class="wide"><label><input id="banpost2" type="radio" value="-2" name="banpost" class="radio"/> 屏蔽帖子</label></li>
+		    </ul>
+			<script type="text/javascript">
+				var status = getQueryString("banstatus");
+				if (status == "0") {
+					$("banpost1").checked = true;
+					$("banpost2").checked = false;
+				}
+				else {
+					$("banpost2").checked = true;
+					$("banpost1").checked = false;
+				}			
+			</script>
+		</div>
+		<!--屏蔽结束-->
+		<%/if%>
+		
+		<%if {operation}=="bump"%>
+		<!--提升开始-->
+		<div class="topicadminlow">
+		    <ul style="margin: 5px 0pt;" class="inlinelist">
+		        <li class="wide"><label><input id="bumptype1" type="radio" checked="checked" value="1" name="bumptype" class="radio"/>提升</label></li>
+                <li class="wide"><label><input id="bumptype2" type="radio" value="-1" name="bumptype" class="radio"/>下沉</label></li>
+		    </ul>
+		</div>
+		<!--提升结束-->
+		<%/if%>
+		
+		<%if {operation}=="copy"%>
+		<!--拷贝开始-->
+		<div class="topicadminlow">
+		    <p class="tah_body tah_fixiesel">
+                <label for="copyto">目标论坛/分类: </label><br />
+                <select name="copyto">{forumlist}</select>
+            </p>
+        </div>
+		<!--拷贝结束-->
+		<%/if%>
+		
+		<%if {operation}=="split"%>
+		<!--分割开始-->
+		<div class="topicadminlow">
+		    <p class="tah_body tah_fixiesel">
+                <label for="subject">新主题的标题:</label> <br />
+                <input type="text" name="subject" size="32" value="" class="txt"/>
+            </p>
+        </div>
+        <p>选择内容:        
+		    <div style="width:218px;height:60px;overflow:hidden;overflow-y:auto;">
+			<%loop (Post) post postlist%><input name="postid" type="checkbox" value="{post.ID}" /><strong>{post.Poster}</strong><br />
+				{post.Html}<br />
+			<%/loop%>
+			</div>
+        </p>
+		<!--分割结束-->
+		<%/if%>
+		
+		<%if {operation}=="merge"%>
+		<!--合并开始-->
+		<div class="topicadminlow">
+		    <table cellspacing="0" cellpadding="0" style="width:100%">
+		        <tr>
+		            <td><label for="othertid">合并 →</label></td>
+		            <td>填写目标主题 ID (tid)</td>
+		        </tr>
+		        <tr>
+		            <td></td>
+		            <td><input size="10" name="othertid" id="othertid"  class="txt" title="<%if {config.aspxrewrite}==1%>即将与这个主题合并的主题id,如showtopic-22.aspx,tid 为 22<%else%>>即将与这个主题合并的主题id,<br />如showtopic.aspx?topicid=22,tid 为 22<%/if%>" /></td>
+		        </tr>
+		    </table>		    
+        </div>
+		<!--合并结束-->
+		<%/if%>
+		
+		<%if {operation}=="type"%>
+		<!--分类开始-->
+		<div class="topicadminlow">
+            <p><label for="typeid">分类:</label> <select id="typeid" name="typeid">{topictypeselectoptions}</select></p>
+        </div>
+		<!--分类结束-->
+		<%/if%>
+		
+		<%if {operation}=="rate"%>
+		<!--评分开始-->
+		<input type="hidden" name="postid" id="postid" value="{postidlist}" class="txt" />
+		<div class="rateopt">
+            <%loop score scorelist%>
+                <%set (int){defaultratevalue}=0%>
+                <div class="hasdropdownbtn ratelist s_clear">
+                    <label for="score{score[_id]}"> {score[ScoreName]}</label>
+                    <input type="text" class="txt" value="{defaultratevalue}" name="score" id="score{score[_id]}"/>
+                    <input type="hidden" value="{score[ScoreCode]}" name="extcredits" />
+                    <a onclick="InFloat='floatlayout_rate';showselect(this, 'score{score[_id]}', 'scoreoption{score[_id]}')" class="dropdownbtn" href="javascript:;">^</a>
+                    <ul style="display: none;" id="scoreoption{score[_id]}">{score[options]}</ul><span style="padding-left:4px;">(今日剩余 {score[MaxInDay]} {score[ScoreName]})</span>
+                </div>
+            <%/loop%>
+        </div>
+		<!--评分结束-->
+		<%/if%>
+		
+		<%if {operation}=="cancelrate"%>
+		<!--取消评分开始-->
+		<input type="hidden" name="postid" id="postid" value="{postidlist}" class="txt" />
+		<div class="floatwrap" style="height:280px; margin-bottom:10px;overflow-y:auto;">
+		    <table cellspacing="0" cellpadding="0" class="list" width="570" style="table-layout:fixed;">
+		        <thead>
+		            <tr>
+		                <td style="width:30px;"> </td>
+		                <td style="width:100px;">用户名</td>
+		                <td style="width:120px;">时间</td>
+		                <td>积分</td>
+		                <td style="width:190px;">理由</td>
+		            </tr>
+		        </thead>
+		        <tbody>
+                    <%loop rateloginfo ratelog%>
+                    <tr>
+                        <td><input name="ratelogid" type="checkbox"  value="{rateloginfo[id]}" /></td>
+                        <td><a href="<%if {config.Aspxrewrite}!=1%>userinfo.aspx?userid={rateloginfo[uid]}<%else%>userinfo-{rateloginfo[uid]}.aspx<%/if%>">{rateloginfo[username]}</a></td>
+                        <td><span class="time">{rateloginfo[postdatetime]}</span></td>
+                        <td>{rateloginfo[extcreditname]} <span class="bold"><%if !{rateloginfo[score]}.StartsWith("-")%>+{rateloginfo[score]}<%else%>{rateloginfo[score]}<%/if%></span></td>
+                        <td>{rateloginfo[reason]}</td>
+                    </tr>            
+				    <%/loop%>
+                </tbody>
+            </table>
+        </div>
+		<!--取消评分结束-->
+		<%/if%>
+		
+		<%if {operation}=="identify"%>
+		<!--鉴定开始-->
+		{identifyjsarray}	
+		<div>
+            <p>鉴定: 
+                <select name="selectidentify" id="selectidentify" onchange="changeindentify(this.value)">
+				    <option value="0" selected="selected">请选择</option>
+				    <option value="-1">* 取消鉴定 *</option>
+			    <%loop (TopicIdentify) identify identifylist%>  
+				    <option value="{identify.ID}"<%if {identify[_id]}==1%> selected="selected"<%/if%>>{identify.Name}</option>						  
+			    <%/loop%>
+			    </select>	
+            </p>
+        </div>
+        <p style="text-align:center;padding:2px;"><img id="identify_preview" src="{topicidentifydir}/zc.gif" onerror="changeindentify($('selectidentify').options[2].value)" /></p>
+		<script type="text/javascript">
+			function changeindentify(imgid)
+			{
+				if (imgid != "0" && imgid != "-1")
+				{
+				    $("identify_preview").src = "{topicidentifydir}/" + topicidentify[imgid];
+					$("identify_preview").style.display = "";
+				}
+				else
+				{
+					$("identify_preview").style.display = "none";
+				}
+            }
+            changeindentify($('selectidentify').options[2].value);
+		</script>	
+		<!--鉴定结束-->
+		<%/if%>
+		
+		<%if {operation}=="delete" || {operation}=="delposts"%>
+		<!--删除帖子开始-->
+		<div class="topicadminlow">
+             <ul class="inlinelist">
+			     <p>您确认要 <strong>删除</strong> 选择的
+                  <%if {operation}=="delposts"%>
+                         <input type="hidden" size="10" name="postid" id="Hidden1" value="{postidlist}" />
+	                     <input type="hidden" size="10" name="opinion" id="opinion" value="{opinion}" />
+                             帖子
+                   <%else %>
+                            主题
+                   <%/if%>么?
+                     </p>
+		    </ul>
+	    </div>
+		<!--删除帖子结束-->
+		<%/if%>
+		
+		<%if {operation}!="identify"&&{operation}!="bonus"&&{operation}!="cancelrate"%>
+		<!--操作说明开始-->
+		<div class="topicadminlog">
+		    <h4>
+		        <span class="hasdropdownbtn y"><a href="javascript:;" class="dropdownbtn" onclick="showselect(this, 'reason', 'reasonselect')">^</a></span>
+		        操作说明：<label>最多50个字符，还可输入<strong><span id="chLeft">50</span></strong></label>
+		    </h4>
+		    <p>
+			    <textarea onkeyup="seditor_ctlent(event, '$(\'moderateform\').submit()')" class="txtarea" name="reason" id="reason" <%if {operation}=="rate"%>style="width:322px;"<%/if%>></textarea>
+                <script type="text/javascript">checkLength($('reason'), 50); //检查评分内容长度</script>
+		    </p>
+		    <ul style="display: none;" id="reasonselect">
+			    <li>广告/SPAM</li>
+			    <li>恶意灌水</li>
+			    <li>违规内容</li>
+			    <li>文不对题</li>
+			    <li>重复发帖</li>
+			    <li></li>
+			    <li>我很赞同</li>
+			    <li>精品文章</li>
+			    <li>原创内容</li>
+		    </ul>
+	    </div>
+		<!--操作说明结束-->
+		<%/if%>
+		
+		<%if {operation}=="bonus"%>
+		<!--结帖开始-->
+		<div class="bonus">
+			<script type="text/javascript" reload="1">
+                jQuery(function ($){
+                    $(".bonuspostmessage").each(function(){
+                        var  message = $(this);
+                        if(message.children().length == 0){
+                            if(message.html().length > 120){
+                                var html = message.html();
+                                message.html(html.substr(0,120));
+                                var span = $("<span />").html(html.substr(120)).hide();
+                                span.appendTo(message);
+                                var a = $("<a href='javascript:void(0)' title='展开/收起内容' class='xi1'>&gt;&gt;&gt;展开内容</a>").click(function(){
+                                    var a = $(this);
+                                    var aprev = a.prev().first();
+                                    aprev.css("display",aprev.css("display") == 'none' ? '' : 'none');
+                                    a.html(a.html() == "&gt;&gt;&gt;展开内容" ? "&lt;&lt;&lt;收起内容" : "&gt;&gt;&gt;展开内容");
+                                });
+                                a.appendTo(message);
+                            }
+                        }
+                    });
+                    $(".bonustoolsbar li").click(function(){
+                        var obj = $(this);
+                        var pid = obj.attr("pid");
+                        if(obj.is(".valuable")){
+                            if(obj.siblings().first().is(".checkedbest")){
+                                obj.siblings().first().removeClass("checkedbest");
+                                setValuableOrBestAnswer(pid,"");
+                            }
+                            obj.toggleClass("checkedvaluable");
+                            setValuableOrBestAnswer(pid,obj.is(".checkedvaluable") ? "valuable" : "");
+                            if(obj.is(".checkedvaluable")){
+                                $("#input" + pid + " > span").html("有价值答案");
+                                $("#input" + pid).show();
+                            }
+                        }
+                        else{
+                            if($('#bestAnswer').val() != "" && $('#bestAnswer').val() != obj.attr("pid")){
+                                alert("已经设置了最佳答案！");
+                                return;
+                            }
+                            if(obj.siblings().first().is(".checkedvaluable")){
+                                obj.siblings().first().removeClass("checkedvaluable");
+                                setValuableOrBestAnswer(pid,"");
+                            }
+                            obj.toggleClass("checkedbest");
+                            setValuableOrBestAnswer(pid,obj.is(".checkedbest") ? "best" : "");
+                            if(obj.is(".checkedbest")){
+                                $("#input" + pid + " > span").html("最佳答案");
+                                $("#input" + pid).show();
+                            }
+                        }
+
+                        var count = $(this).parent().find(".checkedvaluable,.checkedbest").length;
+                        if(count == 0){
+                            $("#bonus_" + pid).val(0);
+                            $("#input" + pid).hide();
+                        }
+
+                    });
+
+                    $(".floatimg").each(function(){
+                        $(this).mousemove(function(){
+                            var position = $(this).position();
+                            $("#img" + $(this).attr("aid")).css({position:'absolute',left:position.left,top:position.top + 25}).show();
+                        });
+                        $(this).mouseout(function(){
+                             $("#img" + $(this).attr("aid")).hide();
+                        });
+                    });
+                });
+
+				var reg = /^\d+$/i;
+				$('moderate').onsubmit = function (){
+					if (getCostBonus() != {topicinfo.price})
+					{
+						alert('分数总和与悬赏总分不相符');
+						return false;
+					}
+					return true;
+				}
+				
+				function getCostBonus()
+				{
+					var bonusboxs = document.getElementsByName('postbonus');
+					var costbonus = 0;
+					for (var i = 0; i < bonusboxs.length ; i ++ )
+					{
+						var bonus = isNaN(parseInt(bonusboxs[i].value)) ? 0 : parseInt(bonusboxs[i].value);
+						costbonus += bonus;
+					}
+
+					return costbonus;
+				}
+				function checkInt(obj)
+				{				
+					if (!reg.test(obj.value))
+					{
+						obj.value = 0;
+					}
+				}
+				function bonushint(obj)
+				{							
+					var costbonus = getCostBonus();
+					var leftbonus = {topicinfo.price} - costbonus;
+					$('bonus_menu').innerHTML = '总悬赏分: ' + {topicinfo.price} + '<br />当前可用: ' + leftbonus;
+                    var position = jQuery(obj).position();
+                    $('bonus_menu').style.left = position.left + 'px';
+                    $('bonus_menu').style.top = position.top + 25 + 'px';
+					$('bonus_menu').style.display = '';
+					obj.focus();
+				}
+
+				function closebonushint(obj)
+				{
+					$('bonus_menu').style.display = 'none';
+				}
+
+				function str_pad(text, length, padstring) {
+					text += '';
+					padstring += '';
+
+					if(text.length < length) {
+						padtext = padstring;
+
+						while(padtext.length < (length - text.length)) {
+							padtext += padstring;
+						}
+
+						text = padtext.substr(0, (length - text.length)) + text;
+					}
+
+					return text;
+				}
+				function setValuableOrBestAnswer(pid,choice)
+				{
+					switch (choice)
+					{
+						case "valuable":
+                            if($('valuableAnswers').value == ""){
+                                $('valuableAnswers').value = pid;
+                                return;
+                            }
+                            var valuableAnswers = $('valuableAnswers').value.split(',');
+                            if(in_array(pid,valuableAnswers))
+                                break;
+                            valuableAnswers[valuableAnswers.length] = pid;
+                            $('valuableAnswers').value = valuableAnswers.join(',');
+							break;
+						case "best":
+                            if($('bestAnswer').value == ""){
+                                $('bestAnswer').value = pid;
+                                return;
+                            }
+                            var bestAnswers = $('bestAnswer').value.split(',');
+                            if(in_array(pid,bestAnswers))
+                                break;
+                            bestAnswers[bestAnswers.length] = pid;
+                            $('bestAnswer').value = bestAnswers.join(',');
+							break;
+						default:
+                            if(in_array(pid,$('valuableAnswers').value.split(','))){
+                                var valuableAnswers = $('valuableAnswers').value.split(',');
+                                for(var i = 0; i < valuableAnswers.length; i++){
+                                    if(valuableAnswers[i] == pid){
+                                        valuableAnswers.splice(i,1);
+                                        break;
+                                    }
+                                }
+                                $('valuableAnswers').value = valuableAnswers.join(',');
+                            }
+                            if(in_array(pid,$('bestAnswer').value.split(','))){
+                                var bestAnswers = $('bestAnswer').value.split(',');
+                                for(var i = 0; i < bestAnswers.length; i++){
+                                    if(bestAnswers[i] == pid){
+                                        bestAnswers.splice(i,1);
+                                        break;
+                                    }
+                                }
+                                $('bestAnswer').value = bestAnswers.join(',');
+                                break;
+                            }
+					}
+				}
+			</script>
+			<input type="hidden" id="bestAnswer" name="bestAnswer" value="" />
+			<input type="hidden" id="valuableAnswers" name="valuableAnswers" value="" />
+			<div class="topicadminhigh">
+			    <%loop (Post) post postlist%>
+			    <dl>
+					<dt>
+                    <%if {post.PosterID}!={topicinfo.PosterID}%>
+                    <ul class="bonustoolsbar">
+						<li title="最佳答案" class="bonusli" pid="{post.ID}">最佳答案</li>
+						<li title="有价值答案" class="bonusli valuable" pid="{post.ID}">有价值答案</li>
+                    </ul>
+                    <%/if%>
+                    <%if {post.PosterID}!={topicinfo.PosterID}%> 
+			        <cite id="input{post.ID}"><span></span>得分:
+                        <input name="postbonus" id="bonus_{post.ID}" type="text" class="txt" value="0" size="1" maxlength="9" onblur="checkInt(this);" 
+			            onmouseover="bonushint(this);" onmouseout="closebonushint(this);" />
+			            <input name="addons" type="hidden" value="{post.PosterID}|{post.ID}|{post.Poster}" />
+                    </cite>
+                    <%/if%>
+			        <%if {post.PosterID}=={topicinfo.PosterID}%><span class='bonusinfo'>不能给自己加分</span><%/if%><strong>{post.Poster}</strong>
+					</dt>
+					<dd>
+					 <%set (string){message}=TransAttachImgUbb({post.Message})%>
+						<span class="bonuspostmessage">{message}</span>
+					</dd>
+			    </dl>
+			    <%/loop%>
+			</div>
+			<div id="bonus_menu" class="p_pop" style="position:absolute;display:none;padding:5px;"></div>
+		</div>
+		<!--结帖结束-->
+		<%/if%>
+		
+		<!--短消息通知开始-->
+		<%if {operation}!="cancelrate"%>
+		<p>
+            <button type="submit" class="pn" name="modsubmit"><span>确定</span></button>
+            <%if {operation}=="delete" || {operation}=="delposts"%>
+		    <!--保留附件开始-->
+		    	<input name="reserveattach" type="checkbox" value="1" /> <label for="reserveattach">保留附件</label>
+		    <!--保留附件结束-->
+		    <%/if%>
+            <%if {issendmessage}%>
+		        <input type="checkbox" disabled checked="checked"/>
+		        <input name="sendmessage" type="hidden" id="sendmessage" value="1"/>
+		    <%else%>
+		        <input name="sendmessage" type="checkbox" id="sendmessage" value="1"/>
+		    <%/if%> <label for="sendmessage">通知作者</label>
+        </p>
+        <%else%>
+        <div class="topic_msg">
+            <p style="float: right;">
+                <input type="checkbox" class="checkbox" id="sendmessage" name="sendmessage" value="1"/> <label for="sendreasonpm">通知作者</label>  
+                操作说明: <input class="txt" name="reason"/>
+                <button name="ratesubmit" value="true" type="submit" class="submit">提交</button>
+            </p>
+            <label><input name="chkall" type="checkbox"  onclick="checkall(this.form, 'ratelogid')" /> 全选</label>
+        </div>
+        <%/if%>
+		<!--短消息通知结束-->
+	
+	</div>
+	<!--操作面板结束-->
+	
+    </form>
+	</div>
+<%else%>
+     <%if {infloat}==1%>
+        <%if {titlemessage}%>
+            {msgbox_text}
+        <%else%>
+            <div id="floatlayout_mods">
+	            <h3 class="flb">
+	                <em id="em1">{operationtitle}</em>
+					<span><a href="javascript:;" class="flbc" onclick="hideWindow('mods')" title="关闭">关闭</a></span>
+	            </h3>
+		        <div class="c cl">{msgbox_text}</div>
+		    </div>
+        <%/if%>
+	  <%else%>
+		<%template _errmsgbox%>
+	  <%/if%>
+<%/if%>
+<%else%>
+	<%if {infloat}==1%>
+	
+        <script type="text/javascript"  reload="1">
+            location.href = '{msgbox_url}';	
+			$('return_mods').className='';
+        </script>
+	<%else%>
+	    <%template _msgbox%>
+	<%/if%>
+<%/if%>
+<%template _copyright%>
+<%template _footer%>

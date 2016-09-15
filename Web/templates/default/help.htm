@@ -1,0 +1,70 @@
+﻿<%template _header%>
+<div class="wrap cl pageinfo">
+	<div id="nav">
+	<%if {usergroupinfo.AllowSearch}%>
+		<%template _quicksearch%>
+	<%/if%>
+	<a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <strong>帮助</strong>
+	</div>
+</div>
+<%if page_err==0%>
+<div class="wrap uc cl help">
+    <%if {showversion}==1%>
+		<div class="uc_app">
+			<h2>{forumproductname} 版本信息</h2>
+			<ul>
+				<li>版本信息</li>
+			</ul>
+		</div>
+		<div class="uc_main">
+		<div class="uc_content">
+			<h1>{forumproductname} 版本信息</h1>   
+			<ul style="margin: 8px 16px;">
+				<li>BBX.Common.dll : {dllver_bbxcommon}</li>
+				<li>BBX.Control.dll : {dllver_bbxcontrol}</li>
+				<li>BBX.Entity.dll : {dllver_bbxentity}</li>
+				<li>BBX.Forum.dll : {dllver_bbxforum}</li>
+				<li>BBX.Plugin.dll : {dllver_bbxplugin}</li>
+				<li>BBX.Web.Admin.dll : {dllver_bbxwebadmin}</li>
+				<li>BBX.Web.dll : {dllver_bbxweb}</li>
+				<li>数据库类型 : {dbtype}</li>
+				<li>产品名称 : {assemblyproductname}</li>
+				<li>版权信息 : {Assemblycopyright}</li>
+			</ul>
+		</div>
+		</div>
+	<%else%>
+		<div class="uc_app">
+			<h2>在线帮助</h2>
+			<ul>
+		<%loop (Help) help helplist%>
+		<%if {help.Pid}==0%>
+			<li><strong><a href="?hid={help.ID}">{help.Title}</a></strong></li>
+		<%else%>
+			<li><a href="#h_{help.pid}_{help.ID}" style="padding-left: 8px;">{help.Title}</a></li>
+		<%/if%>
+		<%/loop%>
+			</ul>
+		</div>
+		<div class="uc_main">
+		<div class="uc_content">
+		<%loop (Help) helpcontent helplist%>
+		<%if {helpcontent.Pid}==0%>
+			<h3 class="lightlink">{helpcontent.Title}</h3>
+			<hr class="solidline"/>
+		<%else%>
+			<ul>
+				<li class="helpsubtitle"><a name="h_{helpcontent.Pid}_{helpcontent.ID}"></a>{helpcontent.Title}</li>
+				<li>{helpcontent.Message}</li>
+			</ul>
+		<%/if%>
+		<%/loop%>
+		</div>
+		</div>
+	<%/if%>
+</div>
+<%else%>
+	<%template _errmsgbox%>
+<%/if%>
+<%template _copyright%>
+<%template _footer%>

@@ -1,0 +1,16 @@
+﻿<div class="msgbox error_msg">
+	<h3>错误提示</h3>
+	<p>{msgbox_text}</p>
+	<p class="errorback">
+		<script type="text/javascript">
+			if({msgbox_showbacklink})
+			{
+				document.write("<a href=\"{msgbox_backlink}\">返回上一步</a> &nbsp; &nbsp;|  ");
+			}
+		</script>
+		&nbsp; &nbsp; <a href="forumindex.aspx">论坛首页</a>
+		<%if {usergroupid}==7%>
+		 &nbsp; &nbsp;|&nbsp; &nbsp; <a href="login.aspx">登录</a>&nbsp; &nbsp;|&nbsp; &nbsp; <a href="register.aspx">注册</a>
+		<%/if%>
+	</p>
+</div>

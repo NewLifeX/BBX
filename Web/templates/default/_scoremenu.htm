@@ -1,0 +1,10 @@
+﻿<%if {userid}>0%>
+<ul class="f_tab">
+	<li <%if pagename=="usercpcreditspay.aspx"%>class="cur_tab"<%/if%>><a href="usercpcreditspay.aspx">积分兑换</a></li>
+    <li <%if pagename=="usercpcreditsbuy.aspx"%>class="cur_tab"<%/if%>><a href="usercpcreditsbuy.aspx">积分充值</a></li>
+	<li <%if pagename=="usercpcreditstransfer.aspx"%>class="cur_tab"<%/if%>><a href="usercpcreditstransfer.aspx">积分转帐</a></li>
+	<li <%if pagename=="usercpcreditspayoutlog.aspx"%>class="cur_tab"<%/if%>><a href="usercpcreditspayoutlog.aspx">支出记录</a></li>
+	<li <%if pagename=="usercpcreditspayinlog.aspx"%>class="cur_tab"<%/if%>><a href="usercpcreditspayinlog.aspx">收入记录</a></li>
+	<li <%if pagename=="usercpcreaditstransferlog.aspx"%>class="cur_tab"<%/if%>><a href="usercpcreaditstransferlog.aspx">兑换与转帐记录</a></li>
+</ul>
+<%/if%>

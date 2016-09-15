@@ -1,0 +1,39 @@
+#
+# robots.txt for BBX
+# Version 1.0
+#
+
+User-agent: *
+
+Disallow: /admin/
+Disallow: /aspnet_client/
+Disallow: /aspx/
+Disallow: /avatars/
+Disallow: /bin/
+Disallow: /cache/
+Disallow: /config/
+Disallow: /editor/
+Disallow: /images/
+Disallow: /install/
+Disallow: /javascript/
+Disallow: /plugin/
+Disallow: /services/
+Disallow: /silverlight/
+Disallow: /templates/
+#Disallow: /tools/
+Disallow: /upgrade/
+Disallow: /upload/
+Disallow: /watermark/
+Disallow: /Web
+Disallow: /userinfo
+Disallow: /usercpprofile
+Disallow: /usercpnewpassword
+Disallow: /usercppreference
+Disallow: /usercpinbox
+Disallow: /usercpsentbox
+Disallow: /usercpdraftbox
+Disallow: /usercpannouncepm
+Disallow: /usercpignorelist
+Disallow: /usercpnotice
+Disallow: /usercpsubscribe
+#Disallow: /showtopic.aspx?topicid=*

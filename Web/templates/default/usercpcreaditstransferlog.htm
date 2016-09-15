@@ -1,0 +1,69 @@
+﻿<%template _header%>
+<div class="wrap cl pageinfo">
+	<div id="nav">
+		<%if {usergroupinfo.AllowSearch}%>
+			<%template _quicksearch%>
+		<%/if%>
+		<a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <a href="usercpprofile.aspx">用户中心</a> &raquo; <strong>转账与兑换记录</strong>
+	</div>
+</div>
+<div class="wrap uc cl">
+   <%template _menu%>
+	<div class="uc_main">
+	<div class="uc_content">
+		<h1>转账与兑换记录</h1>
+		<%template _scoremenu%>	
+<%if page_err==0%>
+	<%if isshowmsg%>
+		<%template _usercpmsgbox%>
+	<%else%>
+	   <%if {creditsloglist.rows.Count}>0%>
+		<form id="form1" name="form1" method="post" action="">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="datatable">
+		<tr class="colplural">
+			<th width="15%">来自/到</th>
+			<th width="20%">时间</th>
+			<th width="20%">支出</th>
+			<th width="20%">收入</th>
+			<th>操作</th>
+		</tr>
+		<tbody>
+		<%loop creditslog creditsloglist%>
+		<tr>
+			<td>
+			<%if {strtoint({creditslog[uid]})}=={userid}%>
+			<%set {aspxrewriteurl} = this.UserInfoAspxRewrite({creditslog[fromto]})%>
+			<a href="{aspxrewriteurl}" target="_blank">{creditslog[touser]}</a>
+			<%else%>
+			<%set {aspxrewriteurl} = this.UserInfoAspxRewrite({creditslog[uid]})%>
+			<a href="{aspxrewriteurl}" target="_blank">{creditslog[fromuser]}</a>
+			<%/if%>
+			</td>
+			<%set (string){sendcreditsword} = ForumUtils.ConvertCreditAndAmountToWord(Utility.ToInt(creditslog["sendcredits"], 0),Utility.ToInt(creditslog["send"], 0))%>
+			<%set (string){receivecreditsword} = ForumUtils.ConvertCreditAndAmountToWord(Utility.ToInt(creditslog["receivecredits"], 0),Utility.ToInt(creditslog["receive"], 0))%>
+			<td class="time">{creditslog[paydate]}</td>
+			<td>{sendcreditsword}</td>
+			<td>{receivecreditsword}</td>
+			<td>{creditslog[operationinfo]}</td>
+		</tr>
+		<%/loop%>
+		</tbody>
+		</table>
+		</form>
+		<div class="pages_btns">
+			<div class="pages">
+			<em>{pageid}/{pagecount}页</em> {pagenumbers}
+			</div>
+		</div>
+		<%else%>
+		<div class="zerothreads">暂无记录</div>
+		<%/if%>
+	<%/if%>
+<%else%>
+	<%template _usercperrmsgbox%>
+<%/if%>
+	</div>
+	</div>
+</div>
+<%template _copyright%>
+<%template _footer%>

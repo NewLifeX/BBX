@@ -1,0 +1,10 @@
+﻿.tabs { padding-bottom: 28px;font-size:12px;padding-left:0px}
+	.tabs li {float:left;display:inline; margin-right:1px;}
+	.TabSelect {background:url(../images/tab_left_icon.gif) no-repeat 0 0; margin-top:6px;}
+	.OnTabSelect {background:url(../images/selectTab_hover.gif) no-repeat 0 0; margin-top:6px;}
+	.CurrentTabSelect {position:relative;bottom:-1px;background:url(../images/selected_tab_left_icon.gif) no-repeat left top; height:26px; line-height:25px;}
+	.tabs li a { float:left;display:block;margin-left:3px;_margin-left:1px;padding: 0 5px; text-decoration: none; height: 19px; line-height: 19px; background: url(../images/tab_right_icon.gif) no-repeat 100% 0; color: #000;}
+	.tabs li a:hover { color: #000; background: url(../images/selectTab_hover2.gif) no-repeat right top; text-decoration: none;}
+	.tabs a.current,.tabs a:hover.current {cursor: default; border-bottom: 1px solid #FFF; background:url(../images/selected_tab_right_icon.gif) no-repeat right top;line-height: 25px; margin-top:0;height:25px;}
+	.tabarea { clear:both; overflow:hidden; zoom:1; background: #FFF; border: 1px solid #919b9c;text-align: right; padding: 20px; margin-top:-3px;}
+	.tab-page {text-align:left;font-size:12px;}

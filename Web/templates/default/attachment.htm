@@ -1,0 +1,17 @@
+﻿<%template _header%>
+<%if page_err==0%>
+<div class="wrap s_clear pageinfo">
+	<div id="nav">
+		<a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; {ForumUtils.UpdatePathListExtname(forum.Pathlist, config.Extname)} &raquo; <%set {aspxrewriteurl} = this.ShowTopicAspxRewrite({topic.ID},0)%>
+	    <a href="{aspxrewriteurl}">{topic.Title}</a> &raquo; <strong>附件</strong>
+	</div>
+</div>
+<%else%>
+	<%if {needlogin}%>
+		<%template _login%>
+	<%else%>
+		<%template _errmsgbox%>
+	<%/if%>
+<%/if%>
+<%template _copyright%>
+<%template _footer%>

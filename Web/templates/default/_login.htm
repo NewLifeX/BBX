@@ -1,0 +1,142 @@
+<%if {infloat}!=1%>
+<div class="wrap cl">
+	<div class="blr">
+	<div class="msgbox" style="margin:4px auto;padding:0 !important;margin-left:0;background:none;">
+		<div class="msg_inner error_msg">
+			<p>您无权进行当前操作，这可能因以下原因之一造成</p>
+			<p><b>{msgbox_text}</b></p>
+			<p>您还没有登录，请填写下面的登录表单后再尝试访问。</p>
+		</div>
+	</div>
+	<hr class="solidline"/>
+	<form id="formlogin" name="formlogin" method="post" action="{rooturl}login.aspx" onsubmit="submitLogin(this);">
+	<div class="c cl">
+		<div style="overflow:hidden;overflow-y:auto" class="lgfm">
+		<input type="hidden" value="2592000" name="cookietime"/>
+			<div class="sipt lpsw">
+				<label for="username">用户名　：</label>
+				<input type="text" id="username" name="username" size="25" maxlength="40" tabindex="2" class="txt" />
+			</div>
+			<div class="sipt lpsw">
+				<label for="password">密　码　：</label>
+				<input type="password" name="password" size="25" tabindex="3" class="txt"/>
+			</div>
+        <%if {isLoginCode}%>
+			<div class="lpsw" style="position: relative;margin-bottom:10px;">
+				<%template _vcode%>
+			</div>
+        <%/if%>
+		<%if {config.secques}==1%>
+				<div class="ftid sltp" style="margin-bottom:10px">
+					<select name="question" id="question_login" change="changequestion();" tabindex="5">
+						<option value="0">安全提问（未设置请忽略）</option>
+						<option onclick="loadselect_liset('question_login', 0, 'question_login','1',this.innerHTML, 1)" value="1" k_id="question_login">母亲的名字</option>
+						<option onclick="loadselect_liset('question_login', 0, 'question_login','2',this.innerHTML, 2)" value="2" k_id="question_login">爷爷的名字</option>
+						<option onclick="loadselect_liset('question_login', 0, 'question_login','3',this.innerHTML, 3)" value="3" k_id="question_login">父亲出生的城市</option>
+						<option onclick="loadselect_liset('question_login', 0, 'question_login','4',this.innerHTML, 4)" value="4" k_id="question_login">您其中一位老师的名字</option>
+						<option onclick="loadselect_liset('question_login', 0, 'question_login','5',this.innerHTML, 5)" value="5" k_id="question_login">您个人计算机的型号</option>
+						<option onclick="loadselect_liset('question_login', 0, 'question_login','6',this.innerHTML, 6)" value="6" k_id="question_login">您最喜欢的餐馆名称</option>
+						<option onclick="loadselect_liset('question_login', 0, 'question_login','7',this.innerHTML, 7)" value="7" k_id="question_login">驾驶执照的最后四位数字</option>
+					</select>
+					<script type="text/javascript">simulateSelect('question_login', '214');</script>
+					<script type="text/javascript">
+					    window.onload = function(){setselect({question});}
+				        function changequestion() {
+				            if ($('question_login').getAttribute("selecti") != "0") {
+				                $('answer_login').style.display = '';
+						        $('answer_login').focus();
+				            }
+				            else {
+				                $('answer_login').style.display = 'none';
+				            }
+				        }
+				        function setselect(value) {
+				            try {
+                                var questionarray = new Array('安全提问','母亲的名字','爷爷的名字','父亲出生的城市','您其中一位老师的名字','您个人计算机的型号','您最喜欢的餐馆名称','驾驶执照的最后四位数字');
+                                $('question_login').setAttribute("selecti",value);
+                                $('question_login').options[0].value = value;
+                                $('question_ctrl').innerHTML = questionarray[value];
+                                changequestion();
+				            }
+				            catch (e) {
+				            }
+				        }
+
+					</script>
+				</div>
+				<div class="sltp" style="clear:both;"><input type="text" tabindex="6" class="txt" size="36" autocomplete="off" style="display: none;" id="answer_login" name="answer"/></div>
+			<%/if%>
+			<div class="sltp"  style="display:none">
+				<label for="templateid">界面风格</label>
+				<select name="templateid" tabindex="7">
+				<option value="0">- 使用默认 -</option>
+					{templatelistboxoptions}
+				</select>
+			</div>
+		</div>
+		<div class="lgf">
+            <div>
+			    <h4>没有帐号？
+				    <%if {infloat}==1%>
+				    <a href="{rooturl}register.aspx"  onclick="hideWindow('login');showWindow('register', this.href);" class="xg2">立即注册</a>
+				    <%else%>
+				    <a href="{rooturl}register.aspx" tabindex="-1" accesskey="r" title="立即注册 (ALT + R)" class="xg2">立即注册</a>
+				    <%/if%>
+			    </h4>
+			    <p>
+				    <%if {infloat}==1%>
+				    <a href="{rooturl}getpassword.aspx" onclick="hideWindow('login');showWindow('getpassword', this.href);" accesskey="g" title="忘记密码 (ALT + G)" class="xg2">找回密码</a>
+				    <%else%>
+				    <a href="{rooturl}getpassword.aspx" accesskey="g" title="找回密码" class="xg2">找回密码</a>
+				    <%/if%>
+			    </p>
+            </div>
+            <%if {isopenconnect}%>
+            <br />
+			<div class="lgf">
+				<p><a href="{forumpath}QzoneConnect.aspx"><img alt="QQ登录" class="vm" src="{forumpath}images/common/qq_login.gif"/></a></p>
+				<p class="hm xg1">只需一步，快速开始</p>
+			</div>
+            <%/if%>
+		</div>
+	</div>
+	<p class="fsb pns cl">
+		<input type="submit" style="width:0;filter:alpha(opacity=0);-moz-opacity:0;opacity:0;"/>
+		<button name="login" type="submit" id="login" tabindex="8" <%if {infloat}!=1%>onclick="javascript:window.location.replace('?agree=yes')"<%/if%> class="pn"><span>登录</span></button>
+		<input type="checkbox" value="43200" tabindex="9" id="expires" name="expires" checked="checked" />
+		<label for="expires"><span title="下次访问自动登录">记住我</span></label>
+	</p>
+	<script type="text/javascript">
+		document.getElementById("username").focus();
+	</script>
+	</form>
+</div>
+</div>
+<%else%>
+<div class="main">
+	<div class="msgbox">
+		<h1>{config.forumtitle} 提示信息</h1>
+		<hr class="solidline"/>
+		<div class="msg_inner error_msg">
+			<p>您无权进行当前操作，这可能因以下原因之一造成</p>
+			<p><b>{msgbox_text}</b></p>
+			<p>您还没有登录，请填写下面的登录表单后再尝试访问。</p>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" reload="1">
+setTimeout("floatwin('close_newthread');floatwin('close_reply');floatwin('close_edit');floatwin('open_login', '{forumurl}login.aspx', 600, 410)",1000);
+</script>
+<%/if%>	
+<script type="text/javascript">
+        <%if {infloat}!=1%>
+		document.getElementById("username").focus();
+        <%/if%>
+		function submitLogin(loginForm)
+		{
+//		    loginForm.action = '{rooturl}login.aspx?loginsubmit=true&reurl=' + escape(window.location);
+            loginForm.action = '{rooturl}login.aspx?reurl=' + escape(window.location);
+            
+			//loginForm.submit();
+		}
+</script>

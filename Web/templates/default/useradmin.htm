@@ -1,0 +1,156 @@
+﻿<%template _header%>
+<%if {infloat}!=1%>
+<div class="wrap cl pageinfo">
+	<div id="nav">
+		<a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <strong>{operationtitle}</strong>
+	</div>
+</div>
+<%/if%>
+<%if !{ispost}%>
+<%if {page_err}==0%>
+<%if {infloat}==1%>
+<div id="floatlayout_mods">
+	<h3 class="flb">
+	<%if {infloat}==1%>
+		<span class="y">
+			<a title="关闭" onclick="hideWindow('mods')" class="flbc" href="javascript:;">关闭</a>
+		</span>
+	<%/if%>
+	    <em id="return_mods">{operationtitle}</em>
+	</h3>
+	<form id="moderate" name="moderate" method="post" onsubmit="ajaxpost('moderate', 'return_mods', 'return_mods', 'onerror');return false;" action="{rooturl}useradmin.aspx?infloat=1&action=banuser&uid={operateduid}">
+	    <div class="postbox">
+		<%if {action}=="banuser"%>
+		<div class="topicadminlow" style="height:60px;">
+			<label for="operatedusername">被操作用户</label>:
+			<%set {aspxrewriteurl} = this.UserInfoAspxRewrite({operateduid})%>
+			<a href="{aspxrewriteurl}" target="_blank">{operatedusername}</a>
+		    <ul style="margin: 5px 0pt;" class="inlinelist">
+		        <li class="wide"><label><input type="radio" value="0" name="bantype" <%if {bantype}==0%>checked="checked"<%/if%> />正常状态</label></li>
+                <li class="wide"><label><input type="radio" value="1" name="bantype" <%if {bantype}==1%>checked="checked"<%/if%> />禁止发言</label></li>
+				<li class="wide"><label><input type="radio" value="2" name="bantype" <%if {bantype}==2%>checked="checked"<%/if%> />禁止访问</label></li>
+				<%if {bantype}==3%><li class="wide"><label><input type="radio" value="3" name="bantype" checked="checked" />禁止IP</label></li><%/if%>
+		    </ul>
+		</div>
+		<div class="topicadminlow" style="clear:both;margin:8px 0;height:35px;"><label for="banexpirynew">过期日期</label>:{groupexpiry}
+			<div class="ftid">
+				<select name="banexpirynew" id="banexpirynew">
+					<option value="0">永 久</option>
+				    <option value="1">1天</option>
+				    <option value="3">3天</option>
+				    <option value="5">5天</option>
+				    <option value="7">7天</option>
+				    <option value="14">14天</option>
+				    <option value="30">1个月</option>
+				    <option value="90">3个月</option>
+				    <option value="180">半年</option>
+				    <option value="365">1年</option>
+				</select>
+				<script type="text/javascript">simulateSelect('banexpirynew');</script>
+			</div>
+		</div>
+		<%/if%>
+		<div class="topicadminlog">
+		    <h4>
+		        <span class="hasdropdownbtn y"><a href="javascript:;" class="dropdownbtn" onclick="showselect(this, 'reason', 'reasonselect')">^</a></span>
+		        操作说明:
+		    </h4>
+		    <p>
+			    <textarea onkeyup="seditor_ctlent(event, '$(\'moderateform\').submit()')" class="txtarea" name="reason" id="reason" onkeydown="if(this.value.length>200){ alert('操作原因不能多于200个字符');return false; }"></textarea>
+		    </p>
+		    <ul style="display: none;" id="reasonselect">
+			    <li>广告/SPAM</li>
+			    <li>恶意灌水</li>
+			    <li>违规内容</li>
+			    <li>文不对题</li>
+			    <li>重复发帖</li>
+			    <li></li>
+			    <li>我很赞同</li>
+			    <li>精品文章</li>
+			    <li>原创内容</li>
+		    </ul>
+	    </div>
+	    <div class="topic_msg">
+            <button name="modsubmit" value="true" type="submit" class="submit">提交</button>
+        </div>
+        </div>
+	</form>
+	</div>
+</div>
+<%else%>
+<div class="wrap cl" id="wrap">
+	<div class="main">
+	<h1>{operationtitle}</h1>
+	<form id="moderate" name="moderate" method="post">
+		<%if {action}=="banuser"%>
+		<div class="topicadminlow">
+			<label for="operatedusername">被操作用户</label>:
+			<%set {aspxrewriteurl} = this.UserInfoAspxRewrite({operateduid})%>
+			<a href="{aspxrewriteurl}" target="_blank">{operatedusername}</a>
+		    <ul style="margin: 5px 0pt;" class="inlinelist">
+		        <li class="wide"><label><input type="radio" value="0" name="bantype" <%if {bantype}==0%>checked="checked"<%/if%> />正常状态</label></li>
+                <li class="wide"><label><input type="radio" value="1" name="bantype" <%if {bantype}==1%>checked="checked"<%/if%> />禁止发言</label></li>
+				<li class="wide"><label><input type="radio" value="2" name="bantype" <%if {bantype}==2%>checked="checked"<%/if%> />禁止访问</label></li>
+				<%if {bantype}==3%><li class="wide"><label><input type="radio" value="3" name="bantype" checked="checked" />禁止IP</label></li><%/if%>
+		    </ul>
+		</div>
+		<%/if%>
+		<div class="topicadminlog">
+		    <h4>
+		        <span class="hasdropdownbtn right"><a href="javascript:;" class="dropdownbtn" onclick="InFloat='floatlayout_mods';showselect(this, 'reason', 'reasonselect')">^</a></span>
+		        操作说明:
+		    </h4>
+		    <p>
+			    <textarea onkeyup="seditor_ctlent(event, '$(\'moderateform\').submit()')" class="txtarea" name="reason" id="reason" onkeydown="if(this.value.length>200){ alert('操作原因不能多于200个字符');return false; }"></textarea>
+		    </p>
+		    <ul style="display: none;" id="reasonselect">
+			    <li>广告/SPAM</li>
+			    <li>恶意灌水</li>
+			    <li>违规内容</li>
+			    <li>文不对题</li>
+			    <li>重复发帖</li>
+			    <li></li>
+			    <li>我很赞同</li>
+			    <li>精品文章</li>
+			    <li>原创内容</li>
+		    </ul>
+	    </div>
+	    <div class="topic_msg">
+            <p style="float: right;">
+                <input type="checkbox" class="checkbox" id="sendmessage" name="sendmessage"/> <label for="sendreasonpm">通知作者</label>  
+            </p>
+            <button name="modsubmit" value="true" type="submit" class="submit">提交</button>
+        </div>
+	</form>
+	</div>
+</div>
+<%/if%>
+<%else%>
+	<%if {infloat}==1%>
+        <%if {titlemessage}%>
+            {msgbox_text}
+        <%else%>
+            <h3 class="flb">
+				<span class="y">
+					<a href="javascript:;" class="flbc" onclick="hideWindow('mods')" title="关闭">关闭</a>
+				</span>
+				<em id="return_mods">{operationtitle}</em>
+			</h3>
+			<div class="c cl">{msgbox_text}</div>
+		</div>
+        <%/if%>
+	  <%else%>
+		<%template _errmsgbox%>
+	  <%/if%>
+<%/if%>
+<%else%>
+    <%if {infloat}==1%>
+        <script type="text/javascript"  reload="1">
+            location.href = '{msgbox_url}';	
+        </script>
+	<%else%>
+	    <%template _msgbox%>
+	<%/if%>
+<%/if%>
+<%template _copyright%>
+<%template _footer%>

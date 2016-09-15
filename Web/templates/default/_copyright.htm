@@ -1,0 +1,78 @@
+<%if {infloat}!=1%>
+<%if {pagename}=="website.aspx"%>    
+       <div id="websitebottomad"></div>
+<%else if {footerad}!=""%> 
+     <div id="ad_footerbanner">{footerad}</div>   
+<%/if%>
+<div id="footer">
+	<div class="wrap"  id="wp">
+		<div id="footlinks">
+			<p><a href="{config.weburl}" target="_blank">{config.webtitle}</a> - {config.linktext} - <a target="_blank" href="{forumurl}stats.aspx">统计</a> - <%if {config.sitemapstatus}==1%>&nbsp;<a href="{forumurl}tools/sitemap.aspx" target="_blank" title="百度论坛收录协议">Sitemap</a><%/if%>
+			{config.statcode}<a href="http://www.miitbeian.gov.cn" target="_blank">{config.icp}</a>
+			</p>
+			<div>
+				<a href="{forumurl}archiver/index.aspx" target="_blank">简洁版本</a>
+			<%if {config.stylejump}==1%>
+				<%if {userid}!=-1 || {config.guestcachepagetimeout}<=0%>
+				- <span id="styleswitcher" class="drop" onmouseover="showMenu({'ctrlid':this.id, 'pos':'21'})" onclick="window.location.href='{forumurl}showtemplate.aspx'">界面风格</span>
+				<%/if%>
+			<%/if%>
+			</div>
+		</div>
+		<p id="debuginfo" class="grayfont">
+		<%if {config.debug}!=0%>
+			Processed in {this.processtime} ms
+			<%if {isguestcachepage}==1%>
+				(Cached).
+			<%else%>
+				 , {querycount} query {ExecuteCount} execute.
+			<%/if%>
+		<%/if%>
+		</p>
+	</div>
+</div>
+<a id="scrolltop" href="javascript:;" style="display:none;" class="scrolltop" onclick="setScrollToTop(this.id);">TOP</a>
+<ul id="usercenter_menu" class="p_pop" style="display:none;">
+    <li><a href="{forumpath}usercpprofile.aspx?action=avatar">设置头像</a></li>
+    <li><a href="{forumpath}usercpprofile.aspx">个人资料</a></li>
+    <li><a href="{forumpath}usercpnewpassword.aspx">更改密码</a></li>
+    <li><a href="{forumpath}usercp.aspx">用户组</a></li>
+    <li><a href="{forumpath}usercpsubscribe.aspx">收藏夹</a></li>
+    <li><a href="{forumpath}usercpcreditspay.aspx">积分</a></li>
+</ul>
+
+<%loop (int) prentid mainnavigationhassub%>
+<ul class="p_pop" id="menu_{prentid}_menu" style="display: none">
+<%loop (Nav) subnav subnavigation%>
+<%set (bool) {isoutput} = false%>
+  <%if {subnav.ParentID}=={prentid}%>
+		<%if {subnav.Level}==0%>
+		<%set {isoutput}=true%>
+		<%else%>
+		<%if {subnav.Level}==1 && {userid}!=-1%>
+			<%set {isoutput}=true%>
+		<%else%>
+			<%set (bool) {leveluseradmindi}=true%>
+			<%set {leveluseradmindi} = ({useradminid}==3 || {useradminid}==1 || {useradminid}==2)%>
+			<%if {subnav.Level}==2 &&  {leveluseradmindi}%>
+				  <%set {isoutput}=true%>
+			<%/if%>
+			<%if {subnav.Level}==3 && {useradminid}==1%>
+				  <%set {isoutput}=true%>
+			<%/if%>
+		<%/if%>
+		<%/if%>
+<%/if%>
+<%if {isoutput}%>
+    {subnav.Content}
+<%/if%>
+<%/loop%>
+</ul>
+<%/loop%>
+<%if {config.stylejump}==1%>
+	<%if {userid}!=-1 || {config.guestcachepagetimeout}<=0%>
+	<ul id="styleswitcher_menu" class="popupmenu_popup s_clear" style="display: none;">
+	{templatelistboxoptions}
+	</ul>
+	<%/if%>
+<%/if%>

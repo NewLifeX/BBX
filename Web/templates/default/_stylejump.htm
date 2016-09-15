@@ -1,0 +1,12 @@
+﻿<%if {config.stylejump}==1%>
+	<%if {userid}!=-1 || {config.guestcachepagetimeout}<=0%>
+	<a id="styleswitcher1" onmouseover="showMenu(this.id)" onclick="window.location.href='{forumurl}showtemplate.aspx'">
+	<img src="{imagedir}/style.gif" alt="风格切换"/>
+	</a>
+	<div id="styleswitcher1_menu" class="popupmenu_popup cl skin" style="display: none;">
+		<ul>
+		{templatelistboxoptions}
+		</ul>
+	</div>
+	<%/if%>
+<%/if%>

@@ -1,0 +1,780 @@
+﻿<%template _header%>
+<div class="wrap s_clear pageinfo">
+    <div id="nav">
+        <a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <a href="stats.aspx">
+            统计</a> &raquo; <strong>
+                <%if {type}==""%>
+                基本概况
+                <%else if {type}=="views"%>
+                流量统计
+                <%else if {type}=="client"%>
+                客户软件
+                <%else if {type}=="posts"%>
+                发帖量记录
+                <%else if {type}=="forumsrank"%>
+                版块排行
+                <%else if {type}=="topicsrank"%>
+                主题排行
+                <%else if {type}=="postsrank"%>
+                发帖排行
+                <%else if {type}=="creditsrank"%>
+                积分排行
+                <%else if {type}=="onlinetime"%>
+                在线时间
+                <%else if {type}=="trade"%>
+                交易排行
+                <%else if {type}=="team"%>
+                管理团队
+                <%else if {type}=="modworks"%>
+                管理统计
+                <%else if {type}=="trend"%>
+                趋势统计
+                <%/if%>
+            </strong>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function changeTab(obj) {
+        if (obj.className == 'currenttab') {
+            obj.className = '';
+        }
+        else {
+            obj.className = 'currenttab';
+        }
+    }
+</script>
+
+<%if {page_err}==0%>
+<div class="wrap uc cl">
+    <div class="uc_app">
+        <h2>
+            统计</h2>
+        <ul>
+            <li id="tab_main" class="current"><a onmouseout="changeTab(this)" onmouseover="changeTab(this)"
+                href="stats.aspx">基本状况</a></li>
+            <%if {statstatus}%>
+            <li id="tab_views"><a onmouseout="changeTab(this)" onmouseover="changeTab(this)"
+                href="?type=views">流量统计</a></li>
+            <li id="tab_client"><a onmouseout="changeTab(this)" onmouseover="changeTab(this)"
+                href="?type=client">客户软件</a></li>
+            <%/if%>
+            <li id="tab_posts"><a onmouseout="changeTab(this)" onmouseover="changeTab(this)"
+                href="?type=posts">发帖量记录</a></li>
+            <li id="tab_forumsrank"><a onmouseout="changeTab(this)" onmouseover="changeTab(this)"
+                href="?type=forumsrank">版块排行</a></li>
+            <li id="tab_topicsrank"><a onmouseout="changeTab(this)" onmouseover="changeTab(this)"
+                href="?type=topicsrank">主题排行</a></li>
+            <li id="tab_postsrank"><a onmouseout="changeTab(this)" onmouseover="changeTab(this)"
+                href="?type=postsrank">发帖排行</a></li>
+            <li id="tab_creditsrank"><a onmouseout="changeTab(this)" onmouseover="changeTab(this)"
+                href="?type=creditsrank">积分排行</a></li>
+            <!--
+			<li><a id="tab_trade"  onmouseout="changeTab(this)" onmouseover="changeTab(this)" href="?type=trade">交易排行</a></li>
+			-->
+            <%if {config.oltimespan}>0%>
+            <li id="tab_onlinetime"><a onmouseout="changeTab(this)" onmouseover="changeTab(this)"
+                href="?type=onlinetime">在线时间</a></li>
+            <%/if%>
+            <li id="tab_trend"><a onmouseout="changeTab(this)" onmouseover="changeTab(this)"
+                href="?type=trend">趋势统计</a></li>
+            <!--
+			<li><a id="tab_team"  onmouseout="changeTab(this)" onmouseover="changeTab(this)" href="?type=team">管理团队</a></li>
+			<li><a id="tab_modworks"  onmouseout="changeTab(this)" onmouseover="changeTab(this)" href="?type=modworks">管理统计</a></li>
+			-->
+        </ul>
+    </div>
+
+    <script type="text/javascript">
+        try {
+            $("tab_main").className = "";
+            $("tab_" + '{type}').className = "current";
+        } catch (e) {
+            $("tab_main").className = "current";
+        }
+    </script>
+
+    <div class="uc_main">
+        <div class="uc_content stats">
+            <h1>
+                <%if {type}==""%>
+                基本概况
+                <%else if {type}=="views"%>
+                流量统计
+                <%else if {type}=="client"%>
+                客户软件
+                <%else if {type}=="posts"%>
+                发帖量记录
+                <%else if {type}=="forumsrank"%>
+                版块排行
+                <%else if {type}=="topicsrank"%>
+                主题排行
+                <%else if {type}=="postsrank"%>
+                发帖排行
+                <%else if {type}=="creditsrank"%>
+                积分排行
+                <%else if {type}=="onlinetime"%>
+                在线时间
+                <%else if {type}=="trade"%>
+                交易排行
+                <%else if {type}=="team"%>
+                管理团队
+                <%else if {type}=="modworks"%>
+                管理统计
+                <%else if {type}=="trend"%>
+                趋势统计
+                <%/if%>
+            </h1>
+            <%if {type}==""%>
+            <h3>基本状况</h3>
+            <table cellpadding="0" cellspacing="0" border="0" class="datatable" style="margin-bottom: 10px;">
+                <tbody>
+                    <tr>
+                        <td class="t_th">
+                            注册会员
+                        </td>
+                        <td>
+                            {members}
+                        </td>
+                        <td class="t_th">
+                            发帖会员
+                        </td>
+                        <td>
+                            {mempost}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="t_th">
+                            管理成员
+                        </td>
+                        <td>
+                            {admins}
+                        </td>
+                        <td class="t_th">
+                            未发帖会员
+                        </td>
+                        <td>
+                            {memnonpost}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="t_th">
+                            新会员
+                        </td>
+                        <td>
+                            {lastmember}
+                        </td>
+                        <td class="t_th">
+                            发帖会员占总数
+                        </td>
+                        <td>
+                            {mempostpercent}%
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="t_th">
+                            今日论坛之星
+                        </td>
+                        <td>
+                            <%if !String.IsNullOrEmpty({bestmem})%><a href="userinfo.aspx?username={bestmem}">{bestmem}</a>({bestmemposts})<%/if%>
+                        </td>
+                        <td class="t_th">
+                            平均每人发帖数
+                        </td>
+                        <td>
+                            {mempostavg}
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody summary="论坛统计">
+                    <tr>
+                        <td class="t_th">
+                            版块数
+                        </td>
+                        <td>
+                            {forums}
+                        </td>
+                        <td class="t_th">
+                            平均每日新增帖子数
+                        </td>
+                        <td>
+                            {postsaddavg}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="t_th">
+                            最热门版块
+                        </td>
+                        <td>
+                            <a href="{ShowForumAspxRewrite(hotforum.fid,0)}" target="_blank">{hotforum.name}</a>
+                        </td>
+                        <td class="t_th">
+                            主题数
+                        </td>
+                        <td>
+                            {topics}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="t_th">
+                            平均每日注册会员数
+                        </td>
+                        <td>
+                            {membersaddavg}
+                        </td>
+                        <td class="t_th">
+                            主题数
+                        </td>
+                        <td>
+                            {hotforum.topics}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="t_th">
+                            帖子数
+                        </td>
+                        <td>
+                            {posts}
+                        </td>
+                        <td class="t_th">
+                            最近24小时新增帖子数
+                        </td>
+                        <td>
+                            {postsaddtoday}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="t_th">
+                            帖子数
+                        </td>
+                        <td>
+                            {hotforum.posts}
+                        </td>
+                        <td class="t_th">
+                            平均每个主题被回复次数
+                        </td>
+                        <td>
+                            {topicreplyavg}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="t_th">
+                            今日新增会员数
+                        </td>
+                        <td>
+                            {membersaddtoday}
+                        </td>
+                        <td class="t_th">
+                            论坛活跃指数
+                        </td>
+                        <td>
+                            {activeindex}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <%if {statstatus}%>
+            <h3>流量概况</h3>
+            <table cellpadding="0" cellspacing="0" border="0" class="datatable">
+                <tbody>
+                    <tr>
+                        <td class="t_th">
+                            总页面流量
+                        </td>
+                        <td>
+                            {totalstats[hits]}
+                        </td>
+                        <td class="t_th">
+                            访问量最多的月份
+                        </td>
+                        <td>
+                            {yearofmaxmonth} 年 {monthofmaxmonth} 月
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="t_th">
+                            共计来访
+                        </td>
+                        <td>
+                            {totalstats[visitors]} 人次
+                        </td>
+                        <td class="t_th">
+                            月份总页面流量
+                        </td>
+                        <td>
+                            {maxmonth}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="t_th">
+                            会员
+                        </td>
+                        <td>
+                            {totalstats[members]}
+                        </td>
+                        <td class="t_th">
+                            时段
+                        </td>
+                        <td>
+                            {maxhourfrom} - {maxhourto}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="t_th">
+                            游客
+                        </td>
+                        <td>
+                            {totalstats[guests]}
+                        </td>
+                        <td class="t_th">
+                            时段总页面流量
+                        </td>
+                        <td>
+                            {maxhour}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="t_th">
+                            平均每人浏览
+                        </td>
+                        <td>
+                            {pageviewavg}
+                        </td>
+                        <td class="t_th">
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <%/if%>
+            <h3>月份流量</h3>
+            <table cellpadding="0" cellspacing="0" border="0" class="datatable">
+                <%if {statstatus}%>
+                {monthofstatsbar}
+                <%else%>
+                <thead>
+                    <tr class="colplural">
+                        <td colspan="2" class="t_th">
+                            每月新增帖子记录
+                        </td>
+                    </tr>
+                </thead>
+                {monthpostsofstatsbar}
+                <thead>
+                    <tr class="colplural">
+                        <td colspan="2" class="t_th">
+                            每日新增帖子记录
+                        </td>
+                    </tr>
+                </thead>
+                {daypostsofstatsbar}
+                <%/if%>
+            </table>
+            <%/if%>
+            <%if {type}=="views"%>
+            <h3>流量统计</h3>
+            <table cellpadding="0" cellspacing="0" border="0" class="datatable">
+                <thead>
+                    <tr>
+                        <td colspan="2">
+                            星期流量
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {weekofstatsbar}
+                </tbody>
+                <thead>
+                    <tr>
+                        <td colspan="2">
+                            时段流量
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {hourofstatsbar}
+                </tbody>
+            </table>
+            <%/if%>
+            <%if {type}=="client"%>
+            <h3>客户软件</h3>
+            <table cellpadding="0" cellspacing="0" border="0" class="datatable">
+                <thead>
+                    <tr>
+                        <td colspan="2">
+                            操作系统
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {osofstatsbar}
+                </tbody>
+                <thead>
+                    <tr>
+                        <td colspan="2">
+                            浏览器
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {browserofstatsbar}
+                </tbody>
+            </table>
+            <%/if%>
+            <%if {type}=="posts"%>
+            <h3>发帖量记录</h3>
+            <table cellpadding="0" cellspacing="0" border="0" class="datatable">
+                <thead>
+                    <tr>
+                        <td colspan="2" class="colplural">
+                            每月新增帖子记录
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {monthpostsofstatsbar}
+                </tbody>
+                <thead>
+                    <tr>
+                        <td colspan="2" class="colplural">
+                            每日新增帖子记录
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {daypostsofstatsbar}
+                </tbody>
+            </table>
+            <%/if%>
+            <%if {type}=="forumsrank"%>
+            <h3>版块排行</h3>
+            <table cellpadding="0" cellspacing="0" border="0" class="datatable">
+                <thead>
+                    <tr class="colplural">
+                        <td width="25%">
+                            发帖 排行榜
+                        </td>
+                        <td width="25%">
+                            回复 排行榜
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="absmiddle">
+                            <ul>
+                                {topicsforumsrank}</ul>
+                        </td>
+                        <td class="absmiddle">
+                            <ul>
+                                {postsforumsrank}</ul>
+                        </td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr class="colplural">
+                        <td width="25%">
+                            最近 30 天发帖 排行榜
+                        </td>
+                        <td width="25%">
+                            最近 24 小时发帖 排行榜
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="absmiddle">
+                            <ul>
+                                {thismonthforumsrank}</ul>
+                        </td>
+                        <td class="absmiddle">
+                            <ul>
+                                {todayforumsrank}</ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <%/if%>
+            <%if {type}=="topicsrank"%>
+            <h3>主题排行</h3>
+            <table cellpadding="0" cellspacing="0" border="0" class="datatable">
+                <thead>
+                    <tr class="colplural">
+                        <td width="50%">
+                            被浏览最多的主题
+                        </td>
+                        <td>
+                            被回复最多的主题
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="absmiddle">
+                            <ul>
+                                {hottopics}</ul>
+                        </td>
+                        <td class="absmiddle">
+                            <ul>
+                                {hotreplytopics}</ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <%/if%>
+            <%if {type}=="postsrank"%>
+            <h3>发帖排行</h3>
+            <table cellpadding="0" cellspacing="0" border="0" class="datatable">
+                <thead>
+                    <tr class="colplural">
+                        <td width="25%">
+                            发帖 排行榜
+                        </td>
+                        <td width="25%">
+                            精华帖 排行榜
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="absmiddle">
+                            <ul>
+                                {postsrank}</ul>
+                        </td>
+                        <td class="absmiddle">
+                            <ul>
+                                {digestpostsrank}</ul>
+                        </td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr class="colplural">
+                        <td width="25%">
+                            最近 30 天发帖 排行榜
+                        </td>
+                        <td width="25%">
+                            最近 24 小时发帖 排行榜
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="absmiddle">
+                            <ul>
+                                {thismonthpostsrank}</ul>
+                        </td>
+                        <td class="absmiddle">
+                            <ul>
+                                {todaypostsrank}</ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <%/if%>
+            <%if {type}=="creditsrank"%>
+            <h3>积分排行</h3>
+            <table cellpadding="0" cellspacing="0" border="0" class="datatable">
+                <thead>
+                    <tr class="colplural">
+                        <td>
+                            积分 排行榜
+                        </td>
+                        <%if {score[1]}!=""%>
+                        <td>
+                            {score[1]} 排行榜
+                        </td>
+                        <%/if%>
+                        <%if {score[2]}!=""%>
+                        <td>
+                            {score[2]} 排行榜
+                        </td>
+                        <%/if%>
+                        <%if {score[3]}!=""%>
+                        <td>
+                            {score[3]} 排行榜
+                        </td>
+                        <%/if%>
+                        <%if {score[4]}!=""%>
+                        <td>
+                            {score[4]} 排行榜
+                        </td>
+                        <%/if%>
+                        <%if {score[5]}!=""%>
+                        <td>
+                            {score[5]} 排行榜
+                        </td>
+                        <%/if%>
+                        <%if {score[6]}!=""%>
+                        <td>
+                            {score[6]} 排行榜
+                        </td>
+                        <%/if%>
+                        <%if {score[7]}!=""%>
+                        <td>
+                            {score[7]} 排行榜
+                        </td>
+                        <%/if%>
+                        <%if {score[8]}!=""%>
+                        <td>
+                            {score[8]} 排行榜
+                        </td>
+                        <%/if%>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <ul>
+                                {creditsrank}</ul>
+                        </td>
+                        <%if {score[1]}!=""%>
+                        <td>
+                            <ul>
+                                {extcreditsrank1}</ul>
+                        </td>
+                        <%/if%>
+                        <%if {score[2]}!=""%>
+                        <td>
+                            <ul>
+                                {extcreditsrank2}</ul>
+                        </td>
+                        <%/if%>
+                        <%if {score[3]}!=""%>
+                        <td>
+                            <ul>
+                                {extcreditsrank3}</ul>
+                        </td>
+                        <%/if%>
+                        <%if {score[4]}!=""%>
+                        <td>
+                            <ul>
+                                {extcreditsrank4}</ul>
+                        </td>
+                        <%/if%>
+                        <%if {score[5]}!=""%>
+                        <td>
+                            <ul>
+                                {extcreditsrank5}</ul>
+                        </td>
+                        <%/if%>
+                        <%if {score[6]}!=""%>
+                        <td>
+                            <ul>
+                                {extcreditsrank6}</ul>
+                        </td>
+                        <%/if%>
+                        <%if {score[7]}!=""%>
+                        <td>
+                            <ul>
+                                {extcreditsrank7}</ul>
+                        </td>
+                        <%/if%>
+                        <%if {score[8]}!=""%>
+                        <td>
+                            <ul>
+                                {extcreditsrank8}</ul>
+                        </td>
+                        <%/if%>
+                    </tr>
+                </tbody>
+            </table>
+            <%/if%>
+            <%if {type}=="onlinetime"%>
+            <h3>主题排行</h3>
+            <table cellpadding="0" cellspacing="0" border="0" class="datatable">
+                <thead>
+                    <tr class="colplural">
+                        <td width="50%">
+                            总在线时间排行(小时)
+                        </td>
+                        <td>
+                            本月在线时间排行(小时)
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <ul>
+                                {totalonlinerank}</ul>
+                        </td>
+                        <td>
+                            <ul>
+                                {thismonthonlinerank}</ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <%/if%>
+            <%if {type}=="trend"%>
+            <h3>趋势统计</h3>
+            <script type="text/javascript"  src="{jsdir}/template_calendar.js"></script>
+            <form action="stats.aspx?type=trend" method="get">
+            <table cellspacing="0" cellpadding="0" class="dt bm mbw">
+                <caption>
+                    <h2 class="ptm">统计分类</h2>
+                    <p class="pbm xg1">站点趋势统计系统，会记录站点每日的发展概况。通过每日的趋势变化，为站长运营站点提供科学的数据基础。</p>
+                </caption>
+                <tbody>
+                    <tr class="tbmu">
+                        <th>基础数据:</th>
+                        <td>
+                            <label><input type="checkbox" class="pc" value="login" name="types"<%csharp%>templateBuilder.Append(IsChecked("login"));<%/csharp%>>登录用户</label>
+                            &nbsp;<label><input type="checkbox" class="pc" value="register" name="types"<%csharp%>templateBuilder.Append(IsChecked("register"));<%/csharp%>>新注册用户</label>
+                        </td>
+                    </tr>
+                    <tr class="tbmu">
+                        <th>论坛:</th>
+                        <td>
+                            <label><input type="checkbox" class="pc" value="topic" name="types"<%csharp%>templateBuilder.Append(IsChecked("topic"));<%/csharp%>>主题</label>
+                            &nbsp;<label><input type="checkbox" class="pc" value="poll" name="types"<%csharp%>templateBuilder.Append(IsChecked("poll"));<%/csharp%>>投票</label>
+                            &nbsp;<label><input type="checkbox" class="pc" value="bonus" name="types"<%csharp%>templateBuilder.Append(IsChecked("bonus"));<%/csharp%>>悬赏</label>
+                            &nbsp;<label><input type="checkbox" class="pc" value="debate" name="types"<%csharp%>templateBuilder.Append(IsChecked("debate"));<%/csharp%>>辩论</label>
+                            &nbsp;<label><input type="checkbox" class="pc" value="post" name="types"<%csharp%>templateBuilder.Append(IsChecked("post"));<%/csharp%>>主题回帖</label>
+                        </td>
+                    </tr>
+                    <tr class="tbmu">
+                        <th>统计日期:</th>
+                        <td>	    
+                            <input type="text" value="{primarybegin}" class="px" id="primarybegin" name="primarybegin" onclick="showcalendar(event, 'primarybegin', 'primarybegin_startdate', 'primarybegin_enddate', '{primarybegin}');"> -
+                            <input type="hidden" name="primarybegin_startdate" id="primarybegin_startdate" size="10"  value="2000-01-01" />
+                            <input type="hidden" name="primarybegin_enddate" id="primarybegin_enddate" size="10"  value="{Utils.GetDateTime()}" />
+                            <input type="text" value="{primaryend}" class="px" id="primaryend" name="primaryend" onclick="showcalendar(event, 'primaryend', 'primaryend_startdate', 'primaryend_enddate', '{primaryend}');">
+                            <input type="hidden" name="primaryend_startdate" id="primaryend_startdate" size="10"  value="2000-01-01" />
+                            <input type="hidden" name="primaryend_enddate" id="primaryend_enddate" size="10"  value="{Utils.GetDateTime()}" />
+                            <label><input type="checkbox" class="pc" value="1" name="merge"<%csharp%>templateBuilder.Append(IsChecked("merge"));<%/csharp%>> 合并统计</label>
+                            <button class="pn pnp" type="submit"><strong>查看</strong></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="hidden" value="trend" name="type">
+            </form>
+            <table width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>
+                        <script type="text/javascript">
+                            document.write(AC_FL_RunContent('width', '100%', 'height', '300', 'src', '{rooturl}images/common/stat.swf?{statuspara}', 'quality', 'high', 'wmode', 'transparent'));
+                        </script>
+                   </td>
+                </tr>
+            </table>
+            <%/if%>
+            <%if {lastupdate}!="" && {nextupdate}!=""%>
+            <div class="hintinfo notice">统计数据已被缓存，上次于 {lastupdate} 被更新，下次将于 {nextupdate} 进行更新</div>
+            <%/if%>
+        </div>
+    </div>
+</div>
+<%else%>
+<%if {needlogin}%>
+<%template _login%>
+<%else%>
+<%template _errmsgbox%>
+<%/if%>
+<%/if%>
+<%template _copyright%>
+<%template _footer%>

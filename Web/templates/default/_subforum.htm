@@ -1,0 +1,124 @@
+<div id="subforum" class="main cl list">
+	<div class="titlebar xg2">
+		<span class="y">
+		<%if !String.IsNullOrEmpty({forum.ModeratorsHtml})%>
+			分类版主: {forum.ModeratorsHtml}
+		<%/if%>
+		<img id="category_{forum.fid}_img"  src="{imagedir}/collapsed_no.gif" alt="展开/收起" onclick="toggle_collapse('category_{forum.Fid}');" class="cursor"/>
+		</span>
+		<h2>子版块</h2>
+	</div>
+	<div id="category_{forum.fid}"  class="fi" summary="category_{forum.fid}">
+	<table cellspacing="0" cellpadding="0">
+	<tbody>	
+	<%if {forum.ColCount}==1%>
+		<%loop (IXForum) subforum subforumlist%>
+			<tr>
+				<%set {aspxrewriteurl} = this.ShowForumAspxRewrite({subforum.fid},0)%>
+				<th <%if {config.Shownewposticon}==1 %>class="notopic <%if {subforum.havenew}=="new" %>new<%/if%>"<%/if%>>
+					<h2>						
+						<%if {subforum.redirect}+""==""%>
+							<%set {aspxrewriteurl} = this.ShowForumAspxRewrite({subforum.fid},0,{subforum.rewritename})%>
+							<a href="{forumurl}{aspxrewriteurl}">
+						<%else%>
+							<a href="{subforum.redirect}" target="_blank">
+						<%/if%>
+                        <%if {subforum.icon}+""!=""%>
+							<img src="{subforum.icon}" border="0" align="left" hspace="5" alt="{subforum.name}"/>
+						<%/if%>
+						{subforum.name}</a><%if {subforum.TodayPosts}>0%><span class="today">(今日:<strong>{subforum.TodayPosts}</strong>)</span><%/if%>
+					</h2>
+					<%if {subforum.description}!=""%><p>{subforum.description}</p><%/if%>
+					<%if !String.IsNullOrEmpty({subforum.ModeratorsHtml})%><p class="moderators">版主:{subforum.ModeratorsHtml}</p><%/if%>
+				</th>
+				<td class="nums"><em>{subforum.topics}</em> / {subforum.posts}</td>
+				<td class="lastpost">
+					<%if {subforum.status}==-1%>
+						<p>私密论坛</p>
+					<%else%>
+						<%if {subforum.LastTID}!=0%>
+						<p>
+							<%set {aspxrewriteurl} = this.ShowTopicAspxRewrite({subforum.LastTID},0)%>
+							<a href="{forumurl}{aspxrewriteurl}"><%getsubstring({subforum.LastTitle,35,"..."})%></a>
+						</p>
+						<div class="topicbackwriter">by
+							<%if {subforum.LastPoster}+""!=""%>
+								<%if {subforum.LastPosterID}==-1%>
+									游客
+								<%else%>
+									<%set {aspxrewriteurl} = this.UserInfoAspxRewrite({subforum.LastPosterID})%>
+									<a href="{forumurl}{aspxrewriteurl}" target="_blank">{subforum.LastPoster}</a>
+								<%/if%>
+							<%else%>
+								匿名
+							<%/if%>
+							<%set {aspxrewriteurl} = this.ShowTopicAspxRewrite({subforum.LastTID},0)%>
+                            <%set (string){sublastdatetime} = ForumUtils.ConvertDateTime({subforum.LastPost})%>
+						- 	<a href="{forumurl}showtopic.aspx?topicid={subforum.LastTID}&page=end#lastpost" title="{subforum.LastTitle}"><span>{sublastdatetime}</span></a>
+						</div>
+						<%else%>
+							从未
+						<%/if%>
+					<%/if%>
+				</td>
+			  </tr>
+		<%/loop%>
+<%else%>
+		<%set (int) {subforumindex}=0%>
+		<%set (double){colwidth} = 99.6 / {forum.ColCount} %>
+		<%loop (IXForum) subforum subforumlist%>		
+		<%set {subforumindex}={subforumindex}+1%>
+		<%if {subforumindex}==1%>
+			<tr>
+		<%/if%>
+				<th style="width:{colwidth}%;" <%if {config.Shownewposticon}==1 %>class="notopic <%if {subforum.havenew}=="new" %>new<%/if%>"<%/if%>>
+				<h2>				
+				<%if {forum.redirect}+""==""%>
+					<%set {aspxrewriteurl} = this.ShowForumAspxRewrite({subforum.fid},0,{subforum.rewritename})%>
+					<a href="{forumurl}{aspxrewriteurl}">
+				<%else%>
+					<a href="{subforum.redirect}" target="_blank">
+				<%/if%>
+                <%if {subforum.icon}+""!=""%>
+					<img src="{subforum.icon}" alt="{subforum.name}" hspace="5" />
+				<%/if%>
+				{subforum.name}</a>
+				<%if {subforum.TodayPosts}>0%>
+				<span class="time">(今日:<strong>{subforum.TodayPosts}</strong>)</span>
+				<%/if%>
+				</h2>
+				<p>主题:{subforum.topics}, 帖数:{subforum.posts}</p>
+				<%if {subforum.status}==-1%>
+				<p>私密版块</p>
+				<%else%>
+					<%if {subforum.LastTID}!=0%>
+                        <%set (string){sublastdatetime} = ForumUtils.ConvertDateTime({subforum.LastPost})%>
+						<p>最后: <a href="{forumurl}showtopic.aspx?topicid={subforum.LastTID}&page=end#lastpost" title="{subforum.LastTitle}"><span>{sublastdatetime}</span></a> by 
+							<%if {subforum.LastPoster}+""!=""%>
+								<%if {subforum.LastPosterID}==-1%>
+									游客
+								<%else%>
+								   <%set {aspxrewriteurl} = this.UserInfoAspxRewrite({subforum.LastPosterID})%>
+									<a href="{forumurl}{aspxrewriteurl}" target="_blank">{subforum.LastPoster}</a>
+								<%/if%>
+							<%else%>
+								匿名
+							<%/if%>
+						</p>
+					<%/if%>				
+				<%/if%>
+				 </th>
+		<%if {subforumindex}=={forum.ColCount}%>
+			</tr>
+			<%set {subforumindex}=0%>
+		<%/if%>
+		<%/loop%>
+		<%if {subforumindex}!=0%>
+			<%repeat("<td>&nbsp;</td>", {forum.ColCount}-{subforumindex})%>
+			</tr>
+		<%/if%>
+<%/if%>
+	</tbody>
+	</table>
+	</div>
+</div>

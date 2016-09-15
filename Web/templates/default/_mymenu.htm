@@ -1,0 +1,8 @@
+﻿<%if {userid}>0%>
+<ul class="f_tab">
+	<li <%if {pagename}=="mytopics.aspx"%> class="cur_tab"<%/if%>><a href="mytopics.aspx">我的主题</a></li>
+	<li <%if {pagename}=="myposts.aspx"%> class="cur_tab"<%/if%>><a href="myposts.aspx">我的帖子</a></li>
+	<li <%if {pagename}=="search.aspx?posterid=current&type=digest"%> class="cur_tab"<%/if%>><a href="search.aspx?posterid=current&type=digest&searchsubmit=1">我的精华</a></li>
+    <li <%if {pagename}=="myaudittopics.aspx"%> class="cur_tab"<%/if%>><a href="myaudittopics.aspx">未审核主题</a></li>
+</ul>
+<%/if%>

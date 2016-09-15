@@ -1,0 +1,24 @@
+<div id="{editorid}_editortoolbar" class="editortoolbar">
+	<div class="p_pop fnm" id="{editorid}_fontname_menu" style="display: none">
+	<ul unselectable="on">
+	<%set (string){fontoptions} = "仿宋_GB2312,黑体,楷体_GB2312,宋体,新宋体,微软雅黑,TrebuchetMS,Tahoma,Arial,Impact,Verdana,TimesNewRoman"%>
+		<%loop (string) fontname fontoptions.Split(comma)%>
+	    <li onclick="bbxcode('fontname', '{fontname}')" style="font-family: {fontname}" unselectable="on"><a href="javascript:;" title="{fontname}">{fontname}</a></li>
+		<%/loop%>
+	</ul>
+	</div>
+	<%set (string){sizeoptions} = "1,2,3,4,5,6,7"%>
+	<div class="p_pop fszm" id="{editorid}_fontsize_menu" style="display: none">
+	<ul unselectable="on">
+		<%loop (string) size sizeoptions.Split(comma)%>
+			<li onclick="bbxcode('fontsize', {size})" unselectable="on"><a href="javascript:;" title="{size}"><font size="{size}" unselectable="on">{size}</font></a></li>
+		<%/loop%>
+	</ul>
+	</div>
+</div>
+<%if {config.smileyinsert}==1%>
+	<div class="p_pof upf" id="{editorid}_sml_menu" style="display: none;width:320px;">
+		<%template _smiley%>
+	</div>
+<%/if%>
+<!-- <script type="text/javascript">smilies_show('smiliesdiv', 8, editorid + '_');</script> -->

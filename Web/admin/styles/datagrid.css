@@ -1,0 +1,18 @@
+﻿.ntcplist { width: 100%; margin: 0 auto; text-align: left; border:0px; font-size:12px; }
+	.ntcplist .head td { line-height: 26px; font-weight: bold; }
+.ntcplist .datalist  { width: 100%; border-collapse: collapse; text-align: center; border:0px; border-top:2px solid #ccc; font-size:12px;}
+	.ntcplist .datalist .category td { border-top: 2px solid #CCC; background: #F2F2F2; }
+	.ntcplist .datalist thead{border-top:2px solid #ccc;}
+	.ntcplist .datalist td { padding: 0.2em 0.5em; border: 1px solid #EEE; border:0px; line-height:180%; }
+	.ntcplist .postitem td{border:1px solid #EAE9E1;padding: 0.1em 0.5em;text-align:left; }
+.mouseoverstyle{ cursor:hand; background-color:AliceBlue; line-height:180%;}
+.mouseoutstyle{ cursor:hand;background-color:White; line-height:180%;}
+.datagridSelectedItem{color:#663399;background-color:#FFCC66;}
+.datagridPager{border:0px;color:#330099;height:1px;}
+.countor {height:36px; line-height:36px;}
+	.countor input {margin-bottom:3px; margin-right:3px;}
+/*聚合*/
+.tabledatagrid,.datagridStyles {width:98%;}
+.datagridHeader {background:#fbfbfb; font-weight:bold; height:25px; text-align:center;}
+.datagridItem {line-height:180%;}
+/*聚合*/

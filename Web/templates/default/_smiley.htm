@@ -1,0 +1,39 @@
+﻿<div class="smilieslist">
+	<%set (string){defaulttypname} = string.Empty%>
+	<div id="smiliesdiv">
+		<div class="smiliesgroup" style="margin-right: 0pt;">
+			<ul>
+			<%loop (Smilie) stype Smilie.GetSmiliesTypes()%>
+				<%if {stype[_id]}==1%>
+				<%set {defaulttypname} = {stype.Code}%>
+				<%/if%>
+				<%if {stype[_id]}==1%>
+				<li id="t_s_{stype[_id]}"><a id="s_{stype[_id]}" hidefocus="true" href="javascript:;" onclick="showsmiles1({stype[_id]}, '{stype.Code}');" class="current">{stype.Code}</a></li>
+				<%else%>
+				<li id="t_s_{stype[_id]}"><a id="s_{stype[_id]}" hidefocus="true" href="javascript:;" onclick="showsmiles1({stype[_id]}, '{stype.Code}');">{stype.Code}</a></li>
+				<%/if%>
+			<%/loop%>
+			</ul>
+		 </div>
+		 <div style="clear: both;" id="showsmilie"></div>
+		 <table class="smilieslist_table" id="s_preview_table" style="display: none"><tr><td class="smilieslist_preview" id="s_preview"></td></tr></table>
+		 <div id="showsmilie_pagenum" class="smilieslist_page">&nbsp;</div>
+	</div>
+</div>
+<script type="text/javascript" reload="1">
+	function getSmilies(func){
+		if($('showsmilie').innerHTML !='' && $('showsmilie').innerHTML != '正在加载表情...')
+			return;
+		var c = "{forumpath}tools/ajax.ashx?t=smilies";
+		_sendRequest(c,function(d){var e={};try{e=eval("("+d+")")}catch(f){e={}}var h=e?e:null;func(h);e=null;func=null},false,false);
+		setTimeout("if($('showsmilie').innerHTML=='')$('showsmilie').innerHTML = '正在加载表情...'", 2000);
+	}
+	
+	function getSmilies_callback(obj) {
+		smilies_HASH = obj; 
+		showsmiles1(1, '{defaulttypname}');
+	}
+	//_attachEvent($('{editorid}_popup_smilies'), 'click', function(){
+		getSmilies(getSmilies_callback);
+	//});
+</script>

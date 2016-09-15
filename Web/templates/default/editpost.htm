@@ -1,0 +1,193 @@
+﻿<%template _header%>
+<script type="text/javascript" src="{jsdir}/bbcode.js"></script>
+<script type="text/javascript" src="{jsdir}/editor.js"></script>
+<script type="text/javascript"  src="{jsdir}/template_calendar.js"></script>
+<script type="text/javascript" src= "{jsdir}/template_attach.js"></script>
+<div class="wrap cl pageinfo">
+    <div id="nav">
+    <%if {usergroupinfo.AllowSearch}%>
+        <%template _quicksearch%>
+    <%/if%>
+        <a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <%if {forum.Pathlist}!=""%>{ShowForumAspxRewrite(forum.Pathlist,forumid,forumpageid)} &raquo; <%/if%>
+        <%if {topic}!=null%>
+            <a href="{ShowTopicAspxRewrite(topicid,0)}">{topic.title}</a> &raquo; &nbsp;
+        <%/if%>
+        <strong>编辑帖子</strong>
+    </div>
+</div>
+<script type="text/javascript">
+var postminchars = parseInt({config.minpostsize});
+var postmaxchars = parseInt({config.maxpostsize});
+var disablepostctrl = {disablepostctrl.ToString().ToLower()};
+var tempaccounts = false;
+var forumpath = "{forumpath}";
+var posturl=forumpath+'editpost.aspx?topicid={topicid}&postid={postid}&forumpage={forumpageid}&pageid={pageid}';
+</script>
+<%if page_err==0%>
+<%if {ispost}%>
+    <%template _msgbox%>
+<%else%>
+<div class="wrap cl post">
+    <script type="text/javascript">
+        function geteditormessage(theform)
+        {
+            var message = wysiwyg ? html2bbcode(getEditorContents()) : (!theform.parseurloff.checked ? parseurl(theform.message.value) : theform.message.value);
+            theform.message.value = message;
+        }
+    </script>
+    <form method="post" name="postform" id="postform" action="" onsubmit="return validate(this);">
+    <%csharp%>
+    string formatNow = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+    <%/csharp%>
+    <input type="hidden" name="posttime" id="posttime" value="{formatNow}" />
+    <%template _post%>
+    <%if {postinfo.layer}==0%>
+    <div style="display: none;" id="specialposttable">
+    <%if {topic.special}==1%>
+    <div class="exfm cl">
+        <div class="sinf z">
+            <div class="cl">
+                <h4><em>选项:</em>每行填写 1 个选项</h4>
+            </div>
+            <div id="polloptions" class="mbm">
+            <input id="PollItemname" type="hidden" name="PollItemname" value="" />
+            <input id="PollOptionDisplayOrder" type="hidden" name="PollOptionDisplayOrder" value="" />
+            <input id="PollOptionID" type="hidden" name="PollOptionID" value="" />
+            <ul>
+                <li>序号</li>
+                <li>投票项</li>
+            </ul>
+            <%loop (PollOption) poll polloptionlist%>
+                <p <%if {poll[_id]}==1%>id="divPollItem" <%/if%> name="PollItem">
+                    <input type="hidden" name="optionid" value="{poll.ID}">
+                    <input type="text" class="txt" style="margin-right:2px" size="2" name="displayorder" maxlength="4" value="{poll.DisplayOrder}" tabindex="1" />
+                    <input type="text" name="pollitemid" value="{poll.Name}" class="optioninfo txt" tabindex="1" />
+                    <a href="javascript:;" class="del y" title="删除投票项" onclick="if(!delObj(document.getElementById('polloptions'),2,this.parentNode)){alert('投票项不能少于2个');}">del</a>
+                </p>
+            <%/loop%>
+            </div>
+            <p><a onclick="clonePoll('{config.maxpolloptions}')" href="javascript:;">+增加投票项</a><a onclick="if(!delObj(document.getElementById('polloptions'), 2)){alert('投票项不能少于2个');}" href="javascript:;">删除投票项</a></p>
+        </div>
+        <div class="sadd z">
+            <p class="mbn"><label for="polldatas">投票结束日期</label>
+                <input name="enddatetime" type="text" id="enddatetime" class="txt" size="10" value="{pollinfo.expiration}" style="cursor: default" onclick="showcalendar(event, 'enddatetime', 'cal_startdate', 'cal_enddate', '{nowdate}');" readonly="readonly" />
+                <input type="hidden" name="cal_startdate" id="cal_startdate" size="10" value="{nowdate}">
+                <input type="hidden" name="cal_enddate" id="cal_enddate" size="10" value="">
+            </p>
+            <p class="mbn"><label for="pollnum">
+                <input <%if {pollinfo.multiple}==1%>checked="checked" <%/if%> type="checkbox" name="multiple"
+                onclick="this.checked?$('maxchoicescontrol').style.display='':$('maxchoicescontrol').style.display='none';" />多选投票
+                </label>
+                <span id="maxchoicescontrol" <%if {pollinfo.multiple}==0%>style="display: none;"<%/if%>>最多可选项数: <input type="text" tabindex="1" value="{pollinfo.MaxChoices}" class="spshortinput txt" size="8" name="maxchoices"/></span>
+            </p>
+            <p class="mbn">
+                <input name="updatepoll" type="hidden" id="updatepoll" value="1" />
+                <input type="checkbox" name="visiblepoll" <%if {pollinfo.visible}==1%>checked="checked"<%/if%> />提交投票后结果才可见
+            </p>
+            <p class="mbn"><input type="checkbox" tabindex="1" name="allowview" <%if {pollinfo.AllowView}%>checked="checked"<%/if%> />公开投票参与人</p>
+        </div>
+    </div>
+    <%/if%>
+    <%if {topic.special}==2%>
+    <div class="exfm cl">
+        <label for="rewardprice">悬赏价格:</label>
+        <input name="topicprice" type="text" class="txt" id="topicprice" value="{topic.price}" size="5" maxlength="5" onkeyup="getrealprice(this.value);"/>
+        {userextcreditsinfo.unit} {userextcreditsinfo.name}
+        [ 悬赏范围 {usergroupinfo.MinBonusprice} - {usergroupinfo.MaxBonusprice}  
+        {bonusextcreditsinfo.unit}
+        {bonusextcreditsinfo.name}, 当前可用 {mybonustranscredits} {bonusextcreditsinfo.unit}{bonusextcreditsinfo.name}]
+        [ 税后支付 <span id="realprice">0</span>]
+        <script type="text/javascript" reload="1">
+            function getrealprice(price) {
+                if (!price.search(/^\d+$/)) {
+                    n = Math.ceil(parseInt(price) + price * {Scoresets.GetCreditsTax()});
+                    if (price > 32767) {
+                        $('realprice').innerHTML = '<b>悬赏不能高于 32767</b>';
+                    } else if (price < {usergroupinfo.MinBonusprice} || (price > {usergroupinfo.MaxBonusprice})) {
+                        $('realprice').innerHTML = '<b>悬赏超出范围</b>';
+                    } else {
+                        $('realprice').innerHTML = n;
+                    }
+                } else {
+                    $('realprice').innerHTML = '<b>填写无效</b>';
+                }
+            }
+        </script>
+    </div>
+    <%else if {topic.special}==3%>
+    <div class="exfm cl">
+        <label for="rewardprice">悬赏价格:</label>
+        <input name="topicprice" type="hidden" id="topicprice" value="{usergroupinfo.MinBonusprice}" />
+        {topic.price} {userextcreditsinfo.unit} {userextcreditsinfo.name} (只允许正整数)<span class="xg2">已经结帖无法修改悬赏金额</span>
+    </div>
+    <%else if {topic.special}==4%>
+        <div class="exfm cl">
+            <div class="sinf z">
+                <dl>
+                    <dt><strong class="rq">*</strong><label for="affirmpoint">正方:</label></dt>
+                    <dd><textarea tabindex="1" class="txtarea" id="positiveopinion" name="positiveopinion" style="width: 210px;" >{debateinfo.PositiveOpinion}</textarea></dd>
+                    <dt><strong class="rq">*</strong><label for="negapoint">反方:</label></dt>				
+                    <dd><textarea tabindex="1" class="txtarea" id="negativeopinion" name="negativeopinion" style="width: 210px;" >{debateinfo.NegativeOpinion}</textarea></dd>
+                </dl>
+            </div>
+            <div class="sadd">
+                <label for="endtime">结束时间:</label>
+                <p>
+                    <input type="text" name="terminaltime" id="terminaltime" style="cursor:default;" class="txt" size="16" value="{FormatDateTimeString(debateinfo.TerminalTime)}" onclick="showcalendar(event, 'terminaltime', 'cal_startdate', 'cal_enddate', '{debateinfo.TerminalTime}');" readonly="readonly" />
+                    <input type="hidden" name="cal_startdate" id="cal_startdate" value="{FormatDateTimeString(debateinfo.TerminalTime)}" />
+                    <input type="hidden" name="cal_enddate" id="cal_enddate" value="" />
+                    <input type="hidden" name="updatedebate" id="updatedebate" value="1" />
+                </p>
+            </div>
+        </div>
+        <script type="text/javascript">
+            function doadvdebate() {
+                var adv_open = $('advdebate_open');
+                var adv_close = $('advdebate_close');
+                if (adv_open && adv_close) {
+                    if (adv_open.style.display != 'none') {
+                        adv_open.style.display = 'none';
+                        adv_close.style.display = '';
+                    }
+                    else {
+                        adv_open.style.display = '';
+                        adv_close.style.display = 'none';
+                    }
+                }
+            }
+        </script>
+    <%/if%>
+    </div>
+    <%/if%>
+    <input type="hidden" name="aid" id="aid" value="0">
+    <input type="hidden" name="isdeleteatt" id="isdeleteatt" value="0">
+    <p class="textmsg" id="divshowuploadmsg" style="display: none"></p>
+    <p class="textmsg succ" id="divshowuploadmsgok" style="display: none"></p>
+    <input type="hidden" name="uploadallowmax" value="10">
+    <input type="hidden" name="uploadallowtype" value="jpg,gif">
+    <input type="hidden" name="thumbwidth" value="300">
+    <input type="hidden" name="thumbheight" value="250">
+    <input type="hidden" name="noinsert" value="0">
+    <script type="text/javascript">
+        isfirstpost  = {postinfo.layer} == 0 ? 1 : 0;
+        $('postform').onsubmit = function() { return validate($('postform'));};
+        function deleteatt(aid){
+            document.getElementById('isdeleteatt').value = 1;
+            document.getElementById('aid').value = aid;
+            document.getElementById('isdeleteatt').form.submit();
+        }
+    </script>
+    </form>
+<%template _postattachments%>
+<%/if%>
+<%else%>
+    <%if {ispost}%>
+        <%csharp%>
+            string backLink = HttpContext.Current.Request.UrlReferrer.ToString();
+            SetBackLink(backLink.Contains("&cedit=yes") ? backLink : backLink + "&cedit=yes");
+        <%/csharp%>
+    <%/if%>
+    <%template _errmsgbox%>
+<%/if%>
+<%template _copyright%>
+<%template _footer%>

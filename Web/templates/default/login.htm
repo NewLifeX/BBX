@@ -1,0 +1,237 @@
+﻿<%template _header%>
+<%if {infloat}!=1%>
+<div class="wrap cl pageinfo">
+	<div id="nav">
+		<%if {usergroupinfo.AllowSearch}%>
+			<%template _quicksearch%>
+		<%/if%><a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; 用户登录
+	</div>
+</div>
+<%/if%>
+<%if {ispost} && !{loginsubmit} %>
+    <%if {infloat}==1%>
+        <%if page_err==0%>
+            <%if {needactiveuid}<=0%>
+	            <script type="text/javascript">
+		            $('form1').style.display='none';
+		            $('returnmessage').className='';
+	            </script>
+	            <div class="msgbox cl" id="succeemessage">
+		            <div class="msg_inner">
+		            <p style="margin-bottom:16px;">{msgbox_text}</p>
+		            <%if {msgbox_url}!=""%>
+			            <p><a href="javascript:;" onclick="location.reload()" class="xg2">如果长时间没有响应请点击此处</a></p>
+			            <script type="text/javascript">setTimeout('location.reload()', 1500);</script>
+		            <%/if%>
+		            </div>
+	            </div>
+	            <script type="text/javascript">
+		            $('succeedmessage').style.display='';
+		            $('succeedmessage').innerHTML=$('succeemessage').innerHTML;
+		            $('returnmessage').innerHTML='用户登录';
+	            </script>
+            <%else%>
+                <script type="text/javascript">
+                	$('form1').style.display = 'none';
+                	$('returnmessage').className = '';
+	            </script>
+                <div id="emailreset">
+		            <div class="msg_inner">
+		                <p id="emailresetmsg" style="margin-bottom:16px;">{msgbox_text}</p>
+                        <p style="margin-bottom:16px;">点击此处 <a href="###" onclick="$('emailresetbox').style.display='';">重新设置/发送E-mail</a></p>
+                        <div id="emailresetbox" style="display:none;">
+                            <input type="text" id="newemail" name="newemail" value="{email}" class="txt" size="30" />
+                            <input type="button" id="resetemail" value="提交" class="pn" onclick="resetemail();" />
+                        </div>
+		            </div>
+                </div>
+                <script type="text/javascript">
+                    $('succeedmessage').style.display = '';
+                    $('succeedmessage').innerHTML = $('emailreset').innerHTML;
+                    $('emailreset').innerHTML = '';
+                    function resetemail() {
+                        var uid = '{needactiveuid}';
+                        var newemail = $('newemail').value;
+                        var authtoken = '{authstr}';
+                        _sendRequest('tools/ajax.ashx?t=resetemail&uid=' + uid + '&newemail=' + newemail + '&auth=' + authtoken + '&ts={timestamp}', function (repsonseText) {
+                            if (repsonseText) {
+                                var msg = eval('(' + repsonseText + ')');
+                                if (msg.code == '0') {
+                                    $('emailresetmsg').innerHTML = msg.text;
+                                }
+                                else {
+                                    $('emailresetmsg').innerHTML = msg.text;
+                                    setTimeout(function on() { hideWindow('login') }, 3000);
+                                }
+                            }
+                        });
+                    }
+                </script>
+            <%/if%>	
+        <%else%>
+            <p>{msgbox_text}</p>
+        <%/if%>
+    <%else%>
+        <%if page_err==0%>
+            <%if {needactiveuid}<=0%>
+                <%template _msgbox%>
+            <%else%>
+                <div class="wrap s_clear" id="wrap">
+                    <div class="main">
+	                    <div class="msgbox">
+		                    <h1>{config.forumtitle}　提示信息</h1>
+		                    <hr class="solidline"/>
+		                    <div id="emailreset" class="msg_inner">
+			                    <p id="emailresetmsg">{msgbox_text}</p>
+                                <p>点击此处<a href="###" onclick="$('emailresetbox').style.display='';">重新设置/发送E-mail</a> <a href="{referer}">返回首页</a></p>
+                                <p id="emailresetbox" style="display:none;">
+                                    <input type="text" size="26" name="newemail" id="newemail" value="{email}" class="txt" />
+                                    <input type="button" onclick="resetemail();" class="pn" value="提交" id="resetemail" />
+                                </p>
+		                    </div>
+	                    </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    function resetemail() {
+                        var uid = '{needactiveuid}';
+                        var newemail = $('newemail').value;
+                        var authtoken = '{authstr}';
+                        _sendRequest('tools/ajax.ashx?t=resetemail&uid=' + uid + '&newemail=' + newemail + '&auth=' + authtoken + '&ts={timestamp}', function (repsonseText) {
+                            if (repsonseText) {
+                                var msg = eval('(' + repsonseText + ')');
+                                if (msg.code == '0') {
+                                    $('emailresetmsg').innerHTML = msg.text;
+                                }
+                                else {
+                                    $('emailreset').innerHTML = '<p>' + msg.text + '</p>';
+                                    setTimeout(function on() { document.location.href = '{referer}'; }, 1500);
+                                }
+                            }
+                        });
+                    }
+                </script>
+            <%/if%>
+        <%else%>
+            <%template _errmsgbox%>
+        <%/if%>
+    <%/if%>
+<%else%>
+	<%if {infloat}!=1%>
+	<div class="wrap cl">
+		<div class="blr" id="floatlayout_login">
+		<form id="form1" name="form1" method="post" <%if {loginauth}!=""%>action="{rooturl}login.aspx?loginauth={loginauth}&referer={referer}"<%else%>action=""<%/if%>>
+	<%else%>
+		<h3 class="flb"><em id="returnmessage">用户登录</em><span><a href="javascript:;" class="flbc" onclick="hideWindow('login')" title="关闭">关闭</a></span></h3>
+		<div id="succeedmessage" class="c cl" style="display:none"></div>
+		<form id="form1" name="form1" method="post" onsubmit="javascript:$('form1').action='{rooturl}login.aspx?infloat=1&';ajaxpost('form1', 'returnmessage', 'returnmessage', 'onerror');return false;" action="{rooturl}login.aspx?infloat=1&">
+	<%/if%>
+		<div class="c cl">
+			<div style="overflow:hidden;overflow-y:auto" class="lgfm">
+			<%if {config.emaillogin}==1%>
+				<p>您可以使用Email或用户名登录</p>
+			<%/if%>
+				<div class="sipt lpsw">
+					<label for="username" onclick="document.form1.username.focus();">用户名　：</label>
+					<input type="text" class="txt" tabindex="1" value="{postusername}" maxlength="20" size="25" autocomplete="off" name="username" id="username"/>
+				</div>
+			<%if {loginauth}==""%>
+				<div class="sipt lpsw">
+					<label for="password3">密　码　：</label>
+					<input type="password" tabindex="2" class="txt" size="36" name="password" id="password3"/>
+				</div>
+			<%/if%>	
+			<%if {isseccode}%>
+				<div class="lpsw" style="position: relative;margin-bottom:10px;">
+					<%template _vcode%>
+				</div>
+			<%/if%>	
+			<%if {config.secques}==1%>
+				<div class="ftid sltp" style="margin-bottom:10px">
+					<select name="question" id="question" change="changequestion();" tabindex="1003">
+						<option value="0">安全提问</option>
+						<option onclick="loadselect_liset('question', 0, 'question','1',this.innerHTML, 1)" value="1" k_id="question">母亲的名字</option>
+						<option onclick="loadselect_liset('question', 0, 'question','2',this.innerHTML, 2)" value="2" k_id="question">爷爷的名字</option>
+						<option onclick="loadselect_liset('question', 0, 'question','3',this.innerHTML, 3)" value="3" k_id="question">父亲出生的城市</option>
+						<option onclick="loadselect_liset('question', 0, 'question','4',this.innerHTML, 4)" value="4" k_id="question">您其中一位老师的名字</option>
+						<option onclick="loadselect_liset('question', 0, 'question','5',this.innerHTML, 5)" value="5" k_id="question">您个人计算机的型号</option>
+						<option onclick="loadselect_liset('question', 0, 'question','6',this.innerHTML, 6)" value="6" k_id="question">您最喜欢的餐馆名称</option>
+						<option onclick="loadselect_liset('question', 0, 'question','7',this.innerHTML, 7)" value="7" k_id="question">驾驶执照的最后四位数字</option>
+					</select>
+					<script type="text/javascript">simulateSelect('question','214');</script>
+					<script type="text/javascript">
+					    window.onload = function(){setselect({question});}
+				        function changequestion() {
+				            if ($('question').getAttribute("selecti") != "0") {
+				                $('answer').style.display = '';
+						        $('answer').focus();
+				            }
+				            else {
+				                $('answer').style.display = 'none';
+				            }
+				        }
+				        function setselect(value) {
+				            try {
+                                var questionarray = new Array('安全提问','母亲的名字','爷爷的名字','父亲出生的城市','您其中一位老师的名字','您个人计算机的型号','您最喜欢的餐馆名称','驾驶执照的最后四位数字');
+                                $('question').setAttribute("selecti",value);
+                                $('question').options[0].value = value;
+                                $('question_ctrl').innerHTML = questionarray[value];
+                                changequestion();
+				            }
+				            catch (e) {
+				            }
+				        }
+
+					</script>
+				</div>
+				<div class="sltp" style="clear:both;"><input type="text" tabindex="1004" class="txt" size="36" autocomplete="off" style="display: none;" id="answer" name="answer"/></div>
+			<%/if%>
+				<div class="sltp"  style="display:none">
+					<label for="templateid">界面风格</label>
+					<select name="templateid" tabindex="13">
+					<option value="0">- 使用默认 -</option>
+						{templatelistboxoptions}
+					</select>
+				</div>
+			</div>
+			<div class="lgf">
+                <div>
+				    <h4>没有帐号？
+					    <%if {infloat}==1%>
+					    <a href="{rooturl}register.aspx"  onclick="hideWindow('login');showWindow('register', this.href);" class="xg2">立即注册</a>
+					    <%else%>
+					    <a href="{rooturl}register.aspx" tabindex="-1" accesskey="r" title="立即注册 (ALT + R)" class="xg2">立即注册</a>
+					    <%/if%>
+				    </h4>
+				    <p>
+					    <%if {infloat}==1%>
+					    <a href="{rooturl}getpassword.aspx" onclick="hideWindow('login');showWindow('getpassword', this.href);" accesskey="g" title="忘记密码 (ALT + G)" class="xg2">找回密码</a>
+					    <%else%>
+					    <a href="{rooturl}getpassword.aspx" accesskey="g" title="找回密码" class="xg2">找回密码</a>
+					    <%/if%>
+				    </p>
+                </div>
+                <%if {isopenconnect}%>
+                <br />
+				<div>
+					<p><a href="{forumpath}QzoneConnect.aspx"><img alt="QQ登录" class="vm" src="{forumpath}images/common/qq_login.gif" /></a></p>
+					<p class="hm xg1">只需一步，快速开始</p>
+				</div>
+                <%/if%>
+			</div>
+		</div>
+		<p class="fsb pns cl">
+			<input type="submit" style="width:0;filter:alpha(opacity=0);-moz-opacity:0;opacity:0;"/>
+			<button name="login" type="submit" id="login" tabindex="1005" <%if {infloat}!=1%>onclick="javascript:window.location.replace('?agree=yes')"<%/if%> class="pn"><span>登录</span></button>
+			<input type="checkbox" value="43200" tabindex="1006" id="expires" name="expires" checked="checked" />
+			<label for="expires"><span title="下次访问自动登录">记住我</span></label>
+		</p>
+		<script type="text/javascript">
+			document.getElementById("username").focus();
+		</script>
+		</form>
+	</div>
+</div>
+<%/if%>
+<%template _copyright%>
+<%template _footer%>

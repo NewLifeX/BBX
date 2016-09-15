@@ -1,0 +1,23 @@
+﻿<div class="wrap cl">
+<div class="main">
+	<div class="msgbox">
+		<h1>出现了{page_err}个错误</h1>
+		<hr class="solidline"/>
+		<div class="msg_inner error_msg">
+			<p>{msgbox_text}</p>
+			<p class="errorback">
+				<script type="text/javascript">
+					if({msgbox_showbacklink})
+					{
+						document.write("<a href=\"{msgbox_backlink}\">返回上一步</a> &nbsp; &nbsp;|&nbsp; &nbsp  ");
+					}
+				</script>
+				<a href="forumindex.aspx">论坛首页</a>
+				<%if {usergroupid}==7%>
+				 &nbsp; &nbsp;|&nbsp; &nbsp; <a href="login.aspx">登录</a>&nbsp; &nbsp;|&nbsp; &nbsp; <a href="register.aspx">注册</a>
+				<%/if%>
+			</p>
+		</div>
+	</div>
+</div>
+</div>

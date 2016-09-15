@@ -1,0 +1,38 @@
+﻿<%if {pagewordad.length}>0%>
+<div id="ad_text" class="ad_text sclear">
+	<table cellspacing="1" cellpadding="0" width="100%" summary="text ad">
+	<tbody>
+		<tr>
+		<%set (int){adindex}=0%>
+		<%loop (string) pageword pagewordad%>
+			<%if {adindex}<4%>
+			<td>{pageword}</td>
+				<%set {adindex}={adindex}+1%>
+			<%else%>
+		</tr><tr>
+			<td>{pageword}</td>
+				<%set {adindex}=1%>
+			<%/if%>								
+		<%/loop%>
+		<%if {pagewordad.length}%4>0%>
+			<%csharp%>
+				for (int j = 0; j < (4 - pagewordad.Length % 4); j++)
+				{
+			<%/csharp%>
+			<td>&nbsp;</td>
+			<%csharp%>
+				}
+			<%/csharp%>
+		<%/if%>
+		</tr>
+	</tbody>
+	</table>
+</div>
+<%/if%>
+<%if {pagead.count}>0%>
+    <%loop (string) pageadtext pagead%>
+        <div class="ad_text sclear">
+            {pageadtext}
+        </div>
+    <%/loop%>
+<%/if%>

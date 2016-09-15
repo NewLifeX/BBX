@@ -1,0 +1,11 @@
+﻿<%template _pageheader%>
+<script type="text/javascript">
+	if (top.main){
+		top.main.location = "forumindex.aspx";
+	}
+</script>
+<frameset border="0" name="content" framespacing="0" frameborder="0" cols="210,*">
+	<frame id="leftmenu" name="leftmenu" marginwidth="0" marginheight="0" src="forumlist.aspx" noresize scrolling="no">
+	<frame id="main" name="main" src="forumindex.aspx">
+</frameset><noframes></noframes>
+<%/if%>

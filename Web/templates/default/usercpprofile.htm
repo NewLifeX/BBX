@@ -1,0 +1,236 @@
+﻿<%template _header%>
+<div class="wrap cl pageinfo">
+    <div id="nav">
+        <%if {usergroupinfo.AllowSearch}%>
+            <%template _quicksearch%>
+        <%/if%>
+        <a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <a href="usercpprofile.aspx">用户中心</a> &raquo; <strong>编辑个人档案</strong>
+    </div>
+</div>
+<div class="wrap uc cl">
+    <%template _menu%>
+    <div class="uc_main">
+    <div class="uc_content">
+        <%if page_err==0%>
+        <%if ispost%>
+            <%template _usercpmsgbox%>
+        <%else%>
+        <form action="" method="post" ID="Form1" enctype="multipart/form-data">
+        <%if {action}=="avatar"%>
+            <div id="avatarchange">
+                <h1 class="u_t">设置头像</h1>
+                <input name="avatarchanged" type="hidden" value="0" id="avatarchanged" />
+                <table cellspacing="0" cellpadding="0" class="tfm" summary="设置头像">
+                <caption>
+                    <h2 class="xs2">当前我的头像</h2>
+                    <p>如果你还没有设置自己的头像，系统会显示为默认头像，你需要自己上传一张新照片来作为自己的个人头像。</p>
+                </caption>
+                <tbody>
+                <tr>
+                    <td>				
+                        <img id="avatar" src="images/common/none.gif" onerror="this.onerror=null;this.src='{forumpath}images/common/noavatar_medium.gif';" />
+                   </td>
+                </tr>
+                </tbody>
+                </table>
+                <table cellspacing="0" cellpadding="0" class="tfm">
+                <caption>
+                    <h2 class="xs2">设置我的新头像</h2>
+                    <p>请选择一个新照片进行上传编辑。头像保存后，你可能需要刷新一下本页面(按F5键)，才能查看最新的头像效果。</p>
+                </caption>
+                <tbody>
+                <tr>
+                    <td>
+                        <p class="sel_avt cl">
+                            <a href="javascript:;" onclick="$('avatarctrl').style.display = '';$('avatarSilverlight').style.display = 'none';">Flash头像</a>
+                        </p>
+                        <div id="avatarctrl">
+                        <script type="text/javascript">                     
+                            document.write(AC_FL_RunContent('width', '540', 'height', '253', 'scale', 'exactfit', 'src', '{avatarFlashParam}', 'id', 'mycamera', 'name', 'mycamera', 'quality', 'high', 'bgcolor', '#ffffff', 'wmode', 'transparent', 'menu', 'false', 'swLiveConnect', 'true', 'allowScriptAccess', 'always'));
+                        </script>
+                        </div>
+                        <script type="text/javascript">
+                        function updateavatar(sender, args) {
+                           $('avatar').src = '{avatarImage}?random=1' + Math.random();
+                           $('avatarSilverlight').style.display = 'none';                      
+                        }
+                        updateavatar();
+                        </script>
+                   </td>
+                </tr>
+                </tbody>
+                </table>
+            </div>
+        <%else%>
+            <div id="u_cp">
+            <h1>个人资料</h1>
+            <%template _permenu%>
+            <table cellspacing="0" cellpadding="0" class="tfm" summary="个人资料">
+            <tbody id="u_cpfile">
+                <tr>
+                    <th>真实姓名</th>
+                    <td><input name="realname" type="text" id="realname" value="{user.Field.RealName}" size="25" class="txt"/></td>
+                </tr>
+                <tr>
+                    <th>性别</th>
+                    <td>
+                        <div class="ftid">
+                            <select name="gender" id="gender">
+                                <option value="0" <%if {user.gender}==0%>selected="selected"<%/if%>>保密</option>
+                                <option value="1" <%if {user.gender}==1%>selected="selected"<%/if%>>男</option>
+                                <option value="2" <%if {user.gender}==2%>selected="selected"<%/if%>>女</option>
+                            </select>
+                        </div>
+                        <script type="text/javascript">simulateSelect('gender');</script>
+                    </td>
+                </tr>
+                <tr>
+                    <th>生日</th>
+                    <td>
+                        <input name="bday" type="text"  class="txt" id="bday" size="10" value="{user.bday}" style="cursor:default" onClick="showcalendar(event, 'bday', 'cal_startdate', 'cal_enddate', '1980-01-01');" readonly="readonly" />&nbsp;<button type="button" onclick="$('bday').value='';" class="pn"><span>清空</span></button>
+                        <input type="hidden" name="cal_startdate" id="cal_startdate" size="10"  value="1900-01-01" />
+                        <input type="hidden" name="cal_enddate" id="cal_enddate" size="10"  value="{Utils.GetDateTime()}" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>来自</th>
+                    <td>
+                        <input name="location" type="text" class="txt" id="location" class="colorblue" value="{user.Field.Location}" size="25" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>身份证号码</th>
+                    <td>
+                        <input name="idcard" type="text" id="idcard" value="{user.idcard}" size="25"  class="txt"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>昵称</th>
+                    <td><input type="text" class="txt" size="25" id="nickname" name="nickname" value="{user.NickName}"/></td>
+                </tr>
+                <tr>
+                    <th>自我介绍</th>
+                    <td>
+                        <textarea name="bio" cols="50" rows="4" id="bio" class="txtarea" onclick="if (document.getElementById('bio').value.length > 500) {alert('自我介绍长度最大为500字'); return false;}" >{user.bio}</textarea>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody id="u_contact">
+                <tr>
+                    <th>移动电话号码</th>
+                    <td><input name="mobile" type="text"  class="txt" id="mobile" value="{user.mobile}" size="25" /></td>
+                </tr>
+                <tr>
+                    <th>固定电话号码</th>
+                    <td><input name="phone" type="text" id="phone" value="{user.phone}" size="25" class="txt" /></td>
+                </tr>
+                <tr>
+                    <th>EMail</th>
+                    <td><input name="email" type="text" id="email" value="{user.email}" size="25" class="txt"/> 
+                        <input name="showemail" type="checkbox" id="showemail" value="0" <%if {!user.ShowEmail}%>checked="checked"<%/if%>/>Email保密
+                    </td>
+                </tr>
+                <tr>
+                    <th>主页</th>
+                    <td><input name="website" type="text" id="website" value="{user.website}" size="25" class="txt"/></td>
+                </tr>
+                <tr>
+                    <th>MSN Messenger</th>
+                    <td><input name="msn" type="text" id="msn" value="{user.msn}" size="25"  class="txt"/></td>
+                </tr>
+                <tr>
+                    <th>QQ</th>
+                    <td><input name="qq" type="text" id="qq" value="{user.qq}" size="25"  class="txt"/></td>
+                </tr>
+                <tr>
+                    <th>Skype</th>
+                    <td><input name="skype" type="text" id="skype" value="{user.skype}" size="25"  class="txt"/></td>
+                </tr>
+                <tr>
+                    <th>ICQ</th>
+                    <td><input name="icq" type="text" id="icq" value="{user.icq}" size="25"  class="txt"/></td>
+                </tr>
+                <tr>
+                    <th>Yahoo Messenger</th>
+                    <td><input name="yahoo" type="text" id="yahoo" value="{user.yahoo}" size="30"  class="txt"/></td>
+                </tr>
+            </tbody>
+            <tbody id="u_signature">
+                <tr>
+                    <th>签名</th>
+                    <td>
+                        <div id="signaturepreview" style="display:none" class="rulespreview"></div>
+                            <%set (string){coloroptions} = "Black,Sienna,DarkOliveGreen,DarkGreen,DarkSlateBlue,Navy,Indigo,DarkSlateGray,DarkRed,DarkOrange,Olive,Green,Teal,Blue,SlateGray,DimGray,Red,SandyBrown,YellowGreen,SeaGreen,MediumTurquoise,RoyalBlue,Purple,Gray,Magenta,Orange,Yellow,Lime,Cyan,DeepSkyBlue,DarkOrchid,Silver,Pink,Wheat,LemonChiffon,PaleGreen,PaleTurquoise,LightBlue,Plum,White"%>
+                            <%set (string){seditorid} = "signature"%>
+                            <%set (char){comma} = ','%>
+                            <link href="{forumpath}templates/{templatepath}/seditor.css" rel="stylesheet" type="text/css" />
+                            <div class="editor_tb" style="width:70%">
+                                <span class="y">
+                                    <a id="viewsignature" href="###" onclick="preview('signaturepreview','signaturemessage')">预览</a>		
+                                </span>
+                                <div>
+                                    <%if {usergroupinfo.AllowSigbbCode}%>
+                                        <a href="javascript:;" title="粗体" class="tb_bold" onclick="seditor_insertunit('{seditorid}', '[b]', '[/b]')">B</a>
+                                        <a href="javascript:;" title="颜色" class="tb_color" id="{seditorid}forecolor" onclick="showMenu(this.id, true, 0, 2)">Color</a>
+                                        <div class="popupmenu_popup tb_color" id="{seditorid}forecolor_menu" style="display: none;width:120px;">
+                                            <%loop (string) colornamedes coloroptions.Split(comma)%>
+                                                <input type="button" style="background-color: {colornamedes}" onclick="seditor_insertunit('{seditorid}', '[color={colornamedes}]', '[/color]')" /><%if {colornamedes[_id]}%8==0%><br /><%/if%>
+                                            <%/loop%>
+                                        </div>
+                                        <a href="javascript:;" title="链接" class="tb_link" id="{seditorid}url" onclick="seditor_menu('{seditorid}', 'url')">Link</a>
+                                    <%/if%>
+                                    <%if {usergroupinfo.AllowSigimgCode}%>
+                                        <a href="javascript:;" title="图片" class="tb_img" id="{seditorid}img" onclick="seditor_menu('{seditorid}', 'img')">Image</a>
+                                    <%/if%>
+                                </div>
+                        </div>
+                        <textarea id="signaturemessage" rows="4" cols="50" name="signature" class="txtarea" style="width:70%;padding:0;">{user.signature}</textarea>
+                    </td>
+                    <td>
+                        <p>{forumproductname}代码: <%if {usergroupinfo.AllowSigbbCode}%>可用<%else%>不可用<%/if%></p>
+                        <p>图片代码: <%if {usergroupinfo.AllowSigimgCode}%>可用<%else%>不可用<%/if%></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><input name="sigstatus" type="checkbox" id="sigstatus" value="1" <%if {user.sigstatus}==1%> checked="checked"<%/if%>/>使用签名</td>
+                </tr>
+            </tbody>
+            <tr>
+                <th> </th>
+                <td><button value="true" id="editsubmit" name="editsubmit" type="submit" class="pn"><span>提交</span></button></td>
+            </tr>
+            </table>
+            </div>
+            <script type="text/javascript">
+                function InitProfilePanel() {
+                    $('u_cpfile').style.display = 'none';
+                    $('u_contact').style.display = 'none';
+                    $('u_signature').style.display = 'none';
+                    $('u_cpfile_li').className = '';
+                    $('u_contact_li').className = '';
+                    $('u_signature_li').className = '';
+                }
+
+                function ShowPanel(id) {
+                    InitProfilePanel();
+                    $(id).style.display = '';
+                    $(id + "_li").className = 'cur_tab';
+                }
+                var action = '{action}';
+                action = action == '' ? 'u_cpfile' : 'u_' + action;
+
+                ShowPanel(action);
+            </script>
+        <%/if%>
+        </form>
+        <%/if%>
+        <%else%>
+            <%template _usercperrmsgbox%>
+        <%/if%>
+    </div>
+    </div>
+</div>
+<script type="text/javascript"  src="{jsdir}/template_calendar.js"></script>
+<%template _copyright%>
+<%template _footer%>

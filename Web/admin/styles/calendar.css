@@ -1,0 +1,79 @@
+﻿img  {
+	/*border:0px;
+	align:bottom;
+	position:relative;
+	top:10%;*/
+
+	
+}
+
+.calendarimg
+{
+	border:0px;
+	margin-left:2px;
+	margin-bottom:-7px;
+}
+	*html .calendarimg{
+		margin-bottom:-3px;
+	}
+	*+html .calendarimg{
+		margin-bottom:-1px;
+	}
+
+body, td
+{
+font-size: 9pt;
+}
+.expire, .expire a:link, .expire a:visited {
+color: #999999;
+}
+.default, .default a:link, .default a:visited {
+color: #000000;
+}
+.checked, .checked a:link, .checked a:visited {
+color: #FF0000;
+}
+.today, .today a:link, .today a:visited {
+color: #00BB00;
+}
+#calendar_year {
+display: none;
+line-height: 130%;
+background: #FFFFFF;
+position: absolute;
+z-index: 10;
+}
+#calendar_year .col {
+float: left;
+background: #FFFFFF;
+margin-left: 1px;
+border: 1px solid #7AC4EA;
+padding: 4px;
+}
+#calendar_month {
+display: none;
+background: #FFFFFF;
+line-height: 130%;
+border: 1px solid #7AC4EA;
+padding: 4px;
+position: absolute;
+z-index: 11;
+}
+
+
+.calendartable td.header 
+{
+background:aliceblue; /*顶部*/
+padding: 3px;
+}
+.calendartable 
+{
+font-size: 9pt;  
+border: 1px solid aliceblue; /*边框颜色*/
+}
+.calendartable td 
+{
+background:#ffffff;	
+padding:1px;
+border-bottom:1px solid #dddddd;
+}

@@ -1,0 +1,500 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<%if pagetitle=="首页"%>
+<title>{config.forumtitle} {config.seotitle} - Powered by <%=BBX.Common.Utils.ProductName%></title>
+<%else%>
+<title>{pagetitle} - {config.forumtitle} {config.seotitle} - Powered by {forumproductname}</title>
+<%/if%>
+{meta}
+<meta name="generator" content="{forumproductname} {forumversion}" />
+<meta name="author" content="{forumproductname} Team" />
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+<link rel="icon" href="{forumurl}favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="{forumurl}favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="{cssdir}/bbx.css" type="text/css" media="all" />
+<link rel="stylesheet" href="{cssdir}/search.css" type="text/css" media="all" />
+<link rel="stylesheet" href="{cssdir}/float.css" type="text/css" media="all" />
+{link}
+<script type="text/javascript">
+var creditnotice='{Scoresets.GetValidScoreNameAndId()}';	
+var forumpath = "{forumpath}";
+</script>
+<script type="text/javascript"  src="{jsdir}/common.js"></script>
+<script type="text/javascript" src="{jsdir}/template_report.js"></script>
+<script type="text/javascript" src="{jsdir}/template_utils.js"></script>
+<script type="text/javascript" src="{jsdir}/ajax.js"></script>
+<script type="text/javascript" src="{jsdir}/template_modcp.js"></script>
+<script type="text/javascript">
+    var aspxrewrite = {config.aspxrewrite};
+    var IMGDIR = '{imagedir}';
+    var disallowfloat = '{config.disallowfloatwin}';
+    var rooturl="{rooturl}";
+    var imagemaxwidth='{Template.GetWidth(templatepath)}';
+</script>
+{script}
+</head>
+<body onkeydown="if(event.keyCode==27) return false;">
+<div id="append_parent"></div><div id="ajaxwaitid"></div>
+<div class="subhead cl">
+    <a class="xg1 z" href="{forumpath}">返回首页</a>
+    <%if {userid}!=-1%>
+    <div class="sch xg2 y">
+        <strong><a class="vwmy" href="{forumpath}userinfo.aspx?userid={userid}">{username}</a></strong><span class="xg1">在线</span><span class="pipe">|</span>
+        <a title="{oluserinfo.newpms}条新短消息" href="{forumpath}usercpinbox.aspx" id="pm_ntc">短消息</a><span class="pipe">|</span>
+        <a href="{forumpath}usercpnotice.aspx?filter=all">通知</a><span class="pipe">|</span>
+        <a href="{forumpath}usercp.aspx">用户中心</a>
+        <%if {useradminid}==1%>
+            <span class="pipe">|</span><a target="_blank" href="admin/index.aspx">系统设置</a>
+        <%/if%>
+        <span class="pipe">|</span><a href="{forumpath}logout.aspx?userkey={userkey}">退出</a>
+    </div>
+    <%/if%>
+</div>
+<%if {page_err}>0%>
+    <div class="wrap cl">
+        <form action="search.aspx" autocomplete="off" name="postpm" method="post" class="searchform">
+            <table cellspacing="0" cellpadding="0" class="mbm" id="tpsch">
+            <tbody>
+                <tr>
+                <td><h1><a title="{forumproductname}|BBS|论坛" href="{forumpath}index.aspx"><img alt="{forumproductname}|BBS|论坛" src="{forumpath}templates/default/images/logo.png"></a></h1></td>
+                <td>
+                    <ul class="tb cl">
+                        <li id="forumli"><a href="search.aspx?keyword={keyword}&searchsubmit=1">论坛</a></li>
+                    </ul>
+                    <script type="text/javascript">
+                        var type = '{type}';
+                        switch (type) {
+                            case 'spacepost': $('spaceli').className = 'a'; break;
+                            case 'album': $('albumli').className = 'a'; break;
+                            default: $('forumli').className = 'a'; break;
+                        }
+                    </script>
+                    <input type="hidden" value="" name="type" />
+                    <table cellspacing="0" cellpadding="0" id="tps_form">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <input type="text" tabindex="1" value="{keyword}" maxlength="40" size="45" class="schtxt" name="keyword" id="srchtxt">
+                            </td>
+                            <td>
+                                <button class="schbtn" id="tps_btn" type="submit"><strong>搜索</strong></button>
+                            </td>
+                            <td style="padding-left: 10px; background:#FFF;">
+                                <label><a href="search.aspx?advsearch=1">高级</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+                </tr>
+            </tbody>
+            </table>
+        </form>
+        <div class="tl">
+            <div class="sttl mbn">
+                <h2>结果: <em>
+                <%if {keyword}!=""%>
+                    对关键词 "{keyword}" <%if {poster}!=""%>和<%else%>的<%/if%>
+                <%/if%>
+                <%if {poster}!=""%>
+                    对作者 "{poster}" 的
+                <%/if%>
+                查询,找到相关主题 {topiccount} 个</em></h2>
+            </div>
+        </div>
+        <p class="emp xs2 xg2">{msgbox_text}</p>
+    </div>
+<%else%>
+    <%if {searchid}==-1%>
+        <%if {advsearch}==0%>
+            <div class="search">
+                <form action="" name="postpm" autocomplete="off" method="post" class="searchform">
+                    <table cellspacing="0" cellpadding="0">
+                    <tbody>
+                    <tr>
+                        <td class="s_logo"><h1 class="mtw ptw"><a title="{forumproductname}|BBS|论坛" href="{forumpath}index.aspx"><img alt="{forumproductname}|BBS|论坛" src="{forumpath}templates/default/images/logo.png"></a></h1></td>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr id="tps_form">
+                        <td>
+                            <input type="text" tabindex="1" class="schtxt" value="" maxlength="40" size="65" name="keyword" id="srchtxt">
+                        </td>
+                        <td>
+                            <button class="schbtn" value="true" id="tps_btn" type="submit"><strong>搜索</strong></button>
+                        </td>
+                        <td style="padding-left:10px; width: 50px; background:#FFF; text-align: left;">
+                            <label><a href="search.aspx?advsearch=1">高级</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                    </table>
+                </form>
+            </div>
+        <%else%>
+            <div class="wrap cl">
+            <form id="postpm" name="postpm" method="post" onsubmit="if(this.chkAuthor.checked) $('type').value='author';return true;" action="">
+                <div id="options_item">
+                    <div id="postoptions">
+                        <table cellpadding="0" cellspacing="0" border="0" class="tfm">
+                            <tbody>
+                                <tr>
+                                    <th><label for="searchtime">时间</label></th>
+                                    <td>
+                                        <select name="searchtime" id="searchtime">
+                                          <option value="0" selected="selected">全部时间</option>
+                                          <option value="-1">1天</option>
+                                          <option value="-2">2天</option>
+                                          <option value="-3">3天</option>
+                                          <option value="-7">1周</option>
+                                          <option value="-30">1个月</option>
+                                          <option value="-90">3个月</option>
+                                          <option value="-180">半年</option>
+                                          <option value="-365">1年</option>
+                                        </select>
+                                        <input type="radio" name="searchtimetype"  value="1" />以前
+                                        <input type="radio" name="searchtimetype" value="0" checked />以内
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                    <th><label for="resultorder">结果排序</label></th>
+                                    <td>
+                                        <select name="resultorder" id="resultorder">
+                                          <option value="0" selected="selected">最后回复时间</option>
+                                          <option value="1">发表时间</option>
+                                          <option value="2">回复数量</option>
+                                          <option value="3">查看次数</option>
+                                        </select>
+                                        <input type="radio" name="resultordertype" value="1" />升序
+                                        <input type="radio" name="resultordertype" value="0" checked />降序
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                    <th><label for="searchforumid">搜索范围</label></th>
+                                    <td>
+                                        <select name="searchforumid" size="12" style="width:450px" multiple="multiple" id="searchforumid">
+                                         <option selected value="">---------- 所有版块(默认) ----------</option>
+                                            <!--模版中所有版块的下拉框中一定要加入value=""否则会提示没有选择版块-->
+                                            {Caches.GetForumListBoxOptionsCache(true)}
+                                         </select>
+                                         <p>(按Ctrl或Shift键可以多选,不选择)</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="spacepostoptions">
+                        <table cellpadding="0" cellspacing="0" border="0"  class="tfm">
+                            <tbody>
+                                <tr>
+                                    <th><label for="searchtime">时间</label></th>
+                                    <td>
+                                        <select name="searchtime" id="searchtime">
+                                          <option value="0" selected="selected">全部时间</option>
+                                          <option value="-1">1天</option>
+                                          <option value="-2">2天</option>
+                                          <option value="-3">3天</option>
+                                          <option value="-7">1周</option>
+                                          <option value="-30">1个月</option>
+                                          <option value="-90">3个月</option>
+                                          <option value="-180">半年</option>
+                                          <option value="-365">1年</option>
+                                        </select>
+                                          <input type="radio" name="searchtimetype" value="1" />
+                                        以前
+                                        <input name="searchtimetype" type="radio" value="0"/>
+                                        以内
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                    <th><label for="resultorder">结果排序</label></th>
+                                    <td>
+                                        <select name="resultorder" id="resultorder">
+                                          <option value="0" selected="selected">发表时间</option>
+                                          <option value="1">回复数量</option>
+                                          <option value="2">查看次数</option>
+                                        </select>
+                                        <input type="radio" name="resultordertype" value="1" />
+                                        升序
+                                        <input name="resultordertype" type="radio" value="0"/>
+                                        降序
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="albumoptions">
+                        <table cellpadding="0" cellspacing="0" border="0"  class="tfm">
+                            <tbody>
+                                <tr>
+                                    <th><label for="searchtime">时间</label></th>
+                                    <td>
+                                        <select name="searchtime" id="searchtime">
+                                          <option value="0" selected="selected">全部时间</option>
+                                          <option value="-1">1天前</option>
+                                          <option value="-2">2天前</option>
+                                          <option value="-3">3天前</option>
+                                          <option value="-7">1周前</option>
+                                          <option value="-30">1个月前</option>
+                                          <option value="-90">3个月前</option>
+                                          <option value="-180">半年前</option>
+                                          <option value="-365">1年前</option>
+                                        </select>
+                                          <input type="radio" name="searchtimetype" value="1" />
+                                        之前
+                                        <input name="searchtimetype" type="radio" value="0" />
+                                        之后
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                    <th><label for="resultorder">结果排序</label></th>
+                                    <td>
+                                        <select name="resultorder" id="resultorder">
+                                          <option value="0" selected="selected">创建时间</option>
+                                        </select>
+                                        <input type="radio" name="resultordertype" value="1" />
+                                        升序
+                                        <input name="resultordertype" type="radio" value="0" />
+                                        降序
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <table cellspacing="0" cellpadding="0" class="mbm" id="tpsch">
+                    <tbody>
+                        <tr>
+                            <td><h1><a title="{forumproductname}|BBS|论坛" href="{forumpath}index.aspx"><img alt="{forumproductname}|BBS|论坛" src="{forumpath}templates/default/images/logo.png"></a></h1></td>
+                            <td>
+                                <ul class="tb cl">
+                                    <li id="forumli" class="a"><a href="search.aspx">论坛</a></li>
+                                </ul>
+<!--                                <input type="hidden" value="{type}" name="type" />
+                                <script type="text/javascript">
+                                    var type = '{type}';
+                                    switch (type) {
+                                        case 'spacepost': $('spaceli').className = 'a'; break;
+                                        case 'album': $('albumli').className = 'a'; break;
+                                        default: $('forumli').className = 'a'; break;
+                                    }
+                                </script>-->
+                                <table cellspacing="0" cellpadding="0" id="tps_form">
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <input type="text" tabindex="1" value="{keyword}" maxlength="40" size="45" class="schtxt" name="keyword" id="srchtxt">
+                                        </td>
+                                        <td>
+                                            <button id="tps_btn" class="schbtn" type="submit"><strong>搜索</strong></button>
+                                        </td>
+                                        <td style="padding-left: 10px; background:#FFF;">
+                                            <label><a href="search.aspx">返回普通搜索</a></label>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table cellSpacing="0" cellPadding="0" summary="搜索选项"  class="tfm">
+                    <thead>
+                    <tr>
+                        <th id="divsearchoption">搜索选项</th>
+                        <td>&nbsp;</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th><label for="poster">作者</label></th>
+                            <td>
+                                <input name="poster" type="text" id="poster" size="45" class="txt" />
+                                <input type="checkbox" value="1" id="chkAuthor" name="chkAuthor" onclick="checkauthoroption(this);" />搜索该作者所有帖子及相关内容
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody id="divsearchtype">
+                        <tr>
+                            <th><label for="poster">搜索类型</label></th>
+                            <td>
+                                <input type="hidden" name="type" value="" id="type" />
+                                <input name="keywordtype" type="radio" value="0" checked onclick="changeoption('');" />
+                                全部主题搜索
+                                <input name="keywordtype" type="radio" value="4" onclick="changeoption('digest');"/>
+                                精华主题搜索
+                                <%if {usergroupinfo.AllowSearch}%>
+                                    <input type="radio" name="keywordtype" value="1" onclick="changeoption('post');" />
+                                全文搜索
+                                <%/if%>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="options" style="margin-top:-1px;"></div>
+                <script type="text/javascript"  src="{jsdir}/template_search.js"></script>	
+                <table cellSpacing="0" cellPadding="0" summary="搜索类型" class="tfm">
+                    <tbody>
+                    <tr><th></th><td><button name="submit" type="submit" id="submit" class="pn"><span>执行搜索</span></button></td></tr>
+                    </tbody>
+                </table>
+             </form>
+             </div>
+        <%/if%>
+    <%else%>
+        <div class="wrap cl">
+            <form action="search.aspx" autocomplete="off" name="postpm" method="post" class="searchform">
+                <table cellspacing="0" cellpadding="0" class="mbm" id="tpsch">
+                <tbody>
+                    <tr>
+                    <td><h1><a title="{forumproductname}|BBS|论坛" href="{forumpath}index.aspx"><img alt="{forumproductname}|BBS|论坛" src="{forumpath}templates/default/images/logo.png"></a></h1></td>
+                    <td>
+                    <ul class="tb cl">
+                        <li id="forumli"><a href="search.aspx?keyword={keyword}&searchsubmit=1">论坛</a></li>
+                    </ul>
+                    <input type="hidden" value="" name="type" />
+                    <script type="text/javascript">
+                        var type = '{type}';
+                        switch (type) {
+                            case 'spacepost': $('spaceli').className = 'a'; break;
+                            case 'album': $('albumli').className = 'a'; break;
+                            default: $('forumli').className = 'a'; break;
+                        }
+                    </script>
+                        <table cellspacing="0" cellpadding="0" id="tps_form">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <input type="text" tabindex="1" value="{keyword}" maxlength="40" size="45" class="schtxt" name="keyword" id="srchtxt">
+                                </td>
+                                <td>
+                                    <button class="schbtn" id="tps_btn" type="submit"><strong>搜索</strong></button>
+                                </td>
+                                <td style="padding-left: 10px; background:#FFF;">
+                                    <label><a href="search.aspx?advsearch=1">高级</a></label>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    </tr>
+                </tbody>
+                </table>
+            </form>
+            <div class="tl">
+                <%if {type}=="author"%>
+                    <div id="resultid1" style="display:block;">
+                        <div class="sttl mbn">
+                            <h2>帖子搜索结果: <em>共搜索到{topiccount}个符合条件的帖子</em></h2>
+                        </div>
+                        <div class="slst mtw">
+                            <ul>
+                                <%loop (Topic) topic topiclist%>
+                                <li class="pbw">
+                                    <h3 class="xs3">
+                                        <%set {aspxrewriteurl} = this.ShowTopicAspxRewrite({topic.ID},0)%>
+                                        <a href="{aspxrewriteurl}" target="_blank">{topic.Title}</a>
+                                    </h3>
+                                    <p class="xg1">{topic.Replies} 个评论 - {topic.Views} 次查看</p>
+                                    <p></p>
+                                    <p>
+                                    <span><%set (string){pdtime} = ForumUtils.ConvertDateTime({topic.PostDateTime})%>{pdtime}</span>
+                                     - 
+                                    <span>
+                                    <%if {topic.PosterID}==-1%>
+                                        游客
+                                    <%else%>
+                                        <%set {aspxrewriteurl} = this.UserInfoAspxRewrite({topic.PosterID})%>
+                                        <a id="search{topic.ID}" href="{aspxrewriteurl}" target="_parent" <%if {useradminid}==1||{useradminid}==2%> onmouseout="showMenu(this.id);" onmousemove="showMenu(this.id);"<%/if%>>{topic.Poster}</a>
+                                    <%/if%>
+                                    </span>
+                                     - 
+                                    <span> <%set {aspxrewriteurl} = this.ShowForumAspxRewrite({topic.Fid},0)%>
+                                        <a href="{aspxrewriteurl}" target="_parent">{topic.ForumName}</a>
+                                    </span>
+                                    </p>
+                                </li>
+                                    <ul class="p_pop" id="search{topic.ID}_menu" style="display:none">
+                                        <li><a href="useradmin.aspx?action=banuser&uid={topic.PosterID}" onclick="showWindow('mods', this.href);doane(event);" class="forbid_user">禁言用户</a></li>
+                                        <li><a href="###" onclick="if(confirm('您确定要删除吗？')) _auditpost('deletepostsbyuidanddays',{topic.PosterID})">删除7天内的帖子</a></li>
+                                        <%set {aspxrewriteurl} = this.UserInfoAspxRewrite({topic.PosterID})%>
+                                        <li><a href="{aspxrewriteurl}" target="_blank" class="public_info">查看公共资料</a></li>
+                                        <li><a href="search.aspx?posterid={topic.Poster}&searchsubmit=1" class="all_topic" target="_blank">查看所有帖子</a></li>
+                                    </ul>
+                                <%/loop%>
+                            </ul>
+                        </div>
+                        <div class="pages_btns">
+                            <div class="pages">
+                                <%if {topicpagecount}>1%><em>{topicpageid}/{topicpagecount}页</em><%/if%>{topicpagenumbers}
+                            </div>
+                        </div>
+                    </div>
+                <%else%>
+                    <div class="sttl mbn">
+                        <h2>结果: <em>
+                         <%if {keyword}!=""%>
+                            对关键词 "{keyword}" <%if {poster}!=""%>和<%else%>的<%/if%>
+                        <%/if%>
+                        <%if {poster}!=""%>
+                            对作者 "{poster}" 的
+                        <%/if%>
+                        查询,找到相关主题 {topiccount} 个</em></h2>
+                    </div>
+                    <div class="slst mtw">
+                        <ul>
+                            <%loop (Topic) topic topiclist%>
+                            <li class="pbw">
+                                <h3 class="xs3">
+                                    <%set {aspxrewriteurl} = this.ShowTopicAspxRewrite({topic.ID},0)%>
+                                    <%set (string){tptitle} = LightKeyWord({topic.Title},{keyword})%>
+                                    <a href="{aspxrewriteurl}" target="_blank">{tptitle}</a>
+                                </h3>
+                                <p class="xg1">{topic.Replies} 个评论 - {topic.Views} 次查看</p>
+                                <p></p>
+                                <p>
+                                <span> <%set (string){pdtime} = ForumUtils.ConvertDateTime({topic.PostDateTime})%>{pdtime}</span>
+                                 - 
+                                <span>
+                                    <%if {topic.PosterID}==-1%>
+                                        游客
+                                    <%else%>
+                                        <%set {aspxrewriteurl} = this.UserInfoAspxRewrite({topic.PosterID})%>
+                                        <a id="search{topic.ID}" href="{aspxrewriteurl}" target="_parent" <%if {useradminid}==1||{useradminid}==2%>onmouseout="showMenu(this.id);" onmousemove="showMenu(this.id);"<%/if%>>{topic.Poster}</a>
+                                    <%/if%>
+                                </span>
+                                 - 
+                                <span><%set {aspxrewriteurl} = this.ShowForumAspxRewrite({topic.Fid},0)%><a href="{aspxrewriteurl}" target="_parent">{topic.ForumName}</a></span>
+                                </p>
+                            </li>
+                                <ul class="p_pop" id="search{topic.ID}_menu" style="display:none">
+                                    <li><a href="useradmin.aspx?action=banuser&uid={topic.PosterID}" onclick="showWindow('mods', this.href);doane(event);" class="forbid_user">禁言用户</a></li>
+                                    <li><a href="###" onclick="if(confirm('您确定要删除吗？')) _auditpost('deletepostsbyuidanddays',{topic.PosterID})">删除7天内的帖子</a></li>
+                                    <%set {aspxrewriteurl} = this.UserInfoAspxRewrite({topic.PosterID})%>
+                                    <li><a href="{aspxrewriteurl}" target="_blank" class="public_info">查看公共资料</a></li>
+                                    <li><a href="search.aspx?posterid={topic.Poster}&searchsubmit=1" class="all_topic" target="_blank">查看所有帖子</a></li>
+                                </ul>
+                            <%/loop%>
+                        </ul>
+                    </div>
+                    <div class="pages_btns">
+                        <div class="pages">
+                            <%if {pagecount}>1%><em>{pageid}/{pagecount}页</em><%/if%>{pagenumbers}
+                        </div>
+                    </div>
+                <%/if%>
+            </div>
+        <%/if%>      
+    </div>
+<%/if%>
+<%template _copyright%>
+<%template _footer%>	

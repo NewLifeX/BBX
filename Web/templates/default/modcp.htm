@@ -1,0 +1,1154 @@
+﻿<%template _header%>
+<script type="text/javascript" src="{config.GetJqueryUrl()}"></script>
+<script type="text/javascript">
+    jQuery.noConflict();
+</script>
+<script type="text/javascript" src="{jsdir}/template_modcp.js"></script>
+<script type="text/javascript" src="{jsdir}/ajax.js"></script>
+<script type="text/javascript" src="{jsdir}/template_quickreply.js"></script>
+<div class="wrap cl pageinfo">
+    <div id="nav">
+        <%if {usergroupinfo.AllowSearch}%>
+            <%template _quicksearch%>
+        <%/if%>
+        <a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <strong>管理面板</strong>
+    </div>
+</div>
+<%if page_err==0%>
+<%if {ispost} && {editusersubmit||banusersubmit||editannouncement||deleteannoucement} %>
+<%template _msgbox%>
+<%else%>
+<div class="wrap uc cl">
+    <div class="uc_app">
+        <h2>管理面板</h2>
+        <ul>
+            <%if {admingroupinfo.AllowPostannounce}%>
+            <li><a href="modcp.aspx?operation=list&forumid={forumid}">公告</a></li>
+            <%/if%>
+            <%if {admingroupinfo.AllowEditUser}%>
+            <li><a href="modcp.aspx?operation=edituser&forumid={forumid}">编辑用户</a></li>
+            <%/if%>
+            <%if {admingroupinfo.AllowBanUser}%>
+            <li><a href="modcp.aspx?operation=banusersearch&forumid={forumid}">禁止用户</a></li>					
+            <%/if%>
+            <li><a href="modcp.aspx?operation=forumaccesslist&forumid={forumid}">用户权限</a></li>
+            <%if {admingroupinfo.AllowBanIP}%>
+            <li><a href="modcp.aspx?operation=showbannedlist&forumid={forumid}">禁止 IP</a></li>
+            <%/if%>
+            <li><a href="modcp.aspx?operation=editforum&forumid={forumid}">版块编辑</a></li>
+            <%if {admingroupinfo.AllowModPost}%>
+            <li><a href="modcp.aspx?operation=audittopic&forumid={forumid}&filter=-2"><span id="audittopiccount" class="y numbg">{auditTopicCount}</span>审核主题</a></li>
+            <li><a href="modcp.aspx?operation=auditpost&forumid={forumid}&filter=1"><span id="auditpostcount" class="y numbg">{auditPostCount}</span>审核回复</a></li>
+            <%/if%>
+            <li><a href="modcp.aspx?operation=attention&forumid={forumid}">主题关注</a></li>
+            <%if {admingroupinfo.AllowViewLog}%><li><a href="modcp.aspx?operation=logs&forumid={forumid}">管理日志</a></li><%/if%>
+            <li><a href="modcp.aspx?operation=userout&forumid={forumid}">返回论坛</a></li>
+        </ul>
+    </div>
+    <div class="uc_main">
+    <div class="uc_content">
+    <%if {operation}=="login"%>
+        <h1>管理登录</h1>
+        <form action="" method="post" class="exfm">
+        <input type="hidden" value="{operation}" name="operation"/>
+        <table cellspacing="0" cellpadding="0" class="formtable" summary="管理登录">
+        <tbody>
+            <tr>
+                <th width="60"><label for="cpname">用户名</label></th><td><input type="text" name="cpname" class="txt" value="{username}" readonly="readonly"/></td>
+            </tr>
+            <tr>
+                <th><label for="cppwd">密码</label></th><td><input type="password" name="cppwd" class="txt"/></td>
+            </tr>
+            <tr>
+                <th></th><td><button type="submit" id="Submit1" name="Submit" class="pn"><span>提交</span></button></td>
+            </tr>
+        </table>
+        </form>
+        <div class="hintinfo">当您首次进入管理面板或者长时间没有管理动作时，您需要输入密码才能进入。如果密码输入错误超过 3 次，管理面板将会锁定。30 分钟或者更长时间后，管理面板才能解除锁定。
+        </div>
+    <%/if%>
+    <!--批量删帖-->
+    <%if {operation}=="deleteuserpost"%>
+        <h1>批量删帖</h1>
+        <table cellspacing="0" cellpadding="0" class="formtable" summary="批量删帖">
+        <tbody>
+            <tr>
+                <td>
+                <form action="modcp.aspx?operation=deleteuserpost" method="post">
+                    <input type="hidden" value="topics" name="deletetype"/>
+                    删除该用户
+                    <select name="delTopicDate">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                     </select>天内的主题<button type="submit" id="Submit1" name="Submit">提交</button>
+                </form>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                <form action="modcp.aspx?operation=deleteuserpost" method="post">
+                    <input type="hidden" value="posts" name="deletetype"/>
+                    删除该用户
+                    <select name="delTopicDate">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                     </select>天内的回帖<button type="submit" id="Submit1" name="Submit" class="pn"><span>提交</span></button>
+                </form>			 
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </form>
+    <%/if%>
+    <!--添加公告-->
+    <%if {operation}=="addannouncements" && {admingroupinfo.AllowPostannounce}%>
+        <h1>添加公告</h1>
+        <form action="modcp.aspx?operation=add" method="post">
+        <input type="hidden" value="{operation}" name="operation"/>
+        <input type="hidden" value="0" name="displayorder"/>
+        <table cellspacing="0" cellpadding="0" class="formtable" summary="添加公告">
+        <tbody>
+            <tr>
+                <th>标题</th><td><input type="text" size="80" id="subject" name="subject" value="" class="txt"/></td>
+            </tr>
+            <tr>
+                <th>起始时间</th><td><input type="text" style="cursor:default" onClick="showcalendar(event, 'starttime', 'cal_startdate1', 'cal_enddate1', '{Utils.GetDateTime()}');" name="starttime" value='{starttime}' id="starttime" class="txt"/>
+                    <input type="hidden" name="cal_startdate1" id="cal_startdate1" size="10"  value="1900-01-01" />
+                    <input type="hidden" name="cal_enddate1" id="cal_enddate1" size="10"  value="2099-01-01" />
+                </td>
+            </tr>
+            <tr>
+                <th>结束时间</th><td><input type="text" style="cursor:default" onClick="showcalendar(event, 'endtime', 'cal_startdate2', 'cal_enddate2', '{Utils.GetDateTime()}');" name="endtime" value='{endtime}' id="endtime" class="txt"/>
+                <input type="hidden" name="cal_startdate2" id="cal_startdate2" size="10"  value="1900-01-01" />
+                <input type="hidden" name="cal_enddate2" id="cal_enddate2" size="10"  value="2099-01-01" />
+                </td>
+            </tr>
+            <tr>
+                <th>内容</th><td><textarea cols="80" rows="10" id="message" name="message" class="txtarea" ></textarea></td>
+            </tr>
+            <tr>
+                <th> </th><td><button type="submit" id="addannouncement_Submit" name="Submit" class="pn"><span>提交</span></button></td>
+            </tr>
+        </tbody>
+        </table>
+        </form>
+        <script type="text/javascript" src="{jsdir}/template_calendar.js"></script>
+    <%/if%>
+    <!--编辑公告-->
+    <%if {operation}=="editannouncements"%>
+        <h1>编辑公告</h1>
+        <form action="modcp.aspx?operation=updateannouncements" method="post">
+        <input type="hidden" value={id} name="id"/>
+        <input type="hidden" value={displayorder} name="displayorder"/>
+        <table cellspacing="0" cellpadding="0" class="formtable" summary="编辑公告">
+        <tbody>
+            <tr>
+                <th>标题</th><td><input type="text" size="80" id="subject" name="subject" value={subject} class="txt"/></td>
+            </tr>
+            <tr>
+            <th>起始时间</th>
+            <td>
+                <input type="text" style="cursor:default" onClick="showcalendar(event, 'starttime', 'cal_startdate1', 'cal_enddate1', '{Utils.GetDateTime()}');" name="starttime" value="{starttime}" id="starttime" class="txt"/>
+                <input type="hidden" name="cal_startdate1" id="cal_startdate1" size="10"  value="1900-01-01" />
+                <input type="hidden" name="cal_enddate1" id="cal_enddate1" size="10"  value="2099-01-01" />
+            </td>
+            </tr>
+            <tr>
+                <th>结束时间</th>
+                <td>
+                <input type="text" style="cursor:default" onClick="showcalendar(event, 'endtime', 'cal_startdate2', 'cal_enddate2', '{Utils.GetDateTime()}');" name="endtime" value="{endtime}" id="endtime" class="txt"/>
+                <input type="hidden" name="cal_startdate2" id="cal_startdate2" size="10"  value="1900-01-01" />
+                <input type="hidden" name="cal_enddate2" id="cal_enddate2" size="10"  value="2099-01-01" />
+                </td>
+            </tr>
+            <tr>
+                <th>内容</th><td><textarea cols="80" rows="10" id="message" name="message" class="txtarea" >{message}</textarea></td>
+            </tr>
+            <tr>
+                <th></th><td><button type="submit" id="editannoucementsubmit" name="editannoucementsubmit" class="pn"><span>提交</span></button></td>
+            </tr>
+        </tbody>
+        </table>
+        </form>
+        <script type="text/javascript" src="{jsdir}/template_calendar.js"></script>
+    <%/if%>
+    <!--公告列表-->
+    <%if {operation}=="list"%>
+        <form action="modcp.aspx?operation=manage&op=delannouncements" method="post"  class="datalist">
+        <h1>
+            <span class="y" style="font-size:12px;font-weight:normal;">
+                <a href="modcp.aspx?operation=addannouncements&forumid={forumid}">+ 添加公告</a>
+            </span>公告列表</h1>
+        <input type="hidden" value={operation} name="operation"/>
+        <input type="hidden" value={op} name="op"/>
+        <table border="0" cellspacing="0" cellpadding="0" class="datatable">
+        <thead>
+        <tr class="colplural">
+            <th width="8%"><input type="checkbox" onclick="checkall(this.form)" name="chkall" id="chkall"/>删除</th>
+            <th width="5%">顺序</th>
+            <th width="12%">作者</th>
+            <th>标题</th>
+            <th width="15%">起始时间</th>
+            <th width="15%">结束时间</th>
+            <th width="8%">操作</th>
+        </tr>
+        </thead>
+        <%if {counts}<=0%>
+        <tbody>
+            <tr>
+                <td colspan="7">暂无公告</td>
+            </tr>
+        </tbody>
+        <%else%>
+        <%loop (Announcement) announcement announcementlist%>
+        <tbody>
+            <tr>
+                <td><%if {username}=="admin"||{username}=={announcement[poster]}%>
+                <input type="checkbox" name='aidlist' id='aidlist' value="{announcement[id]}" class="checkbox"/>
+                <%else%>
+                <input type="checkbox" name='aidlist' id='aidlist' disabled="disabled" value="{announcement[id]}" class="checkbox"/>	
+                <%/if%></td>	
+                <td>
+                <%if {username}=="admin"||{username}=={announcement[poster]}%>
+                <input type="text" size="3" id="displayorder" name="displayorder" value={announcement[displayorder]}  class="txt"/><%else%><input type="text" size="3" readonly="readonly" disabled id="displayorder" name="displayorder" value={announcement[displayorder]}  class="txt"/><%/if%>
+                <input type="hidden" name="hid" id="hid" size="10"  value="{announcement[id]}" />
+                </td>						
+                <td>{announcement[poster]}</td>
+                <td class="datatitle">{announcement[title]}</td>
+                <td class="time">{announcement[starttime]} </td>
+                <td class="time">{announcement[endtime]}</td>
+                <td>
+                <%if {username}=="admin"||({username}=={announcement[poster]})%>
+                <a href="modcp.aspx?operation=editannouncements&id={announcement[id]}">编辑
+                <%/if%></td>
+            </tr>
+        </tbody>
+        <%/loop%>
+        <%/if%>
+        </table>
+        <div class="pages_btns">
+            <div class="pages">
+            {pagenumbers}
+            </div>
+            <span class="z">
+                <button type="submit" name="operationsubmit" id="operationsubmit"  name="Submit" class="pn"/><span>提交</span></button>
+            </span>
+        </div>
+        <%if tip=="add"%><div class="hintinfo">公告添加完毕，请继续操作</div><%/if%><%if tip=="delsuccessful"%><div class="hintinfo">选定公告删除完毕，请继续操作</div><%/if%>
+        </form>
+    <%/if%>
+    <!--编辑用户-->
+    <%if {operation}=="edituser"%>
+        <h1>编辑用户 - 搜索</h1>
+        <form method="post" action="modcp.aspx?operation=edituser&op=edit&forumid={fid}" class="exfm">
+        <input type="hidden" value="{operation}" name="operation"/>
+        <input type="hidden" value="{op}" name="op"/>
+        <table cellspacing="0" cellpadding="0" class="formtable" summary="编辑用户 - 搜索">
+        <tbody>
+            <tr>
+                <th width="60"><label for="username">用户名</label></th><td><input name="username" value="" size="20" type="text" class="txt" ></td>
+            </tr>
+            <tr>
+                <th><label for="uid">UID</label></th><td><input name="uid" value="" size="20" type="text" class="txt"> [可选]</td>
+            </tr>
+            <tr>
+                <th> </th><td><button type="submit" class="pn" name="editusersubmit" id="editusersubmit"><span>提交</span></button></td>
+            </tr>
+        </tbody>
+        </table>
+        </form>
+        <%if {op}!="edit"%>
+        <div class="hintinfo">
+            请首先输入用户名或者 UID 搜索用户，然后进行下一步。搜索 UID 比搜索用户名速度更快且准确
+        </div>
+    <%else%>
+        <%if {op}=="edit" &&{uid}>0%>
+            <h1>编辑用户</h1>
+            <form method="post" action="modcp.aspx?operation=updateuser&forumid={fid}"  class="exfm">
+            <input type="hidden" value={operation} name="operation"/>
+            <input type="hidden" value="updateuser" name="op"/>
+            <input type="hidden" name="username" value={uname}>
+            <input type="hidden" name="uid" value={uid}>
+            <table cellspacing="0" cellpadding="0" class="formtable" summary="编辑用户 - {username}">
+                <tr>
+                    <th></th>
+                    <td>
+                    <%set (string){avatarurl}=Avatars.GetAvatarUrl(uid) %>
+                        <img src="t{avatarurl}" onerror="this.onerror=null;this.src='{imagedir}/noavatar_medium.gif';" />
+                        <%if {allowdeleteavatar}%>
+                        <input type="checkbox" name="delavatar" value="1" onclick="if(this.checked) this.checked=confirm('您确认要在提交后删除该用户的头像吗?');" />删除头像
+                        <%/if%>
+                    </td>
+                </tr>
+                <tr>
+                    <th width="60"><label for="username">用户名</label></th>
+                    <td>{uname}</td>
+                </tr>
+                <tr>
+                    <th><label for="username">Uid</label></th><td>{uid}</td>
+                </tr>
+                <tr>
+                    <th><label for="locationnew">来自</label></th><td><input type="text" name="locationnew" value="{location}" size="40"></td>
+                </tr>
+                <tr>
+                    <th><label for="bionew">自我介绍</label></th><td><textarea name="bionew" rows="4" cols="80">{bio}</textarea></td>
+                </tr>
+                <tr>
+                    <th><label for="bionew">签名</label></th><td><textarea name="signaturenew" rows="4" cols="80">{signature}</textarea></td>
+                </tr>
+                <tr>
+                    <th></th><td><button type="submit" class="pn" name="editsubmit" id="editsubmit"><span>提交</span></button></td>
+                </tr>
+            </table>
+            </form>
+        <%else%>
+            <div class="hintinfo">
+            该用户不存在，请重新输入 
+            </div>
+        <%/if%>
+    <%/if%>
+    <%/if%>
+    <!--禁止用户-->
+    <%if {operation}=="banusersearch"%>
+        <h1>禁止用户 - 搜索</h1>
+        <form method="post" action="modcp.aspx?operation=banusersearch&op=ban"  class="exfm">
+        <input type="hidden" value="{operation}" name="operation"/>
+        <input type="hidden" value="{op}" name="op"/>
+            <table cellspacing="0" cellpadding="0" class="formtable" summary="禁止用户 - 搜索">
+            <tbody>
+            <tr>
+                <th width="60"><label for="username">用户名</label></th><td><input name="username" value="" size="20" type="text" class="txt"></td>
+            </tr>
+            <tr>
+                <th><label for="Uid">UID</label></th><td><input name="uid" value="" size="20" type="text" class="txt"> [可选]</td>
+            </tr>
+            <tr>
+                <th> </th><td><button type="submit" class="pn" name="Submit" id="Submit"><span>提交</span></button></td>
+            </tr>
+            </tbody>
+        </table>
+        </form>
+    <%if {op}!="ban"%>
+        <div class="hintinfo">
+            请首先输入用户名或者 UID 搜索用户，然后进行下一步。搜索 UID 比搜索用户名速度更快且准确
+        </div>
+    <%else%>
+        <%if {uid}>0%>
+        <h3>禁止用户 - {uname}</h3>
+        <form method="post" action="modcp.aspx?operation=banuser">
+        <input type="hidden" value={operation} name="operation"/>
+        <input type="hidden" value={uname} name="username" >
+        <input type="hidden" value={uid} name="uid"/>
+        <table cellspacing="0" cellpadding="0" class="formtable" summary="禁止用户 - {username}">
+        <tbody>
+            <tr>
+                <th><label for="uname">用户名</label></th><td>{uname}</td>
+            </tr>
+            <tr>
+                <th><label for="Uid">UID</label></th><td>{uid}</td>
+            </tr>
+            <tr>
+                <th><label for="curstatus">当前状态</label></th>
+                <td><%if {curstatus}=="禁止发言"||{curstatus}=="禁止访问"%>{grouptitle} (有效期至 {groupexpiry})<%else%>正常状态<%/if%></td>
+            </tr>
+            <tr>
+                <th><label for="bannew">变更为</label></th><td><%if {grouptitle}=="禁止发言"%> <input name="bannew" value="4" type="radio" checked/> 禁止发言<%else%><input name="bannew" value="4" type="radio"/>禁止发言<%/if%><%if {grouptitle}=="禁止访问"%><input name="bannew" value="5" type="radio" checked/>禁止访问<%else%><input name="bannew" value="5" type="radio"/>禁止访问<%/if%></td>
+            </tr>
+            <tr>
+            <th><label for="banexpirynew">期限</label></th>
+            <td>	
+            <div class="ftid">
+                <select name="banexpirynew" id="banexpirynew">
+                    <option value="0">永 久</option>
+                    <option value="1">1天</option>
+                    <option value="3">3天</option>
+                    <option value="5">5天</option>
+                    <option value="7">7天</option>
+                    <option value="14">14天</option>
+                    <option value="30">1个月</option>
+                    <option value="90">3个月</option>
+                    <option value="180">半年</option>
+                    <option value="365">1年</option>
+                </select>
+            </div>
+            <script type="text/javascript">simulateSelect('banexpirynew');</script>
+            期限设置仅对禁止发言和禁止访问的操作有效
+            </td>
+            </tr>
+            <tr>
+                <th><label for="reason">理由</label></th><td><textarea name="reason" rows="4" cols="80" class="txtarea">{reason}</textarea></td>
+            </tr>
+            <tr>
+                <th></th><td><button type="submit" class="pn" name="banusersubmit" id="banusersubmit"><span>提交</span></button></td>
+            </tr>
+        </tbody>
+        </table>
+        </form>
+        <%else%>
+        <div class="hintinfo">
+        该用户不存在，请重新输入 
+        </div>
+        <%/if%>
+    <%/if%>
+    <%/if%>
+    <!--用户权限-->
+    <%if {operation}=="forumaccesslist"%>
+        <h1>特殊用户</h1>
+        <div class="datalist">
+        <table summary="" cellpadding="0" cellspacing="0" class="datatable">
+        <thead>
+        <tr class="colplural">
+            <td width="15%">会员</td>
+            <td width="15%">版块</td>
+            <th width="8%">浏览主题</th>
+            <th width="8%">发表主题</th>
+            <th width="8%">回复主题</th>
+            <th width="8%">上传附件</th>
+            <th width="8%">下载附件</th>
+            <td width="15%">版主</td>
+        </tr>
+        </thead>
+        <%if foruminfolist.Count>0%>
+            <%loop (IXForum) filist foruminfolist%>
+            <%loop (string) t filist.Permuserlist.Split('|')%>
+            <tr>
+             <%set {aspxrewriteurl} = this.UserInfoAspxRewrite({t.Split(',')[1]})%>
+            <td><a href="{forumurl}{aspxrewriteurl}" target="_blank">{t.Split(',')[0]}</a></td>
+            <%set (string){aspxforumrewriteurl} = this.ShowForumAspxRewrite({filist.fid},0,{filist.rewritename})%>
+            <td><a href="{forumurl}{aspxforumrewriteurl}" target="_blank">{filist.name}</a></td>
+            <%set (int){power} = Convert.ToInt32({t.Split(',')[2]})%>
+            <%set (string){viewpowerimg} = GetPowerImg({power},{BBX.Entity.ForumSpecialUserPower.ViewByUser})%>
+            <td><img src="{imagedir}/{viewpowerimg}" /></td>
+            <%set (string){postpowerimg} = GetPowerImg({power},{BBX.Entity.ForumSpecialUserPower.PostByUser})%>
+            <td><img src="{imagedir}/{postpowerimg}" /></td>
+            <%set (string){replypowerimg} = GetPowerImg({power},{BBX.Entity.ForumSpecialUserPower.ReplyByUser})%>
+            <td><img src="{imagedir}/{replypowerimg}" /></td>
+            <%set (string){downloadpowerimg} = GetPowerImg({power},{BBX.Entity.ForumSpecialUserPower.DownloadAttachByUser})%>
+            <td><img src="{imagedir}/{downloadpowerimg}" /></td>
+            <%set (string){postattachpowerimg} = GetPowerImg({power},{BBX.Entity.ForumSpecialUserPower.PostAttachByUser})%>
+            <td><img src="{imagedir}/{postattachpowerimg}" /></td>
+            <td>
+                <a href="{forumurl}{aspxrewriteurl}">{filist.ModeratorsHtml}</a>
+            </td>
+            </tr>
+            <%/loop%>
+            <%/loop%>
+            <%else%>
+            <tr>
+            <td colspan="9" align="left">
+            当前没有特殊权限用户
+            </td>
+            </tr>
+            <%/if%>
+            <tbody>
+            <tr>
+                <td colspan="9">
+                    <form method="post" action="modcp.aspx?operation=forumaccesslist" class="y">
+                    <input name="formhash" value="5ff4e742" type="hidden">
+                    <div class="z" style="margin-left:2px;">用户名: <input name="suser" value="" onclick="this.value='';" type="text" class="txt"></div>
+                    <div class="ftid" style="margin-left:2px;">
+                        <select name="forumid2" id="forumid2">
+                            <option value="0">全部</option>
+                            {forumliststr}
+                        </select>
+                        <script type="text/javascript">simulateSelect('forumid2','160');</script>
+                    </div>
+                    <button type="submit" id="Submit" name="Submit" class="z pn" style="margin-left:2px;"><span>搜索</span></button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+        </table>
+        </div>
+        <script type="text/javascript">
+        function chkallaccess(obj) {
+            $('new_post').checked
+                = $('new_post').disabled
+                = $('new_reply').checked
+                = $('new_reply').disabled
+                = $('new_postattach').checked
+                = $('new_postattach').disabled
+                = $('new_getattach').checked
+                = $('new_getattach').disabled
+                = obj.checked;
+        }
+
+        function disallaccess(obj) {
+            $('new_view').checked
+                = $('new_post').checked
+                = $('new_post').checked
+                = $('new_reply').checked
+                = $('new_postattach').checked
+                = $('new_getattach').checked
+                = false;
+            $('customaccess').disabled
+                = $('new_view').disabled
+                = $('new_view').disabled
+                = $('new_post').disabled
+                = $('new_post').disabled
+                = $('new_reply').disabled
+                = $('new_postattach').disabled
+                = $('new_getattach').disabled
+                = obj.checked;
+        }
+
+        </script>
+        <h1>编辑用户权限</h1>
+        <form method="post" action="modcp.aspx?operation=forumaccessupdate" class="exfm">
+        <input type="hidden" value="{operation}" name="operation"/>
+        <table cellspacing="0" cellpadding="0" class="formtable" summary="编辑用户权限">
+        <tbody>
+            <tr>
+                <th width="60"><label for="forumid">版块选择</label></th>
+                <td>
+                <div class="ftid">
+                    <select name="forumid" id="forumid">
+                        <option value="0">全部</option>
+                        {forumliststr}
+                    </select>
+                    <script type="text/javascript">simulateSelect('forumid','160');</script>
+                </div>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="new_user">用户名</label></th>
+                <td><input size="25" value="" id="new_user" name="new_user" type="text" class="txt"></td>
+            </tr>
+            <tr>
+                <th><label for="deleteaccess">权限变更</label></th>
+                <td>
+                    <input value="0" name="deleteaccess" id="deleteaccess" onclick="disallaccess(this)" type="checkbox"> 恢复默认
+                    <span id="customaccess" style="border: 0px solid rgb(221, 221, 221); padding: 0px;">
+                    <input value="1" name="new_view" id="new_view" onclick="chkallaccess(this)" type="checkbox"> 禁止查看主题 
+                    <input value="2" name="new_post" id="new_post" type="checkbox"> 禁止发表主题
+                    <input value="4" name="new_reply" id="new_reply" type="checkbox"> 禁止发表回复
+                    <input value="8" name="new_postattach" id="new_postattach" type="checkbox"> 禁止上传附件
+                    <input value="16" name="new_getattach" id="new_getattach" type="checkbox"> 禁止下载附件
+                </td>
+            </tr>
+            <tr>
+                <th></th><td><button type="submit" id="Submit" name="Submit" class="pn"><span>提交</span></button></td>
+            </tr>
+            <tr>
+                <th></th><td><%if {tip}=="access_successful"%>用户权限更新成功, 请继续操作<%/if%></td>
+            </tr>
+        </tbody>
+        </table>
+        </form>
+        <div class="hintinfo">
+            通常情况下，用户在版块的权限是根据他的用户组决定的，此处您可以限制某个用户在某版块的权限。<br>注意: 看帖是基本权限，一旦禁止, 其他权限会同时进行禁止。<br>图例说明: <img src="{imagedir}/access_normal.gif"> &nbsp; 默认权限&nbsp;&nbsp;&nbsp;&nbsp;<img src="{imagedir}/access_allow.gif"> &nbsp;强制允许
+        </div>
+    <%/if%>
+    <!--禁止IP-->	
+    <%if {operation}=="showbannedlist"%>
+        <form method="post" action="modcp.aspx?operation=ipban" class="datalist">
+        <h1>禁止 IP</h1>
+        <input type="hidden" value="{operation}" name="operation"/>
+        <table cellpadding="0" cellspacing="0" class="datatable">
+        <thead>
+            <tr class="colplural">
+                <th width="8%"><input class="checkbox" id="chkall" name="chkall" onclick="checkall(this.form)" type="checkbox">删除</th>
+                <th>IP 地址</th>
+                <th width="20%">地理位置</th>
+                <th width="10%">操作者</th>
+                <th width="15%">起始时间</th>
+                <th width="15%">结束时间</th>
+            </tr>
+        </thead>
+        <%if {counts}>0%>
+        <tbody>
+        <%loop (Banned) showbannedip showbannediplist%>
+        <tr>
+            <td><%if {showbannedip.Admin}!=username%><input class="checkbox" id="chkbanip" name="chkbanip" disabled="disabled" value={showbannedip.ID} type="checkbox"><%else%><input class="checkbox" id="chkbanip" name="chkbanip" value={showbannedip.ID} type="checkbox"><%/if%></td>
+            <td>{showbannedip.ip1}.{showbannedip.ip2}.{showbannedip.ip3}.{showbannedip.ip4}</th>
+            <td>{showbannedip.Location}</td>
+            <td>{showbannedip.Admin}</td>
+            <td class="time">{showbannedip.dateline}</td>
+            <td><input type="text" name="expiration" id="expiration" size="15" value={showbannedip.expiration}></input><input type="hidden" name ="hiddenexpiration" id ="hiddenexpiration" value={showbannedip.expiration}><input type="hidden" name ="hiddenid" id ="hiddenid" value={showbannedip.ID}></td>
+        </tr>
+        <%/loop%>
+        </tbody>
+        <%/if%>
+        </table>
+        <div class="pages_btns">
+            <div class="pages">{pagenumbers}</div>
+        </div>
+        <hr class="solidline"/>
+        <h1>新增要禁止IP</h1>
+        <div class="exfm">
+            <table cellspacing="0" cellpadding="0" class="formtable" summary="新增要禁止IP">
+            <tbody>
+            <tr>
+                <td width="300">ip地址：<input name="ip1new" value="" size="1" maxlength="10" type="text" class="txt"> .
+                    <input name="ip2new" value="" size="1" maxlength="10" type="text" class="txt"> .
+                    <input name="ip3new" value="" size="1" maxlength="10" type="text" class="txt"> .
+                    <input name="ip4new" value="" size="1" maxlength="10" type="text" class="txt">
+                </td>
+                <td>期限：<input name="validitynew" value="30" size="3" type="text" class="txt"> 天</td>
+                <td><button type="submit" id="Submit" name="Submit" class="pn"><span>提交</span></button></td>
+            </tr>
+            </tbody>
+            </table>
+        </div>
+        </form>
+    <%/if%>
+    <!--审核回复-->	
+    <%if {operation}=="auditpost" && {admingroupinfo.AllowModPost}%>
+        <h1>审核回复范围选择</h1>
+        <form id="form_post" action="" method="get" class="exfm">
+        <input name="operation" type="hidden" value="{operation}" />
+        <table cellspacing="0" cellpadding="0" class="formtable" summary="审核回复范围选择">
+        <tbody>
+        <tr>
+            <th width="60"><label for="forumid">版块选择</label></th>
+            <td>
+                <div class="ftid">
+                    <select name="forumid" id="forumid" change="location.href='modcp.aspx?operation=auditpost&forumid='+jQuery('#forumid option:selected').val()+'&filter='+jQuery('#filter option:selected').val()">
+                        <option value="0">全部</option>
+                        {forumliststr}
+                    </select>
+                </div>
+                <script type="text/javascript">
+                    simulateSelect("forumid","200",true);
+                </script>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="filter">帖子范围</label></th>
+            <td>
+                <input id="auditpost_radio" type="radio" <%if {filter}==1%>checked="checked"<%/if%>  onclick="jQuery('#ignorepost_radio').attr('checked', false);location.href='modcp.aspx?operation=auditpost&forumid='+jQuery('#forumid option:selected').val()+'&filter=1&tablelist='+jQuery('#tablelist option:selected').val();">未审核的回复</input>
+                <input id="ignorepost_radio" type="radio" <%if {filter}==-3%>checked="checked"<%/if%> onclick="jQuery('#auditpost_radio').attr('checked', false);location.href='modcp.aspx?operation=auditpost&forumid='+jQuery('#forumid option:selected').val()+'&filter=-3&tablelist='+jQuery('#tablelist option:selected').val()">已忽略的回复</input>
+            </td>
+        </tr>
+        </tbody>
+        </table>
+        </form>
+        <%if {counts}!=0%>
+        <form action="" method="post" name="auditpost_form" id="auditpost_form">
+        <div class="pages_btns">
+            <div class="pages">{pagenumbers}</div>
+            <input id="checkedall" name="checkedall" type="checkbox" value="" onclick="newCheckAll(this.form.id,this.checked)"/>全选 
+            操作理由&nbsp; <input type="text" style="margin: 0px;" id="pm_top" name="pm_top" class="txt"/> &nbsp; 
+            <select onchange="$('pm_top').value=this.value;" style="margin: 0px;">
+                <option value="">无</option>
+                <option value="">--------</option>
+                <option value="广告/SPAM">广告/SPAM</option>
+                <option value="恶意灌水">恶意灌水</option>
+                <option value="违规内容">违规内容</option>
+                <option value="文不对题">文不对题</option>
+                <option value="重复发帖">重复发帖</option>
+                <option></option>
+                <option value="我很赞同">我很赞同</option>
+                <option value="精品文章">精品文章</option>
+                <option value="原创内容">原创内容</option>
+            </select>
+            <span class="postbtn"><input type="button" value="通过" onclick="optionCheckedPosts('pass',$('pm_top').value)" /></span>
+            <span class="postbtn"><input type="button" value="删除" onclick="optionCheckedPosts('delete',$('pm_top').value)" /></span>
+            <span class="postbtn"><input type="button" value="忽略" onclick="optionCheckedPosts('ignore',$('pm_top').value)" /></span>
+            <span class="postbtn"><input type="submit" value="展开" style="display:none"/></span>
+        </div>
+        <div class="audit_list">
+        <table id="table_post" cellspacing="0" cellpadding="0" width="100%">
+            <%loop (Post) post postlist%>
+            <tbody id="postbody_{post.ID}" <%if {post[_id]}=={last}&&inajax==1&&{about}=="post"%>name="lastpost"<%/if%> onmousemove="chageclass('postover',{post.ID})" onmouseout="chageclass('postout',{post.ID})">
+                <tr>
+                <td>
+                    <input name="operation" type="hidden" value="{operation}" />	
+                    <input name="pidlist" type="hidden" value="{post.ID}" />
+                    <input name="tidlist" type="hidden" value="{post.tid}" />
+                    <input name="fidlist" type="hidden" value="{post.fid}" />
+                    <dl>
+                        <dt>
+                            <cite id="postcite_{post.ID}" class="y" style="display:none">
+                            操作理由&nbsp; <input type="text" style="margin: 0px;" id="pm_{post.ID}" name="pm_{post.ID}" class="txt"> &nbsp; 
+                            <select onchange="$('pm_{post.ID}').value=this.value;" style="margin: 0px;">
+                            <option value="">无</option>
+                            <option value="">--------</option>
+                            <option value="广告/SPAM">广告/SPAM</option>
+                            <option value="恶意灌水">恶意灌水</option>
+                            <option value="违规内容">违规内容</option>
+                            <option value="文不对题">文不对题</option>
+                            <option value="重复发帖">重复发帖</option>
+                            <option></option>
+                            <option value="我很赞同">我很赞同</option>
+                            <option value="精品文章">精品文章</option>
+                            <option value="原创内容">原创内容</option>
+                            </select>
+                            <a href="###" id="passpost_{post.ID}" name="mod_{post.ID}" onclick="_auditpost('passpost','{post.ID}|{post.tid}',$('pm_{post.ID}').value)">通过</a>
+                            <a href="###" id="mod_{post.ID}" name="mod_{post.ID}" onclick="_auditpost('ignorepost','{post.ID}|{post.tid}',$('pm_{post.ID}').value)">忽略</a>
+                            <a href="###"   id="mod_{post.ID}" name="mod_{post.ID}" onclick="_auditpost('deletepost','{post.ID}|{post.tid}',$('pm_{post.ID}').value)">删除</a>
+                            </cite>
+                            <input id="auditpostid" name="auditpostid" type="checkbox" value="{post.ID}|{post.tid}" />
+                            <%set {aspxrewriteurl} = this.ShowTopicAspxRewrite({post.tid},0)%>
+                            <%set (string){aspxuserrewriteurl} = this.UserInfoAspxRewrite({post.PosterID})%>
+                            {forumnav} » {post.title}
+                        </dt>
+                        <dd>
+                            <a id="post{post.ID}" href="{aspxuserrewriteurl}" title="{post.ForumName}" class="lightlink" onmouseout="showMenu(this.id);" onmousemove="showMenu(this.id);">{post.poster}</a> 发表于 <a href="{aspxrewriteurl}" title="{post.ForumName}"  class="audit_time">{post.PostDateTime}</a>
+                        </dd>
+                        <dd>
+                            <div style="overflow-y: auto; overflow-x: hidden; height: 120px; width: 100%;">{post.message}</div>
+                        </dd>
+                    </dl>					
+                    <div id="auditreason_menu" class="popupmenu_popup" style="display:none;">
+                        <textarea type="textarea" size="80" name="pm_{post.ID}" id="pm_{post.ID}" class="txtarea"></textarea>
+                    </div>
+                    <ul class="p_pop" id="post{post.ID}_menu" style="display:none">
+                    <li><a href="useradmin.aspx?action=banuser&uid={post.PosterID}" onclick="showWindow('mods', this.href);doane(event);" class="forbid_user">禁言用户</a></li>
+                    <li><a href="###" onclick="if(confirm('您确定要删除吗？')) _auditpost('deletepostsbyuidanddays',{post.PosterID})">删除7天内的帖子</a></li>
+                    <%set {aspxrewriteurl} = this.UserInfoAspxRewrite({post.PosterID})%>
+                    <li><a href="{aspxrewriteurl}" target="_blank" class="public_info">查看公共资料</a></li>
+                    <li><a href="search.aspx?posterid={post.PosterID}&searchsubmit=1" class="all_topic" target="_blank">查看所有帖子</a></li>
+                </ul>
+                </td>
+                </tr>
+            </tbody>
+            <%/loop%>
+            </table>
+        </div>
+        <div class="pages_btns">
+            <div class="pages">{pagenumbers}</div>
+            <input id="lastcheckedall" name="lastcheckedall" type="checkbox" value="" onclick="newCheckAll(this.form.id,this.checked)"/>全选 
+            操作理由&nbsp; <input type="text" style="margin: 0px;" id="pm_bottom" name="pm_bottom" class="txt"> &nbsp; 
+            <select onchange="$('pm_bottom').value=this.value;" style="margin: 0px;">
+            <option value="">无</option>
+            <option value="">--------</option>
+            <option value="广告/SPAM">广告/SPAM</option>
+            <option value="恶意灌水">恶意灌水</option>
+            <option value="违规内容">违规内容</option>
+            <option value="文不对题">文不对题</option>
+            <option value="重复发帖">重复发帖</option>
+            <option></option>
+            <option value="我很赞同">我很赞同</option>
+            <option value="精品文章">精品文章</option>
+            <option value="原创内容">原创内容</option>
+            </select>
+            <span class="postbtn"><input type="button" value="通过" onclick="optionCheckedPosts('pass',$('pm_bottom').value)" /></span>
+            <span class="postbtn"><input type="button" value="删除" onclick="optionCheckedPosts('delete',$('pm_bottom').value)" /></span>
+            <span class="postbtn"><input type="button" value="忽略" onclick="optionCheckedPosts('ignore',$('pm_bottom').value)" /></span>
+            <span class="postbtn"><input type="submit" value="展开" style="display:none"/></span>
+        </div>
+        </form>		
+        <%else%>
+            <div class="hintinfo">对不起，没有找到需要审核的回复。</div>
+            <input id="postcount" type="hidden" value="0" />
+        <%/if%>
+<%/if%>
+        
+<!--审核主题-->
+        <input name="operation" type="hidden" value="{operation}" />
+        <input id="count" type="hidden" value="{counts}" />
+        <input id="fid" type="hidden" value="{fid}" />
+        <input id="pagecount" type="hidden" value="{pagecount}" />
+        <input id="pageid" type="hidden" value="{pageid}" />
+        <table id="temp" style="display:none"></table>
+<%if {operation}=="audittopic" && {admingroupinfo.AllowModPost}%>
+        <h1>审核主题范围选择</h1>
+        <form id="forum_topic" action="" method="get" class="exfm">
+        <input name="operation" type="hidden" value="{operation}" />
+        <table cellspacing="0" cellpadding="0" class="formtable" summary="审核主题范围选择">
+        <tbody>
+        <tr>
+            <th width="60"><label for="forumid">版块选择</label></th>
+            <td>
+                <div class="ftid">
+                    <select name="forumid" id="forumid" change="location.href='modcp.aspx?operation=audittopic&forumid='+jQuery('#forumid option:selected').val()+'&filter='+jQuery('#filter option:selected').val()">
+                        <option value="0">全部</option>
+                        {forumliststr}
+                    </select>
+                </div>
+                <script type="text/javascript">
+                    simulateSelect("forumid", "200", true);
+                </script>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="filter">帖子范围</label></th>
+            <td>
+            <div>
+                <input id="audittopic_radio" type="radio" <%if {filter}==-2%>checked="checked"<%/if%> onclick="jQuery('#ignoretopic_radio').attr('checked', false);location.href='modcp.aspx?operation=audittopic&forumid='+jQuery('#forumid option:selected').val()+'&filter=-2&tablelist='+jQuery('#tablelist option:selected').val()">未审核的主题</input>
+                <input id="ignoretopic_radio" type="radio" <%if {filter}==-3%>checked="checked"<%/if%> onclick="jQuery('#audittopic_radio').attr('checked', false);location.href='modcp.aspx?operation=audittopic&forumid='+jQuery('#forumid option:selected').val()+'&filter=-3&tablelist='+jQuery('#tablelist option:selected').val()">已忽略的主题</input>
+            </div>
+            </td>
+        </tr>
+        </tbody>
+        </table>
+        </form>
+        <%if {counts}!=0%>
+        <form action="#" method="post" id="audittopic_form" name="audittopic_form" id="audittopic_form">
+        <div class="pages_btns">
+            <div class="pages">{pagenumbers}</div>
+            <input id="chkall" name="chkall" type="checkbox" value="" onclick="newCheckAll(this.form.id,this.checked)"/>全选 
+            操作理由&nbsp; <input type="text" style="margin: 0px;" id="pm_top" name="pm_top" class="txt"> &nbsp; 
+            <select onchange="$('pm_top').value=this.value;" style="margin: 0px;">
+            <option value="">无</option>
+            <option value="">--------</option>
+            <option value="广告/SPAM">广告/SPAM</option>
+            <option value="恶意灌水">恶意灌水</option>
+            <option value="违规内容">违规内容</option>
+            <option value="文不对题">文不对题</option>
+            <option value="重复发帖">重复发帖</option>
+            <option></option>
+            <option value="我很赞同">我很赞同</option>
+            <option value="精品文章">精品文章</option>
+            <option value="原创内容">原创内容</option>
+            </select>
+            <span class="postbtn"><input type="button" value="通过" onclick="optionCheckedTopics('pass',$('pm_top').value)" /></span>
+            <span class="postbtn"><input type="button" value="删除" onclick="optionCheckedTopics('delete',$('pm_top').value)" /></span>
+            <span class="postbtn"><input type="button" value="忽略" onclick="optionCheckedTopics('ignore',$('pm_top').value)" /></span>
+            <span class="postbtn"><input type="submit" value="展开" style="display:none"/></span>
+        </div>
+
+        <div class="audit_list">
+            <table id="table_topic" cellspacing="0" cellpadding="0" width="100%">
+                <%loop (Topic) topic topiclist%>
+                <tbody id="tbody_{topic.ID}" <%if {topic[_id]}=={last}&&inajax==1&&{about}=="topic"%>name="lasttopic"<%/if%> onmousemove="chageclass('topicover',{topic.ID})" onmouseout="chageclass('topicout',{topic.ID})">
+                <tr>
+                <td>
+                    <dl>
+                        <dt>
+                            <cite id="cite_{topic.ID}" class="y" style="display:none">
+                            操作理由&nbsp; <input type="text" style="margin: 0px;" id="pm_{topic.ID}" name="pm_{topic.ID}" class="txt"> &nbsp; 
+                            <select onchange="$('pm_{topic.ID}').value=this.value;" style="margin: 0px;">
+                            <option value="">无</option>
+                            <option value="">--------</option>
+                            <option value="广告/SPAM">广告/SPAM</option>
+                            <option value="恶意灌水">恶意灌水</option>
+                            <option value="违规内容">违规内容</option>
+                            <option value="文不对题">文不对题</option>
+                            <option value="重复发帖">重复发帖</option>
+                            <option></option>
+                            <option value="我很赞同">我很赞同</option>
+                            <option value="精品文章">精品文章</option>
+                            <option value="原创内容">原创内容</option>
+                            </select>
+                            <a href="###" id="pass_{topic.ID}" name="pass_{topic.ID}" onclick="_auditpost('passtopic',{topic.ID},$('pm_{topic.ID}').value)">通过</a>
+                            <a href="###"  id="ignore_{topic.ID}" name="mod_{topic.ID}" onclick="_auditpost('ignoretopic',{topic.ID},$('pm_{topic.ID}').value)">忽略</a>
+                            <a href="###"  name="delete_{topic.ID}" id="mod_{topic.ID}" onclick="_auditpost('deletetopic',{topic.ID},$('pm_{topic.ID}').value)">删除</a>
+                            </cite>
+                            <input id="audittopicid" name="audittopicid" type="checkbox" value="{topic.ID}" />
+                            <input name="topicidlist" type="hidden" value="{topic.ID}" />
+                            <input name="fidlist" type="hidden" value="{topic.fid}" />
+                            <%set {aspxrewriteurl} = this.ShowTopicAspxRewrite({topic.ID},0)%>
+                            <a href="javascript:void(0);" onclick="getpostinfo({topic.ID})" title="{topic.ForumName}" class="f_bold">{topic.title}</a>
+                        </dt>
+                        <dd>
+                            <%set {aspxrewriteurl} = this.UserInfoAspxRewrite({topic.PosterID})%>
+                            <a id="topic{topic.ID}" href="{aspxrewriteurl}" class="lightlink" onmouseout="showMenu(this.id);" onmousemove="showMenu(this.id);">{topic.Poster}</a><span class="audit_time">{topic.PostDateTime}</span>
+                        </dd>
+                        <dd id="msgtbody_{topic.ID}" style="display:none">
+                            <div id="msg_{topic.ID}" style="overflow-y:auto;overflow-x:hidden;height:120px;"></div>
+                        </dd>
+                    </dl>
+                    <div id="auditreason_{topic.ID}" class="popupmenu_popup" style="display:none;">
+                        <textarea type="textarea" id="reason_{topic.ID}" size="80" id="pm_{topic.ID}" class="txtarea"></textarea>
+                        <input type="button" onclick="_auditpost('ignore',{topic.ID})" />
+                    </div>
+                    <ul class="p_pop audit_menu" id="topic{topic.ID}_menu" style="display:none;">
+                        <li><a href="useradmin.aspx?action=banuser&uid={topic.PosterID}" onclick="showWindow('mods', this.href);doane(event);" class="forbid_user">禁言用户</a></li>
+                        <li><a href="###" onclick="if(confirm('您确定要删除吗？')) _auditpost('deletepostsbyuidanddays',{topic.PosterID});">删除7天内的帖子</a></li>
+                        <%set {aspxrewriteurl} = this.UserInfoAspxRewrite({topic.PosterID})%>
+                        <li><a href="{aspxrewriteurl}" target="_blank" class="public_info">查看公共资料</a></li>
+                        <li><a href="search.aspx?posterid={topic.PosterID}&searchsubmit=1" class="all_topic" target="_blank">查看所有帖子</a></li>
+                 </ul>
+                </td>
+                </tr>
+                </tbody>
+                <%/loop%>					
+            </table>
+        </div>
+        <div class="pages_btns">
+            <div class="pages">{pagenumbers}</div>
+            <input id="lastchkall" name="lastchkall" type="checkbox" value="" onclick="newCheckAll(this.form.id,this.checked)"/>全选 
+            操作理由&nbsp; <input type="text" style="margin: 0px;" id="pm_bottom" name="pm_bottom" class="txt"> &nbsp; 
+            <select onchange="$('pm_bottom').value=this.value;" style="margin: 0px;">
+            <option value="">无</option>
+            <option value="">--------</option>
+            <option value="广告/SPAM">广告/SPAM</option>
+            <option value="恶意灌水">恶意灌水</option>
+            <option value="违规内容">违规内容</option>
+            <option value="文不对题">文不对题</option>
+            <option value="重复发帖">重复发帖</option>
+            <option></option>
+            <option value="我很赞同">我很赞同</option>
+            <option value="精品文章">精品文章</option>
+            <option value="原创内容">原创内容</option>
+            </select>
+            <span class="postbtn"><input type="button" value="通过" onclick="optionCheckedTopics('pass',$('pm_bottom').value)" /></span>
+            <span class="postbtn"><input type="button" value="删除" onclick="optionCheckedTopics('delete',$('pm_bottom').value)" /></span>
+            <span class="postbtn"><input type="button" value="忽略" onclick="optionCheckedTopics('ignore',$('pm_bottom').value)" /></span>
+            <span class="postbtn"><input type="submit" value="展开" style="display:none"/></span>
+        </div>
+        </form>
+        <%else%>
+        <div class="hintinfo">对不起，没有找到需要审核的主题。</div>
+        <%/if%>		
+    <%/if%>
+    <%if {operation}=="editforum"%>
+        <h1>版块编辑</h1>
+        <%if !{alloweditrules}%>
+            <div class="hintinfo">当您首次进入管理面板或者长时间没有管理动作时，您需要输入密码才能进入。如果密码输入错误超过 3 次，管理面板将会锁定。30 分解除锁定。</div>
+        <%/if%>
+        <div class="exfm">
+        <form method="get" action="">
+            <input name="operation" type="hidden" value="{operation}" />
+            <table cellspacing="0" cellpadding="0" class="formtable" summary="论坛版块选择">
+            <tbody>
+            <tr>
+                <th width="60">版块</th>
+                <td>
+                    <div class="ftid">
+                    <select name="forumid" id="forumid" onchange="location.href='modcp.aspx?operation=editforum&forumid='+jQuery('#forumid option:selected').val()">
+                        <option value="0" disabled="true">全部</option>
+                        {forumliststr}
+                    </select>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+            </table>
+        </form>
+        <%if {forumid}!=0%>
+        <form method="post" action="?operation=updateforum">
+        <input name="forumid" type="hidden" value="{foruminfo.fid}" />
+        <table cellspacing="0" cellpadding="0" class="formtable" summary="版块编辑">
+        <tbody>
+            <tr>
+                <th width="60">版块介绍</th>
+                <td width=""><div id="descpreview" style="display:none" class="rulespreview"></div>
+                    <%set (string){coloroptions} = "Black,Sienna,DarkOliveGreen,DarkGreen,DarkSlateBlue,Navy,Indigo,DarkSlateGray,DarkRed,DarkOrange,Olive,Green,Teal,Blue,SlateGray,DimGray,Red,SandyBrown,YellowGreen,SeaGreen,MediumTurquoise,RoyalBlue,Purple,Gray,Magenta,Orange,Yellow,Lime,Cyan,DeepSkyBlue,DarkOrchid,Silver,Pink,Wheat,LemonChiffon,PaleGreen,PaleTurquoise,LightBlue,Plum,White"%>
+                    <%set (string){seditorid} = "description"%>
+                    <%set (char){comma} = ','%>
+                    <%if {alloweditrules}%>
+                    <link href="{forumpath}templates/{templatepath}/seditor.css" rel="stylesheet" type="text/css" />
+                    <div class="editor_tb" style="width:70%">
+                        <span class="y">
+                            <a id="viewdescription" href="###" onclick="preview('descpreview','descriptionmessage')">预览</a>		
+                        </span>
+                        <div>
+                            <a href="javascript:;" title="粗体" class="tb_bold" onclick="seditor_insertunit('{seditorid}', '[b]', '[/b]')">B</a>
+                            <a href="javascript:;" title="颜色" class="tb_color" id="{seditorid}forecolor" onclick="showMenu(this.id, true, 0, 2)">Color</a>
+                            <div class="popupmenu_popup tb_color" id="{seditorid}forecolor_menu" style="display: none">
+                                <%loop (string) colornamedes coloroptions.Split(comma)%>
+                                    <input type="button" style="background-color: {colornamedes}" onclick="seditor_insertunit('{seditorid}', '[color={colornamedes}]', '[/color]')" /><%if {colornamedes[_id]}%8==0%><br /><%/if%>
+                                <%/loop%>
+                            </div>
+                            <a href="javascript:;" title="图片" class="tb_img" id="{seditorid}img" onclick="seditor_menu('{seditorid}', 'img')">Image</a>
+                            <a href="javascript:;" title="链接" class="tb_link" id="{seditorid}url" onclick="seditor_menu('{seditorid}', 'url')">Link</a>
+                            </div>
+                    </div>
+                    <textarea id="descriptionmessage" name="descriptionmessage" rows="8"class="txtarea" style="width:70%;padding:0" >{foruminfo.description}</textarea>
+                    <%else%>
+                    <textarea id="descriptionmessage" name="descriptionmessage" rows="8" cols="80" disabled readonly class="txtarea" style="width:70%;padding:0">
+                    {foruminfo.description}</textarea>
+                    <%/if%>
+                </td>
+            </tr>
+            <tr>
+                <th valign="top">版块规则</th>
+                <td>
+                    <div id="rulespreview" style="display:none" class="rulespreview"></div>
+                    <%if {alloweditrules}%>
+                    <%set {seditorid} = "rules"%>
+                    <link href="{forumpath}templates/{templatepath}/seditor.css" rel="stylesheet" type="text/css" />
+                    <div class="editor_tb" style="width: 70%;"><span class="y"><a id="viewrule" href="###" onclick="preview('rulespreview','rulesmessage')">预览</a></span>
+                        <div>
+                        <a href="javascript:;" title="粗体" class="tb_bold" onclick="seditor_insertunit('{seditorid}', '[b]', '[/b]')">B</a>
+                        <a href="javascript:;" title="颜色" class="tb_color" id="{seditorid}forecolor" onclick="showMenu(this.id, true, 0, 2)">Color</a>
+                        <div class="popupmenu_popup tb_color" id="{seditorid}forecolor_menu" style="display: none">
+                        <%loop (string) colornamerules coloroptions.Split(comma)%>
+                            <input type="button" style="background-color: {colornamerules}" onclick="seditor_insertunit('{seditorid}', '[color={colornamerules}]', '[/color]')" /><%if {colornamerules[_id]}%8==0%><br /><%/if%>
+                        <%/loop%>
+                        </div>
+                        <a href="javascript:;" title="图片" class="tb_img" id="{seditorid}img" onclick="seditor_menu('{seditorid}', 'img')">Image</a>
+                        <a href="javascript:;" title="链接" class="tb_link" id="{seditorid}url" onclick="seditor_menu('{seditorid}', 'url')">Link</a>
+                        </div>
+                    </div>
+                    <textarea id="rulesmessage" name="rulesmessage" rows="8" cols="80" class="txtarea" style="width:70%;padding:0">
+                    <%else%>
+                    <textarea id="rulesmessage" name="rulesmessage" rows="8" cols="80" disabled readonly class="txtarea" style="width:70%;padding:0">
+                    <%/if%>{foruminfo.rules}</textarea>
+                </td>
+            </tr>
+            <%if {alloweditrules}%>
+            <tr>
+                <th></th><td><button type="submit" id="Submit1" class="pn"><span>提交</span></button></td>
+            </tr>
+            <%/if%>
+        </tbody>
+        </table>
+        </form>
+        </div>
+        <%/if%>
+        <%/if%>
+    <%if {operation}=="logs" && {admingroupinfo.AllowViewLog}%>
+        <h1>管理日志搜索</h1>
+        <form method="get" action="" class="exfm">
+        <input name="operation" type="hidden" value="{operation}" />
+        <table cellspacing="0" cellpadding="0" class="formtable" summary="版块编辑">
+        <tbody>
+            <tr>
+            <th>关键字</label>
+            <td>
+                <input name="keyword" value="" size="60" type="text" class="txt">每页显示条数
+                <input name="lpp" value="20" size="4" type="text" class="txt">
+                <button type="submit" id="searchsubmit" value="true">提交</button>
+            </td>
+            </tr>
+        </tbody>
+        </table>
+        </form>
+        <h1>管理日志列表</h1>
+        <div class="datalist">
+            <table summary="" cellpadding="0" cellspacing="0" class="datatable">
+                <thead>
+                    <tr class="colplural">
+                        <td>操作人</td>
+                        <td>用户组</td>
+                        <td>IP</td>
+                        <td>操作类型</td>
+                        <td>操作版块</td>
+                        <td width="15%">操作主题</td>
+                        <td>操作原因</td>
+                        <td>操作时间</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%loop logs moderatorLogs%>
+                    <tr>
+                        <%set {aspxrewriteurl} = this.UserInfoAspxRewrite({logs[moderatoruid]})%>
+                        <td><a href="{aspxrewriteurl}" target="_blank"><b>{logs[moderatorname]}</b></a></td>
+                        <td>{logs[grouptitle]}</td>
+                        <td>{logs[ip]}</td>
+                        <td>{logs[actions]}</td>
+                        <%set {aspxrewriteurl} = this.ShowForumAspxRewrite({logs[fid]},0)%>
+                        <td><a href="{aspxrewriteurl}" target="_blank">{logs[fname]}</a></td>
+                        <%set {aspxrewriteurl} = this.ShowTopicAspxRewrite({logs[tid]},0)%>
+                        <td><div style="overflow:hidden; height:20px;"><a href="{aspxrewriteurl}" target="_blank">{logs[title]}</a></div></td>
+                        <td>
+                            <a href="###" <%if {logs[reason]}!=""%>onmouseover="showMenu(this.id)"<%/if%> id="logreason{logs[_id]}">
+                                <%if {logs[reason]}!=""%>
+                                    查看
+                                <%else%>
+                                    无操作原因
+                                <%/if%>
+                            </a>
+                            <div id="logreason{logs[_id]}_menu" class="popupmenu_popup cl" style=" width:150px;display: none;">
+                                {logs[reason]}
+                            </div>
+                        </td>
+                        <td class="time">{logs[postdatetime]}</td>
+                    </tr>
+                    <%/loop%>
+                </tbody>
+            </table>
+        </div>
+        <div class="pages_btns">
+            <div class="pages">
+            {pagenumbers}
+            </div>
+        </div>
+    <%/if%>
+        <!--主题关注-->
+        <%if {operation}=="attention"%>
+        <h1>主题关注</h1>
+        <form action="" method="get" class="exfm">
+        <input name="operation" type="hidden" value="{operation}" />
+        <table cellspacing="0" cellpadding="0" class="formtable">
+        <tbody>
+        <tr>
+            <th width="60"><label for="keyword">关键字</label></th><td><input name="keyword" value="" size="45" type="text" class="txt"></td>
+        </tr>
+        <tr>
+            <th><label for="forumid">版块选择</label></th>
+            <td>
+                <div class="ftid">
+                    <select name="forumid" id="forumid">
+                        <option value="0">全部</option>
+                        {forumliststr}
+                    </select>
+                    <script type="text/javascript">simulateSelect('forumid','160');</script>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th></th><td><button type="submit" class="pn"><span>提交</span></button></td>
+        </tr>
+        </tbody>
+        </table>
+        </form>
+        <%if {counts}>0%>
+        <form action="" method="post">
+        <h1>主题关注列表</h1>
+        <input name="forumid" type="hidden" value="{forumid}" />
+        <input name="operation" type="hidden" value="{operation}" />
+        <div class="datalist">
+        <table summary="" cellpadding="0" cellspacing="0" class="datatable">
+        <thead>
+        <tr class="colplural">
+            <th style="text-align:left;"><input type="checkbox" name="chkall" onclick="checkall(this.form, 'topicid')"/>标题</th>
+            <th width="10%">作者</th>
+            <th width="20%">发布时间</th>
+            <td width="20%">最后发表</td>
+        </tr>
+        </thead>
+        <tbody>
+        <%loop (Topic) topic topiclist%>
+            <tr>
+                <td class="datatitle">
+                <%set {aspxrewriteurl} = this.ShowTopicAspxRewrite({topic.ID},0)%>
+                <input type="checkbox" id="topicid" name="topicid" value="{topic.ID}"/><a href="{aspxrewriteurl}" target="_blank">{topic.Title}</a></td>
+                <%set {aspxrewriteurl} = this.UserInfoAspxRewrite({topic.PosterID})%>
+                <td><a href="{aspxrewriteurl}" target="_blank">{topic.Poster}</a></td>
+                <td class="time">{topic.PostDateTime}</td>
+                <td class="time">{topic.LastPost}</td>
+            </tr>
+            <%/loop%>
+        </tbody>
+        </table>
+        </div>
+        <div class="pages_btns">
+            <div class="pages">
+                {pagenumbers}
+            </div>
+            <div class="ftid">
+                <select name="disattentiontype" id="disattentiontype">
+                    <option value="0" selected="selected">所选主题</option>
+                    <option value="7">一星期前</option>
+                    <option value="30">一月前</option>
+                    <option value="365">一年前</option>
+                </select>
+            </div>
+            <script type="text/javascript">simulateSelect('disattentiontype');</script>
+            <button type="submit" value="取消关注" class="pn"/><span>取消关注</span></button>
+        </div>
+        </form>	
+        <%else%>
+        <div class="hintinfo">对不起，没有找到需要关注的主题。</div>
+        <%/if%>
+        <%/if%>
+    </div>
+    </div>
+</div>
+<%/if%>
+<%else%>
+<%template _errmsgbox%>
+<%/if%>
+<%template _copyright%>
+<%template _footer%>

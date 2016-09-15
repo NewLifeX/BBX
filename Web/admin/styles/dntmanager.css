@@ -1,0 +1,265 @@
+﻿/*css document start*/
+
+*{ margin:0; padding:0; word-break: break-all;}
+*html{ overflow-x:hidden;}
+body { font: 12px/160% Tahoma, Verdana,snas-serif; color:#666; scrollbar-darkshadow-color: #808080; scrollbar-face-color: #DDDDDD; scrollbar-highlight-color: #EEEEEE; scrollbar-shadow-color: #DEE3E7;
+scrollbar-3dlight-color: #D1D7DC; scrollbar-arrow-color:  #000000; scrollbar-track-color: #EDEDED; background-color: #fff; margin:10px 20px;}
+h1,h2,h3,h4,h5{ font-size:12px;}
+img{ border:0;}
+select option{ padding-left:4px;}
+ul,li{ list-style:none;}
+a { color: #036; text-decoration: none;}
+a:hover { color: #258DC9; text-decoration: underline;}
+em, cite, strong, th { font-style: normal; font-weight: normal;}
+table { empty-cells: show; border-collapse: collapse; }
+#warper {width:100%; margin:0 auto; min-width:778px;}
+
+
+/*MenuTab*/
+#MenuTab {width:100%; border-bottom:1px solid #666; height:42px; position:relative; text-align:right; background:url(../images/topbarbg.gif) repeat-x left top;}
+#MenuTab ul {list-style: none; padding-top:7px;text-algin:left; background:url(../images/topbar.jpg) no-repeat left top; height:35px!important;height:42px; position:absolute; top:0; left:0;}
+#MenuTab ul li { float: left; position: relative; margin: 0 0 0 -28px; height: 35px; line-height: 35px;}
+*html #MenuTab ul li { width:100px; text-align:center;}
+#MenuTab ul li a {display:block; height: 29px; line-height: 29px; text-decoration: none; color: #000; margin-left:6px; padding-top:6px;}
+
+#MenuTab ul li.MenuDrop{width:163px; margin:0; margin-right:35px;}
+	#MenuTab ul li .MenuDropOut{ text-align:center; cursor:pointer;background: url(../images/Menuon.gif) no-repeat 15px 0;}
+	#MenuTab ul li .MenuDropOn{ text-align:center; cursor:pointer;background: url(../images/Menudown.gif) no-repeat 15px 0;}
+
+#MenuTab ul li .tab1,#MenuTab ul li .tab2,#MenuTab ul li .tab3,#MenuTab ul li .tab4,#MenuTab ul li .tab5,#MenuTab ul li .tab6,#MenuTab ul li .tab0 { background-image:url(../images/tabbg.gif); background-position:no-repeat;}
+#MenuTab ul li .tab1 a:link,#MenuTab ul li .tab1 a:visited,#MenuTab ul li .tab2 a:link,#MenuTab ul li .tab2 a:visited,#MenuTab ul li .tab3 a:link ,#MenuTab ul li .tab3 a:visited,#MenuTab ul li .tab4 a:link,#MenuTab ul li .tab4 a:visited,#MenuTab ul li .tab5 a:link,#MenuTab ul li .tab5 a:visited,#MenuTab ul li .tab6 a:link,#MenuTab ul li .tab6 a:visited,#MenuTab ul li .tab0 a:link,#MenuTab ul li .tab0 a:visited {background-image: url(../images/tabbg.gif); background-repeat: no-repeat; padding:6px 45px 0 14px;}
+a.CurrentHoverTab1,a.CurrentHoverTab2,a.CurrentHoverTab3,a.CurrentHoverTab4,a.CurrentHoverTab5,a.CurrentHoverTab6,a.CurrentHoverTab0 {background-image: url(../images/tabbg.gif); background-repeat: no-repeat; font-size:14px;margin-top:1px; padding:6px 45px 6px 14px;}
+.Currenttab1,.Currenttab2,.Currenttab3,.Currenttab4,.Currenttab5,.Currenttab6,.Currenttab0 {background-image: url(../images/tabbg.gif);background-repeat: no-repeat; margin-top:1px;}
+
+#MenuTab ul li .tab1{ background-position: 0 6px; z-index: 10;}
+	#MenuTab ul li .tab1 a:link,#MenuTab ul li .tab1 a:visited { background-position: 100% -29px;}
+	a.CurrentHoverTab1 {background-position:100% -35px;}
+	.Currenttab1{ background-position: 0 0;}
+
+#MenuTab ul li .tab2{background-position: 0 -70px; z-index: 9;}
+	#MenuTab ul li .tab2 a:link,#MenuTab ul li .tab2 a:visited {background-position: 100% -105px;}
+	a.CurrentHoverTab2 {background-position: 100% -111px;}
+	.Currenttab2 {background-position: 0 -76px; }
+
+#MenuTab ul li .tab3{background-position: 0 -146px; z-index: 8;}
+	#MenuTab ul li .tab3 a:link ,#MenuTab ul li .tab3 a:visited{background-position: 100% -181px;}
+	a.CurrentHoverTab3 {background-position: 100% -187px;}
+	.Currenttab3 {background-position: 0 -152px;}
+
+#MenuTab ul li .tab4{background-position: 0 -222px; z-index: 7;}
+	#MenuTab ul li .tab4 a:link,#MenuTab ul li .tab4 a:visited {background-position: 100% -257px;}
+	a.CurrentHoverTab4 {background-position: 100% -263px;}
+	.Currenttab4  {background-position: 0 -228px;}
+
+#MenuTab ul li .tab5{background-position: 0 -298px; z-index: 6;}
+	#MenuTab ul li .tab5 a:link,#MenuTab ul li .tab5 a:visited {background-position: 100% -333px;}
+	a.CurrentHoverTab5 {background-position: 100% -339px; }
+	.Currenttab5  {background-position: 0 -304px;}
+
+#MenuTab ul li .tab6{background-position: 0 -374px; z-index: 5;}
+	#MenuTab ul li .tab6 a:link,#MenuTab ul li .tab6 a:visited {background-position: 100% -409px;}
+	a.CurrentHoverTab6 {background-position: 100% -415px;}
+	.Currenttab6  {background-position: 0 -380px;}
+
+#MenuTab ul li .tab0{background-position: 0 -450px; z-index: 4;}
+	#MenuTab ul li .tab0 a:link,#MenuTab ul li .tab0 a:visited {background-position: 100% -485px;}
+	a.CurrentHoverTab0 {background-position: 100% -491px;}
+	.Currenttab0  {background-position: 0 -456px;}
+
+.SearchBar { position:absolute; top:15px; right:6px; width:190px; border:1px solid #999; text-align:left; height:22px; line-height:160%; padding:0 3px; background:#fff;}
+	.SearchBar dl { padding:2px 0;}
+    .SearchBar input {border:0px; line-height:160%; width:123px;}
+	.SearchBar .OutButton,.SearchBar .SubmitButton,.SearchBar .OverButton {overflow:hidden; border:0px solid #fff; width:21px; height:16px; background:url(../images/serchbutton.gif) no-repeat 50% 20%; cursor:pointer; margin-top:-2px;}
+	.SearchBar .OverButton { background:url(../images/serchbutton2.gif) no-repeat 50% 25%; }	
+	.SearchBar .SubmitButton { background:url(../images/searchbutton.jpg) no-repeat 0 0; }
+	* html .SearchBar .OutButton {background:url(../images/serchbutton.gif) no-repeat 50% 50%;}
+	* html .SearchBar .OverButton {background:url(../images/serchbutton2.gif) no-repeat 50% 50%;}
+	*+html .SearchBar .OutButton {background:url(../images/serchbutton.gif) no-repeat 50% 50%;}
+	*+html .SearchBar .OverButton {background:url(../images/serchbutton2.gif) no-repeat 50% 50%;}
+	* html .SearchBar .SubmitButton { background:url(../images/searchbutton.jpg) no-repeat 0 50%; }
+	*+html .SearchBar .SubmitButton { background:url(../images/searchbutton.jpg) no-repeat 0 50%; }
+
+	.SearchBar dt,.SearchBar dd { float:left;}
+	    .SearchBar dt {width:45px}
+	    .popupmenu-new{width:175px;text-align:left;margin-top:5px !important;margin-top:6px; padding-left:1px;}
+	    .popupmenu-item-last{border:1px solid #ccc;padding: 5px;white-space: nowrap;font-weight: normal;background:#eee url(../images/td_bg3.gif) no-repeat left top;}
+			.popupmenu-item-last a {color:#000;}
+	    .popupmenu-item{white-space:nowrap;color:  #000;}
+/*MenuTab*/
+
+/*ManagerBody*/
+	#ManagerBody { overflow:hidden; zoom:1;}
+	#ManagerBodyMenu { float:left; width:163px; overflow:hidden; zoom:1;}
+	*Html #ManagerBody {  float:left; overflow:hidden; zoom:1;}
+/*bodycolor*/	
+		.NavBody {overflow:hidden; zoom:1; margin:0 auto;border:1px solid #000;border-top:0;}	
+		.NtTab1 .NavBody {background-color:#C5DEF5;}
+		.NtTab2 .NavBody {background-color:#ffdd7b;}	
+		.NtTab3 .NavBody {background-color:#bca8e1;}
+		.NtTab4 .NavBody {background-color:#9dc2b7;}
+		.NtTab5 .NavBody {background-color:#F6FA7D;}
+		.NtTab6 .NavBody {background-color:#a0a0b3;}
+		.NtTab0 .NavBody {background-color:#becea1;}
+/*bodycolor*/
+		.InnerBody{ overflow:hidden; zoom:1; padding:11px; padding-left:0;}
+		.InnerBodyMenu {overflow:hidden; zoom:1; padding:11px; padding-right:0; background-image: url(../images/tableftbg.gif); background-repeat:no-repeat;}
+			.NtTab1 .InnerBodyMenu { background-position: 0 0;}
+			.NtTab2 .InnerBodyMenu { background-position: -163px 0;}
+			.NtTab3 .InnerBodyMenu { background-position: -326px 0;}
+			.NtTab4 .InnerBodyMenu { background-position: -489px 0;}
+			.NtTab5 .InnerBodyMenu { background-position: -652px 0;}
+			.NtTab6 .InnerBodyMenu { background-position: -815px 0;}
+			.NtTab0 .InnerBodyMenu { background-position: -978px 0;}
+			
+		#NavManager { overflow:hidden; zoom:1; border:1px solid #676767; border-left:none; background:#fff; overflow-y:hidden;}
+		
+		.NavManagerMenu {border-right:1px solid #676767; min-height:602px; height:auto!important;height:602px; }
+		.NavManagerMenu li{ position:relative; margin-bottom:-1px; height:30px; line-height: 30px; color: #0954A6; text-align:left;}	
+		*+html .NavManagerMenu li{margin-bottom:-3px;}
+		* html .NavManagerMenu li{margin-bottom:-3px;}			
+			.NavManagerMenu li cite {float:left; display:block; width:80%; line-height:28px;}
+			.NavManagerMenu li span {float:right; display:block; width:18%; padding-top:13px;}
+				.NavManagerMenu li a:link,.NavManagerMenu li a:visited{ text-decoration: none; color: #000;}
+				.NavManagerMenu li a:hover,.NavManagerMenu li a:active{ text-decoration: none; color: #000;}
+		.NavManagerMenu li .NoSelect {top:0; right:0; position:absolute; color: #0954A6;  cursor: pointer;  width:100%; height:30px; filter:alpha(opacity=50); -moz-opacity:0.5; opacity:0.5; background-image:url(../images/Menutab.jpg); background-repeat: no-repeat; }
+			*html .NavManagerMenu li .NoSelect {right:-1px;}
+		.NavManagerMenu li .current {top:0; right:-1px; position:absolute; color: #0954A6;  cursor: pointer;  width:100%; line-height:30px; height:30px; background-image:url(../images/Menutab.jpg); background-repeat: no-repeat; }
+		* html .NavManagerMenu li .current {right:-2px;}
+			.NoSelect strong,.current strong {padding-left:10px; font-weight:normal;}
+
+			.NtTab1 .NavManagerMenu li .NoSelect{ background-position:-151px 0; }
+			.NtTab1 .NavManagerMenu li .current	{background-position:0 0;}
+
+			.NtTab2 .NavManagerMenu li .NoSelect{ background-position:-151px -30px; }
+			.NtTab2 .NavManagerMenu li .current { background-position:0 -30px; }	
+						
+			.NtTab3 .NavManagerMenu li .NoSelect{ background-position:-151px -60px; }
+			.NtTab3 .NavManagerMenu li .current{ background-position:0 -60px; }	
+						
+			.NtTab4 .NavManagerMenu li .NoSelect { background-position:-151px -90px; }
+			.NtTab4 .NavManagerMenu li .current { background-position:0 -90px; }
+
+			.NtTab5 .NavManagerMenu li .NoSelect { background-position:-151px -120px; }
+			.NtTab5 .NavManagerMenu li .current { background-position:0 -120px; }
+
+			.NtTab6 .NavManagerMenu li .NoSelect { background-position:-151px -150px; }
+			.NtTab6 .NavManagerMenu li .current { background-position:0 -150px; }
+
+			.NtTab0 .NavManagerMenu li .NoSelect { background-position:-151px -180px; }
+			.NtTab0 .NavManagerMenu li .current { background-position:0 -180px; }
+
+			.NtTab1 .NavManagerMenu li.Submenu,.NtTab2 .NavManagerMenu li.Submenu,.NtTab3 .NavManagerMenu li.Submenu,.NtTab4 .NavManagerMenu li.Submenu,.NtTab5 .NavManagerMenu li.Submenu,.NtTab6 .NavManagerMenu li.Submenu,.NtTab0 .NavManagerMenu li.Submenu {  margin-left:5px; margin-top:1px; padding-left:15px; height:auto!important;height:29px; background:url(../images/submenubg.jpg) repeat-x 0 0;filter:alpha(opacity=60); -moz-opacity:0.6; opacity:0.6;}
+				.NtTab2 .NavManagerMenu li.Submenu {background:url(../images/submenubg2.jpg) repeat-x 0 0;}
+				.NtTab3 .NavManagerMenu li.Submenu {background:url(../images/submenubg3.jpg) repeat-x 0 0;}
+				.NtTab4 .NavManagerMenu li.Submenu {background:url(../images/submenubg4.jpg) repeat-x 0 0;}
+				.NtTab5 .NavManagerMenu li.Submenu {background:url(../images/submenubg5.jpg) repeat-x 0 0;}
+				.NtTab6 .NavManagerMenu li.Submenu {background:url(../images/submenubg6.jpg) repeat-x 0 0;}
+				.NtTab0 .NavManagerMenu li.Submenu {background:url(../images/submenubg7.jpg) repeat-x 0 0;}
+			.Submenu  a { display:block; height:24px; line-height:24px;}
+				.Submenu a:link,.Submenu a:visited {color:#000; text-decoration:none;}
+				.Submenu a:hover,.Submenu a:active {color:#000; text-decoration:none;}
+/*ManagerBody*/
+
+/*managerForm*/
+	* html .ManagerForm { margin:0;}
+	.ManagerForm .Help { padding:9px; padding-bottom:0px; text-align:right;}
+	.ManagerForm fieldset { border: 1px solid #ccc; margin-bottom: 8px; padding:4px 30px; padding-bottom:10px; text-align:center; }
+		.ManagerForm legend { font-weight:bold; line-height:45px; padding-left:60px;}
+		.ManagerForm table {text-align:left; color:#999; font-size:12px;}
+			.ManagerForm  th {text-align:right; padding-right:5px; line-height:240%;}
+			
+		.ManagerButton,.TopicButton{ border:1px solid #919699; background:url(../images/buttonbg.gif) repeat-x left bottom; text-align:center; text-decoration:none; padding:2px 3px; cursor:pointer; line-height:22px; margin-right:2px;}
+			*html .ManagerButton { padding:1px 0;}
+			*+html .ManagerButton { padding:0;}
+			a.ManagerButton { display:block; float:left; padding:2px 3px; text-decoration:none; color:#000; margin-right:6px; line-height:22px;}
+				a.ManagerButton span,a.ManagerButton strong { display:block; float:left; background:url(../images/submit.gif) no-repeat 2px 50%; text-indent:1.5em;}
+				a.ManagerButton strong { background:url(../images/checkver.gif) no-repeat 5px 50%;text-indent:1.8em;}
+				a.ManagerButton:hover {text-decoration:none;color:#000;}
+			.ManagerButton img{padding-right:3px; margin-bottom:-3px;}
+
+		.TopicButton{padding:1px 2px; line-height:14px;}
+			*html .TopicButton { margin-right:2px;  font-size:12px;}
+			*+html .TopicButton { margin-right:2px;  font-size:12px;}
+			.TopicButton img{ margin-bottom:-3px; height:15px; padding-right:2px;}
+			a.TopicButton:link,a.TopicButton:visited {color:#000; text-decoration:none;}
+			a.TopicButton:hover,a.TopicButton:active {color:#000; text-decoration:none;}
+/*managerform*/
+
+	#resultmessage {padding-right:15px;}
+
+/*command*/
+	.messagetext {overflow:hidden; zoom:1; border-left:1px solid #000; border-right:1px solid #000; padding:0 10px;  text-align:left; background:#ffffe1; word-break : break-all; letter-break:break-all; }
+	.messagetext img {float:left;margin:0 3px 3px 3px;}
+	.infomessage {float:right;margin-top:-10px;margin-right:-4px;}
+	*html .infomessage{margin-top:-15px;}
+/*command*/
+
+/*DropWindow*/
+	.DropWindow dl{ overflow:hidden; zoom:1; width:163px; background:url(../images/droptop.gif) no-repeat left bottom; padding:10px 0 15px 0;}
+		.DropWindow dt,.DropWindow dd {text-align:center;  line-height:200%;}
+		.DropWindow a:link,.DropWindow a:visited {display:block; color:#fff; text-decoration:none;}
+		.DropWindow a:hover,.DropWindow a:active {display:block; margin:0 15px; color:#000; text-decoration:none; background:#8e8e8e; }
+		.line {border-top:1px solid #000;border-bottom:1px solid #4d4d4d; width: 90%; margin:1px auto;}
+/*DropWindow*/
+
+/*Login*/
+#LoginBar { position: absolute; left:50%; Top:50%; margin-top: -210px; z-index: 1; margin-left: -220px; width: 600px;  Height: 420px }
+	#LoginBar .LoginTop {font-size:0; line-height:15px; height:15px;}
+		.FormNav {background:url(../images/login-center.gif) repeat-y left top;}
+		.FormNav dl {background:url(../images/key.gif) no-repeat 0 22px; padding:30px 30px 30px 100px;}
+		.FormNav dt,.FormNav dd { line-height:35px; height:40px;}
+		.FormNav label { padding-right:15px; font-size:14px; color:#666; font-weight:bold;}
+		.FormNav dd img { margin-left:20px;margin-bottom:-18px;}
+.FormCode {width:80px;}
+.FormNav button { width:60px; height:26px; border:0; background:url(../images/button.gif) no-repeat left top; cursor:pointer; margin-left:65px;}
+#copyright { position: absolute; left:44%; bottom:50%; text-align:center; height:100px; margin-left: -220px; margin-bottom: -180px;}
+.nofocus { border:1px solid #CCC; background:#EEE; color:#545454; padding:0.4em 0;}
+    *html .nofocus {height:26px; padding:0; line-height:26px;}
+    *+html .nofocus {height:26px; padding:0; line-height:26px;}
+/*Login*/
+
+/*inner*/
+label{position:relative;top:-3px; padding:0 6px; }
+textarea,.subject { border:1px solid #c0c0c0; background-color: #FFF;font-size: 12px; color: #000;}
+	.areamouseover { border:1px solid #3399ff; background:#c0ddfc;}
+select { font-size: 12px;  color: #000; background-color: #FFF;}
+table {word-break: break-all ;}
+.table1 {word-break : break-all; background-color: #fff; width:100%; margin:0 auto;}
+	.table1 td{font-size:12px;margin:10px 0;}
+.panelbox { vertical-align:top; }
+	.panelbox td { padding:10px; font-size:12px; vertical-align:top; }
+		.panelbox td td { padding:0; vertical-align:auto; font-size:12px;}
+		.panelbox td td td { padding:0; vertical-align:auto; font-size:12px;}
+.Navbutton {clear:both; text-align:left; margin:10px auto;}
+	.Navbutton td{ font-size:12px;}
+.datagridPager { clear:both; height:25px; color:#000;}
+	.datagridPager a{color:#000;}
+
+.imageexample {padding-top:4px;}
+	.imageexample img {margin:3px; margin-bottom: -3px; }
+
+.contral {margin:0 auto;}
+.td_alternating_item1 {height:25px; line-height:180%;}
+.td_alternating_item12 {height:25px; line-height:180%;}
+
+.datagridpage,.category,.multi {font-size:12px; color:#000;}
+.advtypes{margin-top:20px;}
+.advtypes h4{line-height:20px;height:20px;margin-bottom:10px;padding:4px 0;border-bottom:2px solid #CCC;}
+.advtypes a{display:block;float:left;padding:1px 6px;border:1px solid #ccc;margin-right:14px;margin-bottom:10px; white-space:nowrap;text-decoration:none;}
+.advtypes a:hover,.advtypes a:active,.advtypes a.currenttype{background:#09C;color:#FFF;}
+/*inner*/
+
+.item_title{font-weight:700;padding:10px 0 8px 0;color:#555;}
+.rowform{ width:306px; overflow:auto; }
+.vtop {vertical-align:top;}
+/* form */
+.txt,textarea,select{ padding:2px; border:1px solid; border-color:#666 #ccc #ccc #666; background:#fff; color:#333; }
+.txt, select{ vertical-align:middle; }
+.txt_hover, .txt_focus, textarea_hover, textarea_focus{padding:2px; border:1px solid; border-color:#09C; background:#F5F9FD; }
+.txtnobd{ border:1px solid #FFF; background:#FFF; cursor:pointer; }
+.radio, .checkbox{ border:none; background:none; vertical-align:middle; }
+.checkbox{ height:14px; }
+.btn{ margin:3px 0; padding:2px 5px; *padding:4px 5px 1px; border-color:#ddd #666 #666 #ddd; background:#DDD; color:#000; cursor:pointer; vertical-align:middle; }
+.uploadbtn{ width:250px; border-color:#999; }
+.currentitem{font-weight:bold;}
+.preview {border:1px dashed #707070;margin-bottom:10px;padding:10px;width:580px!important;width:600px;}

@@ -1,0 +1,59 @@
+﻿<%template _header%>
+<div class="wrap cl pageinfo">
+	<div id="nav">
+		<%if {usergroupinfo.AllowSearch}%>
+			<%template _quicksearch%>
+		<%/if%>
+		<a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <a href="usercpprofile.aspx">用户中心</a> &raquo; <strong>QQ 绑定</strong>
+	</div>
+</div>
+<div class="wrap uc cl">
+	<%template _menu%>
+	<div class="uc_main">
+	<div class="uc_content cl">
+		<h1 class="u_t">QQ 绑定</h1>
+	    <%if {page_err}==0%>
+		    <%if ispost%>
+		        <%template _usercpmsgbox%>
+		    <%else%>
+                <p class="pbm bbda xi1">您已将本站帐号{username}与QQ号码绑定</p>
+		        <form id="setbind" method="post" action="">
+                    <table class="tfm" cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr>
+                                <th>绑定设置</th>
+                                <td>
+                                    <label for="ispublishfeed">
+                                        <input id="ispublishfeed" class="pc" type="checkbox"<%if {ispublishfeed}%> checked="checked"<%/if%> value="1" name="ispublishfeed" />
+                                         发表主题时默认发送动态到QQ空间
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <label for="ispublisht">
+                                        <input id="ispublisht" class="pc" type="checkbox"<%if {ispublisht}%> checked="checked" <%/if%> value="2" name="ispublisht" />
+                                         发表主题时默认转播到腾讯微博
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <button value="yes" class="pn" name="connectsubmit" type="submit"><strong>保存设置</strong></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+                <h2><a class="xi2" href="QzoneConnect.aspx?act=unbind">解绑已绑定的帐号?</a></h2>
+		    <%/if%>
+	    <%else%>
+		    <%template _usercperrmsgbox%>
+	    <%/if%>
+	</div>
+</div>
+</div>
+<%template _copyright%>
+<%template _footer%>

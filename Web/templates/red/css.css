@@ -1,0 +1,19 @@
+#imageList{margin-left:60px;border:1px solid #D4D4D4;background:#F9F8F8;padding:6px;width:480px;}
+.playList{position:relative;}
+.playList .previous a,.playList .next a{background-image:url(images/play.gif);background-repeat:no-repeat;}
+.playList .plBd{width:440px;overflow:hidden;margin-left:18px;}
+.playList .plBd ul{overflow:hidden;height:62px;}
+.playList .plBd li{width:84px;height:62px;overflow:hidden;float:left;padding-right:8px;display:inline;text-align:center;}
+.playList .plBd li a{display:block;border:1px solid #D2D8E0;}
+.playList .plBd li a:hover,.playList .plBd .select a{border:1px solid #333;text-decoration:none;}
+.playList .previous,.playList .next{width:13px;position:absolute;top:0;overflow:hidden;}
+.playList .previous a,.playList .next a{display:block;height:60px;text-indent:-9999px;}
+.playList .previous{left:0;}
+.playList .previous a{background-position:0 4px;}
+.playList .next{left:467px;}
+.playList .next a{background-position:-13px 4px;}
+#largeimage{z-index:800;border:1 solid #D2D8E0;padding:2px;background:#FFF;}
+#topicTitle{width:240px;background:url(images/ruler.gif) repeat-x scroll 3px 5px #EEFFED;}
+#selectImage{width:240px;}
+#blockname{width:240px;}
+#summary{width:488px;}

@@ -1,0 +1,43 @@
+﻿<%if {infloat}!=1%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <%if pagetitle=="首页"%>
+        <title>{config.forumtitle} {config.seotitle}</title>
+    <%else%>
+        <title>{pagetitle} - {config.forumtitle} {config.seotitle}</title>
+    <%/if%>
+    {meta}
+    <link rel="icon" href="{forumurl}favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="{forumurl}favicon.ico" type="image/x-icon" />
+    <%if pagename!="website.aspx"%>
+        <link rel="stylesheet" href="{cssdir}/bbx.css" type="text/css" media="all" />
+    <%/if%>
+    <link rel="stylesheet" href="{cssdir}/float.css" type="text/css" />
+    <link rel="stylesheet" href="{cssdir}/highlight.css" type="text/css" />
+    <%if {isnarrowpage}%>
+        <link type="text/css" rel="stylesheet" href="{cssdir}/widthauto.css" id="css_widthauto" />
+    <%/if%>
+    {link}
+    <script type="text/javascript">
+        var creditnotice='{Scoresets.GetValidScoreNameAndId()}';	
+        var forumpath = "{forumpath}";
+    </script>
+    <script type="text/javascript" src="{jsdir}/common.js"></script>
+    <script type="text/javascript" src="{jsdir}/template_report.js"></script>
+    <script type="text/javascript" src="{jsdir}/template_utils.js"></script>
+    <script type="text/javascript" src="{jsdir}/ajax.js"></script>
+    <script type="text/javascript" src="{jsdir}/highlight.pack.js"></script>
+    <script type="text/javascript">
+	    var aspxrewrite = {config.aspxrewrite};
+	    var IMGDIR = '{imagedir}';
+        var disallowfloat = '{config.disallowfloatwin}';
+	    var rooturl="{rooturl}";
+	    var imagemaxwidth='{Template.GetWidth(templatepath)}';
+	    var cssdir='{cssdir}';
+    </script>
+    {script}
+    <script type="text/javascript" src="{config.GetJqueryUrl()}"></script>
+    <script type="text/javascript">jQuery.noConflict();</script>
+</head>

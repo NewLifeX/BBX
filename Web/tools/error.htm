@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=7" />
+    <meta name="keywords" content="ASP.net,论坛" />
+    <meta name="description" content="论坛,asp.net" />
+    
+  
+    <script type="text/javascript">
+    var arr = '';
+    if (location.search.length > 1) {
+        arr = decodeURI(location.search).substr(1).split("&"); //各个参数放到数组里
+    }
+
+    function requestGetForumPath() {
+        for (var i = 0; i < arr.length; i++) {
+            if ((arr[i].toLowerCase() + '=').indexOf('forumpath=') == 0) {
+                document.write('<meta http-equiv="refresh" content="3; url=' + encodeURI(arr[i].substr(10)) + 'index.aspx" />');
+                return;
+            }
+        }
+        document.write('<meta http-equiv="refresh" content="3; url=/index.aspx" />');
+    }
+    requestGetForumPath();
+    
+    function requestGetTemplate() {
+        for (var i = 0; i < arr.length; i++) {
+            if ((arr[i].toLowerCase() + '=').indexOf('templatepath=') == 0) {
+                document.write('<link href="/templates/' + encodeURI(arr[i].substr(13)) + '/bbx.css" rel="stylesheet" type="text/css" />');
+                 return;
+             }
+         }
+        document.write('<link href="/templates/default/bbx.css" rel="stylesheet" type="text/css" />');
+     }
+    
+    requestGetTemplate();  
+    </script>
+    <title>错误信息页面</title>
+</head>
+<body>
+    <div id="errormsg" class="box message error_box" />
+</body>
+</html>
+
+<script type="text/javascript">
+    function requestGetMsg() {
+        for (var i = 0; i < arr.length; i++) {
+            if ((arr[i].toLowerCase() + '=').indexOf('msg=') == 0) {
+                return arr[i].substr(4);
+            }
+        }           
+        return '暂无错误信息!';
+    }
+    document.getElementById('errormsg').innerHTML = '<p>' + decodeURI(requestGetMsg()) + '</p>';    
+</script> 
+

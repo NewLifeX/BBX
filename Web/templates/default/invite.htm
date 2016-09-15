@@ -1,0 +1,211 @@
+﻿<%template _header%>
+<%if {infloat}==1%>
+	<!--弹窗start-->
+	<%if ispost%>
+	  <%if page_err==0%>
+		<script type="text/javascript">
+		    $('returnmessage').className = '';
+	        setTimeout('location.reload()', 2000);
+		</script>		
+	  <%/if%>
+	  <p>{msgbox_text}</p>
+	<%else%>
+	<h3 class="flb">
+		<em id="returnmessage">发送邀请码</em>
+		<span class="y"><a href="javascript:;" class="flbc" onclick="hideWindow('emailtoinvite')" title="关闭">关闭</a></span>
+	</h3>
+	<div id="floatwinemailbox" style=" text-align:left; margin:20px">
+	<form id="sendcodeonfloat" method="post" onsubmit="javascript:$('sendcodeonfloat').action='invite.aspx?action=floatwinemailsend&invitecode={invitecode}&usersaid={usersaid}&infloat=1&';ajaxpost('sendcodeonfloat', 'returnmessage', 'returnmessage', 'onerror');return false;" action="">
+        <ul>
+        <%if {config.Regstatus}==3%>
+           <li style="padding-bottom:8px">邀请码:<a href="javascript:;" onclick="copycodeinfloat('{invitecode}');">{invitecode}</a> 点击复制</li>
+        <%/if%>
+           <li style="padding-bottom:8px">Email: <input id="floatwinemail" name="email" type="text" style="width:300px;margin-right:10px;" class="txt"/><br/>(多个地址用","分割)</li>
+           <li><button name="emailtoinvite" title="通过Email将邀请链接发送给好友" type="submit" id="floatwinemailtoinvite" onclick="return checkStrNullOrEmptyInFloat('floatwinemail','Email地址不能为空')">发送给好友</button></li>
+        </ul>
+	</form>
+	</div>
+	<script type="text/javascript" reload="1">
+	    function checkStrNullOrEmptyInFloat(str, message) {
+	        var s = $(str).value;
+	        if (s == '') {
+	            $('returnmessage').innerHTML = '<p>' + message + '</p>';
+	            return false;
+	        }
+	        return true;
+	    }
+	    
+        function copycodeinfloat(obj) {
+            obj = '{rooturl}invite.aspx?invitecode=' + obj;
+//            if(is_moz)
+//               floatwin('close_emailtoinvite');
+            setcopy(is_ie ? obj.replace(/\r\n\r\n/g, '\r\n') : obj, '复制完成');
+            }
+    </script>
+	<%/if%>
+	<!--弹窗over-->
+<%else%>
+	<!--非弹窗start-->
+<script type="text/javascript">
+    function copycode(obj) {
+        setcopy(is_ie ? obj.value.replace(/\r\n\r\n/g, '\r\n') : obj.value, '复制完成');
+    }
+
+    function checkStrNullOrEmpty(str, message) {
+        var s = $(str).value;
+        if (s == '') {
+            alert(message);
+            return false;
+        }
+        return true;
+    }
+
+    function usersaidPriview() {
+        $('usersaidinemail').innerHTML = $('usersaid').value;
+    }
+</script>
+<div class="wrap s_clear pageinfo">
+	<div id="nav"><a href="{config.forumurl}">{config.forumtitle}</a> &raquo; <strong>邀请注册</strong></div>
+</div>
+<%if page_err!=0%>
+	<%template _errmsgbox%>
+<%else%>
+	<%if ispost%>
+		<%template _msgbox%>
+	<%else%>
+	<div class="wrap s_clear" id="wrap">
+	<div class="main" style="padding:18px 28px">
+	<h1>邀请注册</h1>
+    <%if {userid}>0%>
+		<%if {config.Regstatus}==2%>
+				<%if {invitecodeinfo}==null%>
+				<form id="createinvitecode" method="post" action="invite.aspx?action=createcode">
+					<table summary="邀请注册" cellspacing="0" cellpadding="0" class="formtable"  id="invitecodemsg">
+					<tr id="promotiondescription">
+						<td>{invitationconfiginfo.InvitationLoginUserDescription}</td>
+					</tr>
+					<tr>
+						<td><button name="createcode" type="submit" id="createcode">我要加入</button></td></td>
+					</tr>
+					</table>
+				</form>
+				<%else%>
+				<div style="margin-top:20px">
+				 您可以通过QQ、MSN等IM工具，或者发送邮件，把下面的链接告诉你的好友，邀请他们加入进来。<br />
+				 <%if {invitationconfiginfo.InviteCodePayCount}>0%>当成功邀请{invitationconfiginfo.InviteCodePayCount}个用户后可以兑换到积分。<br /><%/if%>
+				 <%if {invitationconfiginfo.InviteCodeMaxCount}>0%>您的邀请链接最多可以被成功使用{invitationconfiginfo.InviteCodeMaxCount}次。<br /><%/if%>
+				 <%if {invitecodeinfo.CreateTime}!={invitecodeinfo.ExpireTime}%>{InviteCodeExpireTip(invitecodeinfo.ExpireTime)}<%/if%>
+				</div>
+				<hr class="solidline"/>
+				<form id="convertinvitecode" method="post" action="invite.aspx?action=convertcode">
+				<table summary="邀请注册" cellspacing="0" cellpadding="0" class="formtable"  id="invitecodemsg">
+				<tr>
+					<th><label for="invitecode">推广链接:</label></th>
+					<td><input id="invitecode" title="双击文本框复制推广链接" type="text" value="{inviteurl}" style="width:350px;margin-right:10px;" readonly="readonly" ondblclick="copycode($('invitecode'))" />&nbsp;&nbsp;<button id="copylink" type="button" onclick="copycode($('invitecode'))">复制链接</button>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="successcount">成功邀请用户:</label></th>
+					<td>{invitecodeinfo.SuccessCount}人 </td>
+				</tr>
+				<tr>
+					<th><label for="userscore">可兑换到的积分:</label></th>
+					<td>{userscore}<%if {invitecodeinfo.SuccessCount}-{invitationconfiginfo.InviteCodePayCount}>=0%><button name="convertcode" type="submit" id="convertcode" style="margin-left:10px;" onclick="return confirm('是否要将邀请码兑换成积分')">我要兑换</button>
+                    <%else if {invitecodeinfo.SuccessCount}-{invitationconfiginfo.InviteCodePayCount}<0&&{datediff}>0 %><button name="convertcode" type="submit" id="Button1" style="margin-left:10px;" onclick="return confirm('是否要删除已过期的邀请链接?')">删除过期邀请链接</button><%/if%></td>
+				</tr>
+				</table>
+				</form>
+				<hr class="solidline"/>
+				<h1>邮件邀请朋友</h1>
+				<div style="padding-top:20px">
+				<table summary="用户自定义邮件内容" cellspacing="0" cellpadding="0" class="formtable"  id="userscript">
+				<%if {isuseusersaid}%>
+				<tr>
+				   <th><label for="usersaid">想对好友说的话:</label></th>
+				   <td><input id="usersaid" name="usersaid" type="text" style="width:350px;margin-right:10px;" onkeyup="usersaidPriview();" /></td>
+				</tr>
+				<%/if%>
+				<tr>
+				   <th colspan="2"><label for="emailpreview">邮件内容预览:</label></th>
+				</tr>
+				<tr>
+				   <td colspan="2">
+				     <div style="overflow:hidden;zoom:1;border:1px dashed #CCC;margin-top:10px;background:#FBFBFB; padding:20px">{emailpreview}</div>
+				   </td>				   
+				</tr>
+				<tr>
+				   <td colspan="2"><button onclick="showWindow('emailtoinvite', '{rooturl}invite.aspx?action=floatwinemail&invitecode={invitecodeinfo.code}&usersaid='<%if {isuseusersaid}%>+escape($('usersaid').value)<%/if%>,'get',0);return false;">通过Email邀请好友</button></td>
+				</tr>
+				</table>
+				</div>
+				<%/if%>
+		<%else%>
+		   <div id="userinvitecodelist" class="datalist" style=" margin-top:20px">
+		   <div class="hintinfo" style="margin-top:0">您拥有的扩展积分:{CreateUserExtCreditsStr()}</div>
+		   <div class="hintinfo" style="margin-top:0">您购买的邀请码会在失效之后由系统定时清理，不会长期驻留在列表中</div>
+		      <%if {invitecodecount}>0%>
+				<table summary="邀请码" cellspacing="0" cellpadding="0" class="datatable" id="invitecodelist">
+				<thead class="colplural">
+				<tr>
+					<th>邀请码</th>
+					<th>购买时间</th>
+					<th>过期时间</th>
+					<th>可使用次数</th>
+					<th>已使用次数</th>
+				</tr>
+				</thead>
+				<tbody>
+				<%loop (Invitation) code invitecodelist%>
+				<tr>
+					<td><a href="javascript:;" onclick="showWindow('emailtoinvite', '{rooturl}invite.aspx?action=floatwinemail&invitecode={code.code}','get',0);return false;">{code.code}</a></td><td>{code.CreateTime}</td><td><%if {code.CreateTime}!={code.ExpireTime}%>{code.ExpireTime}<%else%>永不过期<%/if%></td><td>{code.MaxCount}</td><td>{code.SuccessCount}</td>
+				</tr>
+				<%/loop%>
+				</tbody>
+				</table>
+			  <%else%>
+				<div class="zerothreads">您还没有购买邀请码</div>
+			  <%/if%>
+				<div class="pages_btns">
+					<div class="pages">
+						<%if {invitecodecount}>0%><kbd>现有{invitecodecount}个邀请码</kbd>{pagenumber}<kbd>共{pagecount}页</kbd><%/if%>
+					</div>
+				   <div style="overflow:hidden; zoom:1; margin-bottom:10px;float:left;">
+					   <form id="buyinvitecode" method="post" action="invite.aspx?action=buycode" style="float:left; margin-right:10px">
+						  <div id="buycode">
+							  邀请码售价: {invitecodeprice}<%if {invitecodecount}<{invitationconfiginfo.InviteCodeMaxCountToBuy}%>
+							  <%set (int){couldbuy}={invitationconfiginfo.InviteCodeMaxCountToBuy}-{invitecodecount}%>您还能购买{couldbuy}个 <button id="buycode" type="submit" onclick="return confirm('确定购买？')">我要购买</button><%/if%>
+						  </div>
+					   </form>
+				   </div>
+				</div>
+		   </div>
+		<%/if%>
+	<%else%>
+		<table summary="邀请注册" cellspacing="0" cellpadding="0" class="formtable"  id="invitecodemsg">
+		<tr id="visitordescription">
+			<td>{invitationconfiginfo.InvitationVisitorDescription}</td>
+		</tr>
+		<tr>
+		    <td>
+		    <div style="overflow:hidden;zoom:1;border:1px dashed #CCC;margin-top:20px;background:#FBFBFB; padding:20px">
+		    <%if {invitecodeinfo}!=null%><%set (string){avatarurl}=Avatars.GetAvatarUrl(invitecodeinfo.CreatorID) %>
+				<img src="{avatarurl}" onerror="this.onerror=null;this.src='{imagedir}/noavatar_medium.gif';"  alt="头像" id="memberinfo" style="float:left; margin-right:40px; height:80px"/>
+			    <div id="creatormessage" style="vertical-align:top">您好:<br/>您的朋友 {invitecodeinfo.Creator} 邀请您加入到我们的行列当中<br /><%/if%>
+                <%set (string){regurl} = "register.aspx"%>
+                <%if {invitecodeinfo}!=null%>
+                    <%set {regurl} = "register.aspx?invitecode="+{invitecode}%>
+                <%/if%>
+			    <a href="{regurl}"><img src="{imagedir}/add_invite.gif" style="margin-top:14px" /></a></div>
+		    </div>
+		    </td>
+		</tr>
+		</table>
+    <%/if%>
+	</div>
+	<%/if%>
+		<!--非弹窗over-->
+	</div>
+  <%/if%>
+<%/if%>
+<%template _copyright%>
+<%template _footer%>

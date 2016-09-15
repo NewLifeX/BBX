@@ -1,0 +1,317 @@
+﻿<%template _header%>
+<script type="text/javascript">
+    var templatepath = "{templatepath}";
+    var imagedir = "{imagedir}";
+function getvalidpic(data)
+{
+var pic='';
+if(parseInt(data)==1)
+{
+    pic = '<img src="{imagedir}/data_valid.gif"/>';
+}
+if(parseInt(data)==0)
+{
+    pic = '<img src="{imagedir}/data_invalid.gif"/>';
+}
+document.write(pic);
+}
+function tickthreadtype(data)
+{
+var str='';
+  switch (parseInt(data)){
+   case 0:
+str='不允许';
+   case 1:
+str='允许本版内置顶';
+   case 2:
+str='允许分类内置顶';
+    case 3:
+str='执行任意置顶';
+}
+document.write(str);
+}
+
+function searchtype(data)
+{
+switch (parseInt(data)){
+   case 0:
+str='不允许';
+   case 1:
+str='允许搜索标题或全文';
+   case 2:
+str='仅允许搜索标题';
+
+}
+document.write(str);
+}
+</script>
+<script type="text/javascript"  src="{jsdir}/template_showtopic.js"></script>
+<div class="wrap cl pageinfo">
+    <div id="nav">
+        <%if {usergroupinfo.AllowSearch}%>
+            <%template _quicksearch%>
+        <%/if%>
+        <a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <a href="usercpprofile.aspx">用户中心</a> &raquo; <strong>用户组&权限</strong>
+    </div>
+</div>
+<div class="wrap uc cl">
+    <%template _menu%>
+    <div class="uc_main">
+    <div class="uc_content cl">
+        <h1 class="u_t">用户组&权限</h1>
+    <%if {page_err}==0%>
+        <%if ispost%>
+        <%template _usercpmsgbox%>
+        <%else%>
+        <div class="cpuser cl">
+        <%set (string){avatarurl}=Avatars.GetAvatarUrl(userid) %>
+            <img src="{avatarurl}" onerror="this.onerror=null;this.src='{forumpath}images/common/noavatar_medium.gif';"/>
+            <ul class="cprate">
+                <li><strong>{user.Name}</strong></li>
+                <li><label>积分:</label> {user.credits}</li>
+                <%if {score[1]}!=""%>
+                <li><label>{score[1]}:</label>{score1}</li>
+                <%/if%>
+                <%if {score[2]}!=""%>
+                <li><label>{score[2]}:</label>{score2}</li>
+                <%/if%>
+                <%if {score[3]}!=""%>
+                <li><label>{score[3]}:</label>{score3}</li>
+                <%/if%>
+                <%if {score[4]}!=""%>
+                <li><label>{score[4]}:</label>{score4}</li>
+                <%/if%>
+                <%if {score[5]}!=""%>
+                <li><label>{score[5]}:</label>{score5}</li>
+                <%/if%>
+                <%if {score[6]}!=""%>
+                <li><label>{score[6]}:</label>{score6}</li>
+                <%/if%>
+                <%if {score[7]}!=""%>
+                <li><label>{score[7]}:</label>{score7}</li>
+                <%/if%>
+                <%if {score[8]}!=""%>
+                <li><label>{score[8]}:</label>{score8}</li>
+                <%/if%>										
+            </ul>				
+            <ul class="cpinfo">
+                <li><label>总发帖数:</label><%if {user.posts}>0%><A href="search.aspx?posterid={user.ID}">{user.posts}</A><%else%>{user.posts}<%/if%></li>
+                <li><label>精华帖数:</label><%if {user.DigestPosts}>0%><A href="search.aspx?posterid={user.ID}&type=digest">{user.DigestPosts}</a>
+                <%else%>
+                {user.DigestPosts}
+                <%/if%>
+                </li>
+                <li><label>新短消息数:</label><%if {oluserinfo.newpms}>0%><A href="usercpinbox.aspx">{oluserinfo.newpms}</A>
+                <%else%>
+                <script>
+                    document.write({user.NewpmCount}*-1);
+                </script>
+                <%/if%></li>
+                <li><label>新通知数:</label><%if {oluserinfo.newnotices}>0%><A href="">{oluserinfo.newnotices}</A><%else%>{oluserinfo.newnotices}<%/if%></li>								
+            </ul>
+        </div>
+        <div class="cpsignature cl">
+            <span>签名</span>:<%if {user.Field.Signature}==""%>
+            暂无签名
+            <%else%>
+            {user.Field.Sightml}
+            <%/if%>
+        </div>
+        <div class="limits_box datalist cl">
+            <div id="list_memcp_main_c" style="float:left;font-size:14px;padding-right:15px;">
+                <h3>您的主用户组</h3>				
+            </div>
+            <div id="list_memcp_main">
+            <div class="channelinfo">主用户组决定了您在本论坛拥有哪些权限，您可以通过查看权限详细了解它</div>
+            <table cellspacing="0" cellpadding="0" width="100%" class="datatable">
+                <thead class="colplural">
+                <tr>
+                    <td width="13%"/>
+                    <td width="11%">用户级别</td>
+                    <td width="15%">类型</td>
+                    <td width="20%">积分起点</td>
+                    <td width="10%">阅读权限</td>
+                    <td width="10%">到期时间</td>
+                    <td>操作</td>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <td><strong><u>{usergroupinfo.GroupTitle}</u><strong/></strong></td>
+                    <td>					
+                    <script type="text/javascript">
+                    ShowStars({usergroupinfo.stars}, {config.starthreshold});
+                    </script>
+                    </td>
+                    <td>（会员用户组）</td>
+                    <td>{usergroupinfo.creditshigher}</td>
+                    <td>{usergroupinfo.readaccess}</td>
+                    <td> - </td>
+                    <td>
+                    <a class="xg2" href="###" onclick="javascript:if ($('usergroupbox').style.display=='none')
+                    {
+                    $('usergroupbox').style.display='';
+                    }
+                    else
+                    {
+                    $('usergroupbox').style.display='none';
+                    }">查看权限</a>
+                    </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+        <div class="limits_box cl" id="usergroupbox" style="display:none;">
+            <%if {useradminid}>0%>
+            <div class="c_header cl" id="list_admin_c">
+                <h3 onclick="toggle_collapse('list_admin', 1, 1);">管理权限</h3>
+                <div class="y"><p onclick="toggle_collapse('list_admin', 1, 1);" class="c_header_ctrlbtn">[ 展开 ]</p></div>
+            </div>
+            <div id="list_admin">
+            <table cellspacing="0" cellpadding="0" width="100%" class="datatable" >
+            <tbody>
+            <tr class="colplural">
+                <th>允许编辑帖子</th>
+                <th>允许编辑投票</th>
+                <th>允许删除帖子</th>
+                <th>允许批量删除</th>
+                <th>允许编辑用户</th>
+                <th>允许查看论坛运行记录</th>
+            </tr>
+            <tr>
+                <td><script type="text/javascript">getvalidpic({admingroupinfo.AllowEditPost})</script></td>
+                <td><script type="text/javascript">getvalidpic({admingroupinfo.AllowEditpoll})</script></td>
+                <td><script type="text/javascript">getvalidpic({admingroupinfo.AllowDelPost})</script></td>
+                <td><script type="text/javascript">getvalidpic({admingroupinfo.AllowMassprune})</script></td>
+                <td><script type="text/javascript">getvalidpic({admingroupinfo.AllowEditUser})</script></td>
+                <td><script type="text/javascript">getvalidpic({admingroupinfo.AllowViewLog})</script></td>
+            </tr>
+            </tbody>
+            <tbody>
+            <tr class="colplural">
+                <th>允许查看用户实名</th>
+                <th>允许禁止用户</th>
+                <th>允许禁止IP</th>
+                <th>是否允许置顶</th>
+                <th>允许查看IP</th>
+                <th>发帖不受审核、过滤、灌水等限制</th>
+            </tr>
+            <tr>
+                <td><script type="text/javascript">getvalidpic({admingroupinfo.AllowViewrealName})</script></td>
+                <td><script type="text/javascript">getvalidpic({admingroupinfo.AllowBanUser})</script></td>
+                <td><script type="text/javascript">getvalidpic({admingroupinfo.AllowBanIP})</script></td>
+                <td><script type="text/javascript">tickthreadtype({admingroupinfo.AllowStickthread})</script></td>
+                <td><script type="text/javascript">getvalidpic({admingroupinfo.AllowViewIP})</script></td>
+                <td><script type="text/javascript">getvalidpic({admingroupinfo.DisablePostctrl})</script></td>
+            </tr>
+            </tbody>
+            </table>
+            </div>
+            <%/if%>
+            <div class="c_header cl" id="list_basic_c">
+                <h3 onclick="toggle_collapse('list_basic', 1, 1);">基本权限</h3>
+                <div class="y"><p onclick="toggle_collapse('list_basic', 1, 1);" class="c_header_ctrlbtn">[ 展开 ]</p></div>
+            </div>
+            <table cellspacing="0" cellpadding="0" id="list_basic" width="100%" class="datatable" >
+            <tbody>
+            <tr class="colplural">
+                <th>访问论坛</th>
+                <th>阅读权限</th>
+                <th>查看用户资料</th>							
+                <th>使用搜索</th>								
+                <th>短信收件箱容量</th>
+            </tr>
+            <tr>
+                <td><script type="text/javascript">getvalidpic(<%{usergroupinfo.AllowVisit}?1:0%>)</script></td>
+                <td>{usergroupinfo.readaccess}</td>
+                <td><script type="text/javascript">getvalidpic(<%{usergroupinfo.AllowViewpro}?1:0%>)</script></td>
+                <td><script type="text/javascript">searchtype(<%{usergroupinfo.AllowSearch}?1:0%>)</script></td>
+                <td>{usergroupinfo.MaxPmNum}</td>
+            </tr>
+            </tbody>
+            </table>
+            <div class="c_header cl" id="list_post_c">
+                <h3 onclick="toggle_collapse('list_post', 1, 1);">帖子相关</h3>
+                <div class="y"><p onclick="toggle_collapse('list_post', 1, 1);" class="c_header_ctrlbtn">[ 展开 ]</p></div>
+            </div>
+            <div id="list_post">
+            <table cellspacing="0" cellpadding="0"  width="100%" class="datatable" >
+            <tbody>
+            <tr class="colplural">
+                <th>发新话题</th>
+                <th>发表回复</th>
+                <th>发起投票</th>
+                <th>参与投票</th>
+                <th>发表悬赏</th>
+                <th>发表辩论</th>
+                <th>发表交易</th>								
+            </tr>
+            <tr>
+                <td><script type="text/javascript">getvalidpic(<%{usergroupinfo.AllowPost}?1:0%>)</script></td>
+                <td><script type="text/javascript">getvalidpic(<%{usergroupinfo.AllowReply}?1:0%>)</script></td>
+                <td><script type="text/javascript">getvalidpic(<%{usergroupinfo.AllowPostpoll}?1:0%>)</script></td>
+                <td><script type="text/javascript">getvalidpic(<%{usergroupinfo.AllowVote}?1:0%>)</script></td>
+                <td><script type="text/javascript">getvalidpic(<%{usergroupinfo.AllowBonus}?1:0%>)</script></td>
+                <td><script type="text/javascript">getvalidpic(<%{usergroupinfo.AllowDebate}?1:0%>)</script></td>
+                <td><script type="text/javascript">getvalidpic(<%{usergroupinfo.AllowTrade}?1:0%>)</script></td>								
+            </tr>
+            </tbody>
+            </table>
+            <table cellspacing="0" cellpadding="0" width="100%" class="datatable" >
+              <tbody>
+                <tr class="colplural">
+                  <th>最大签名长度</th>
+                  <th>签名中使用 UBB 代码</th>
+                  <th>签名中使用 [img] 代码</th>
+                  <th>是否允许HTML帖</th>
+                  <th>是否允许使用hide代码</th>
+                  <th>主题最高售价</th>
+                </tr>
+                <tr>
+                  <td>{usergroupinfo.MaxSigSize}</td>
+                  <td><script type="text/javascript">getvalidpic(<%{usergroupinfo.AllowSigbbCode}?1:0%>)</script></td>
+                  <td><script type="text/javascript">getvalidpic(<%{usergroupinfo.AllowSigimgCode}?1:0%>)</script></td>
+                  <td><script type="text/javascript">getvalidpic(<%{usergroupinfo.AllowHtml}?1:0%>)</script></td>
+                  <td><script type="text/javascript">getvalidpic(<%{usergroupinfo.AllowHideCode}?1:0%>)</script></td>
+                  <td>{usergroupinfo.MaxPrice}</td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+            <div class="c_header cl" id="list_attachment_c">
+                <h3 onclick="toggle_collapse('list_attachment', 1, 1);">附件相关</h3>
+                <div class="y"><p onclick="toggle_collapse('list_attachment', 1, 1);" class="c_header_ctrlbtn">[ 展开 ]</p></div>
+            </div>
+            <div id="list_post cl">
+            <table cellspacing="0" cellpadding="0" id="list_attachment" width="100%" class="datatable" >
+            <tbody>
+            <tr class="colplural">
+                <th>下载/查看附件</th>
+                <th>发布附件</th>
+                <th>设置附件权限</th>
+                <th>单个最大附件尺寸</th>
+                <th>每天最大附件总尺寸</th>
+                <th>附件类型</th>
+            </tr>
+            <tr>
+                <td><script type="text/javascript">getvalidpic(<%{usergroupinfo.AllowGetattach}?1:0%>)</script></td>
+                <td><script type="text/javascript">getvalidpic(<%{usergroupinfo.AllowPostattach}?1:0%>)</script></td>
+                <td><script type="text/javascript">getvalidpic(<%{usergroupinfo.AllowSetattachPerm}?1:0%>)</script></td>
+                <td>{usergroupinfo.MaxAttachSize}</td>
+                <td>{usergroupinfo.MaxSizeperday}</td>
+                <td>{usergroupattachtype}</td>
+            </tr>
+            </tbody>
+            </table>
+            </div>
+        </div>
+        <%/if%>
+    <%else%>
+        <%template _usercperrmsgbox%>
+    <%/if%>
+    </div>
+</div>
+</div>
+<%template _copyright%>
+<%template _footer%>

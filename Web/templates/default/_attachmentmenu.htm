@@ -1,0 +1,6 @@
+﻿<ul class="f_tab">
+	<li <%if {typeid}==0%>class="cur_tab"<%/if%>><a href="myattachment.aspx">全部</a></li>
+	<%loop (AttachmentType) list MyAttachment.AttachTypeList()%>
+	<li <%if {typeid}=={list.TypeId}%>class="cur_tab"<%/if%>><a href="?typeid={list.TypeId}">{list.TypeName}</a></li>
+	<%/loop%>
+</ul>

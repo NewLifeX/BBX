@@ -1,0 +1,106 @@
+﻿.sdmenu {
+    width: 150px;
+    font-family: Sans-Serif;
+    font-size: 12px;
+    padding-bottom: 10px;
+    background: #b1bdcb ;
+    color: #FFF;
+    z-index: 10;
+    float:left;
+}
+
+.sdmenu .title, .sdmenu .titlehidden{
+    display: block;
+    font-weight: bold;
+    color: black;
+   
+    PADDING-LEFT: 15px; 
+    FONT-SIZE: 12px; 
+    PADDING-BOTTOM: 0px; 
+   
+    CURSOR: pointer; 
+    PADDING-TOP: 0px; 
+    HEIGHT:17px;
+    FONT-FAMILY: tahoma, verdana
+    WIDTH:200px;
+}
+
+.sdmenu .title {
+    border-bottom: 0px solid #DDD;
+}
+
+.sdmenu .arrow {
+		margin-left: 10px;
+    margin-right: 7px;
+}
+
+.sdmenu .titlehidden {
+    border-bottom: none;
+}
+
+.sdmenu #top {
+    background: url(../images/top_level_bg.gif) no-repeat;
+}
+
+.sdmenu .submenu {
+    overflow: hidden;
+    WIDTH:185px;
+   
+}
+
+.sdmenu .submenu a {
+    padding: 5px 0;
+    text-indent: 0px;
+    background: #EEE;
+    display: block;
+    text-decoration: none;
+    color: #066;
+ 
+    PADDING-LEFT: 3px; 
+    FONT-SIZE: 12px; 
+    PADDING-BOTTOM: 4px; 
+   
+    CURSOR: pointer; 
+    COLOR: black; 
+    PADDING-TOP: 4px; 
+    FONT-FAMILY: tahoma, verdana;
+    
+}
+
+.sdmenu .submenu a:hover {
+    /*background : transparent url(../images/nav_linkarrow.gif) no-repeat right center;*/
+    color: #000000;
+}
+
+
+.sdmenu table{
+    WIDTH:185px;
+    background-color:#b1bdcb;
+    background: transparent url(../images/top_level_bg.gif) repeat-x;
+    align:middle;
+}
+
+.submenu table
+{
+    WIDTH:185px;
+    background-color:#EEE;
+    background: #EEE ;
+    align:middle;
+    PADDING-LEFT: 0px; 
+
+}
+
+.lefttd
+{
+   width:26px;
+   text-align:right;
+}
+
+
+
+.splitter
+{   
+   background: #b1bdcb;
+   WIDTH:185px;
+   line-height:10px;
+}

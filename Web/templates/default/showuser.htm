@@ -1,0 +1,97 @@
+﻿<%template _header%>
+<div class="wrap cl pageinfo">
+	<div id="nav">
+		<%if {usergroupinfo.AllowSearch}%>
+			<%template _quicksearch%>
+		<%/if%>
+		<a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <strong>用户列表</strong>
+	</div>
+</div>
+<div class="wrap cl">
+<div class="main datalist">
+<%if page_err==0%>
+	<h3>会员列表</h3>
+	<div class="pages_btns cl">
+		<div class="pages">
+			<kbd>共{totalusers}名用户</kbd>{pagenumbers}<kbd>共{pagecount}页</kbd>
+		</div>
+		<span class="postbtn left">
+		<input type="text" size="22" id="username" name="username" class="txt" onKeyDown="javascript:if(event.keyCode==13) window.location.href='userinfo.aspx?username='+this.value;" />
+		<button type="button" onclick="if(document.getElementById('username').value==''){return false;}else{window.location.href='userinfo.aspx?username=' + document.getElementById('username').value;}">查看用户</button>
+		</span>
+	</div>
+	<table summary="用户列表" cellspacing="0" cellpadding="0" class="datatable">
+		<thead class="colplural">
+		<tr>
+			<th>&nbsp;</th>
+			<th>用户名</th>
+			<th>组别</th>
+			<th>积分</th>
+			<th>发帖数</th>
+			<th>来自</th>
+			<th>注册时间</th>
+			<th>最后访问</th>
+		</tr>
+		</thead>
+	<%loop (IUser) user userlist%>
+		<tbody>
+		<tr>
+			<td><%if ({user.OnlineImage}+"").Trim()!=""%><img src="{BaseConfigs.GetForumPath}images/groupicons/{user.OnlineImage}" /><%/if%></td>
+			<th class="datatitle">
+				<%set {aspxrewriteurl} = this.UserInfoAspxRewrite({user.ID})%>
+				<a href="{aspxrewriteurl}">{user.Name}</a>
+				<%if ({user.NickName}+"").Trim()!=""%>
+					<%if {user.NickName}!={user.Name}%>&nbsp;&nbsp;({user.NickName})
+					<%/if%>	
+				<%/if%>
+			</th>
+			<td>{user.GroupTitle}</td>
+			<td>{user.Credits}</td>
+			<td>{user.Posts}</td>
+			<td>{user.Location}&nbsp;</td>
+			    <%set (string){jdate} = ForumUtils.ConvertDateTime({user.JoinDate})%>
+			<td class="time"><span title="<%{user.JoinDate}%>">{jdate}</span></td>
+			    <%set (string){lactivity} = ForumUtils.ConvertDateTime({user.LastActivity})%>
+			<td class="time"><span title="<%{user.LastActivity}%>">{lactivity}</span></td>
+		</tr>
+		</tbody>
+	<%/loop%>
+	</table>
+	<div class="pages_btns cl" style="margin-top:10px;">
+		<div class="pages">
+			<kbd>共{totalusers}名用户</kbd>{pagenumbers}<kbd>共{pagecount}页</kbd>
+		</div>
+		<span class="postbtn left">
+			<form method="get" action="">
+				按:
+				<input id="page" type="hidden" value="{pageid}" name="page" />
+				<select name="orderby" id="orderby">
+				  <option value="">默认</option>
+				  <option value="uid">用户ID</option>
+				  <option value="username">用户名</option>
+				  <option value="credits">积分</option>
+				  <option value="posts">发帖数</option>
+				  <option value="adminid">管理权限</option>
+				  <option value="joindate">注册日期</option>
+				  <option value="lastactivity">最后访问日期</option>
+				</select>
+				<select name="ordertype" id="ordertype">
+				  <option value="asc">升序</option>
+				  <option value="desc">降序</option>
+				</select>
+				<script type="text/javascript">
+					document.getElementById('orderby').value="{request[orderby]}";
+					document.getElementById('ordertype').value="{request[ordertype]}";
+				</script>
+				&nbsp;
+				<button type="submit" name="Submit" onclick="document.getElementById('username').value='';this.form.submit();">排序</button>
+			</form>
+		</span>
+	</div>
+</div>
+</div>
+<%else%>
+<%template _errmsgbox%>
+<%/if%>
+<%template _copyright%>
+<%template _footer%>

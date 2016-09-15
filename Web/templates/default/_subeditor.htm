@@ -1,0 +1,130 @@
+<script type="text/javascript" src="{jsdir}/post.js" reload="1" ></script>
+<%csharp%>
+    /*下方代码会在_postattachment中的大量程序中使用*/
+<%/csharp%>
+<script type="text/javascript">
+    var TABLEBG = '#FFF';//'{  WRAPBG  }';
+    var uid = parseInt('{userid}');
+
+    var special = parseInt('0');
+    var charset = 'utf-8';
+    var thumbwidth = parseInt(400);
+    var thumbheight = parseInt(300);
+    var extensions = '{attachextensions}';
+    var imgexts = '{Attachments.GetImageAttachmentTypeString(attachextensionsnosize)}';
+    var ATTACHNUM = {'imageused':0,'imageunused':0,'attachused':0,'attachunused':0};
+    var pid = parseInt('{topicid}');
+    var fid = {forumid};
+    var custombbcodes = { {customeditbuttons} };
+</script>
+<div class="edt cl" id="{editorid}_body">
+	<div id="{editorid}_controls" class="bar">
+		<div class="y">
+			<div class="b2r nbl nbr" id="{editorid}_adv_5">
+				<p><a id="{editorid}_undo" title="撤销">Undo</a></p>
+				<p><a id="{editorid}_redo" title="重做">Redo</a></p>
+			</div>
+			<div class="z">
+				<span class="mbn"><a id="{editorid}_simple"></a><a id="{editorid}_fullswitcher"></a></span>
+				<label id="{editorid}_switcher" class="bar_swch ptn"><input type="checkbox" class="pc" name="checkbox" value="0" <%if {config.Defaulteditormode}==0%>checked="checked"<%/if%> onclick="switchEditor(this.checked?0:1)" />代码模式</label>
+			</div>
+		</div>
+		<div id="{editorid}_button" class="cl">
+			<div class="b1r" id="{editorid}_adv_s0">
+				<a id="{editorid}_paste" title="粘贴">粘贴</a>
+			</div>
+			<div class="b2r nbr" id="{editorid}_adv_s2">
+				<a id="{editorid}_fontname" class="dp" title="设置字体"><span id="{editorid}_font">字体</span></a>
+				<a id="{editorid}_fontsize" class="dp" title="设置文字大小"><span id="{editorid}_size">大小</span></a>
+				<br id="{editorid}_adv_1" />
+				<a id="{editorid}_bold" title="粗体">B</a>
+				<a id="{editorid}_italic" title="文字斜体">I</a>
+				<a id="{editorid}_underline" title="文字加下划线">U</a>
+				<a id="{editorid}_forecolor" title="设置文字颜色">Color</a>
+				<a id="{editorid}_url" title="添加链接">Url</a>
+				<span id="{editorid}_adv_8">
+				<a id="{editorid}_unlink" title="移除链接">Unlink</a>
+				<a id="{editorid}_inserthorizontalrule" title="分隔线">Hr</a>
+				</span>
+			</div>
+			<div class="b2r nbl" id="{editorid}_adv_2">
+				<p id="{editorid}_adv_3"><a id="{editorid}_tbl" title="添加表格">Table</a></p>
+				<p>	<a id="{editorid}_removeformat" title="清除文本格式">Removeformat</a></p>
+			</div>
+			<div class="b2r">
+				<p>
+					<a id="{editorid}_justifyleft" title="居左">Left</a>
+					<a id="{editorid}_justifycenter" title="居中">Center</a>
+					<a id="{editorid}_justifyright" title="居右">Right</a>
+				</p>
+				<p id="{editorid}_adv_4">
+					<a id="{editorid}_autotypeset" title="自动排版">Autotypeset</a>
+					<a id="{editorid}_insertorderedlist" title="排序的列表">Orderedlist</a>
+					<a id="{editorid}_insertunorderedlist" title="未排序列表">Unorderedlist</a>
+				</p>
+			</div>
+			<div class="b1r" id="{editorid}_adv_s1">
+                <%if {config.smileyinsert}==1 && {forum.AllowSmilies}%>
+				<a id="{editorid}_sml" title="添加表情">表情</a>
+                <%/if%>
+				<div id="{editorid}_imagen" style="display:none">!</div>
+				<a id="{editorid}_image" title="添加图片">图片</a>
+				<%if {canpostattach}%>
+				<div id="{editorid}_attachn" style="display:none">!</div>
+				<a id="{editorid}_attach" title="添加附件">附件</a>
+				<%/if%>
+				<a id="{editorid}_aud" title="添加音乐">音乐</a>
+				<a id="{editorid}_vid" title="添加视频">视频</a>
+				<a id="{editorid}_fls" title="添加 Flash">Flash</a>
+			</div>
+			<div class="b2r nbr" id="{editorid}_adv_6">
+				<p>
+					<a id="{editorid}_code" title="添加代码文字">代码</a>	
+					<a id="{editorid}_hide" title="隐藏内容">隐藏内容</a>				
+				</p>
+				<p>
+					<a id="{editorid}_quote" title="添加引用文字">引用</a>
+					<a id="{editorid}_free" title="免费信息">免费信息</a>
+				</p>
+			</div>
+			<div class="b2r nbl">
+			<script type="text/javascript">
+			    //自定义按扭显示
+			    if (typeof (custombbcodes) != 'undefined') {
+			        var i = 0;
+			        var firstlayer = "";
+			        var secondlayer = "";
+			        for (var id in custombbcodes) {
+			            if (custombbcodes[id][1] == '') {
+			                continue;
+			            }
+			            if (i % 2 == 0)
+			                firstlayer += '<a class="cst" id="e_cst' + custombbcodes[id][5] + '_' + custombbcodes[id][0] + '"><img title="' + custombbcodes[id][2] + '" alt="' + custombbcodes[id][2] + '" src = "editor/images/' + custombbcodes[id][1] + '" /></a>';
+			            else
+			                secondlayer += '<a class="cst" id="e_cst' + custombbcodes[id][5] + '_' + custombbcodes[id][0] + '"><img title="' + custombbcodes[id][2] + '" alt="' + custombbcodes[id][2] + '" src = "editor/images/' + custombbcodes[id][1] + '" /></a>';
+			            i++;
+			            //document.writeln('<a class="cst" id="e_cst' + custombbcodes[id][5] + '_' + custombbcodes[id][0] + '"><img title="' + custombbcodes[id][2] + '" alt="' + custombbcodes[id][2] + '" src = "editor/images/' + custombbcodes[id][1] + '" /></a>');
+			        }
+
+			        document.writeln(firstlayer + "<br id=\"{editorid}_adv_7\" />" + secondlayer);
+			    }
+			</script>
+			</div>			
+		</div>
+	</div>
+	
+	<div id="rstnotice" class="ntc_l bbs" style="display:none">
+        <a href="javascript:;" title="清除内容" class="d y" onclick="userdataoption(0)">close</a>
+        您有上次未提交成功的数据 <a class="xi2" href="javascript:;" onclick="userdataoption(1,'{config.antispampostmessage}')"><strong>恢复数据</strong></a>
+    </div>
+	
+	<div class="area cl">
+		<textarea name="{config.antispampostmessage}" id="{editorid}_textarea" class="pt" tabindex="1" rows="15">{message}</textarea>
+	</div>
+	<%template _editor%>
+</div>
+<div id="{editorid}_menus" class="editorrow" style="overflow: hidden; margin-top: -5px; height: 0; border: none; background: transparent;">
+	<%template _editor_menu%>
+</div>
+<input type="hidden" name="wysiwyg" id="{editorid}_mode" value="1" />
+<input type="hidden" id="testsubmit" />

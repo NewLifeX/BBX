@@ -1,0 +1,103 @@
+﻿<%template _header%>
+<div class="wrap cl pageinfo">
+    <div id="nav">
+        <%if {usergroupinfo.AllowSearch}%>
+            <%template _quicksearch%>
+        <%/if%>
+        <a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <a href="usercpprofile.aspx">用户中心</a> &raquo; <strong>积分转帐</strong>
+    </div>
+</div>
+<div class="wrap uc cl">
+    <%template _menu%>
+    <div class="uc_main">
+    <div class="uc_content">
+        <h1>积分转帐</h1>
+        <%template _scoremenu%>	
+    <%if page_err==0%>
+    <%if ispost%>
+        <%template _usercpmsgbox%>
+    <%else%>
+        <form action="" method="post" id="postform">
+        <table cellspacing="0" cellpadding="0" class="tfm" summary="积分转帐">			
+            <caption>
+                <div class="hintinfo" style="margin:0;">积分交易税 {creditstax},兑换最低余额 {Scoresets.GetExchangeMinCredits()},转账最低余额 {Scoresets.GetTransferMinCredits()}</div>				
+            </caption>
+            <tbody>
+            <tr>
+                <th>当前帐户</th>
+                <td class="paychange"><%if {score[1]}!=""%>
+                {score[1]}: <em>{user.ExtCredits1}</em>
+                <%/if%>
+                <%if {score[2]}!=""%>
+                {score[2]}: <em>{user.ExtCredits2}</em>
+                <%/if%>
+                <%if {score[3]}!=""%>
+                {score[3]}: <em>{user.ExtCredits3}</em>
+                <%/if%>
+                <%if {score[4]}!=""%>
+                {score[4]}: <em>{user.ExtCredits4}</em>
+                <%/if%>
+                <%if {score[5]}!=""%>
+                {score[5]}: <em>{user.ExtCredits5}</em>
+                <%/if%>
+                <%if {score[6]}!=""%>
+                {score[6]}: <em>{user.ExtCredits6}</em>
+                <%/if%>
+                <%if {score[7]}!=""%>
+                {score[7]}: <em>{user.ExtCredits7}</em>
+                <%/if%>
+                <%if {score[8]}!=""%>
+                {score[8]}: <em>{user.ExtCredits8}</em>
+                <%/if%>
+                </td>
+            </tr>
+            <tr>
+                <th>用户密码</th>
+                <td>
+                    <input name="password" type="password" id="password" size="25" class="txt"/>
+                </td>
+            </tr>
+            <tr>
+                <th>将数量</th>
+                <td>
+                    <span class="z"><input name="paynum" type="text" id="paynum" value="100" size="10" class="txt" /> 的</span> 				
+                    <div class="ftid">
+                        <select name="extcredits" id="extcredits">
+                            <%if {creditstrans}=="0"%>
+                            <option value="">请选择</option>
+                            <%/if%>
+                            <%loop extcredits Scoresets.GetScorePaySet(1)%>
+                            <%if {creditstrans}=="0"||{creditstrans}=={extcredits[id]}%>
+                            <option value="{extcredits[id]}">{extcredits[name]}</option>
+                            <%/if%>
+                            <%/loop%>
+                        </select>
+                    </div>
+                    <script type="text/javascript">simulateSelect('extcredits');</script>
+                </td>
+            </tr>
+            <tr>
+                <th>转帐给用户</th>
+                <td>
+                    <input name="fromto" type="text" id="fromto" size="25"  class="txt"/>
+                    <a href="###" name="sbutton" value=" " onclick="alert('接收者的所得为 '+$('postform').extcredits.options[$('postform').extcredits.selectedIndex].text + ':'+Math.round($('postform').paynum.value*(1-{creditstax})*100)/100)" ID="Button1" >计算</a>
+                </td>
+            </tr>
+            <tr>
+                <th> </th>
+                <td>
+                    <button type="submit" name="Submit" ID="Submit1" class="pn"><span>确定</span></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </form>
+    <%/if%>
+<%else%>
+    <%template _usercperrmsgbox%>
+<%/if%>
+    </div>
+    </div>
+</div>
+<%template _copyright%>
+<%template _footer%>

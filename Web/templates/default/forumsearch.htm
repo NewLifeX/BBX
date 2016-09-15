@@ -1,0 +1,76 @@
+<%inherits "BBX.Forum.PageBase"%>
+<%csharp%>
+pagetitle = "版块搜索";
+<%/csharp%>
+<%template _header%>
+<div class="wrap s_clear pageinfo">
+	<div id="nav">
+		<a id="forumlist" href="{forumpath}" <%if {config.forumjump}==1%>onmouseover="showMenu(this.id);" onmouseout="showMenu(this.id);"<%/if%> class="title">{config.forumtitle}</a> &raquo; 版块搜索
+	</div>
+</div>
+	<%set (string) {key} = Utils.UrlDecode(DNTRequest.GetString("q")).ToLower().Trim()%>
+	<%set (int) {count} = 0%>
+	<%csharp%>
+	System.Collections.Generic.List<BBX.Entity.IXForum> forumlist = BBX.Forum.Forums.GetForumList();
+	<%/csharp%>
+
+<div class="wrap s_clear" id="wrap">
+<div class="main">
+	<div class="s_clear" id="forumheader">
+		<p class="channelinfo f_clear right">共搜索到<span id="resultcount"></span>个符合条件的版块</p>
+		<h1>版块搜索结果</h1>
+	</div>
+	<div class="mainbox" style="border-top:1px solid #D3E0EC;">
+	<table summary="版块搜索" cellspacing="0" cellpadding="0">
+		<thead class="category">
+			<tr>
+				<td style="background:#EEF4F9;border-bottom:1px solid #D3E0EC;padding:4px 0;text-align:left;padding-left:55px;">版块</td>
+				<td class="nums" style="background:#EEF4F9;border-bottom:1px solid #D3E0EC;padding:4px 0;text-align:center;">主题</td>
+				<td class="nums" style="background:#EEF4F9;border-bottom:1px solid #D3E0EC;padding:4px 0;text-align:center;">帖子</td>
+			</tr>
+		</thead>
+		<tbody class="list">
+	<%loop (IXForum) subforum forumlist%>
+	<%if key=="" || subforum.Name.ToLower().IndexOf(key.ToLower())==-1%>
+		<%continue%>
+	<%/if%>
+	<%if subforum.Name.ToLower().IndexOf(key)==0&&subforum.Name.ToLower().Substring(0,key.Length)!=key%>
+		<%continue%>
+	<%/if%>
+		<tr>
+			<%set {aspxrewriteurl} = this.ShowForumAspxRewrite({subforum.fid},0)%>
+			<th>
+				<h2>
+					<%if {subforum.icon}!=""%>
+						<img src="{subforum.icon}" border="0" align="left" hspace="5" alt="{subforum.name}"/>
+					<%/if%>
+					<%if {subforum.redirect}==""%>
+						<%set {aspxrewriteurl} = this.ShowForumAspxRewrite({subforum.fid},0,{subforum.rewritename})%>
+						<a href="{aspxrewriteurl}">
+					<%else%>
+						<a href="{subforum.redirect}" target="_blank">
+					<%/if%>
+					{subforum.name}</a><%if {subforum.TodayPosts}>0%><span class="today">({subforum.TodayPosts})</span><%/if%>
+				</h2>
+				<%if {subforum.Description}!=""%><p>{subforum.Description}</p><%/if%>
+				<%if !String.IsNullOrEmpty({subforum.ModeratorsHtml})%><p class="moderators">版主:{subforum.ModeratorsHtml}</p><%/if%>
+			</th>
+			<td class="nums">{subforum.topics}</td>
+			<td class="nums">{subforum.posts}</td>
+		</tr>
+		<%set {count}={count}+1%>
+		<%/loop%>
+		</tbody>
+	</table>
+	<script type="text/javascript">
+	$('resultcount').innerHTML = {count};
+	</script>
+	<%if {count}==0&&{key}!=""%>
+	<div class="zerothreads">没有搜索到你要查找的版块</div>
+	<%/if%>
+	<div style="border-top:1px solid #D3E0EC;padding-top:20px;"><input type="text" size="40" value="{Utils.HtmlEncode(key)}" id="f_key" /><input type="button" value="搜  索" onclick="window.location='?q=' + escape($('f_key').value)" /></div>
+	</div>
+</div>
+</div>
+<%template _copyright%>
+<%template _footer%>

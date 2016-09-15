@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<about>
+<template name="red"
+  author="BBX"
+  createdate = "2011-6-1"
+  ver="3.6"
+  fordntver="3.6"
+  copyright="Copyright BBX" 
+  width="750" />
+</about>

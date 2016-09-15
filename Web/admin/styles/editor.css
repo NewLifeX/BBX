@@ -1,0 +1,225 @@
+﻿/* Editor */
+* { margin:0; padding:0;}
+ul,li {list-style:none;}
+#posteditor_controls {
+	padding-top:6px;
+	padding-left:6px;
+}
+.editor input {
+	font: 12px Arail;
+	color: #333333;
+	font-weight: normal;
+	background-color: #F5FBFF;
+	border: 1px solid #7AC4EA;
+	height: 21px;
+}
+.editor	{
+	background: #F5FBFF;
+	border: 1px solid #BBE9FF;
+	border-bottom: 1px solid #86B9D6;
+	padding-bottom: 0px;
+}
+.editor_line {
+	border-top:1px solid #86B9D6;
+}
+#posteditor_switcher {
+	padding-left: 10px;
+	margin-top: 12px;
+}
+#posteditor_switcher button {
+background:#FFFFFF none repeat scroll 0%;
+border:1px solid #86B9D6;
+border-bottom:1px solid #fff;
+cursor:pointer;
+font-weight:bold;
+height:28px;
+line-height:28px;
+margin:0pt 2px;
+position:relative;
+top:1px;
+}
+* html #posteditor_switcher button { top: 2px; }
+*+html #posteditor_switcher button { top: 2px; }
+
+#posteditor_switcher .editor_switcher {
+border-bottom:1px solid #86B9D6;
+font-weight:normal;
+}
+
+.dropmenu {
+background-image:url(../editor/images/menupop.gif) !important;
+background-position:95% 50% !important;
+background-repeat:no-repeat !important;
+cursor:pointer;
+padding-right:15px !important;
+font-size:12px;
+}
+.popupmenu_popup { font-size:12px; text-align: left; line-height: 1.4em; padding: 10px; overflow: hidden; border: 1px solid #CAD9EA; background: #FFF url("../editor/images/ad_bg.gif"); background-repeat: repeat-x; background-position: 0 1px;  }
+	.popupmenu_popup li { padding:0; cursor:pointer;}
+.fontname_menu { width: 97px; font-size:12px; }
+.fontsize_menu { width: 48px; line-height: normal; }
+.NtForumForm a span {
+	margin-left:0;
+}
+.editortoolbar {
+	line-height:180%;
+	color:#000;
+}
+.editortoolbar a {
+		display: block;
+		padding: 1px;
+		border: 1px solid #F5FBFF;
+		cursor: pointer;
+		text-decoration:none;
+		color:#000;
+	}
+	.editortoolbar a.hover, .editortoolbar a:active { 
+		background-color: #E8F3FD; 
+		border: 1px solid #9DB3C5; 
+		text-decoration: none;
+		color:#000;
+	}
+	.editor_button button {
+		font-family:Arial, Helvetica, sans-serif; 
+		color: #036; 
+		background-color: #F5FAFE; 
+		border: 1px solid #95D2F0; 
+		height: 24px;
+		padding:0 3px;
+		margin:0 3px;
+		line-height:24px;
+	}
+.editor_text {
+	font: 12px Tahoma, Verdana;
+	border: 1px solid #86B9D6;
+	border-top: 0px;
+	background: #FFFFFF;
+	padding: 6px;
+}
+.editor_text textarea {
+	border: 0px;
+	background: Transparent;
+	overflow: auto;
+	/*padding: 4px;*/
+	word-break: break-all;
+	behavior: url(#default#userdata);
+}
+.editor_button {
+	background: #F5FBFF;
+	border: 1px solid #BBE9FF;
+	border-top: 1px solid #86B9D6;
+	position: relative;
+	top: -1px;
+	margin-bottom: 6px;
+}
+.editor_textexpand {
+	float: left;
+	position: relative;
+	top: -3px;
+	border-top: 0px;
+}
+.editor_buttonnormal {
+	background: #F5FBFF;
+	color: #000000;
+	padding: 1px;
+	border: none;
+}
+.editor_buttondown, .editor_buttonhover, .editor_buttonselected {
+	background: #F5FBFF;
+	color: #000000;
+	padding: 0px;
+	border: 1px solid #86B9D6;
+}
+.editor_menunormal, .editor_menuhover {
+	font: 11px tahoma;
+	height: 18px;
+	padding: 0px 3px 0px 3px;
+	white-space: nowrap;
+	overflow: hidden;
+	background: #FFFFFF;
+	color: #000000;
+}
+.editor_menunormal {
+	border-right: 1px solid #FFFFFF;
+}
+.editor_menuhover {
+	border-right: 1px solid #86B9D6;
+}
+.editor_menuhover div, .editor_menunormal div {
+	background: #FFFFFF;
+	color: #000000;
+}
+.editor_colormenunormal {
+	border-right: 1px solid #FFFFFF;
+}
+.editor_colormenuhover {
+	border-right: 1px solid #86B9D6;
+}
+.editor_colornormal {
+	padding: 2px;
+	font-size: 1px;
+}
+.editor_colorhover {
+	background: #86B9D6;
+	white-space: nowrap;
+	padding: 2px;
+	font-size: 1px;
+}
+.editor_colornormal div {
+	width: 10px;
+	height: 10px;
+	border: 1px solid #92A05A;
+}
+.editor_colorhover div {
+	width: 10px;
+	height: 10px;
+	border: 1px solid #86B9D6;
+}
+/*
+.tagSelected{
+	background:url(images/tagSelected.gif) no-repeat;
+	width: 101px;
+	height: 24px;
+	cursor:default;
+} 
+.tagNoSelect{
+	background:url(images/tagNoSelect.gif) no-repeat;
+	width:101px;
+	height:24px;
+	cursor:default;
+}
+.tagHover{
+	background:url(images/tagHover.gif) no-repeat;
+	width:101px;
+	height:24px;
+	cursor:default;
+}
+*/
+
+
+.editor_controlbar						
+{
+	padding: 2px;
+}
+.editor_title_line
+{
+	background-position: 50% bottom;
+	background-image: url(images/editor_title_line.gif);
+	background-repeat: repeat-x;
+	width:100%;
+}
+.editor_title_blank
+{
+	width: auto;
+}
+
+.editor table {
+	color: #333333;
+	empty-cells: show;
+	border-collapse: separate !important;
+	border-collapse: collapse;
+	font-size:12px;
+}
+	.editor table input {margin:2px; height:auto; }
+.t_table {border-bottom:1px solid #ccc; border-right:1px solid #ccc;}
+.t_table td {border-left:1px solid #ccc; border-top:1px solid #ccc;}

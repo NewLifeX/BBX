@@ -1,0 +1,46 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<html>
+<head>
+<title>站点信息</title>
+<script type="text/javascript" src="../js/common.js"></script>
+<link href="../styles/dntmanager.css" type="text/css" rel="stylesheet" />
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+<style>
+.sideinfo li{border-bottom:1px dashed #EEE;padding:8px 0;color:#000;}
+	.sideinfo li span{float:left;display:block;width:120px;font-weight:700;}
+</style>
+</head>
+<body>
+<form id="Form1" method="post" runat="server">
+<div class="ManagerForm">
+<fieldset>
+	<legend style="background:url(../images/icons/legendimg.jpg) no-repeat 6px 50%;">站点信息</legend>
+	<table width="100%">
+		<tr><td class="item_title">提示技巧</td></tr>
+		<tr>
+			<td class="vtop">
+				<ul>
+					<li>如果站点名称或者站点URL有变动，请点击"同步站点信息"按钮。</li>
+					<li>站点KEY是站点与云平台通信的验证密钥，若近期有危险操作泄漏站点KEY等消息,请点击"更换站点KEY"按钮.<span style="#B23D53">请谨慎使用此功能</span></li>
+				</ul>
+			</td>
+		</tr>
+		<tr><td class="item_title">站点信息</td></tr>
+		<tr>
+			<td class="vtop">
+				<ul class="sideinfo">
+					<li><span>站点名称</span>BBXBoard</li>
+					<li><span>站点URL</span>http://x.s49.myverydz.com</li>
+					<li><span>站点ID</span>5096364</li>
+				</ul>
+			</td>
+		</tr>
+		<tr><td style="padding:10px 0;"><button id="submit" class="ManagerButton" type="button"><img src="../images/submit.gif">同步站点信息</button><button id="submit" class="ManagerButton" type="button"><img src="../images/submit.gif">更换站点KEY</button><button id="submit" class="ManagerButton" type="button"><img src="../images/submit.gif">设置云平台接口IP</button></td></tr>
+	</table>
+	
+</fieldset>
+</div>			
+<%=footer%>
+</form>
+</body>
+</html>

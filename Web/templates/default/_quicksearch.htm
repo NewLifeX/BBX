@@ -1,0 +1,31 @@
+﻿<form method="post" action="{forumpath}search.aspx" target="_blank" onsubmit="bind_keyword(this);" class="y">
+	<input type="hidden" name="poster" />
+	<input type="hidden" name="keyword" />
+	<input type="hidden" name="type" value="" />
+	<input id="keywordtype" type="hidden" name="keywordtype" value="0" />
+	<a href="javascript:void(0);" class="drop s_type" id="quicksearch" onclick="showMenu(this.id, false);" onmouseover="MouseCursor(this);">快速搜索</a>
+	<input type="text" name="keywordf" value="输入搜索关键字" onblur="if(this.value=='')this.value=defaultValue" onclick="if(this.value==this.defaultValue)this.value = ''" onkeydown="if(this.value==this.defaultValue)this.value = ''" class="txt"/>
+	<input name="searchsubmit" type="submit" value="" class="btnsearch"/>
+</form>
+<ul id="quicksearch_menu" class="p_pop" style="display: none;">
+	<li><a href="###" onclick="$('keywordtype').value='0';$('quicksearch').innerHTML='帖子标题';$('quicksearch_menu').style.display='none';" onmouseover="MouseCursor(this);">帖子标题</a></li>
+	<li><a href="###" onclick="$('keywordtype').value='8';$('quicksearch').innerHTML='作者';$('quicksearch_menu').style.display='none';" onmouseover="MouseCursor(this);">作者</a></li>
+	<li><a href="###" onclick="$('keywordtype').value='9';$('quicksearch').innerHTML='版块';$('quicksearch_menu').style.display='none';" onmouseover="MouseCursor(this);">版块</a></li>
+</ul>
+<script type="text/javascript">
+    function bind_keyword(form) {
+        if (form.keywordtype.value == '9') {
+            form.action = '{forumpath}search.aspx?q=' + escape(form.keywordf.value);
+        } else if (form.keywordtype.value == '8') {
+            form.keyword.value = '';
+            form.poster.value = form.keywordf.value != form.keywordf.defaultValue ? form.keywordf.value : '';
+        } else {
+            form.poster.value = '';
+            form.keyword.value = form.keywordf.value != form.keywordf.defaultValue ? form.keywordf.value : '';
+            if (form.keywordtype.value == '2')
+                form.type.value = 'spacepost';
+            if (form.keywordtype.value == '3')
+                form.type.value = 'album';
+        }
+    }
+</script>

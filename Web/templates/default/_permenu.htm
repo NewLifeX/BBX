@@ -1,0 +1,14 @@
+﻿<%if {userid}>0%>
+<ul class="f_tab">
+    <%if {pagename}=="usercppreference.aspx"%>
+        <li id="u_cpfile_li"><a href="usercpprofile.aspx?action=cpfile">基本资料</a></li>
+	    <li id="u_contact_li"><a href="usercpprofile.aspx?action=contact">联系方式</a></li>
+	    <li id="u_signature_li"><a href="usercpprofile.aspx?action=signature">签名</a></li>
+    <%else%>
+	    <li id="u_cpfile_li"><a href="javascript:void(0);" onclick="ShowPanel('u_cpfile');">基本资料</a></li>
+	    <li id="u_contact_li"><a href="javascript:void(0);" onclick="ShowPanel('u_contact');">联系方式</a></li>
+	    <li id="u_signature_li"><a href="javascript:void(0);" onclick="ShowPanel('u_signature');">签名</a></li>
+	<%/if%>
+	<li <%if {pagename}=="usercppreference.aspx"%>class="cur_tab"<%/if%>><a href="usercppreference.aspx">论坛设置</a></li>
+</ul>
+<%/if%>

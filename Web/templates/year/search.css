@@ -1,0 +1,29 @@
+body{background:#FFF;}
+.subhead{padding:6px;background:#FFF;border-bottom:1px solid #CDCDCD;}
+.search{min-height:400px;}
+.search table{margin:0 auto;margin-top:40px;}
+.s_logo{text-align:center;padding:20px 0;}
+#tps_form {background:#F5F5F5;}
+#srchtxt{background:#FFF;border-color:#999 #CCC #CCC #999;border-style:solid;border-width:1px;height:25px !important;line-height:20px !important;margin:3px;padding:5px 2px 0;width:400px;font-size:12px;}
+#tps_btn{background:#E5EDF2;border-color:#BBB #666 #666 #BBB;border-style:solid;border-width:1px;height:32px;margin-right:3px;width:80px;}
+.hm{text-align:center;padding-bottom:10px;font-size:14px;}
+#tpsch {margin:10px 0;}
+#tpsch h1 {margin-right:20px;}
+#tpsch .tb {border:medium none;line-height:22px;}
+.tb li {float:left;margin:0 3px -1px 0;}
+.tb a {background:#E5EDF2;border:1px solid #CDCDCD;display:block;padding:0 10px;}
+#tpsch .tb a {background-color:#FFF;border-color:#F5F5F5;}
+#tpsch .a a {background-color:#F5F5F5;}
+.sttl {background:#F5F5F5;border-bottom:1px solid #CCC;margin:10px 0;padding:5px;}
+.emp {padding:20px 10px;}
+.slst {width:760px;}
+.mtw {margin-top:20px !important;}
+.xs3{font-size:16px;}
+.slst a {color:#0000CC;font-weight:400;text-decoration:underline;}
+.slst a:visited {color:#800080;}
+.slst p span {color:#3A8000;}
+.slst p span a, .slst p span a:visited {color:#666;}
+.pbw strong {font-weight:400;}
+.pbw {padding-bottom:20px !important;}
+.pbw p {color:#000;line-height:22px;}
+#footer .wrap{border-top:1px solid #CDCDCD;padding:10px 0 50px;}

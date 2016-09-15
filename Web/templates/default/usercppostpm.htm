@@ -1,0 +1,153 @@
+﻿<%template _header%>
+<%if {infloat}!=1%>
+<div class="wrap cl pageinfo">
+	<div id="nav">
+		<%if {usergroupinfo.AllowSearch}%>
+			<%template _quicksearch%>
+		<%/if%>
+		<a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <a href="usercp.aspx">用户中心</a> &raquo; <strong>撰写短消息</strong>
+	</div>
+</div>
+<%/if%>
+<%if {ispost}%>
+     <%if {infloat}==1%>
+		<%if page_err==0%>
+		    <script type="text/javascript">
+		        $('postpm').style.display = 'none';
+		        $('return_mods').className = '';
+		    </script>
+			<div class="msgbox">
+			<h1>{config.forumtitle}　提示信息</h1>
+			<p>{msgbox_text}</p>
+			<%if {msgbox_url}!=""%>
+			<h1><a href="javascript:;" onclick="location.reload()">如果长时间没有响应请点击此处</a></h1>
+			<script type="text/javascript">setTimeout('location.reload()', 3000);</script>
+			<%/if%>
+			</div>
+		<%else%>
+		    {msgbox_text}
+		<%/if%>
+	  <%else%>
+			<%if page_err==0%>
+			<%template _msgbox%>
+			<%else%>
+			<%template _errmsgbox%>
+			<%/if%>	  
+	  <%/if%>
+<%else%>
+<%if {infloat}==1%>
+    <div class="floatbox" id="floatlayout_postpm">
+	<h3 class="flb">
+	<!--操作标题开始-->
+	    <em id="return_mods">撰写短消息</em>
+	<!--操作标题结束-->
+		<span class="y">
+			<a href="javascript:;" class="flbc" onclick="hideWindow('postpm')" title="关闭">关闭</a>
+		</span>
+	</h3>
+	<div class="gateform" style="padding-left:15px;">
+	    <h3 id="returnmessage"></h3>
+		<form id="postpm" name="postpm" method="post" onsubmit="javascript:ajaxpost('postpm', 'return_mods', 'return_mods', 'onerror');return false;" action="{rooturl}usercppostpm.aspx?infloat=1">
+		<table cellspacing="0" cellpadding="0" class="formtable" summary="撰写短消息">
+		<tbody>
+			<tr>
+				<th><label for="msgto">收件人</label></th>
+				<td><input name="msgto" type="text" id="msgto" value="{msgto}" size="25" class="txt" tabindex="1" /></td>
+			</tr>
+			<tr>
+				<th><label for="subject">标题</label></th>
+				<td><input name="subject" type="text"id="subject" value="{subject}" size="40" class="txt" tabindex="1" /></td>
+			</tr>
+			<tr>
+				<th><label for="message">内容</label></th>
+				<td><textarea name="message" cols="60" rows="8" id="message"  tabindex="1" onkeydown="if((event.ctrlKey && event.keyCode == 13) || (event.altKey && event.keyCode == 83)) {ajaxpost('postpm', 'return_mods', 'return_mods', 'onerror');return false;}" style="width:80%;" class="txtarea">{message}</textarea></td>
+			</tr>
+			<%if {isseccode}%>
+			<tr>
+				<th><label for="vcodetext">验证码</label></th>
+				<td>
+					<div style="position: relative;">
+					<%template _vcode%>
+					</div>
+		        </td>
+			</tr>
+			<%/if%>
+			<tr>
+				<th></th>
+				<td><input name="savetosentbox" type="checkbox" id="savetosentbox" value="1" tabindex="4"  />保存到发件箱 
+				<input type="checkbox" name="emailnotify" id="emailnotify" />Email通知</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+				<button name="sendmsg" type="submit" id="sendmsg" tabindex="5" class="pn"/><span>立即发送</span></button>
+				<button type="submit" id="savetousercpdraftbox" tabindex="5" onclick="javascript:$('postpm').action='{rooturl}usercppostpm.aspx?infloat=1&savetousercpdraftbox=存为草稿';" class="pn"/><span>存为草稿</span></button>
+				[可按Ctrl+Enter提交]</td>
+			</tr>
+		</tbody>
+		</table>
+	</form>
+	</div>
+<%else%>
+<div class="wrap uc cl">
+	<%template _menu%>
+	<div class="uc_main">
+	<div class="uc_content">
+		<h1>撰写短消息</h1>
+		<%template _smsmenu%>
+		<%if page_err==0%>
+		<%if ispost%>
+			<%template _usercpmsgbox%>
+		<%else%>
+			<form id="postpm" name="postpm" method="post" action="">			
+			<table cellspacing="0" cellpadding="0" class="tfm" summary="撰写短消息">
+			<tbody>
+			<tr>
+				<th>收件人</th>
+				<td><input name="msgto" type="text" id="msgto" value="{msgto}" size="25" class="txt"/></td>
+			</tr>
+			<tr>
+				<th>标题</th>
+				<td><input name="subject" type="text"id="subject" value="{subject}" size="40" class="txt"/></td>
+			</tr>
+			<tr>
+				<th>内容</th>
+				<td><textarea name="message" cols="60" rows="8" id="message" onkeydown="if((event.ctrlKey && event.keyCode == 13) || (event.altKey && event.keyCode == 83)) document.getElementById('postpm').submit();" style="width:80%;" class="txtarea">{message}</textarea></td>
+			</tr>
+			<%if {isseccode}%>
+			<tr>
+				<th>验证码</th>
+				<td>
+					<div style="position: relative;">
+					<%template _vcode%>
+					</div>
+		        </td>
+			</tr>
+			<%/if%>
+			<tr>
+				<th></th>
+				<td><input name="savetosentbox" type="checkbox" id="savetosentbox" value="1"/>保存到发件箱 
+				<input type="checkbox" name="emailnotify" id="emailnotify"/>Email通知</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+				<button name="sendmsg" type="submit" id="sendmsg" class="pn"><span>立即发送</span></button>
+				<button type="submit" id="savetousercpdraftbox" onclick="this.name='savetousercpdraftbox';"  class="pn"><span>存为草稿</span></button>
+				[可按Ctrl+Enter提交]				
+				</td>
+			</tr>
+			</tbody>
+			</table>
+			</form>
+		<%/if%>
+		<%else%>
+			<%template _usercperrmsgbox%>
+		<%/if%>
+	</div>
+	</div>
+</div>
+<%/if%>
+<%/if%>
+<%template _copyright%>
+<%template _footer%>

@@ -1,0 +1,19 @@
+<%if {userid}>0%>
+<div class="uc_app">
+	<h2>用户中心</h2>
+	<ul>
+        <li <%if {pagename}=="usercpprofile.aspx?action=avatar"%> class="current"<%/if%>><a href="usercpprofile.aspx?action=avatar">设置头像</a></li>
+        <li <%if {pagename}=="usercpprofile.aspx"||{pagename}=="usercppreference.aspx"%> class="current"<%/if%>><a href="usercpprofile.aspx">个人资料</a></li>
+        <li <%if {pagename}=="usercpinbox.aspx"||{pagename}=="usercpsentbox.aspx"||{pagename}=="usercpdraftbox.aspx"||{pagename}=="usercppostpm.aspx"||{pagename}=="usercpshowpm.aspx"||{pagename}=="usercpannouncepm.aspx"||{pagename}=="usercpignorelist.aspx"||{pagename}=="usercpnotice.aspx"%> class="current"<%/if%>><a href="usercpinbox.aspx">短消息</a></li>
+        <li <%if {pagename}=="mytopics.aspx"||{pagename}=="myposts.aspx"%> class="current"<%/if%>><a href="mytopics.aspx">我的帖子</a></li>
+        <li <%if {pagename}=="myattachment.aspx"%> class="current"<%/if%>><a href="myattachment.aspx">附件</a></li>
+        <li <%if {pagename}=="usercpsubscribe.aspx"%> class="current"<%/if%>><a href="usercpsubscribe.aspx">收藏夹</a></li>
+        <li <%if {pagename}=="usercpcreditspay.aspx"||{pagename}=="usercpcreditstransfer.aspx"||{pagename}=="usercpcreditspayoutlog.aspx"||{pagename}=="usercpcreditspayinlog.aspx"||{pagename}=="usercpcreaditstransferlog.aspx"%> class="current"<%/if%>><a href="usercpcreditspay.aspx">积分</a></li>
+        <li <%if {pagename}=="usercp.aspx"%> class="current"<%/if%>><a href="usercp.aspx">用户组&权限</a></li>
+        <li <%if {pagename}=="usercpnewpassword.aspx"%> class="current"<%/if%>><a href="usercpnewpassword.aspx">更改密码</a></li>
+        <%if {isbindconnect}%>
+        <li <%if {pagename}=="usercpqqbind.aspx"%> class="current"<%/if%>><a href="usercpqqbind.aspx">QQ绑定</a></li>
+        <%/if%>
+	</ul>
+</div>
+<%/if%>

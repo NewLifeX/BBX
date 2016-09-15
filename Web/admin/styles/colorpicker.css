@@ -1,0 +1,31 @@
+﻿.article 
+{
+	position: absolute; 
+	z-index: 10000;
+    background-color: #F5F7F8; 
+    width:250px;
+    float:left;
+    background: #FFFFFF;
+    margin-left: 1px;
+    border: 1px solid #B0C4EA;
+    padding: 4px;
+} 
+
+.img
+{
+	border:0px;
+	align: absmiddle;
+	position:relative;
+	top:4px;
+	height:20px;
+	left:1px;
+}
+
+	*html .img 
+	{
+		top:1px;	
+	}
+	*+html .img 
+	{
+		top:1px;	
+	}

@@ -1,0 +1,123 @@
+﻿<%template _header%>
+<script type="text/javascript">
+var aspxrewrite = {config.Aspxrewrite};
+</script>
+<div class="wrap cl pageinfo">
+	<div id="nav">
+	<%if {usergroupinfo.AllowSearch}%>
+		<%template _quicksearch%>
+	<%/if%>
+	<a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <a href="tags.aspx">标签</a><%if {page_err}==0 && {tagid}>0%> &raquo; {tag.Name}<%/if%>
+	</div>
+</div>
+<%if {page_err}==0%>
+<div class="wrap cl">
+<div class="main thread" style="padding:10px;">
+<%if {tagid}>0%>
+	<script type="text/javascript">
+		function changeTab(obj)
+		{
+			if (obj.className == 'current')
+			{
+				obj.className = '';
+			}
+			else
+			{
+				obj.className = 'currentt';
+			}
+		}
+	</script>
+	<div class="cl">
+		<ul class="f_tab">
+			<li id="tab_forum" <%if {listtype}=="topic"%>class="cur_tab" <%else%> onmouseout="changeTab(this)" onmouseover="changeTab(this)" <%/if%>><a href="<%if {config.Aspxrewrite}==1%>topictag-{tagid}.aspx<%else%>tags.aspx?tagid={tagid}<%/if%>"><span>主题</span></a></li>
+		</ul>
+	</div>
+	<%if {listtype}=="topic"%>		
+		<%if {topiccount}==0%>
+		<%template _usercpmsgbox%>
+		<%else%>
+		<div class="threadlist">
+		<table cellSpacing="0" cellPadding="0" summary="主题标签">
+		<thead>
+		<tr>
+			<th style="padding:4px 0;">标题</th>
+			<th>所在版块</th>
+			<td class="by">作者</td>
+			<td class="num">回复 / 查看</td>
+			<td class="by"><cite>最后发表</cite></td>
+		</tr>
+		</thead>
+		<%loop (Topic) topic topiclist%>
+		<tbody>
+		<tr>
+			<th class="subject">
+				<%set {aspxrewriteurl} = this.ShowTopicAspxRewrite({topic.ID},0)%>
+				<a href="{aspxrewriteurl}" target="_blank">{topic.title}</a>
+			</th>
+			<td>
+				<%set {aspxrewriteurl} = this.ShowForumAspxRewrite({topic.fid},0)%>
+				<a href="{aspxrewriteurl}">{topic.ForumName}</a>
+			</td>
+			<td class="by">
+				<cite>
+				<%if {strtoint({topic.PosterID})}==-1%>
+					游客
+				<%else%>
+					<%set {aspxrewriteurl} = this.UserInfoAspxRewrite({topic.PosterID})%>
+					<a href="{aspxrewriteurl}">{topic.poster}</a>
+				<%/if%></cite>
+				<em><%Format({topic.PostDateTime}, "yyyy.MM.dd HH:mm")%></em>
+			</td>
+			<td class="num"><a href="#" class="xg2">{topic.replies}</a><em>{topic.views}</em></td>
+			<td class="by">
+				<cite>by
+				<%if {topic.LastPosterID}==-1%>
+					游客
+				<%else%>
+					<a href="{UserInfoAspxRewrite(topic.LastPosterID)}" target="_blank">{topic.LastPoster}</a>
+				<%/if%>
+				</cite>
+				<em><a href="showtopic.aspx?topicid={topic.ID}&page=end" target="_blank"><%Format({topic.LastPost},"yyyy.MM.dd HH:mm")%></a></em>
+			</td>
+		</tr>
+		</tbody>
+		<%/loop%>
+		</table>			
+		</div>
+		<div class="pages_btns">
+			<div class="pages">
+				<em>{pageid}/{pagecount}页</em>{pagenumbers}
+			</div>
+		</div>
+		<%/if%>
+    <%/if%>
+	<%else%>
+		<script type="text/javascript" src="tools/ajax.ashx?t=closedtags"></script>
+    <script type="text/javascript" src="tools/ajax.ashx?t=colorfulltags"></script>
+		<script type="text/javascript"  src="{jsdir}/template_showtopic.js"></script>	
+		<script type="text/javascript" src="{jsdir}/template_tags.js"></script>	
+		<script type="text/javascript" src="{jsdir}/ajax.js"></script>
+		<h3>论坛热门标签</h3>
+		<hr class="solidline"/>
+		<ul id="forumhottags" class="taglist">
+		<%loop (Tag) tag taglist%>
+				<li><a 
+			<%if {config.aspxrewrite}==1%>
+				href="topictag-{tag.ID}.aspx" 
+			<%else%>
+				href="tags.aspx?t=topic&tagid={tag.ID}" 
+			<%/if%>
+			<%if {tag.Color}!=""%>	
+				style="color: #{tag.Color};"
+			<%/if%>
+				title="{tag.FCount}">{tag.Name}</a></li>
+		<%/loop%>
+		</ul>
+	<%/if%>
+</div>
+<%else%>
+	<%template _errmsgbox%>
+<%/if%>
+</div>
+<%template _copyright%>
+<%template _footer%>

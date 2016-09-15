@@ -1,0 +1,24 @@
+<%template _header%>
+<%if {infloat}==1%>
+    {msgbox_text}
+<%else%>
+<div class="wrap cl pageinfo">
+	<div id="nav">
+	<%if {usergroupinfo.AllowSearch}%>
+		<%template _quicksearch%>
+	<%/if%>
+	<a href="{config.forumurl}" class="title">{config.forumtitle}</a>
+	<%if {topicid}!=-1%>
+		 &raquo; {forumnav} &raquo; <%set {aspxrewriteurl} = this.ShowForumAspxRewrite({forumid},0)%>
+		<a href="{aspxrewriteurl}">{topictitle}</a> &raquo; <strong>收藏主题</strong>
+	<%/if%>
+	</div>
+</div>
+<%if page_err==0%>
+	<%template _msgbox%>
+<%else%>
+	<%template _errmsgbox%>
+<%/if%>
+<%/if%>
+<%template _copyright%>
+<%template _footer%>

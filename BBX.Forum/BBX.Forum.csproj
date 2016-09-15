@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{6998BF8A-1A54-417B-8D92-07FD7144E228}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <AssemblyName>BBX.Forum</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <WarningLevel>4</WarningLevel>
+    <RootNamespace>BBX.Forum</RootNamespace>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <OutputPath>..\Web\bin\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <Optimize>false</Optimize>
+    <ErrorReport>prompt</ErrorReport>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>..\Web\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="NewLife.Core">
+      <HintPath>..\DLL\NewLife.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="XCode">
+      <HintPath>..\DLL\XCode.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Version.cs">
+      <Link>Properties\Version.cs</Link>
+    </Compile>
+    <Compile Include="Common\Arithmetic.cs" />
+    <Compile Include="Common\PageTemplate.cs" />
+    <Compile Include="PageHelper.cs" />
+    <Compile Include="QzoneConnectContext.cs" />
+    <Compile Include="ScheduledEvents\AttachmentEvent.cs" />
+    <Compile Include="ScheduledEvents\ClearCatchEvent.cs" />
+    <Compile Include="ScheduledEvents\Event.cs" />
+    <Compile Include="ScheduledEvents\EventManager.cs" />
+    <Compile Include="ScheduledEvents\ForumEvent.cs" />
+    <Compile Include="ScheduledEvents\IEvent.cs" />
+    <Compile Include="AdminForums.cs" />
+    <Compile Include="AdminForumStats.cs" />
+    <Compile Include="AdminTopics.cs" />
+    <Compile Include="Attachments.cs" />
+    <Compile Include="Avatars.cs" />
+    <Compile Include="Caches.cs" />
+    <Compile Include="CreditsFacade.cs" />
+    <Compile Include="Debates.cs" />
+    <Compile Include="Editors.cs" />
+    <Compile Include="Emails.cs" />
+    <Compile Include="EPayments.cs" />
+    <Compile Include="Feeds.cs" />
+    <Compile Include="Focuses.cs" />
+    <Compile Include="ForumHots.cs" />
+    <Compile Include="ForumPageTemplate.cs" />
+    <Compile Include="Forums.cs" />
+    <Compile Include="ForumUtils.cs" />
+    <Compile Include="HttpModule.cs" />
+    <Compile Include="LoginLogs.cs" />
+    <Compile Include="MenuManage.cs" />
+    <Compile Include="Moderators.cs" />
+    <Compile Include="PageBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Posts.cs" />
+    <Compile Include="QZoneAvatar.cs" />
+    <Compile Include="ScheduledEvents\InvitationEvent.cs" />
+    <Compile Include="ScheduledEvents\NoticesEvent.cs" />
+    <Compile Include="ScheduledEvents\ScriptEvent.cs" />
+    <Compile Include="ScheduledEvents\StatEvent.cs" />
+    <Compile Include="Scoresets.cs" />
+    <Compile Include="SiteUrls.cs" />
+    <Compile Include="Smilies.cs" />
+    <Compile Include="Stats.cs" />
+    <Compile Include="Sync.cs" />
+    <Compile Include="TopicAdmins.cs" />
+    <Compile Include="Topics.cs" />
+    <Compile Include="UBB.cs" />
+    <Compile Include="Urls.cs" />
+    <Compile Include="UserAuthority.cs" />
+    <Compile Include="UserGroups.cs" />
+    <Compile Include="Users.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BBX.Common\BBX.Common.csproj">
+      <Project>{D4CD57D2-3084-4878-BFDC-8C15603F6878}</Project>
+      <Name>BBX.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BBX.Entity\BBX.Entity.csproj">
+      <Project>{F2D7522A-311D-46FA-B7CE-BD5B7686EAB2}</Project>
+      <Name>BBX.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BBX.Plugin\BBX.Plugin.csproj">
+      <Project>{AADF896C-C093-47CA-A13F-6CE3E9AA6A38}</Project>
+      <Name>BBX.Plugin</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

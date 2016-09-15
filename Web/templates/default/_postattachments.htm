@@ -1,0 +1,301 @@
+﻿<iframe name="attachframe" id="attachframe" style="display: none;" onload="uploadNextAttach();"></iframe>
+
+<div class="p_pof upf" id="{editorid}_attach_menu" style="display: none;width:600px;" unselectable="on">
+        <span class="y"><a href="javascript:;" class="flbc" onclick="hideMenu()">关闭</a></span>
+        <ul class="imguptype" id="{editorid}_attach_ctrl">
+            <li><a href="javascript:;" hidefocus="true" class="current" id="{editorid}_btn_attachlist" onclick="switchAttachbutton('attachlist');">附件列表</a></li>
+            <li><a href="javascript:;" hidefocus="true" id="{editorid}_btn_upload" onclick="switchAttachbutton('upload');">普通上传</a></li>
+            <li><a href="javascript:;" hidefocus="true" id="{editorid}_btn_swfupload" onclick="switchAttachbutton('swfupload');">批量上传</a></li>
+        </ul>
+            <div class="p_opt" unselectable="on" id="{editorid}_upload" style="display: none;">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                    <tbody id="attachbodyhidden" style="display:none"><tr>
+                        <td class="atnu"><span id="localno[]"><img src="images/attachicons/common_new.gif" /></span></td>
+                        <td class="atna">
+                            <span id="deschidden[]" style="display:none">
+                                <span id="localfile[]"></span>
+                            </span>
+                            <input type="hidden" name="localid" />
+                        </td>
+                        <td class="attc delete_msg"><span id="cpdel[]"></span></td>
+                    </tr></tbody>
+                </table>
+                <div class="p_tbl"><table cellpadding="0" cellspacing="0" summary="post_attachbody" border="0" width="100%"><tbody id="attachbody"></tbody></table></div>
+                <div class="upbk">
+                    <div id="attachbtnhidden" name="uploadattchfile" filetype="file" style="display:none"><span><form name="attachform" id="attachform" method="post" autocomplete="off" action="tools/attachupload.aspx?forumid={forumid}" target="attachframe" enctype="multipart/form-data"><input type="hidden" name="uid" value=""><input type="hidden" name="hash" value=""><input type="file" name="Filedata" size="45" class="fldt" multiple="multiple" filetype="file" /></form></span></div>
+                    <div id="attachbtn"></div>
+                    <p id="uploadbtn">
+                        <button type="button" class="pn" onclick="hideMenu();"><span>取消</span></button>
+                        <button type="button" class="pn pnc" onclick="uploadAttach(0, 0)"><span>上传</span></button>
+                    </p>
+                    <p id="uploading" style="display: none;"><img src="images/common/uploading.gif" style="vertical-align: middle;" /> 上传中，请稍候，您可以<a href="javascript:;" onclick="hideMenu()">暂时关闭这个小窗口</a>，上传完成后您会收到通知。</p>
+                </div>
+                <div class="notice upnf">
+                    文件尺寸: <strong>{FormatBytes(usergroupinfo.MaxAttachSize)}</strong>&nbsp;
+                    上传限制: <strong>{config.maxattachments}</strong> 个文件&nbsp;&nbsp;
+                    <br />可用扩展名: <strong>{attachextensionsnosize}</strong>&nbsp;
+                </div>				
+            </div>
+            <div class="p_opt" unselectable="on" id="{editorid}_swfupload" style="display: none;">
+                <div class="floatboxswf" id="{editorid}_multiattach">
+                <%if {config.Swfupload}==1 %>
+                <embed width="470" height="268" type="application/x-shockwave-flash" wmode="transparent" allowscriptaccess="always" menu="false" quality="high" src="{rooturl}images/common/upload.swf?site={rooturl}tools/attachupload.aspx%3fmod=swfupload%26forumid={forumid}&amp;random={DateTime.Now.Ticks}">
+                <%/if%>
+                </div>
+                <div class="notice upnf">
+                    文件尺寸: <strong>{FormatBytes(usergroupinfo.MaxAttachSize)}</strong>&nbsp;
+                    上传限制: <strong>{config.maxattachments}</strong> 个文件&nbsp;&nbsp;
+                    <br />可用扩展名: <strong>{attachextensionsnosize}</strong>&nbsp;
+                </div>
+            </div>
+        <div class="p_opt post_tablelist" unselectable="on" id="{editorid}_attachlist">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" id="attachlist_edittablist">
+                    <tbody>
+                        <tr>
+                        <td class="atnu">&nbsp;</td>
+                        <td class="atna">文件名&nbsp;(<a class="xg2" href="javascript:;" onclick="insertAllAttachTag();return false;" style="margin:0 4px;">插入全部附件</a>)</td>
+                        <td class="atds">描述</td>
+                        <%if {userid}!=-1 && {usergroupinfo.AllowSetattachPerm}%><td class="attv">阅读权限</td><%/if%>
+                        <%if {topicattachscorefield}>0 && usergroupinfo.MaxPrice>0 %><td class="attp">{Scoresets.GetTopicAttachCreditsTransName()}</td><%/if%>
+                        <td class="attc delete_msg"></td>
+                       </tr>
+                    </tbody>
+                    <%if {action}=="edit"%>
+                      <%loop (Attachment) attachment attachmentlist%>
+                        <%if {strtoint({attachment.Pid})}=={postinfo.ID} && !{attachment.IsImage}%>
+                            <%set (string){filetypeimage} = ""%>
+                            <%set (int){isimage} = 0 %>
+                            <%set (string){inserttype} = ""%>
+                            <%if {attachment.FileType}.IndexOf("image")>-1%>
+                                <%set {filetypeimage} = "image.gif"%>
+                                <%set {inserttype} = "insertAttachimgTag"%>
+                                <%set {isimage} = 1 %>
+                            <%else%>
+                               <%set {inserttype} = "insertAttachTag"%>
+                               <%if Utils.GetFileExtName(attachment.Name)=="rar" || Utils.GetFileExtName(attachment.Name)=="zip"%>
+                               <%set {filetypeimage} = "rar.gif"%>
+                               <%else%>
+                               <%set {filetypeimage} = "attachment.gif"%>
+                               <%/if%>
+                            <%/if%>		
+                            <tbody id="attach_{attachment.ID}">
+                            <tr>
+                            <td class="atnu">
+                            <img id="attach{attachment.ID}_type" border="0" src="images/attachicons/{filetypeimage}" class="vm" alt=""/>
+                            </td>
+                            <td class="atna">
+                            <span id="attach{attachment.ID}">
+                            <a id="attachname{attachment.ID}" onclick="{inserttype}({attachment.ID})" href="javascript:;" isimage="{isimage}" title="{attachment.Name}"><%getsubstring({attachment.Name},25,"...")%></a> 
+                            <a href="javascript:;" class="atturl" title="添加附件地址" onclick="insertText('attach://')">
+                            <img alt="" src="images/attachicons/attachurl.gif"/>
+                            </a>
+                            </span>
+                            <span id="attachupdate{attachment.ID}" style="display:none;">
+                            <form enctype="multipart/form-data" target="attachframe" action="tools/attachupload.aspx?forumid={forumid}&aid={attachment.ID}" method="post" id="attachform_{attachment.ID}" name="attachform_{attachment.ID}" style="float:left;">
+                                <input type="file" name="Filedata" size="8" />
+                                <input type="hidden" value="{attachment.ID}" name="attachupdatedid" />
+                                <input type="submit" value="上传" />
+                            </form>
+                            </span>
+                            <a id="attach{attachment.ID}_opt" href="javascript:;" class="right" onclick="attachupdate('{attachment.ID}', this)">更新</a>
+                            <input type="hidden" value="{attachment.ID}" name="attachid" />
+                            <%if {isimage}==1%>
+                                <%set (string){attachkey} = Thumbnail.GetKey({attachment.ID})%>
+                                <img src="tools/ajax.ashx?t=image&aid={attachment.ID}&size=300x300&key={attachkey}&nocache=yes&type=fixnone" id="image_{attachment.ID}" cwidth="{attachment.Width}" style="position: absolute; top: -10000px;"/>
+                            <%/if%>
+                            <script type="text/javascript">ATTACHNUM['attachused']++;</script>
+                            </td>
+                            <td class="atds"><input type="text" name="attachdesc_{attachment.ID}" size="18" class="txt" value="{attachment.Description}"/></td>
+                            <td class="attv">
+                                <select id="readperm_{attachment.ID}" onchange="$('readperm_hidden_{attachment.ID}').value = this.value;" size="1">
+                                    <option value="">不限</option>
+                                </select>
+                                <script type="text/javascript">getreadpermoption($('readperm_{attachment.ID}'), {attachment.ReadPerm});</script>
+                                <input type="hidden" id="readperm_hidden_{attachment.ID}" value="{attachment.ReadPerm}" name="readperm_{attachment.ID}"/>
+                            </td>
+                            <td class="attp"><input type="text" size="1" value="{attachment.AttachPrice}" name="attachprice_{attachment.ID}"/></td>
+                            <td class="attc delete_msg"><a href="javascript:;" class="d" onclick="delAttach('{attachment.ID},{forumid}',0)">删除</a></td>
+                            </tr></tbody>
+                           <%/if%>
+                        <%/loop%>
+                    <%/if%>
+
+                </table>
+                <div id="attachlist_tablist_current"></div>
+                <div id="attachlist_tablist"></div>
+                <p class="ptm" id="attach_notice" style="display: none" >点击文件名插入到帖子内容中</p>
+
+                <%if {infloat}==0%>
+                <div id="uploadlist" class="upfilelist" style="height:auto">
+                <%else%>
+                <div id="uploadlist" class="upfilelist">
+                <%/if%>
+                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                    <tbody id="attachbodyhidden" style="display:none"><tr>
+                        <td class="attachnum"><span id="localno[]"><img src="{rooturl}images/attachicons/common_new.gif" /></span></td>
+                        <td class="attachctrl"><span id="cpadd[]"></span></td>
+                        <td class="attachname">
+                            <span id="deschidden[]" style="display:none">
+                                <a href="javascript:;" onclick='parentNode.innerHTML="<input type=\"text\" name=\"attachdesc\" size=\"25\" class=\"txt\" />"'>描述</a>
+                                <span id="localfile[]"></span>
+                            </span>
+                            <input type="hidden" name="localid" />
+                        </td>
+                        <td class="attachdel"><span id="cpdel[]"></span></td>
+                    </tr></tbody>
+                </table>
+                <table cellpadding="0" cellspacing="0" summary="post_attachbody" border="0" width="100%"><tbody id="attachuploaded"></tbody><tbody id="attachbody"></tbody></table>
+            </div>
+        </div>
+<div id="img_hidden" alt="1" style="position:absolute;top:-100000px;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='image');width:{thumbwidth}px;height:{thumbheight}px"></div>		</div>
+    </div>
+
+<div class="p_pof uploadfile" id="{editorid}_image_menu" style="display: none" unselectable="on">
+    <span class="y"><a href="javascript:;" class="flbc" onclick="hideMenu()">关闭</a></span>
+    <ul id="{editorid}_image_ctrl" class="imguptype" style="cursor: move;">
+        <li><a onclick="switchImagebutton('www');" id="{editorid}_btn_www" hidefocus="true" href="javascript:;">网络图片</a></li>
+        <%if {canpostattach}%>
+        <li><a onclick="switchImagebutton('imgattachlist');" id="{editorid}_btn_imgattachlist" hidefocus="true" href="javascript:;">图片列表</a></li>
+        <li><a onclick="switchImagebutton('imgupload');" id="{editorid}_btn_imgupload" hidefocus="true" href="javascript:;">普通图片上传</a></li>
+        <li><a onclick="switchImagebutton('multi');" id="{editorid}_btn_multi" hidefocus="true" href="javascript:;" class="current">批量上传</a></li>
+        <%/if%>
+    </ul>
+    
+    <div id="{editorid}_www" unselectable="on" class="p_opt popupfix">
+        <table cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <th width="74%">请输入图片地址<span id="{editorid}_image_status" class="xi1"></span></th>
+                <th width="13%">宽(可选)</th>
+                <th width="13%">高(可选)</th>
+            </tr>
+            <tr>
+                <td><input type="text" id="{editorid}_image_param_1" onchange="loadimgsize(this.value)" style="width: 95%;" value="" class="px" autocomplete="off" /></td>
+                <td><input id="{editorid}_image_param_2" size="1" value="" class="px p_fre" autocomplete="off" /></td>
+                <td><input id="{editorid}_image_param_3" size="1" value="" class="px p_fre" autocomplete="off" /></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="pns mtn">
+                    <button type="button" class="pn pnc" id="{editorid}_image_submit"><strong>提交</strong></button>
+                    <button type="button" class="pn" onclick="hideMenu();"><em>取消</em></button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <%if {canpostattach}%>
+    <div id="{editorid}_imgattachlist" unselectable="on" class="p_opt" style="display:none;">
+        <div class="upfilelist">
+            <div id="usedimgattachlist"></div>
+            <div id="imgattachlist">
+                <p class="notice">本帖还没有图片附件, <a onclick="switchImagebutton('multi');" href="javascript:;">点击这里</a>上传</p>
+            </div>
+            <div id="unusedimgattachlist"></div>
+            <%if {action}=="edit"%>
+            <script type="text/javascript">
+                var uploadedimagelist = eval('{AttachmentList()}');
+                updateimagelistHTML(uploadedimagelist, 3); //加载已使用图片列表
+            </script>
+            <%/if%>
+        </div>
+        <p style="display: none;" id="imgattach_notice" class="noticetip">
+            <span class="xi1 xw1">点击图片添加到帖子内容中</span>
+        </p>
+    </div>
+
+    <div id="{editorid}_imgupload" unselectable="on" class="p_opt" style="display:none;">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tbody id="imgattachbodyhidden" style="display:none"><tr>
+                <td class="atnu"><span id="imglocalno[]"><img src="images/attachicons/image.gif" /></span></td>
+                <td class="atna">
+                    <span id="imgdeschidden[]" style="display:none">
+                        <span id="imglocalfile[]"></span>
+                    </span>
+                    <input type="hidden" name="localid" />
+                </td>
+                <td class="attc delete_msg"><span id="imgcpdel[]"></span></td>
+            </tr></tbody>
+        </table>
+        <div class="p_tbl"><table cellpadding="0" cellspacing="0" summary="post_attachbody" border="0" width="100%"><tbody id="imgattachbody"></tbody></table></div>
+        <div class="upbk">
+            <div id="imgattachbtnhidden" name="uploadattchfile" filetype="img" style="display:none"><span><form name="imgattachform" id="imgattachform" method="post" autocomplete="off" action="tools/attachupload.aspx?forumid={forumid}&type=image" target="attachframe" enctype="multipart/form-data"><input type="hidden" name="uid" value="" /><input type="hidden" name="hash" value="" /><input type="file" name="Filedata" size="45" class="fldt" multiple="multiple" filetype="img" /></form></span></div>
+            <div id="imgattachbtn"></div>
+            <p id="imguploadbtn">
+                <button type="button" class="pn" onclick="hideMenu();"><span>取消</span></button>
+                <button type="button" class="pn pnc" onclick="uploadAttach(0, 0, 'img')"><span>上传</span></button>
+            </p>
+            <p id="imguploading" style="display: none;"><img src="images/common/uploading.gif" style="vertical-align: middle;" /> 上传中，请稍候，您可以<a href="javascript:;" onclick="hideMenu()">暂时关闭这个小窗口</a>，上传完成后您会收到通知。</p>
+        </div>
+        <div class="notice uploadinfo">
+            文件尺寸: <strong>{FormatBytes(usergroupinfo.MaxAttachSize)}</strong>&nbsp;
+            上传限制: <strong>{config.maxattachments}</strong> 个文件&nbsp;&nbsp;
+            <br />可用扩展名: <strong>{Attachments.GetImageAttachmentTypeString(attachextensionsnosize)}</strong>&nbsp;
+        </div>
+    </div>
+
+    <div id="{editorid}_multi" unselectable="on" class="p_opt">
+        <div id="e_multiimg" class="fswf">
+            <embed width="470" height="268" type="application/x-shockwave-flash" wmode="transparent" allowscriptaccess="always" menu="false" quality="high" 
+            src="{rooturl}images/common/upload.swf?site={rooturl}tools/attachupload.aspx%3fmod=swfupload%26type=image%26forumid={forumid}&amp;type=image&amp;random={DateTime.Now.Ticks}" />
+        </div>
+        <div class="notice uploadinfo">
+            文件尺寸: <strong>{FormatBytes(usergroupinfo.MaxAttachSize)}</strong>&nbsp;
+            上传限制: <strong>{config.maxattachments}</strong> 个文件&nbsp;&nbsp;
+            <br />可用扩展名: <strong>{Attachments.GetImageAttachmentTypeString(attachextensionsnosize)}</strong>&nbsp;
+        </div>
+    </div>	
+    <%/if%>  
+</div>
+
+<script type="text/javascript">
+    var editorform = $('testform');
+    var editorsubmit = $('testsubmit');
+    if (wysiwyg) {
+        newEditor(1, bbcode2html(textobj.value));
+    } else {
+        newEditor(0, textobj.value);
+    }
+    if (getQueryString('cedit') == 'yes') {
+        loadData(true, '{config.antispampostmessage}');
+    }
+</script>
+<script type="text/javascript">
+function switchImagebutton(btn) {
+    var btns = ['www', 'imgattachlist', 'imgupload', 'multi'];
+    switchButton(btn, btns);
+    $(editorid + '_image_menu').style.height = '';
+}
+
+function switchAttachbutton(btn) {
+    var btns = ['attachlist', 'upload', 'swfupload'];
+    switchButton(btn, btns);
+}
+
+<%if {action}=="edit"%>
+    ATTACHNUM['imageused'] = uploadedimagelist?uploadedimagelist.length:ATTACHNUM['imageused'];//更新已使用图片的数量
+<%/if%>
+updateattachnum('attach');
+updateattachnum('image');
+
+<%if {userid}!=-1%>
+updateAttachList();
+updateImageList();
+<%/if%>
+
+if(ATTACHNUM['attachused'] + ATTACHNUM['attachunused']<=0)
+    switchAttachbutton('swfupload');
+else
+    switchAttachbutton('attachlist');
+setCaretAtEnd();
+
+if($('usedimgattachlist') && !$('usedimgattachlist').childNodes.length && !$('unusedimgattachlist').childNodes.length)
+    switchImagebutton('multi');
+else
+    switchImagebutton('www');
+if(BROWSER.ie >= 5 || BROWSER.firefox >= '2') {
+    _attachEvent(window, 'beforeunload',function on(){ saveData(undefined, 'postform','{config.antispamposttitle}', '{config.antispampostmessage}')});
+}
+<%if {userid}!=-1%>
+getunusedattachlist_dialog();
+<%/if%>
+addAttach();
+</script>

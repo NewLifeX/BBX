@@ -1,0 +1,67 @@
+﻿<%template _header%>
+<script type="text/javascript" src="{jsdir}/template_usercpnotice.js"></script>
+<div class="wrap cl pageinfo">
+    <div id="nav">
+        <%if {usergroupinfo.AllowSearch}%>
+            <%template _quicksearch%>
+        <%/if%>
+        <a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <a href="usercpprofile.aspx">用户中心</a> &raquo; <strong>通知</strong>
+    </div>
+</div>
+<div class="wrap uc cl">
+    <%template _menu%>
+    <div class="uc_main">
+    <div class="uc_content">
+        <h1>通知</h1>
+        <%template _smsmenu%>
+    <%if page_err==0%>
+    <%if ispost%>
+        <%template _usercpmsgbox%>
+    <%else%>
+        <div class="pbm ptm cl">
+        <%if {filter}=="all" || {filter}==""%>全部通知<%/if%>
+        <%if {filter}=="postreply"%>主题回复<%/if%>
+        <%if {filter}=="topicadmin"%>管理通知<%/if%>
+        </div>
+        <%if {noticeinfolist.Count}==0%>
+            <div class="zerothreads">暂无新的通知</div>
+        <%else%>
+            <form id="noticelist" name="noticelist" method="post" action="">
+            <div class="nts">
+                <%loop (Notice) noticeinfo noticeinfolist%>
+                <dl>
+                    <dd class="m mbn">
+                        <%if noticeinfo.PosterID==0%>
+                            <img alt="systempm" src="{imagedir}/systempm.gif">
+                        <%else%>
+                        <%set (string){avatarurl}=Avatars.GetAvatarUrl(noticeinfo.PosterID,AvatarSize.Small) %>
+                            <img src="{avatarurl}" onerror="this.onerror=null;this.src='{forumpath}images/common/noavatar_small.gif'"  alt="头像" width="48" height="48"/>
+                        <%/if%>
+                    </dd>
+                    <dt>
+                        <%set (string){postdatetime}=ForumUtils.ConvertDateTime({noticeinfo.PostDateTime})%>	
+                        <span class="xg1">{postdatetime}</span>
+                    </dt>
+                    <dd class="ntc_body">
+                        <%set (string){note}=UBB.ParseUrl({noticeinfo.note}) %>
+                        {note}
+                    </dd>
+                </dl>
+                <%/loop%>
+            </div>
+            </form>
+            <div class="pages_btns">
+                <div class="pages">
+                    {pagenumbers}<em>{pageid}/{pagecount}页</em>
+                </div>
+            </div>
+        <%/if%>
+    <%/if%>
+    <%else%>
+        <%template _usercperrmsgbox%>
+    <%/if%>
+    </div>
+</div>
+</div>
+<%template _copyright%>
+<%template _footer%>

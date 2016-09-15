@@ -1,0 +1,53 @@
+﻿<%template _header%>
+<script type="text/javascript" src="{jsdir}/template_usercpnotice.js"></script>
+<div class="wrap cl pageinfo">
+	<div id="nav">
+		<%if {usergroupinfo.AllowSearch}%>
+			<%template _quicksearch%>
+		<%/if%>
+        <a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <a href="usercpprofile.aspx">用户中心</a> &raquo; <strong>公共消息</strong>
+    </div>
+</div>
+<div class="wrap uc cl">
+    <%template _menu%>
+	<div class="uc_main">
+	<div class="uc_content">
+		<h1>公共消息</h1>
+		<%template _smsmenu%>
+		<%if page_err==0%>
+			<%if ispost%>
+                <%template _usercpmsgbox%>
+            <%else%>
+				<%if {announcepmlist.Count}==0%>
+					<div class="zerothreads">暂无新的公共消息</div> 
+				<%else%>
+					<table cellspacing="0" cellpadding="0" class="pm_list" summary="公共消息" width="100%">
+					<tbody>
+					<%loop (ShortMessage) announcepm announcepmlist%>
+						<tr>
+							<td class="msg_icon"><img alt="公共消息" src="{imagedir}/announcement.gif"/></td>
+							<td width="20%">{announcepm.subject}</td>
+							<td width="60%">{announcepm.message}</td>
+							<%set (string){postdatetime}=ForumUtils.ConvertDateTime({announcepm.PostDateTime})%>	
+							<td class="name_and_date"><span class="date">{postdatetime}</span></td>
+						</tr>
+					<%/loop%>
+					</tbody>                           
+					</table>
+					<div class="cpbox cl">
+					<div class="pages_btns">
+						<div class="pages">
+						<em>{pageid}/{pagecount}页</em>{pagenumbers}
+						</div>
+					</div>
+                   <%/if%>
+               <%/if%>
+		<%else%>
+			<%template _usercperrmsgbox%>
+		<%/if%>
+		</div>
+    </div>
+</div>
+</div>
+<%template _copyright%>
+<%template _footer%>

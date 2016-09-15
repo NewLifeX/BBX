@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{D4CD57D2-3084-4878-BFDC-8C15603F6878}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <AssemblyName>BBX.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <WarningLevel>4</WarningLevel>
+    <RootNamespace>BBX.Common</RootNamespace>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <OutputPath>..\Web\bin\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <Optimize>false</Optimize>
+    <ErrorReport>prompt</ErrorReport>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>..\Web\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="NewLife.Core">
+      <HintPath>..\DLL\NewLife.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Version.cs">
+      <Link>Properties\Version.cs</Link>
+    </Compile>
+    <Compile Include="Cache\CacheKeys.cs" />
+    <Compile Include="Cache\DefaultCacheStrategy.cs" />
+    <Compile Include="Cache\XCache.cs" />
+    <Compile Include="Cache\ICacheStrategy.cs" />
+    <Compile Include="Config\APIConfigInfo.cs" />
+    <Compile Include="Config\BaseConfigInfo.cs" />
+    <Compile Include="Config\BaseConfigs.cs" />
+    <Compile Include="Config\EmailConfigInfo.cs" />
+    <Compile Include="Config\ForumHotConfigInfo.cs" />
+    <Compile Include="Config\GeneralConfigInfo.cs" />
+    <Compile Include="Config\InvitationConfigInfo.cs" />
+    <Compile Include="Config\MyAttachmentsTypeConfigInfo.cs" />
+    <Compile Include="Config\QzoneConnectConfigInfo.cs" />
+    <Compile Include="Config\ScheduleConfigInfo.cs" />
+    <Compile Include="Config\ScriptEventConfigInfo.cs" />
+    <Compile Include="Config\SpreadConfig.cs" />
+    <Compile Include="Config\TradeConfigInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XmlConfig.cs" />
+    <Compile Include="Xml\IXmlNodeVisitor.cs" />
+    <Compile Include="Xml\XmlDocumentExtender.cs" />
+    <Compile Include="Xml\XmlNodeInnerTextVisitor.cs" />
+    <Compile Include="DES.cs" />
+    <Compile Include="DNTRequest.cs" />
+    <Compile Include="Thumbnail.cs" />
+    <Compile Include="Utils.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,2290 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1549F277-6444-48BC-A30C-5B1F9297B80E}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Web</RootNamespace>
+    <AssemblyName>Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NewLife.Core, Version=5.4.5616.32634, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\NewLife.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="XCode, Version=8.18.5616.32635, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\XCode.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="admin\global\advsgrid.aspx.cs">
+      <DependentUpon>advsgrid.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\global\advsgrid.aspx.designer.cs">
+      <DependentUpon>advsgrid.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\global\emailconfig.aspx.cs">
+      <DependentUpon>emailconfig.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\global\emailconfig.aspx.designer.cs">
+      <DependentUpon>emailconfig.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\plugin\CreditStrategy.aspx.cs">
+      <DependentUpon>Creditstrategy.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\plugin\CreditStrategy.aspx.designer.cs">
+      <DependentUpon>Creditstrategy.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\rapidset\createtemplate.aspx.cs">
+      <DependentUpon>createtemplate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\rapidset\createtemplate.aspx.designer.cs">
+      <DependentUpon>createtemplate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\rapidset\likesetting.aspx.cs">
+      <DependentUpon>likesetting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\rapidset\likesetting.aspx.designer.cs">
+      <DependentUpon>likesetting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\rapidset\managemainmenu.aspx.cs">
+      <DependentUpon>managemainmenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\rapidset\managemainmenu.aspx.designer.cs">
+      <DependentUpon>managemainmenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\rapidset\managemenubackupfile.aspx.cs">
+      <DependentUpon>managemenubackupfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\rapidset\managemenubackupfile.aspx.designer.cs">
+      <DependentUpon>managemenubackupfile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\rapidset\manageshortcutmenu.aspx.cs">
+      <DependentUpon>manageshortcutmenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\rapidset\manageshortcutmenu.aspx.designer.cs">
+      <DependentUpon>manageshortcutmenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\rapidset\managesubmenu.aspx.cs">
+      <DependentUpon>managesubmenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\rapidset\managesubmenu.aspx.designer.cs">
+      <DependentUpon>managesubmenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\rapidset\managesubmenuitem.aspx.cs">
+      <DependentUpon>managesubmenuitem.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\rapidset\managesubmenuitem.aspx.designer.cs">
+      <DependentUpon>managesubmenuitem.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\rapidset\setting.aspx.cs">
+      <DependentUpon>setting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\rapidset\setting.aspx.designer.cs">
+      <DependentUpon>setting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\rapidset\shortcut.aspx.cs">
+      <DependentUpon>shortcut.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\rapidset\shortcut.aspx.designer.cs">
+      <DependentUpon>shortcut.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\rapidset\systeminf.aspx.cs">
+      <DependentUpon>systeminf.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\rapidset\systeminf.aspx.designer.cs">
+      <DependentUpon>systeminf.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\tools\adminvisitloggrid.aspx.cs">
+      <DependentUpon>adminvisitloggrid.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\tools\adminvisitloggrid.aspx.designer.cs">
+      <DependentUpon>adminvisitloggrid.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\user\addgroup.aspx.cs">
+      <DependentUpon>addgroup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\user\addgroup.aspx.designer.cs">
+      <DependentUpon>addgroup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\user\AddUser.aspx.cs">
+      <DependentUpon>AddUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\user\AddUser.aspx.designer.cs">
+      <DependentUpon>AddUser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\user\adminusergroupgrid.aspx.cs">
+      <DependentUpon>adminusergroupgrid.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\user\adminusergroupgrid.aspx.designer.cs">
+      <DependentUpon>adminusergroupgrid.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\user\audituser.aspx.cs">
+      <DependentUpon>audituser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\user\audituser.aspx.designer.cs">
+      <DependentUpon>audituser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\user\combinationuser.aspx.cs">
+      <DependentUpon>combinationuser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\user\combinationuser.aspx.designer.cs">
+      <DependentUpon>combinationuser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\user\combinationusergroup.aspx.cs">
+      <DependentUpon>combinationusergroup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\user\combinationusergroup.aspx.designer.cs">
+      <DependentUpon>combinationusergroup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\user\editadminusergroup.aspx.cs">
+      <DependentUpon>editadminusergroup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\user\editadminusergroup.aspx.designer.cs">
+      <DependentUpon>editadminusergroup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\user\editgroup.aspx.cs">
+      <DependentUpon>editgroup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\user\editgroup.aspx.designer.cs">
+      <DependentUpon>editgroup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\user\editsysadminusergroup.aspx.cs">
+      <DependentUpon>editsysadminusergroup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\user\editsysadminusergroup.aspx.designer.cs">
+      <DependentUpon>editsysadminusergroup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\user\edituser.aspx.cs">
+      <DependentUpon>edituser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\user\edituser.aspx.designer.cs">
+      <DependentUpon>edituser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\user\editusergroup.aspx.cs">
+      <DependentUpon>editusergroup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\user\editusergroup.aspx.designer.cs">
+      <DependentUpon>editusergroup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\user\editusergroupspecial.aspx.cs">
+      <DependentUpon>editusergroupspecial.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\user\editusergroupspecial.aspx.designer.cs">
+      <DependentUpon>editusergroupspecial.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\user\resetpassword.aspx.cs">
+      <DependentUpon>resetpassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\user\resetpassword.aspx.designer.cs">
+      <DependentUpon>resetpassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\user\sysadminusergroupgrid.aspx.cs">
+      <DependentUpon>sysadminusergroupgrid.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\user\sysadminusergroupgrid.aspx.designer.cs">
+      <DependentUpon>sysadminusergroupgrid.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\user\usergrid.aspx.cs">
+      <DependentUpon>usergrid.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\user\usergrid.aspx.designer.cs">
+      <DependentUpon>usergrid.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\user\usergroupgrid.aspx.cs">
+      <DependentUpon>usergroupgrid.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\user\usergroupgrid.aspx.designer.cs">
+      <DependentUpon>usergroupgrid.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="admin\user\usergroupspecialgrid.aspx.cs">
+      <DependentUpon>usergroupspecialgrid.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\user\usergroupspecialgrid.aspx.designer.cs">
+      <DependentUpon>usergroupspecialgrid.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="admin\ajax.aspx" />
+    <Content Include="admin\forum\forum_addbbcode.aspx" />
+    <Content Include="admin\forum\forum_addfirstforum.aspx" />
+    <Content Include="admin\forum\forum_addforums.aspx" />
+    <Content Include="admin\forum\forum_addidentify.aspx" />
+    <Content Include="admin\forum\forum_addsmile.aspx" />
+    <Content Include="admin\forum\forum_attachtypesgrid.aspx" />
+    <Content Include="admin\forum\forum_attchemntgrid.aspx" />
+    <Content Include="admin\forum\forum_attchemnttypes.aspx" />
+    <Content Include="admin\forum\forum_auditingtopic.aspx" />
+    <Content Include="admin\forum\forum_auditnewtopic.aspx" />
+    <Content Include="admin\forum\forum_auditpost.aspx" />
+    <Content Include="admin\forum\forum_audittopicgrid.aspx" />
+    <Content Include="admin\forum\forum_bbcodegrid.aspx" />
+    <Content Include="admin\forum\forum_delforums.aspx" />
+    <Content Include="admin\forum\forum_editbbcode.aspx" />
+    <Content Include="admin\forum\forum_editforums.aspx" />
+    <Content Include="admin\forum\forum_editmall.aspx" />
+    <Content Include="admin\forum\forum_forumbatchset.aspx" />
+    <Content Include="admin\forum\forum_forumcombination.aspx" />
+    <Content Include="admin\forum\forum_forumhot.aspx" />
+    <Content Include="admin\forum\forum_forumsgrid.aspx" />
+    <Content Include="admin\forum\forum_forumsmove.aspx" />
+    <Content Include="admin\forum\forum_forumstree.aspx" />
+    <Content Include="admin\forum\forum_identifymanage.aspx" />
+    <Content Include="admin\forum\forum_medalsloggird.aspx" />
+    <Content Include="admin\forum\forum_moderatormanagelog.aspx" />
+    <Content Include="admin\forum\forum_mymenumanage.aspx" />
+    <Content Include="admin\forum\forum_option.aspx" />
+    <Content Include="admin\forum\forum_paymentloggrid.aspx" />
+    <Content Include="admin\forum\forum_postgrid.aspx" />
+    <Content Include="admin\forum\forum_postgridmanage.aspx" />
+    <Content Include="admin\forum\forum_ratescorelog.aspx" />
+    <Content Include="admin\forum\forum_scorestrategy.aspx" />
+    <Content Include="admin\forum\forum_seachtopic.aspx" />
+    <Content Include="admin\forum\forum_searchattchment.aspx" />
+    <Content Include="admin\forum\forum_searchpost.aspx" />
+    <Content Include="admin\forum\forum_searchsm.aspx" />
+    <Content Include="admin\forum\forum_smilegrid.aspx" />
+    <Content Include="admin\forum\forum_smiliemanage.aspx" />
+    <Content Include="admin\forum\forum_tagmanage.aspx" />
+    <Content Include="admin\forum\forum_topicsgrid.aspx" />
+    <Content Include="admin\forum\forum_topictypesgrid.aspx" />
+    <Content Include="admin\forum\forum_updateforumstatic.aspx" />
+    <Content Include="admin\forum\forum_userrights.aspx" />
+    <Content Include="admin\framepage\managerbody.aspx" />
+    <Content Include="admin\framepage\top.aspx" />
+    <Content Include="admin\global\advsgrid.aspx" />
+    <Content Include="admin\global\emailconfig.aspx" />
+    <Content Include="admin\global\global_addadvs.aspx" />
+    <Content Include="admin\global\global_addannounce.aspx" />
+    <Content Include="admin\global\global_addhelp.aspx" />
+    <Content Include="admin\global\global_addhelpclass.aspx" />
+    <Content Include="admin\global\global_addmedal.aspx" />
+    <Content Include="admin\global\global_ajaxcall.aspx" />
+    <Content Include="admin\global\global_allowparticipatescore.aspx" />
+    <Content Include="admin\global\global_announcegrid.aspx" />
+    <Content Include="admin\global\global_announceprivatemessage.aspx" />
+    <Content Include="admin\global\global_attach.aspx" />
+    <Content Include="admin\global\global_backupandrestore.aspx" />
+    <Content Include="admin\global\global_cachemanage.aspx" />
+    <Content Include="admin\global\global_creditsordermanage.aspx" />
+    <Content Include="admin\global\global_editadvs.aspx" />
+    <Content Include="admin\global\global_editannounce.aspx" />
+    <Content Include="admin\global\global_edithelp.aspx" />
+    <Content Include="admin\global\global_edithelpclass.aspx" />
+    <Content Include="admin\global\global_editorset.aspx" />
+    <Content Include="admin\global\global_forumdatacall.aspx" />
+    <Content Include="admin\global\global_forumlinksgrid.aspx" />
+    <Content Include="admin\global\global_givemedals.aspx" />
+    <Content Include="admin\global\global_helplist.aspx" />
+    <Content Include="admin\global\global_logandshrinkdb.aspx" />
+    <Content Include="admin\global\global_medalgrid.aspx" />
+    <Content Include="admin\global\global_navigationmanage.aspx" />
+    <Content Include="admin\global\global_onlinelistgrid.aspx" />
+    <Content Include="admin\global\global_passportmanage.aspx" />
+    <Content Include="admin\global\global_passportsetting.aspx" />
+    <Content Include="admin\global\global_refreshallcache.aspx" />
+    <Content Include="admin\global\global_registerandvisit.aspx" />
+    <Content Include="admin\global\global_restoresetupinf.aspx" />
+    <Content Include="admin\global\global_runsql.aspx" />
+    <Content Include="admin\global\global_safecontrol.aspx" />
+    <Content Include="admin\global\global_schedulemanage.aspx" />
+    <Content Include="admin\global\global_schedulesetting.aspx" />
+    <Content Include="admin\global\global_scoreset.aspx" />
+    <Content Include="admin\global\global_screditset.aspx" />
+    <Content Include="admin\global\global_searchengine.aspx" />
+    <Content Include="admin\global\global_sendsmtogroup.aspx" />
+    <Content Include="admin\global\global_sharelistgrid.aspx" />
+    <Content Include="admin\global\global_siteoptimization.aspx" />
+    <Content Include="admin\global\global_siteset.aspx" />
+    <Content Include="admin\global\global_templatesedit.aspx" />
+    <Content Include="admin\global\global_templatesgrid.aspx" />
+    <Content Include="admin\global\global_templatetree.aspx" />
+    <Content Include="admin\global\global_templatevariable.aspx" />
+    <Content Include="admin\global\global_timespan.aspx" />
+    <Content Include="admin\global\global_uiandshowstyle.aspx" />
+    <Content Include="admin\global\global_uploadavatar.aspx" />
+    <Content Include="admin\global\global_uploadonlieninco.aspx" />
+    <Content Include="admin\global\global_urlgrid.aspx" />
+    <Content Include="admin\global\global_usergroupsendemail.aspx" />
+    <Content Include="admin\global\global_userrights.aspx" />
+    <Content Include="admin\global\global_wordgrid.aspx" />
+    <Content Include="admin\global\thumbnailremoteimage.aspx" />
+    <Content Include="admin\images\add.gif" />
+    <Content Include="admin\images\addmenu.gif" />
+    <Content Include="admin\images\addremoveprograms.gif" />
+    <Content Include="admin\images\agree.gif" />
+    <Content Include="admin\images\ajax_loading.gif" />
+    <Content Include="admin\images\arrow_black.gif" />
+    <Content Include="admin\images\arrow_undo.gif" />
+    <Content Include="admin\images\asc.gif" />
+    <Content Include="admin\images\ascx.gif" />
+    <Content Include="admin\images\aspx.gif" />
+    <Content Include="admin\images\back.gif" />
+    <Content Include="admin\images\bg.gif" />
+    <Content Include="admin\images\bottom.gif" />
+    <Content Include="admin\images\break.gif" />
+    <Content Include="admin\images\btn_calendar.gif" />
+    <Content Include="admin\images\busy.gif" />
+    <Content Include="admin\images\button.gif" />
+    <Content Include="admin\images\buttonbg.gif" />
+    <Content Include="admin\images\buttonbg.jpg" />
+    <Content Include="admin\images\cache_reset.gif" />
+    <Content Include="admin\images\cache_resetall.gif" />
+    <Content Include="admin\images\calendar.gif" />
+    <Content Include="admin\images\cal_nextMonth.gif" />
+    <Content Include="admin\images\cal_prevMonth.gif" />
+    <Content Include="admin\images\cancel.gif" />
+    <Content Include="admin\images\checkver.gif" />
+    <Content Include="admin\images\close.gif" />
+    <Content Include="admin\images\col.gif" />
+    <Content Include="admin\images\collapse.gif" />
+    <Content Include="admin\images\colorpicker.gif" />
+    <Content Include="admin\images\commandbg.gif" />
+    <Content Include="admin\images\commandbg2.gif" />
+    <Content Include="admin\images\commandbg3.gif" />
+    <Content Include="admin\images\commandbg4.gif" />
+    <Content Include="admin\images\config.gif" />
+    <Content Include="admin\images\cs.gif" />
+    <Content Include="admin\images\css.gif" />
+    <Content Include="admin\images\del.gif" />
+    <Content Include="admin\images\deleted.gif" />
+    <Content Include="admin\images\desc.gif" />
+    <Content Include="admin\images\disagree.gif" />
+    <Content Include="admin\images\dot.gif" />
+    <Content Include="admin\images\downarrow.gif" />
+    <Content Include="admin\images\dropdown.gif" />
+    <Content Include="admin\images\droptop.gif" />
+    <Content Include="admin\images\dropup.gif" />
+    <Content Include="admin\images\editfile.gif" />
+    <Content Include="admin\images\email.gif" />
+    <Content Include="admin\images\existmenu.gif" />
+    <Content Include="admin\images\exp.gif" />
+    <Content Include="admin\images\expand.gif" />
+    <Content Include="admin\images\eye.gif" />
+    <Content Include="admin\images\fairy.png" />
+    <Content Include="admin\images\false.gif" />
+    <Content Include="admin\images\favorite.gif" />
+    <Content Include="admin\images\flower.jpg" />
+    <Content Include="admin\images\folder.gif" />
+    <Content Include="admin\images\folders.gif" />
+    <Content Include="admin\images\folder_open.gif" />
+    <Content Include="admin\images\fullmenu.gif" />
+    <Content Include="admin\images\grid_headerBg.gif" />
+    <Content Include="admin\images\group_asc.gif" />
+    <Content Include="admin\images\group_desc.gif" />
+    <Content Include="admin\images\header.gif" />
+    <Content Include="admin\images\header1stCell_bg.gif" />
+    <Content Include="admin\images\header_activeBg.gif" />
+    <Content Include="admin\images\header_bg.gif" />
+    <Content Include="admin\images\header_hoverBg.gif" />
+    <Content Include="admin\images\header_rowBg.gif" />
+    <Content Include="admin\images\help.jpg" />
+    <Content Include="admin\images\hint.gif" />
+    <Content Include="admin\images\hover_tab_bg.gif" />
+    <Content Include="admin\images\hover_tab_left_icon.gif" />
+    <Content Include="admin\images\hover_tab_right_icon.gif" />
+    <Content Include="admin\images\htm.gif" />
+    <Content Include="admin\images\icons\false.jpg" />
+    <Content Include="admin\images\icons\icon1.jpg" />
+    <Content Include="admin\images\icons\icon10.jpg" />
+    <Content Include="admin\images\icons\icon11.jpg" />
+    <Content Include="admin\images\icons\icon12.jpg" />
+    <Content Include="admin\images\icons\icon13.jpg" />
+    <Content Include="admin\images\icons\icon14.jpg" />
+    <Content Include="admin\images\icons\icon15.jpg" />
+    <Content Include="admin\images\icons\icon16.jpg" />
+    <Content Include="admin\images\icons\icon17.jpg" />
+    <Content Include="admin\images\icons\icon18.jpg" />
+    <Content Include="admin\images\icons\icon19.jpg" />
+    <Content Include="admin\images\icons\icon2.jpg" />
+    <Content Include="admin\images\icons\icon20.jpg" />
+    <Content Include="admin\images\icons\icon21.jpg" />
+    <Content Include="admin\images\icons\icon22.jpg" />
+    <Content Include="admin\images\icons\icon23.jpg" />
+    <Content Include="admin\images\icons\icon24.jpg" />
+    <Content Include="admin\images\icons\icon25.jpg" />
+    <Content Include="admin\images\icons\icon26.jpg" />
+    <Content Include="admin\images\icons\icon27.jpg" />
+    <Content Include="admin\images\icons\icon28.jpg" />
+    <Content Include="admin\images\icons\icon29.jpg" />
+    <Content Include="admin\images\icons\icon3.jpg" />
+    <Content Include="admin\images\icons\icon30.jpg" />
+    <Content Include="admin\images\icons\icon31.jpg" />
+    <Content Include="admin\images\icons\icon32.jpg" />
+    <Content Include="admin\images\icons\icon33.jpg" />
+    <Content Include="admin\images\icons\icon34.jpg" />
+    <Content Include="admin\images\icons\icon35.jpg" />
+    <Content Include="admin\images\icons\icon36.jpg" />
+    <Content Include="admin\images\icons\icon37.jpg" />
+    <Content Include="admin\images\icons\icon38.jpg" />
+    <Content Include="admin\images\icons\icon39.jpg" />
+    <Content Include="admin\images\icons\icon4.jpg" />
+    <Content Include="admin\images\icons\icon40.jpg" />
+    <Content Include="admin\images\icons\icon41.jpg" />
+    <Content Include="admin\images\icons\icon42.jpg" />
+    <Content Include="admin\images\icons\icon43.jpg" />
+    <Content Include="admin\images\icons\icon44.jpg" />
+    <Content Include="admin\images\icons\icon45.jpg" />
+    <Content Include="admin\images\icons\icon46.jpg" />
+    <Content Include="admin\images\icons\icon47.jpg" />
+    <Content Include="admin\images\icons\icon48.jpg" />
+    <Content Include="admin\images\icons\icon49.jpg" />
+    <Content Include="admin\images\icons\icon5.jpg" />
+    <Content Include="admin\images\icons\icon50.jpg" />
+    <Content Include="admin\images\icons\icon51.jpg" />
+    <Content Include="admin\images\icons\icon52.jpg" />
+    <Content Include="admin\images\icons\icon53.jpg" />
+    <Content Include="admin\images\icons\icon54.jpg" />
+    <Content Include="admin\images\icons\icon55.jpg" />
+    <Content Include="admin\images\icons\icon56.jpg" />
+    <Content Include="admin\images\icons\icon57.jpg" />
+    <Content Include="admin\images\icons\icon58.jpg" />
+    <Content Include="admin\images\icons\icon59.jpg" />
+    <Content Include="admin\images\icons\icon6.jpg" />
+    <Content Include="admin\images\icons\icon60.jpg" />
+    <Content Include="admin\images\icons\icon7.jpg" />
+    <Content Include="admin\images\icons\icon8.jpg" />
+    <Content Include="admin\images\icons\icon9.jpg" />
+    <Content Include="admin\images\icons\legendimg.jpg" />
+    <Content Include="admin\images\icons\true.jpg" />
+    <Content Include="admin\images\invalidation.gif" />
+    <Content Include="admin\images\jiao.gif" />
+    <Content Include="admin\images\js.gif" />
+    <Content Include="admin\images\key.gif" />
+    <Content Include="admin\images\kj.gif" />
+    <Content Include="admin\images\leftbg.jpg" />
+    <Content Include="admin\images\legendimg.jpg" />
+    <Content Include="admin\images\lines\dash.gif" />
+    <Content Include="admin\images\lines\dashminus.gif" />
+    <Content Include="admin\images\lines\dashplus.gif" />
+    <Content Include="admin\images\lines\i.gif" />
+    <Content Include="admin\images\lines\l.gif" />
+    <Content Include="admin\images\lines\lminus.gif" />
+    <Content Include="admin\images\lines\lplus.gif" />
+    <Content Include="admin\images\lines\minus.gif" />
+    <Content Include="admin\images\lines\noexpand.gif" />
+    <Content Include="admin\images\lines\plus.gif" />
+    <Content Include="admin\images\lines\r.gif" />
+    <Content Include="admin\images\lines\rminus.gif" />
+    <Content Include="admin\images\lines\rplus.gif" />
+    <Content Include="admin\images\lines\t.gif" />
+    <Content Include="admin\images\lines\tminus.gif" />
+    <Content Include="admin\images\lines\tplus.gif" />
+    <Content Include="admin\images\login-bottom.gif" />
+    <Content Include="admin\images\login-center.gif" />
+    <Content Include="admin\images\login-top.gif" />
+    <Content Include="admin\images\login.png" />
+    <Content Include="admin\images\mail.gif" />
+    <Content Include="admin\images\Menudown.gif" />
+    <Content Include="admin\images\Menuon.gif" />
+    <Content Include="admin\images\Menutab.jpg" />
+    <Content Include="admin\images\move.gif" />
+    <Content Include="admin\images\mydocs.gif" />
+    <Content Include="admin\images\mydocuments.gif" />
+    <Content Include="admin\images\navigation.gif" />
+    <Content Include="admin\images\nav\add.gif" />
+    <Content Include="admin\images\nav\add2.gif" />
+    <Content Include="admin\images\nav\advanced.gif" />
+    <Content Include="admin\images\nav\back.gif" />
+    <Content Include="admin\images\nav\combination.gif" />
+    <Content Include="admin\images\nav\common.gif" />
+    <Content Include="admin\images\nav\edit.gif" />
+    <Content Include="admin\images\nav\edit2.gif" />
+    <Content Include="admin\images\nav\email.gif" />
+    <Content Include="admin\images\nav\exit.gif" />
+    <Content Include="admin\images\nav\groupadd.gif" />
+    <Content Include="admin\images\nav\groupadd2.gif" />
+    <Content Include="admin\images\nav\groupadd3.gif" />
+    <Content Include="admin\images\nav\groupedit.gif" />
+    <Content Include="admin\images\nav\guide.gif" />
+    <Content Include="admin\images\nav\home.gif" />
+    <Content Include="admin\images\nav\log.gif" />
+    <Content Include="admin\images\nav\move.gif" />
+    <Content Include="admin\images\nav\sendemail.gif" />
+    <Content Include="admin\images\nav\sendpm.gif" />
+    <Content Include="admin\images\nav\shortcut.gif" />
+    <Content Include="admin\images\nav\sysinfo.gif" />
+    <Content Include="admin\images\nav\templates.gif" />
+    <Content Include="admin\images\nav\useradd.gif" />
+    <Content Include="admin\images\nav\useredit.gif" />
+    <Content Include="admin\images\next.gif" />
+    <Content Include="admin\images\nodelete.gif" />
+    <Content Include="admin\images\off.gif" />
+    <Content Include="admin\images\OK.gif" />
+    <Content Include="admin\images\prev.gif" />
+    <Content Include="admin\images\priority_high.gif" />
+    <Content Include="admin\images\priority_low.gif" />
+    <Content Include="admin\images\reorder.gif" />
+    <Content Include="admin\images\scroller\bottom.gif" />
+    <Content Include="admin\images\scroller\down.gif" />
+    <Content Include="admin\images\scroller\down_disabled.gif" />
+    <Content Include="admin\images\scroller\scroller_bg.gif" />
+    <Content Include="admin\images\scroller\scroll_gripBg.gif" />
+    <Content Include="admin\images\scroller\top.gif" />
+    <Content Include="admin\images\scroller\up.gif" />
+    <Content Include="admin\images\scroller\up_disabled.gif" />
+    <Content Include="admin\images\search.gif" />
+    <Content Include="admin\images\searchbutton.jpg" />
+    <Content Include="admin\images\selected_tab_bg.gif" />
+    <Content Include="admin\images\selected_tab_left_icon.gif" />
+    <Content Include="admin\images\selected_tab_right_icon.gif" />
+    <Content Include="admin\images\selector.gif" />
+    <Content Include="admin\images\selectTab_hover.gif" />
+    <Content Include="admin\images\selectTab_hover2.gif" />
+    <Content Include="admin\images\sentItems.gif" />
+    <Content Include="admin\images\serchbutton.gif" />
+    <Content Include="admin\images\serchbutton2.gif" />
+    <Content Include="admin\images\shareddocuments.gif" />
+    <Content Include="admin\images\sortBlank.gif" />
+    <Content Include="admin\images\spacer.gif" />
+    <Content Include="admin\images\spinner.gif" />
+    <Content Include="admin\images\splitter_horBg.gif" />
+    <Content Include="admin\images\splitter_horCol.gif" />
+    <Content Include="admin\images\splitter_horColHover.gif" />
+    <Content Include="admin\images\splitter_horExp.gif" />
+    <Content Include="admin\images\splitter_horExpHover.gif" />
+    <Content Include="admin\images\splitter_verBg.gif" />
+    <Content Include="admin\images\splitter_verCol.gif" />
+    <Content Include="admin\images\splitter_verColHover.gif" />
+    <Content Include="admin\images\splitter_verExp.gif" />
+    <Content Include="admin\images\splitter_verExpHover.gif" />
+    <Content Include="admin\images\star.gif" />
+    <Content Include="admin\images\state1.gif" />
+    <Content Include="admin\images\state2.gif" />
+    <Content Include="admin\images\state3.gif" />
+    <Content Include="admin\images\submenubg.jpg" />
+    <Content Include="admin\images\submenubg2.jpg" />
+    <Content Include="admin\images\submenubg3.jpg" />
+    <Content Include="admin\images\submenubg4.jpg" />
+    <Content Include="admin\images\submenubg5.jpg" />
+    <Content Include="admin\images\submenubg6.jpg" />
+    <Content Include="admin\images\submenubg7.jpg" />
+    <Content Include="admin\images\submit.gif" />
+    <Content Include="admin\images\tab.active.gif" />
+    <Content Include="admin\images\tab0leftbg.gif" />
+    <Content Include="admin\images\tab1leftbg.gif" />
+    <Content Include="admin\images\tab2leftbg.gif" />
+    <Content Include="admin\images\tab3leftbg.gif" />
+    <Content Include="admin\images\tab4leftbg.gif" />
+    <Content Include="admin\images\tab5leftbg.gif" />
+    <Content Include="admin\images\tab6leftbg.gif" />
+    <Content Include="admin\images\Tabbg.gif" />
+    <Content Include="admin\images\tableftbg.gif" />
+    <Content Include="admin\images\tab_bg.gif" />
+    <Content Include="admin\images\tab_left_icon.gif" />
+    <Content Include="admin\images\tab_right_icon.gif" />
+    <Content Include="admin\images\topbar.jpg" />
+    <Content Include="admin\images\topbarbg.gif" />
+    <Content Include="admin\images\topictype.gif" />
+    <Content Include="admin\images\topItem_col.gif" />
+    <Content Include="admin\images\topItem_exp.gif" />
+    <Content Include="admin\images\top_level_bg.gif" />
+    <Content Include="admin\images\top_level_ico1.gif" />
+    <Content Include="admin\images\top_level_ico2.gif" />
+    <Content Include="admin\images\true.gif" />
+    <Content Include="admin\images\uparrow.gif" />
+    <Content Include="admin\images\update.gif" />
+    <Content Include="admin\images\uploadfile.gif" />
+    <Content Include="admin\images\usergroup.gif" />
+    <Content Include="admin\images\vb.gif" />
+    <Content Include="admin\images\warning.gif" />
+    <Content Include="admin\images\xml.gif" />
+    <Content Include="admin\images\xpbuttonbg_l.gif" />
+    <Content Include="admin\images\xpbuttonbg_r.gif" />
+    <Content Include="admin\images\zip.gif" />
+    <Content Include="admin\images\zoomin.gif" />
+    <Content Include="admin\images\zoomout.gif" />
+    <Content Include="admin\index.aspx" />
+    <Content Include="admin\js\ajaxhelper.js" />
+    <Content Include="admin\js\calendar.js" />
+    <Content Include="admin\js\colorpicker.js" />
+    <Content Include="admin\js\common.js" />
+    <Content Include="admin\js\divcover.js" />
+    <Content Include="admin\js\draglist.js" />
+    <Content Include="admin\js\modalpopup.js" />
+    <Content Include="admin\js\navbar.js" />
+    <Content Include="admin\js\tabstrip.js" />
+    <Content Include="admin\logout.aspx" />
+    <Content Include="admin\plugin\clouderror.htm" />
+    <Content Include="admin\plugin\cloudplatform.htm" />
+    <Content Include="admin\plugin\cloudsiteinfo.htm" />
+    <Content Include="admin\plugin\Creditstrategy.aspx" />
+    <Content Include="admin\rapidset\createtemplate.aspx" />
+    <Content Include="admin\rapidset\likesetting.aspx" />
+    <Content Include="admin\rapidset\managemainmenu.aspx" />
+    <Content Include="admin\rapidset\managemenubackupfile.aspx" />
+    <Content Include="admin\rapidset\manageshortcutmenu.aspx" />
+    <Content Include="admin\rapidset\managesubmenu.aspx" />
+    <Content Include="admin\rapidset\managesubmenuitem.aspx" />
+    <Content Include="admin\rapidset\setting.aspx" />
+    <Content Include="admin\rapidset\shortcut.aspx" />
+    <Content Include="admin\rapidset\systeminf.aspx" />
+    <Content Include="admin\styles\calendar.css" />
+    <Content Include="admin\styles\colorpicker.css" />
+    <Content Include="admin\styles\datagrid.css" />
+    <Content Include="admin\styles\default.css" />
+    <Content Include="admin\styles\dntmanager.css" />
+    <Content Include="admin\styles\draglist.css" />
+    <Content Include="admin\styles\editor.css" />
+    <Content Include="admin\styles\modelpopup.css" />
+    <Content Include="admin\styles\nav.css" />
+    <Content Include="admin\styles\tab.css" />
+    <Content Include="admin\syslogin.aspx" />
+    <Content Include="admin\tools\adminvisitloggrid.aspx" />
+    <Content Include="admin\UserControls\AddTopictype.ascx" />
+    <Content Include="admin\UserControls\ajaxpostinfo.ascx" />
+    <Content Include="admin\UserControls\ajaxtopicinfo.ascx" />
+    <Content Include="admin\UserControls\favoritefunction.ascx" />
+    <Content Include="admin\UserControls\forumstree.ascx" />
+    <Content Include="admin\UserControls\onlineeditor.ascx" />
+    <Content Include="admin\UserControls\pageinfo.ascx" />
+    <Content Include="admin\UserControls\searchfunction.ascx" />
+    <Content Include="admin\UserControls\searchuser.ascx" />
+    <Content Include="admin\UserControls\shortcutmenu.ascx" />
+    <Content Include="admin\UserControls\textarearesize.ascx" />
+    <Content Include="admin\UserControls\usergrouppowersetting.ascx" />
+    <Content Include="admin\user\addadminusergroup.aspx" />
+    <Content Include="admin\user\addgroup.aspx" />
+    <Content Include="admin\user\AddUser.aspx" />
+    <Content Include="admin\user\addusergroup.aspx" />
+    <Content Include="admin\user\addusergroupspecial.aspx" />
+    <Content Include="admin\user\adminusergroupgrid.aspx" />
+    <Content Include="admin\user\audituser.aspx" />
+    <Content Include="admin\user\combinationuser.aspx" />
+    <Content Include="admin\user\combinationusergroup.aspx" />
+    <Content Include="admin\user\editadminusergroup.aspx" />
+    <Content Include="admin\user\editgroup.aspx" />
+    <Content Include="admin\user\editsysadminusergroup.aspx" />
+    <Content Include="admin\user\edituser.aspx" />
+    <Content Include="admin\user\editusergroup.aspx" />
+    <Content Include="admin\user\editusergroupspecial.aspx" />
+    <Content Include="admin\user\resetpassword.aspx" />
+    <Content Include="admin\user\sysadminusergroupgrid.aspx" />
+    <Content Include="admin\user\usergrid.aspx" />
+    <Content Include="admin\user\usergroupgrid.aspx" />
+    <Content Include="admin\user\usergroupspecialgrid.aspx" />
+    <Content Include="admin\xml\navmenu.js" />
+    <Content Include="archiver\dntarchiver.css" />
+    <Content Include="archiver\images\attachicons\attachment.gif" />
+    <Content Include="archiver\images\posticons\1.gif" />
+    <Content Include="archiver\images\posticons\10.gif" />
+    <Content Include="archiver\images\posticons\11.gif" />
+    <Content Include="archiver\images\posticons\12.gif" />
+    <Content Include="archiver\images\posticons\13.gif" />
+    <Content Include="archiver\images\posticons\14.gif" />
+    <Content Include="archiver\images\posticons\15.gif" />
+    <Content Include="archiver\images\posticons\2.gif" />
+    <Content Include="archiver\images\posticons\3.gif" />
+    <Content Include="archiver\images\posticons\4.gif" />
+    <Content Include="archiver\images\posticons\5.gif" />
+    <Content Include="archiver\images\posticons\6.gif" />
+    <Content Include="archiver\images\posticons\7.gif" />
+    <Content Include="archiver\images\posticons\8.gif" />
+    <Content Include="archiver\images\posticons\9.gif" />
+    <Content Include="archiver\index.aspx" />
+    <Content Include="archiver\showforum.aspx" />
+    <Content Include="archiver\showtopic.aspx" />
+    <Content Include="avatars\avatar_large.jpg" />
+    <Content Include="avatars\avatar_medium.jpg" />
+    <Content Include="avatars\avatar_small.jpg" />
+    <Content Include="config\stat_setting.xml" />
+    <Content Include="Default.aspx" />
+    <Content Include="editor\cp_editor.htm" />
+    <Content Include="editor\editor.css" />
+    <Content Include="editor\images\card_btn.png" />
+    <Content Include="editor\images\cls.gif" />
+    <Content Include="editor\images\editor.gif" />
+    <Content Include="editor\images\flash.gif" />
+    <Content Include="editor\images\fly.gif" />
+    <Content Include="editor\images\newarow.gif" />
+    <Content Include="editor\images\px.png" />
+    <Content Include="editor\images\ra.gif" />
+    <Content Include="editor\images\resize.gif" />
+    <Content Include="editor\images\rm.gif" />
+    <Content Include="editor\images\silverlight.gif" />
+    <Content Include="editor\images\smilies\default\0.gif" />
+    <Content Include="editor\images\smilies\default\1.gif" />
+    <Content Include="editor\images\smilies\default\10.gif" />
+    <Content Include="editor\images\smilies\default\11.gif" />
+    <Content Include="editor\images\smilies\default\12.gif" />
+    <Content Include="editor\images\smilies\default\13.gif" />
+    <Content Include="editor\images\smilies\default\14.gif" />
+    <Content Include="editor\images\smilies\default\15.gif" />
+    <Content Include="editor\images\smilies\default\16.gif" />
+    <Content Include="editor\images\smilies\default\17.gif" />
+    <Content Include="editor\images\smilies\default\18.gif" />
+    <Content Include="editor\images\smilies\default\19.gif" />
+    <Content Include="editor\images\smilies\default\2.gif" />
+    <Content Include="editor\images\smilies\default\20.gif" />
+    <Content Include="editor\images\smilies\default\21.gif" />
+    <Content Include="editor\images\smilies\default\22.gif" />
+    <Content Include="editor\images\smilies\default\23.gif" />
+    <Content Include="editor\images\smilies\default\24.gif" />
+    <Content Include="editor\images\smilies\default\25.gif" />
+    <Content Include="editor\images\smilies\default\26.gif" />
+    <Content Include="editor\images\smilies\default\27.gif" />
+    <Content Include="editor\images\smilies\default\28.gif" />
+    <Content Include="editor\images\smilies\default\29.gif" />
+    <Content Include="editor\images\smilies\default\3.gif" />
+    <Content Include="editor\images\smilies\default\30.gif" />
+    <Content Include="editor\images\smilies\default\31.gif" />
+    <Content Include="editor\images\smilies\default\32.gif" />
+    <Content Include="editor\images\smilies\default\33.gif" />
+    <Content Include="editor\images\smilies\default\34.gif" />
+    <Content Include="editor\images\smilies\default\35.gif" />
+    <Content Include="editor\images\smilies\default\36.gif" />
+    <Content Include="editor\images\smilies\default\37.gif" />
+    <Content Include="editor\images\smilies\default\38.gif" />
+    <Content Include="editor\images\smilies\default\39.gif" />
+    <Content Include="editor\images\smilies\default\4.gif" />
+    <Content Include="editor\images\smilies\default\40.gif" />
+    <Content Include="editor\images\smilies\default\41.gif" />
+    <Content Include="editor\images\smilies\default\42.gif" />
+    <Content Include="editor\images\smilies\default\43.gif" />
+    <Content Include="editor\images\smilies\default\44.gif" />
+    <Content Include="editor\images\smilies\default\45.gif" />
+    <Content Include="editor\images\smilies\default\46.gif" />
+    <Content Include="editor\images\smilies\default\47.gif" />
+    <Content Include="editor\images\smilies\default\48.gif" />
+    <Content Include="editor\images\smilies\default\49.gif" />
+    <Content Include="editor\images\smilies\default\5.gif" />
+    <Content Include="editor\images\smilies\default\50.gif" />
+    <Content Include="editor\images\smilies\default\51.gif" />
+    <Content Include="editor\images\smilies\default\52.gif" />
+    <Content Include="editor\images\smilies\default\53.gif" />
+    <Content Include="editor\images\smilies\default\54.gif" />
+    <Content Include="editor\images\smilies\default\55.gif" />
+    <Content Include="editor\images\smilies\default\56.gif" />
+    <Content Include="editor\images\smilies\default\57.gif" />
+    <Content Include="editor\images\smilies\default\58.gif" />
+    <Content Include="editor\images\smilies\default\59.gif" />
+    <Content Include="editor\images\smilies\default\6.gif" />
+    <Content Include="editor\images\smilies\default\60.gif" />
+    <Content Include="editor\images\smilies\default\61.gif" />
+    <Content Include="editor\images\smilies\default\62.gif" />
+    <Content Include="editor\images\smilies\default\63.gif" />
+    <Content Include="editor\images\smilies\default\64.gif" />
+    <Content Include="editor\images\smilies\default\65.gif" />
+    <Content Include="editor\images\smilies\default\66.gif" />
+    <Content Include="editor\images\smilies\default\67.gif" />
+    <Content Include="editor\images\smilies\default\68.gif" />
+    <Content Include="editor\images\smilies\default\69.gif" />
+    <Content Include="editor\images\smilies\default\7.gif" />
+    <Content Include="editor\images\smilies\default\70.gif" />
+    <Content Include="editor\images\smilies\default\71.gif" />
+    <Content Include="editor\images\smilies\default\72.gif" />
+    <Content Include="editor\images\smilies\default\73.gif" />
+    <Content Include="editor\images\smilies\default\74.gif" />
+    <Content Include="editor\images\smilies\default\75.gif" />
+    <Content Include="editor\images\smilies\default\76.gif" />
+    <Content Include="editor\images\smilies\default\77.gif" />
+    <Content Include="editor\images\smilies\default\78.gif" />
+    <Content Include="editor\images\smilies\default\79.gif" />
+    <Content Include="editor\images\smilies\default\8.gif" />
+    <Content Include="editor\images\smilies\default\80.gif" />
+    <Content Include="editor\images\smilies\default\81.gif" />
+    <Content Include="editor\images\smilies\default\82.gif" />
+    <Content Include="editor\images\smilies\default\83.gif" />
+    <Content Include="editor\images\smilies\default\84.gif" />
+    <Content Include="editor\images\smilies\default\85.gif" />
+    <Content Include="editor\images\smilies\default\86.gif" />
+    <Content Include="editor\images\smilies\default\9.gif" />
+    <Content Include="editor\images\uploadfile.gif" />
+    <Content Include="editor\images\wma.gif" />
+    <Content Include="editor\images\wmv.gif" />
+    <Content Include="favicon.ico" />
+    <Content Include="images\attachicons\attachimg.gif" />
+    <Content Include="images\attachicons\attachment.gif" />
+    <Content Include="images\attachicons\attachurl.gif" />
+    <Content Include="images\attachicons\common.gif" />
+    <Content Include="images\attachicons\common_new.gif" />
+    <Content Include="images\attachicons\image.gif" />
+    <Content Include="images\attachicons\rar.gif" />
+    <Content Include="images\banner.png" />
+    <Content Include="images\common\advclose.gif" />
+    <Content Include="images\common\app_add.gif" />
+    <Content Include="images\common\app_set.gif" />
+    <Content Include="images\common\arw.gif" />
+    <Content Include="images\common\back.gif" />
+    <Content Include="images\common\camera.swf" />
+    <Content Include="images\common\card_btn.png" />
+    <Content Include="images\common\clipboard.swf" />
+    <Content Include="images\common\close.gif" />
+    <Content Include="images\common\codebg.gif" />
+    <Content Include="images\common\connect_qq.gif" />
+    <Content Include="images\common\debate_bg.gif" />
+    <Content Include="images\common\debate_chart.gif" />
+    <Content Include="images\common\debate_vs.gif" />
+    <Content Include="images\common\dot.gif" />
+    <Content Include="images\common\editor.gif" />
+    <Content Include="images\common\faq.gif" />
+    <Content Include="images\common\flvplayer.swf" />
+    <Content Include="images\common\imgerror.png" />
+    <Content Include="images\common\imgerror2.png" />
+    <Content Include="images\common\imgloading.png" />
+    <Content Include="images\common\loading.gif" />
+    <Content Include="images\common\loading_wide.gif" />
+    <Content Include="images\common\locale.xml" />
+    <Content Include="images\common\newwindow.gif" />
+    <Content Include="images\common\noavatar_large.gif" />
+    <Content Include="images\common\noavatar_medium.gif" />
+    <Content Include="images\common\noavatar_small.gif" />
+    <Content Include="images\common\none.gif" />
+    <Content Include="images\common\op.png" />
+    <Content Include="images\common\pdbt.gif" />
+    <Content Include="images\common\pm_ntc.gif" />
+    <Content Include="images\common\pn.png" />
+    <Content Include="images\common\qq_bind_small.gif" />
+    <Content Include="images\common\qq_login.gif" />
+    <Content Include="images\common\resize.gif" />
+    <Content Include="images\common\stat.swf" />
+    <Content Include="images\common\upload.swf" />
+    <Content Include="images\common\uploading.gif" />
+    <Content Include="images\common\warning.gif" />
+    <Content Include="images\epayment\alipay_logo.gif" />
+    <Content Include="images\epayment\tenpay_logo.gif" />
+    <Content Include="images\fileicons\default.gif" />
+    <Content Include="images\fileicons\gif.gif" />
+    <Content Include="images\fileicons\jpg.gif" />
+    <Content Include="images\fileicons\rar.gif" />
+    <Content Include="images\fileicons\zip.gif" />
+    <Content Include="images\focus1.swf" />
+    <Content Include="images\gender\female.gif" />
+    <Content Include="images\gender\male.gif" />
+    <Content Include="images\groupicons\admin.gif" />
+    <Content Include="images\groupicons\guest.gif" />
+    <Content Include="images\groupicons\member.gif" />
+    <Content Include="images\groupicons\moder.gif" />
+    <Content Include="images\groupicons\supermoder.gif" />
+    <Content Include="images\groupicons\vip.gif" />
+    <Content Include="images\help\dot.gif" />
+    <Content Include="images\help\dot2.gif" />
+    <Content Include="images\help\dot3.gif" />
+    <Content Include="images\help\dot4.gif" />
+    <Content Include="images\help\gotop.gif" />
+    <Content Include="images\identify\001.gif" />
+    <Content Include="images\identify\001_small.gif" />
+    <Content Include="images\identify\002.gif" />
+    <Content Include="images\identify\002_small.gif" />
+    <Content Include="images\identify\003.gif" />
+    <Content Include="images\identify\003_small.gif" />
+    <Content Include="images\identify\004.gif" />
+    <Content Include="images\identify\004_small.gif" />
+    <Content Include="images\identify\005.gif" />
+    <Content Include="images\identify\005_small.gif" />
+    <Content Include="images\identify\006.gif" />
+    <Content Include="images\identify\006_small.gif" />
+    <Content Include="images\identify\007.gif" />
+    <Content Include="images\identify\007_small.gif" />
+    <Content Include="images\identify\008.gif" />
+    <Content Include="images\identify\008_small.gif" />
+    <Content Include="images\identify\009.gif" />
+    <Content Include="images\identify\009_small.gif" />
+    <Content Include="images\identify\010.gif" />
+    <Content Include="images\identify\010_small.gif" />
+    <Content Include="images\identify\bq.gif" />
+    <Content Include="images\identify\bq2.gif" />
+    <Content Include="images\identify\bq_small.gif" />
+    <Content Include="images\identify\bt.gif" />
+    <Content Include="images\identify\bt2.gif" />
+    <Content Include="images\identify\bt_small.gif" />
+    <Content Include="images\identify\cj.gif" />
+    <Content Include="images\identify\cj_small.gif" />
+    <Content Include="images\identify\cz.gif" />
+    <Content Include="images\identify\cz_small.gif" />
+    <Content Include="images\identify\gf.gif" />
+    <Content Include="images\identify\gf_small.gif" />
+    <Content Include="images\identify\gx.gif" />
+    <Content Include="images\identify\gx_small.gif" />
+    <Content Include="images\identify\hx.gif" />
+    <Content Include="images\identify\hx_small.gif" />
+    <Content Include="images\identify\jc.gif" />
+    <Content Include="images\identify\jc_small.gif" />
+    <Content Include="images\identify\lj.gif" />
+    <Content Include="images\identify\lj_small.gif" />
+    <Content Include="images\identify\nb.gif" />
+    <Content Include="images\identify\nb_small.gif" />
+    <Content Include="images\identify\tj.gif" />
+    <Content Include="images\identify\tj2.gif" />
+    <Content Include="images\identify\tj_small.gif" />
+    <Content Include="images\identify\wl.gif" />
+    <Content Include="images\identify\wl_small.gif" />
+    <Content Include="images\identify\wq.gif" />
+    <Content Include="images\identify\wq_small.gif" />
+    <Content Include="images\identify\ws.gif" />
+    <Content Include="images\identify\ws_small.gif" />
+    <Content Include="images\identify\xx.gif" />
+    <Content Include="images\identify\xx_small.gif" />
+    <Content Include="images\identify\xy.gif" />
+    <Content Include="images\identify\xy_small.gif" />
+    <Content Include="images\identify\zc.gif" />
+    <Content Include="images\identify\zc_small.gif" />
+    <Content Include="images\level\1.gif" />
+    <Content Include="images\level\2.gif" />
+    <Content Include="images\level\3.gif" />
+    <Content Include="images\level\4.gif" />
+    <Content Include="images\logo.gif" />
+    <Content Include="images\medals\medal1.gif" />
+    <Content Include="images\medals\medal10.gif" />
+    <Content Include="images\medals\medal11.gif" />
+    <Content Include="images\medals\medal12.gif" />
+    <Content Include="images\medals\medal13.gif" />
+    <Content Include="images\medals\medal14.gif" />
+    <Content Include="images\medals\medal15.gif" />
+    <Content Include="images\medals\medal16.gif" />
+    <Content Include="images\medals\medal17.gif" />
+    <Content Include="images\medals\medal18.gif" />
+    <Content Include="images\medals\medal19.gif" />
+    <Content Include="images\medals\medal2.gif" />
+    <Content Include="images\medals\medal20.gif" />
+    <Content Include="images\medals\medal3.gif" />
+    <Content Include="images\medals\medal4.gif" />
+    <Content Include="images\medals\medal5.gif" />
+    <Content Include="images\medals\medal6.gif" />
+    <Content Include="images\medals\medal7.gif" />
+    <Content Include="images\medals\medal8.gif" />
+    <Content Include="images\medals\medal9.gif" />
+    <Content Include="images\page\first.gif" />
+    <Content Include="images\page\last.gif" />
+    <Content Include="images\page\next.gif" />
+    <Content Include="images\page\prev.gif" />
+    <Content Include="images\polls\0.gif" />
+    <Content Include="images\polls\1.gif" />
+    <Content Include="images\polls\2.gif" />
+    <Content Include="images\polls\3.gif" />
+    <Content Include="images\polls\4.gif" />
+    <Content Include="images\polls\5.gif" />
+    <Content Include="images\polls\6.gif" />
+    <Content Include="images\polls\7.gif" />
+    <Content Include="images\polls\8.gif" />
+    <Content Include="images\polls\9.gif" />
+    <Content Include="images\posticons\0.gif" />
+    <Content Include="images\posticons\1.gif" />
+    <Content Include="images\posticons\10.gif" />
+    <Content Include="images\posticons\11.gif" />
+    <Content Include="images\posticons\12.gif" />
+    <Content Include="images\posticons\13.gif" />
+    <Content Include="images\posticons\14.gif" />
+    <Content Include="images\posticons\15.gif" />
+    <Content Include="images\posticons\2.gif" />
+    <Content Include="images\posticons\3.gif" />
+    <Content Include="images\posticons\4.gif" />
+    <Content Include="images\posticons\5.gif" />
+    <Content Include="images\posticons\6.gif" />
+    <Content Include="images\posticons\7.gif" />
+    <Content Include="images\posticons\8.gif" />
+    <Content Include="images\posticons\9.gif" />
+    <Content Include="images\share\baidu.gif" />
+    <Content Include="images\share\douban.gif" />
+    <Content Include="images\share\favorite.gif" />
+    <Content Include="images\share\google.gif" />
+    <Content Include="images\share\kaixin001.gif" />
+    <Content Include="images\share\live.gif" />
+    <Content Include="images\share\qq.gif" />
+    <Content Include="images\share\renren.gif" />
+    <Content Include="images\share\sina.gif" />
+    <Content Include="images\share\sohu.gif" />
+    <Content Include="images\share\vivi.gif" />
+    <Content Include="images\stats\aix.gif" />
+    <Content Include="images\stats\firefox.gif" />
+    <Content Include="images\stats\freebsd.gif" />
+    <Content Include="images\stats\konqueror.gif" />
+    <Content Include="images\stats\linux.gif" />
+    <Content Include="images\stats\lynx.gif" />
+    <Content Include="images\stats\mac.gif" />
+    <Content Include="images\stats\mozilla.gif" />
+    <Content Include="images\stats\msie.gif" />
+    <Content Include="images\stats\netscape.gif" />
+    <Content Include="images\stats\opera.gif" />
+    <Content Include="images\stats\os2.gif" />
+    <Content Include="images\stats\other.gif" />
+    <Content Include="images\stats\safari.gif" />
+    <Content Include="images\stats\spiders.gif" />
+    <Content Include="images\stats\sunos.gif" />
+    <Content Include="images\stats\windows.gif" />
+    <Content Include="images\tree\file.gif" />
+    <Content Include="images\tree\folder.gif" />
+    <Content Include="images\tree\folderopen.gif" />
+    <Content Include="images\tree\l0.gif" />
+    <Content Include="images\tree\l1.gif" />
+    <Content Include="images\tree\l2.gif" />
+    <Content Include="images\tree\l3.gif" />
+    <Content Include="images\tree\l4.gif" />
+    <Content Include="images\tree\l5.gif" />
+    <Content Include="images\tree\m0.gif" />
+    <Content Include="images\tree\m1.gif" />
+    <Content Include="images\tree\m2.gif" />
+    <Content Include="images\tree\m3.gif" />
+    <Content Include="images\tree\m5.gif" />
+    <Content Include="images\tree\p0.gif" />
+    <Content Include="images\tree\p1.gif" />
+    <Content Include="images\tree\p2.gif" />
+    <Content Include="images\tree\p3.gif" />
+    <Content Include="index.aspx" />
+    <Content Include="javascript\adm.js" />
+    <Content Include="javascript\ajax.js" />
+    <Content Include="javascript\bbcode.js" />
+    <Content Include="javascript\common.js" />
+    <Content Include="javascript\editor.js" />
+    <Content Include="javascript\editorhelper.js" />
+    <Content Include="javascript\highlight.pack.js" />
+    <Content Include="javascript\jquery-1.11.3.min.js" />
+    <Content Include="javascript\locations.js" />
+    <Content Include="javascript\mymenu.js" />
+    <Content Include="javascript\post.js" />
+    <Content Include="javascript\post_editor.js" />
+    <Content Include="javascript\simplyeditor.js" />
+    <Content Include="javascript\slide.js" />
+    <Content Include="javascript\swfobjectsource.js" />
+    <Content Include="javascript\template_album.js" />
+    <Content Include="javascript\template_announcement.js" />
+    <Content Include="javascript\template_attach.js" />
+    <Content Include="javascript\template_calendar.js" />
+    <Content Include="javascript\template_colorpicker.js" />
+    <Content Include="javascript\template_debate.js" />
+    <Content Include="javascript\template_eccredit.js" />
+    <Content Include="javascript\template_editgoods.js" />
+    <Content Include="javascript\template_floatadv.js" />
+    <Content Include="javascript\template_forumindexquickpost.js" />
+    <Content Include="javascript\template_goodsadmin.js" />
+    <Content Include="javascript\template_hint.js" />
+    <Content Include="javascript\template_inforumad.js" />
+    <Content Include="javascript\template_mallgoodslist.js" />
+    <Content Include="javascript\template_mallindex.js" />
+    <Content Include="javascript\template_mediaad.js" />
+    <Content Include="javascript\template_modcp.js" />
+    <Content Include="javascript\template_postgoods.js" />
+    <Content Include="javascript\template_quickreply.js" />
+    <Content Include="javascript\template_register.js" />
+    <Content Include="javascript\template_report.js" />
+    <Content Include="javascript\template_rotatepic.js" />
+    <Content Include="javascript\template_search.js" />
+    <Content Include="javascript\template_share.js" />
+    <Content Include="javascript\template_showforum.js" />
+    <Content Include="javascript\template_showgoods.js" />
+    <Content Include="javascript\template_showgoodslist.js" />
+    <Content Include="javascript\template_showphoto.js" />
+    <Content Include="javascript\template_showtopic.js" />
+    <Content Include="javascript\template_spaceblog.js" />
+    <Content Include="javascript\template_tags.js" />
+    <Content Include="javascript\template_usercpnotice.js" />
+    <Content Include="javascript\template_usercpshopcategory.js" />
+    <Content Include="javascript\template_usercpshopconfig.js" />
+    <Content Include="javascript\template_usercpshopgoodsmanage.js" />
+    <Content Include="javascript\template_utils.js" />
+    <Content Include="javascript\template_website.js" />
+    <Content Include="robots.txt" />
+    <Content Include="templates\black\about.xml" />
+    <Content Include="templates\black\bbx.css" />
+    <Content Include="templates\black\css.css" />
+    <Content Include="templates\black\editor.css" />
+    <Content Include="templates\black\float.css" />
+    <Content Include="templates\black\forumhot.css" />
+    <Content Include="templates\black\highlight.css" />
+    <Content Include="templates\black\images\access_allow.gif" />
+    <Content Include="templates\black\images\access_normal.gif" />
+    <Content Include="templates\black\images\add_invite.gif" />
+    <Content Include="templates\black\images\ad_icon.gif" />
+    <Content Include="templates\black\images\agree.gif" />
+    <Content Include="templates\black\images\ajaxaction.gif" />
+    <Content Include="templates\black\images\album.gif" />
+    <Content Include="templates\black\images\announcement.gif" />
+    <Content Include="templates\black\images\arrow_down_big.gif" />
+    <Content Include="templates\black\images\arrow_left.gif" />
+    <Content Include="templates\black\images\arrow_right.gif" />
+    <Content Include="templates\black\images\arrow_right_big.gif" />
+    <Content Include="templates\black\images\atarget.png" />
+    <Content Include="templates\black\images\attachment.gif" />
+    <Content Include="templates\black\images\attachment_image.gif" />
+    <Content Include="templates\black\images\bigbtn.gif" />
+    <Content Include="templates\black\images\blog.gif" />
+    <Content Include="templates\black\images\bonus.gif" />
+    <Content Include="templates\black\images\bonusflag.gif" />
+    <Content Include="templates\black\images\btn_post.gif" />
+    <Content Include="templates\black\images\btn_silverlight.gif" />
+    <Content Include="templates\black\images\check_error.gif" />
+    <Content Include="templates\black\images\check_right.gif" />
+    <Content Include="templates\black\images\cls.gif" />
+    <Content Include="templates\black\images\collapse.gif" />
+    <Content Include="templates\black\images\collapsed_no.gif" />
+    <Content Include="templates\black\images\collapsed_yes.gif" />
+    <Content Include="templates\black\images\dashline.gif" />
+    <Content Include="templates\black\images\data_invalid.gif" />
+    <Content Include="templates\black\images\data_valid.gif" />
+    <Content Include="templates\black\images\debatesmall.gif" />
+    <Content Include="templates\black\images\delete.gif" />
+    <Content Include="templates\black\images\digest.gif" />
+    <Content Include="templates\black\images\digest1.gif" />
+    <Content Include="templates\black\images\digest2.gif" />
+    <Content Include="templates\black\images\digest3.gif" />
+    <Content Include="templates\black\images\digest_1.gif" />
+    <Content Include="templates\black\images\digest_2.gif" />
+    <Content Include="templates\black\images\digest_3.gif" />
+    <Content Include="templates\black\images\disagree.gif" />
+    <Content Include="templates\black\images\discuznt_logo.gif" />
+    <Content Include="templates\black\images\draftbox.gif" />
+    <Content Include="templates\black\images\edit.gif" />
+    <Content Include="templates\black\images\editor.png" />
+    <Content Include="templates\black\images\error.gif" />
+    <Content Include="templates\black\images\expand.gif" />
+    <Content Include="templates\black\images\external.png" />
+    <Content Include="templates\black\images\external2.png" />
+    <Content Include="templates\black\images\fastreply.gif" />
+    <Content Include="templates\black\images\favorite.gif" />
+    <Content Include="templates\black\images\fi_bg.jpg" />
+    <Content Include="templates\black\images\folder_closed.gif" />
+    <Content Include="templates\black\images\folder_move.gif" />
+    <Content Include="templates\black\images\folder_mytopic.gif" />
+    <Content Include="templates\black\images\folder_new.gif" />
+    <Content Include="templates\black\images\folder_newhot.gif" />
+    <Content Include="templates\black\images\folder_old.gif" />
+    <Content Include="templates\black\images\folder_oldhot.gif" />
+    <Content Include="templates\black\images\folder_s.gif" />
+    <Content Include="templates\black\images\forum.gif" />
+    <Content Include="templates\black\images\forumdigest.gif" />
+    <Content Include="templates\black\images\forum_new.gif" />
+    <Content Include="templates\black\images\frame_back.gif" />
+    <Content Include="templates\black\images\frame_go.gif" />
+    <Content Include="templates\black\images\gather\album_bg.gif" />
+    <Content Include="templates\black\images\gather\bignews_btn_bg.gif" />
+    <Content Include="templates\black\images\gather\btn_search.gif" />
+    <Content Include="templates\black\images\gather\butonbg.jpg" />
+    <Content Include="templates\black\images\gather\commend_bg.gif" />
+    <Content Include="templates\black\images\gather\discuznt_logo.gif" />
+    <Content Include="templates\black\images\gather\icon.gif" />
+    <Content Include="templates\black\images\gather\nav_bot.gif" />
+    <Content Include="templates\black\images\gather\nophoto.jpg" />
+    <Content Include="templates\black\images\gather\photobox_bg.png" />
+    <Content Include="templates\black\images\gather\sidetitlebg.gif" />
+    <Content Include="templates\black\images\gather\tabbg.gif" />
+    <Content Include="templates\black\images\gather\titlebg.gif" />
+    <Content Include="templates\black\images\gather\title_bg.gif" />
+    <Content Include="templates\black\images\gather\title_bg2.gif" />
+    <Content Include="templates\black\images\gotop.gif" />
+    <Content Include="templates\black\images\hint.gif" />
+    <Content Include="templates\black\images\home.gif" />
+    <Content Include="templates\black\images\hotbg.png" />
+    <Content Include="templates\black\images\icon_announcement.gif" />
+    <Content Include="templates\black\images\icon_drop.gif" />
+    <Content Include="templates\black\images\icon_feed.gif" />
+    <Content Include="templates\black\images\icon_quote_e.gif" />
+    <Content Include="templates\black\images\icon_quote_s.gif" />
+    <Content Include="templates\black\images\icon_search.gif" />
+    <Content Include="templates\black\images\icon_subnav.gif" />
+    <Content Include="templates\black\images\ip.gif" />
+    <Content Include="templates\black\images\lastedit.gif" />
+    <Content Include="templates\black\images\legend_reward.gif" />
+    <Content Include="templates\black\images\loading.gif" />
+    <Content Include="templates\black\images\locked.gif" />
+    <Content Include="templates\black\images\logo.png" />
+    <Content Include="templates\black\images\l_collapsed_no.gif" />
+    <Content Include="templates\black\images\l_collapsed_yes.gif" />
+    <Content Include="templates\black\images\mdly.png" />
+    <Content Include="templates\black\images\mu.jpg" />
+    <Content Include="templates\black\images\mymenubg.gif" />
+    <Content Include="templates\black\images\mytopic.gif" />
+    <Content Include="templates\black\images\newarow.gif" />
+    <Content Include="templates\black\images\newtopic.png" />
+    <Content Include="templates\black\images\noavatar_big.gif" />
+    <Content Include="templates\black\images\noavatar_medium.gif" />
+    <Content Include="templates\black\images\noavatar_small.gif" />
+    <Content Include="templates\black\images\online.gif" />
+    <Content Include="templates\black\images\op.png" />
+    <Content Include="templates\black\images\page_link.gif" />
+    <Content Include="templates\black\images\pmto.gif" />
+    <Content Include="templates\black\images\pm_0.gif" />
+    <Content Include="templates\black\images\pm_1.gif" />
+    <Content Include="templates\black\images\pollsmall.gif" />
+    <Content Include="templates\black\images\pope_bg.png" />
+    <Content Include="templates\black\images\popupcredit_bg.gif" />
+    <Content Include="templates\black\images\popupcredit_btn.gif" />
+    <Content Include="templates\black\images\posts_new.gif" />
+    <Content Include="templates\black\images\pt_icn.png" />
+    <Content Include="templates\black\images\qa.gif" />
+    <Content Include="templates\black\images\qmenu.png" />
+    <Content Include="templates\black\images\qz.gif" />
+    <Content Include="templates\black\images\ratbg.gif" />
+    <Content Include="templates\black\images\ratesrcorebg.gif" />
+    <Content Include="templates\black\images\reply.png" />
+    <Content Include="templates\black\images\repquote.gif" />
+    <Content Include="templates\black\images\rewardsmall.gif" />
+    <Content Include="templates\black\images\rewardsmallend.gif" />
+    <Content Include="templates\black\images\re_unsolved.gif" />
+    <Content Include="templates\black\images\right.gif" />
+    <Content Include="templates\black\images\rss2.gif" />
+    <Content Include="templates\black\images\rwd.gif" />
+    <Content Include="templates\black\images\share.png" />
+    <Content Include="templates\black\images\showdigest.gif" />
+    <Content Include="templates\black\images\sidebg.gif" />
+    <Content Include="templates\black\images\sigline.gif" />
+    <Content Include="templates\black\images\sortnum.png" />
+    <Content Include="templates\black\images\space.gif" />
+    <Content Include="templates\black\images\star_level1.gif" />
+    <Content Include="templates\black\images\star_level2.gif" />
+    <Content Include="templates\black\images\star_level3.gif" />
+    <Content Include="templates\black\images\style.gif" />
+    <Content Include="templates\black\images\systempm.gif" />
+    <Content Include="templates\black\images\tbn.png" />
+    <Content Include="templates\black\images\text_common.gif" />
+    <Content Include="templates\black\images\text_zoom.gif" />
+    <Content Include="templates\black\images\titlebarbg.gif" />
+    <Content Include="templates\black\images\titlebg.png" />
+    <Content Include="templates\black\images\toolbg.gif" />
+    <Content Include="templates\black\images\tradesmall.gif" />
+    <Content Include="templates\black\images\t_top1.gif" />
+    <Content Include="templates\black\images\t_top2.gif" />
+    <Content Include="templates\black\images\t_top3.gif" />
+    <Content Include="templates\black\images\usericon.gif" />
+    <Content Include="templates\black\images\useronline.gif" />
+    <Content Include="templates\black\images\useroutline.gif" />
+    <Content Include="templates\black\images\user_online.gif" />
+    <Content Include="templates\black\search.css" />
+    <Content Include="templates\black\seditor.css" />
+    <Content Include="templates\black\templatevariable.xml" />
+    <Content Include="templates\black\widthauto.css" />
+    <Content Include="templates\black\wysiwyg.css" />
+    <Content Include="templates\default\about.xml" />
+    <Content Include="templates\default\announcement.htm" />
+    <Content Include="templates\default\attachment.htm" />
+    <Content Include="templates\default\bbx.css" />
+    <Content Include="templates\default\buytopic.htm" />
+    <Content Include="templates\default\css.css" />
+    <Content Include="templates\default\delpost.htm" />
+    <Content Include="templates\default\editor.css" />
+    <Content Include="templates\default\editpost.htm" />
+    <Content Include="templates\default\favorites.htm" />
+    <Content Include="templates\default\float.css" />
+    <Content Include="templates\default\forumhot.css" />
+    <Content Include="templates\default\forumindex.htm" />
+    <Content Include="templates\default\forumlist.htm" />
+    <Content Include="templates\default\forumsearch.htm" />
+    <Content Include="templates\default\frame.htm" />
+    <Content Include="templates\default\getip.htm" />
+    <Content Include="templates\default\getpassword.htm" />
+    <Content Include="templates\default\help.htm" />
+    <Content Include="templates\default\highlight.css" />
+    <Content Include="templates\default\images\access_allow.gif" />
+    <Content Include="templates\default\images\access_normal.gif" />
+    <Content Include="templates\default\images\add_invite.gif" />
+    <Content Include="templates\default\images\ad_icon.gif" />
+    <Content Include="templates\default\images\agree.gif" />
+    <Content Include="templates\default\images\announcement.gif" />
+    <Content Include="templates\default\images\arrow_left.gif" />
+    <Content Include="templates\default\images\arrow_right.gif" />
+    <Content Include="templates\default\images\atarget.png" />
+    <Content Include="templates\default\images\attachment.gif" />
+    <Content Include="templates\default\images\attachment_image.gif" />
+    <Content Include="templates\default\images\avatar_shadow.gif" />
+    <Content Include="templates\default\images\bigbtn.gif" />
+    <Content Include="templates\default\images\blog.gif" />
+    <Content Include="templates\default\images\bodybg.png" />
+    <Content Include="templates\default\images\bonus.gif" />
+    <Content Include="templates\default\images\bonusflag.gif" />
+    <Content Include="templates\default\images\btn_post.gif" />
+    <Content Include="templates\default\images\btn_silverlight.gif" />
+    <Content Include="templates\default\images\check_error.gif" />
+    <Content Include="templates\default\images\check_right.gif" />
+    <Content Include="templates\default\images\cls.gif" />
+    <Content Include="templates\default\images\collapse.gif" />
+    <Content Include="templates\default\images\collapsed_no.gif" />
+    <Content Include="templates\default\images\collapsed_yes.gif" />
+    <Content Include="templates\default\images\connect_qq.gif" />
+    <Content Include="templates\default\images\data_invalid.gif" />
+    <Content Include="templates\default\images\data_valid.gif" />
+    <Content Include="templates\default\images\debatesmall.gif" />
+    <Content Include="templates\default\images\delete.gif" />
+    <Content Include="templates\default\images\digest.gif" />
+    <Content Include="templates\default\images\digest1.gif" />
+    <Content Include="templates\default\images\digest2.gif" />
+    <Content Include="templates\default\images\digest3.gif" />
+    <Content Include="templates\default\images\disagree.gif" />
+    <Content Include="templates\default\images\discuznt_logo.gif" />
+    <Content Include="templates\default\images\error.gif" />
+    <Content Include="templates\default\images\expand.gif" />
+    <Content Include="templates\default\images\external.png" />
+    <Content Include="templates\default\images\external2.png" />
+    <Content Include="templates\default\images\favorite.gif" />
+    <Content Include="templates\default\images\folder_closed.gif" />
+    <Content Include="templates\default\images\folder_move.gif" />
+    <Content Include="templates\default\images\folder_mytopic.gif" />
+    <Content Include="templates\default\images\folder_new.gif" />
+    <Content Include="templates\default\images\folder_newhot.gif" />
+    <Content Include="templates\default\images\folder_old.gif" />
+    <Content Include="templates\default\images\folder_oldhot.gif" />
+    <Content Include="templates\default\images\folder_s.gif" />
+    <Content Include="templates\default\images\forum.gif" />
+    <Content Include="templates\default\images\forumdigest.gif" />
+    <Content Include="templates\default\images\forum_new.gif" />
+    <Content Include="templates\default\images\frame_back.gif" />
+    <Content Include="templates\default\images\frame_go.gif" />
+    <Content Include="templates\default\images\gather\album_bg.gif" />
+    <Content Include="templates\default\images\gather\bignews_btn_bg.gif" />
+    <Content Include="templates\default\images\gather\commend_bg.gif" />
+    <Content Include="templates\default\images\gather\discuznt_logo.gif" />
+    <Content Include="templates\default\images\gather\nav_bot.gif" />
+    <Content Include="templates\default\images\gather\nophoto.jpg" />
+    <Content Include="templates\default\images\gather\photobox_bg.png" />
+    <Content Include="templates\default\images\gather\slide_pic.jpg" />
+    <Content Include="templates\default\images\gather\titlebg.gif" />
+    <Content Include="templates\default\images\gather\title_bg.gif" />
+    <Content Include="templates\default\images\gather\title_bg2.gif" />
+    <Content Include="templates\default\images\gotop.gif" />
+    <Content Include="templates\default\images\hint.gif" />
+    <Content Include="templates\default\images\home.gif" />
+    <Content Include="templates\default\images\hotbg.png" />
+    <Content Include="templates\default\images\icon_announcement.gif" />
+    <Content Include="templates\default\images\icon_drop.gif" />
+    <Content Include="templates\default\images\icon_feed.gif" />
+    <Content Include="templates\default\images\icon_quote_e.gif" />
+    <Content Include="templates\default\images\icon_quote_s.gif" />
+    <Content Include="templates\default\images\icon_search.gif" />
+    <Content Include="templates\default\images\icon_subnav.gif" />
+    <Content Include="templates\default\images\info_small.gif" />
+    <Content Include="templates\default\images\ip.gif" />
+    <Content Include="templates\default\images\lastedit.gif" />
+    <Content Include="templates\default\images\legend_reward.gif" />
+    <Content Include="templates\default\images\loading.gif" />
+    <Content Include="templates\default\images\locked.gif" />
+    <Content Include="templates\default\images\logo.png" />
+    <Content Include="templates\default\images\l_collapsed_no.gif" />
+    <Content Include="templates\default\images\l_collapsed_yes.gif" />
+    <Content Include="templates\default\images\mdly.png" />
+    <Content Include="templates\default\images\mu.png" />
+    <Content Include="templates\default\images\mymenubg.gif" />
+    <Content Include="templates\default\images\mytopic.gif" />
+    <Content Include="templates\default\images\newarow.gif" />
+    <Content Include="templates\default\images\newtopic.png" />
+    <Content Include="templates\default\images\noavatar_small.gif" />
+    <Content Include="templates\default\images\online.gif" />
+    <Content Include="templates\default\images\op.png" />
+    <Content Include="templates\default\images\pmto.gif" />
+    <Content Include="templates\default\images\pm_0.gif" />
+    <Content Include="templates\default\images\pm_1.gif" />
+    <Content Include="templates\default\images\pollsmall.gif" />
+    <Content Include="templates\default\images\pope_bg.png" />
+    <Content Include="templates\default\images\popupcredit_bg.gif" />
+    <Content Include="templates\default\images\popupcredit_btn.gif" />
+    <Content Include="templates\default\images\poster_action.png" />
+    <Content Include="templates\default\images\posts_new.gif" />
+    <Content Include="templates\default\images\qa.gif" />
+    <Content Include="templates\default\images\qz.gif" />
+    <Content Include="templates\default\images\ratbg.gif" />
+    <Content Include="templates\default\images\ratesrcorebg.gif" />
+    <Content Include="templates\default\images\reply.png" />
+    <Content Include="templates\default\images\rewardsmall.gif" />
+    <Content Include="templates\default\images\rewardsmallend.gif" />
+    <Content Include="templates\default\images\re_unsolved.gif" />
+    <Content Include="templates\default\images\right.gif" />
+    <Content Include="templates\default\images\rss2.gif" />
+    <Content Include="templates\default\images\rwd.gif" />
+    <Content Include="templates\default\images\share.png" />
+    <Content Include="templates\default\images\showdigest.gif" />
+    <Content Include="templates\default\images\sidebg.gif" />
+    <Content Include="templates\default\images\sigline.gif" />
+    <Content Include="templates\default\images\sortnum.png" />
+    <Content Include="templates\default\images\star_level1.gif" />
+    <Content Include="templates\default\images\star_level2.gif" />
+    <Content Include="templates\default\images\star_level3.gif" />
+    <Content Include="templates\default\images\style.gif" />
+    <Content Include="templates\default\images\systempm.gif" />
+    <Content Include="templates\default\images\tag.gif" />
+    <Content Include="templates\default\images\tbn.png" />
+    <Content Include="templates\default\images\text_control.png" />
+    <Content Include="templates\default\images\titlebg.png" />
+    <Content Include="templates\default\images\tradesmall.gif" />
+    <Content Include="templates\default\images\t_top1.gif" />
+    <Content Include="templates\default\images\t_top2.gif" />
+    <Content Include="templates\default\images\t_top3.gif" />
+    <Content Include="templates\default\images\uc_bg.png" />
+    <Content Include="templates\default\images\usericon.gif" />
+    <Content Include="templates\default\images\useronline.gif" />
+    <Content Include="templates\default\images\useroutline.gif" />
+    <Content Include="templates\default\images\user_cp.png" />
+    <Content Include="templates\default\images\user_info.png" />
+    <Content Include="templates\default\images\user_online.gif" />
+    <Content Include="templates\default\images\user_tool.png" />
+    <Content Include="templates\default\invite.htm" />
+    <Content Include="templates\default\login.htm" />
+    <Content Include="templates\default\logout.htm" />
+    <Content Include="templates\default\misc.htm" />
+    <Content Include="templates\default\modcp.htm" />
+    <Content Include="templates\default\myattachment.htm" />
+    <Content Include="templates\default\myaudittopics.htm" />
+    <Content Include="templates\default\myposts.htm" />
+    <Content Include="templates\default\mytopics.htm" />
+    <Content Include="templates\default\onlineuser.htm" />
+    <Content Include="templates\default\poll.htm" />
+    <Content Include="templates\default\postreply.htm" />
+    <Content Include="templates\default\posttopic.htm" />
+    <Content Include="templates\default\QzoneConnect.htm" />
+    <Content Include="templates\default\register.htm" />
+    <Content Include="templates\default\search.css" />
+    <Content Include="templates\default\search.htm" />
+    <Content Include="templates\default\seditor.css" />
+    <Content Include="templates\default\setnewpassword.htm" />
+    <Content Include="templates\default\showforum.htm" />
+    <Content Include="templates\default\showratelist.htm" />
+    <Content Include="templates\default\showtemplate.htm" />
+    <Content Include="templates\default\showtopic.htm" />
+    <Content Include="templates\default\showtopiclist.htm" />
+    <Content Include="templates\default\showuser.htm" />
+    <Content Include="templates\default\stats.htm" />
+    <Content Include="templates\default\tags.htm" />
+    <Content Include="templates\default\templatevariable.xml" />
+    <Content Include="templates\default\topicadmin.htm" />
+    <Content Include="templates\default\useradmin.htm" />
+    <Content Include="templates\default\usercp.htm" />
+    <Content Include="templates\default\usercpannouncepm.htm" />
+    <Content Include="templates\default\usercpcreaditstransferlog.htm" />
+    <Content Include="templates\default\usercpcreditsbuy.htm" />
+    <Content Include="templates\default\usercpcreditspay.htm" />
+    <Content Include="templates\default\usercpcreditspayinlog.htm" />
+    <Content Include="templates\default\usercpcreditspayoutlog.htm" />
+    <Content Include="templates\default\usercpcreditstransfer.htm" />
+    <Content Include="templates\default\usercpdraftbox.htm" />
+    <Content Include="templates\default\usercpignorelist.htm" />
+    <Content Include="templates\default\usercpinbox.htm" />
+    <Content Include="templates\default\usercpnewpassword.htm" />
+    <Content Include="templates\default\usercpnotice.htm" />
+    <Content Include="templates\default\usercppostpm.htm" />
+    <Content Include="templates\default\usercppreference.htm" />
+    <Content Include="templates\default\usercpprofile.htm" />
+    <Content Include="templates\default\usercpqqbind.htm" />
+    <Content Include="templates\default\usercpsentbox.htm" />
+    <Content Include="templates\default\usercpshowpm.htm" />
+    <Content Include="templates\default\usercpsubscribe.htm" />
+    <Content Include="templates\default\userdatahub.htm" />
+    <Content Include="templates\default\userinfo.htm" />
+    <Content Include="templates\default\widthauto.css" />
+    <Content Include="templates\default\wysiwyg.css" />
+    <Content Include="templates\default\_adlist.htm" />
+    <Content Include="templates\default\_ajaxquickreply.htm" />
+    <Content Include="templates\default\_attachmentinfo.htm" />
+    <Content Include="templates\default\_attachmentmenu.htm" />
+    <Content Include="templates\default\_copyright.htm" />
+    <Content Include="templates\default\_editor.htm" />
+    <Content Include="templates\default\_editor_menu.htm" />
+    <Content Include="templates\default\_errmsgbox.htm" />
+    <Content Include="templates\default\_footer.htm" />
+    <Content Include="templates\default\_forumhot.htm" />
+    <Content Include="templates\default\_header.htm" />
+    <Content Include="templates\default\_login.htm" />
+    <Content Include="templates\default\_menu.htm" />
+    <Content Include="templates\default\_msgbox.htm" />
+    <Content Include="templates\default\_mymenu.htm" />
+    <Content Include="templates\default\_pageheader.htm" />
+    <Content Include="templates\default\_pagewordadlist.htm" />
+    <Content Include="templates\default\_permenu.htm" />
+    <Content Include="templates\default\_poll.htm" />
+    <Content Include="templates\default\_post.htm" />
+    <Content Include="templates\default\_postattachments.htm" />
+    <Content Include="templates\default\_post_attachlist.htm" />
+    <Content Include="templates\default\_quickpost.htm" />
+    <Content Include="templates\default\_quicksearch.htm" />
+    <Content Include="templates\default\_ratelog.htm" />
+    <Content Include="templates\default\_realnamesystem.htm" />
+    <Content Include="templates\default\_report.htm" />
+    <Content Include="templates\default\_rotatepic.htm" />
+    <Content Include="templates\default\_scoremenu.htm" />
+    <Content Include="templates\default\_seditor.htm" />
+    <Content Include="templates\default\_smiley.htm" />
+    <Content Include="templates\default\_smsmenu.htm" />
+    <Content Include="templates\default\_stylejump.htm" />
+    <Content Include="templates\default\_subeditor.htm" />
+    <Content Include="templates\default\_subforum.htm" />
+    <Content Include="templates\default\_subscribemenu.htm" />
+    <Content Include="templates\default\_tempaccounts.htm" />
+    <Content Include="templates\default\_usercperrmsgbox.htm" />
+    <Content Include="templates\default\_usercpmsgbox.htm" />
+    <Content Include="templates\default\_vcode.htm" />
+    <Content Include="templates\default\_websiteheader.htm" />
+    <Content Include="templates\green\about.xml" />
+    <Content Include="templates\green\bbx.css" />
+    <Content Include="templates\green\editor.css" />
+    <Content Include="templates\green\float.css" />
+    <Content Include="templates\green\forumhot.css" />
+    <Content Include="templates\green\highlight.css" />
+    <Content Include="templates\green\images\access_allow.gif" />
+    <Content Include="templates\green\images\access_normal.gif" />
+    <Content Include="templates\green\images\add_invite.gif" />
+    <Content Include="templates\green\images\ad_icon.gif" />
+    <Content Include="templates\green\images\agree.gif" />
+    <Content Include="templates\green\images\announcement.gif" />
+    <Content Include="templates\green\images\arrow_left.gif" />
+    <Content Include="templates\green\images\arrow_right.gif" />
+    <Content Include="templates\green\images\atarget.png" />
+    <Content Include="templates\green\images\attachment.gif" />
+    <Content Include="templates\green\images\attachment_image.gif" />
+    <Content Include="templates\green\images\avatar_shadow.gif" />
+    <Content Include="templates\green\images\bigbtn.gif" />
+    <Content Include="templates\green\images\blog.gif" />
+    <Content Include="templates\green\images\bodybg.jpg" />
+    <Content Include="templates\green\images\bonus.gif" />
+    <Content Include="templates\green\images\bonusflag.gif" />
+    <Content Include="templates\green\images\btn_post.gif" />
+    <Content Include="templates\green\images\btn_silverlight.gif" />
+    <Content Include="templates\green\images\check_error.gif" />
+    <Content Include="templates\green\images\check_right.gif" />
+    <Content Include="templates\green\images\cls.gif" />
+    <Content Include="templates\green\images\collapse.gif" />
+    <Content Include="templates\green\images\collapsed_no.gif" />
+    <Content Include="templates\green\images\collapsed_yes.gif" />
+    <Content Include="templates\green\images\data_invalid.gif" />
+    <Content Include="templates\green\images\data_valid.gif" />
+    <Content Include="templates\green\images\debatesmall.gif" />
+    <Content Include="templates\green\images\delete.gif" />
+    <Content Include="templates\green\images\digest.gif" />
+    <Content Include="templates\green\images\digest1.gif" />
+    <Content Include="templates\green\images\digest2.gif" />
+    <Content Include="templates\green\images\digest3.gif" />
+    <Content Include="templates\green\images\disagree.gif" />
+    <Content Include="templates\green\images\discuznt_logo.gif" />
+    <Content Include="templates\green\images\error.gif" />
+    <Content Include="templates\green\images\expand.gif" />
+    <Content Include="templates\green\images\external.png" />
+    <Content Include="templates\green\images\external2.png" />
+    <Content Include="templates\green\images\favorite.gif" />
+    <Content Include="templates\green\images\folder_closed.gif" />
+    <Content Include="templates\green\images\folder_move.gif" />
+    <Content Include="templates\green\images\folder_mytopic.gif" />
+    <Content Include="templates\green\images\folder_new.gif" />
+    <Content Include="templates\green\images\folder_newhot.gif" />
+    <Content Include="templates\green\images\folder_old.gif" />
+    <Content Include="templates\green\images\folder_oldhot.gif" />
+    <Content Include="templates\green\images\folder_s.gif" />
+    <Content Include="templates\green\images\forum.gif" />
+    <Content Include="templates\green\images\forumdigest.gif" />
+    <Content Include="templates\green\images\forum_new.gif" />
+    <Content Include="templates\green\images\frame_back.gif" />
+    <Content Include="templates\green\images\frame_go.gif" />
+    <Content Include="templates\green\images\gather\album_bg.gif" />
+    <Content Include="templates\green\images\gather\btn_search.gif" />
+    <Content Include="templates\green\images\gather\butonbg.jpg" />
+    <Content Include="templates\green\images\gather\discuznt_logo.gif" />
+    <Content Include="templates\green\images\gather\icon.gif" />
+    <Content Include="templates\green\images\gather\nav_bot.gif" />
+    <Content Include="templates\green\images\gather\nophoto.jpg" />
+    <Content Include="templates\green\images\gather\sidetitlebg.gif" />
+    <Content Include="templates\green\images\gather\tabbg.gif" />
+    <Content Include="templates\green\images\gather\titlebg.gif" />
+    <Content Include="templates\green\images\gather\title_bg.gif" />
+    <Content Include="templates\green\images\gather\title_bg2.gif" />
+    <Content Include="templates\green\images\gotop.gif" />
+    <Content Include="templates\green\images\hint.gif" />
+    <Content Include="templates\green\images\home.gif" />
+    <Content Include="templates\green\images\hotbg.png" />
+    <Content Include="templates\green\images\icon_announcement.gif" />
+    <Content Include="templates\green\images\icon_drop.gif" />
+    <Content Include="templates\green\images\icon_feed.gif" />
+    <Content Include="templates\green\images\icon_quote_e.gif" />
+    <Content Include="templates\green\images\icon_quote_s.gif" />
+    <Content Include="templates\green\images\icon_search.gif" />
+    <Content Include="templates\green\images\icon_subnav.gif" />
+    <Content Include="templates\green\images\img_group.png" />
+    <Content Include="templates\green\images\info_small.gif" />
+    <Content Include="templates\green\images\ip.gif" />
+    <Content Include="templates\green\images\lastedit.gif" />
+    <Content Include="templates\green\images\legend_reward.gif" />
+    <Content Include="templates\green\images\loading.gif" />
+    <Content Include="templates\green\images\locked.gif" />
+    <Content Include="templates\green\images\logo.png" />
+    <Content Include="templates\green\images\l_collapsed_no.gif" />
+    <Content Include="templates\green\images\l_collapsed_yes.gif" />
+    <Content Include="templates\green\images\mdly.png" />
+    <Content Include="templates\green\images\mu.png" />
+    <Content Include="templates\green\images\mymenubg.gif" />
+    <Content Include="templates\green\images\mytopic.gif" />
+    <Content Include="templates\green\images\newarow.gif" />
+    <Content Include="templates\green\images\newtopic.png" />
+    <Content Include="templates\green\images\online.gif" />
+    <Content Include="templates\green\images\op.png" />
+    <Content Include="templates\green\images\pmto.gif" />
+    <Content Include="templates\green\images\pm_0.gif" />
+    <Content Include="templates\green\images\pm_1.gif" />
+    <Content Include="templates\green\images\pollsmall.gif" />
+    <Content Include="templates\green\images\pope_bg.png" />
+    <Content Include="templates\green\images\popupcredit_bg.gif" />
+    <Content Include="templates\green\images\popupcredit_btn.gif" />
+    <Content Include="templates\green\images\poster_action.png" />
+    <Content Include="templates\green\images\posts_new.gif" />
+    <Content Include="templates\green\images\qa.gif" />
+    <Content Include="templates\green\images\qz.gif" />
+    <Content Include="templates\green\images\ratbg.gif" />
+    <Content Include="templates\green\images\ratesrcorebg.gif" />
+    <Content Include="templates\green\images\reply.png" />
+    <Content Include="templates\green\images\rewardsmall.gif" />
+    <Content Include="templates\green\images\rewardsmallend.gif" />
+    <Content Include="templates\green\images\re_unsolved.gif" />
+    <Content Include="templates\green\images\right.gif" />
+    <Content Include="templates\green\images\rss2.gif" />
+    <Content Include="templates\green\images\rwd.gif" />
+    <Content Include="templates\green\images\share.png" />
+    <Content Include="templates\green\images\showdigest.gif" />
+    <Content Include="templates\green\images\sidebg.gif" />
+    <Content Include="templates\green\images\sigline.gif" />
+    <Content Include="templates\green\images\sortnum.png" />
+    <Content Include="templates\green\images\star_level1.gif" />
+    <Content Include="templates\green\images\star_level2.gif" />
+    <Content Include="templates\green\images\star_level3.gif" />
+    <Content Include="templates\green\images\style.gif" />
+    <Content Include="templates\green\images\systempm.gif" />
+    <Content Include="templates\green\images\tbn.png" />
+    <Content Include="templates\green\images\text_control.png" />
+    <Content Include="templates\green\images\titlebg.png" />
+    <Content Include="templates\green\images\tradesmall.gif" />
+    <Content Include="templates\green\images\t_top1.gif" />
+    <Content Include="templates\green\images\t_top2.gif" />
+    <Content Include="templates\green\images\t_top3.gif" />
+    <Content Include="templates\green\images\uc_bg.png" />
+    <Content Include="templates\green\images\usericon.gif" />
+    <Content Include="templates\green\images\useronline.gif" />
+    <Content Include="templates\green\images\useroutline.gif" />
+    <Content Include="templates\green\images\user_cp.png" />
+    <Content Include="templates\green\images\user_info.png" />
+    <Content Include="templates\green\images\user_online.gif" />
+    <Content Include="templates\green\images\user_tool.png" />
+    <Content Include="templates\green\search.css" />
+    <Content Include="templates\green\seditor.css" />
+    <Content Include="templates\green\templatevariable.xml" />
+    <Content Include="templates\green\widthauto.css" />
+    <Content Include="templates\green\wysiwyg.css" />
+    <Content Include="templates\orange\about.xml" />
+    <Content Include="templates\orange\bbx.css" />
+    <Content Include="templates\orange\css.css" />
+    <Content Include="templates\orange\editor.css" />
+    <Content Include="templates\orange\float.css" />
+    <Content Include="templates\orange\forumhot.css" />
+    <Content Include="templates\orange\highlight.css" />
+    <Content Include="templates\orange\images\access_allow.gif" />
+    <Content Include="templates\orange\images\access_normal.gif" />
+    <Content Include="templates\orange\images\add_invite.gif" />
+    <Content Include="templates\orange\images\ad_icon.gif" />
+    <Content Include="templates\orange\images\agree.gif" />
+    <Content Include="templates\orange\images\announcement.gif" />
+    <Content Include="templates\orange\images\arrow_left.gif" />
+    <Content Include="templates\orange\images\arrow_right.gif" />
+    <Content Include="templates\orange\images\atarget.png" />
+    <Content Include="templates\orange\images\attachment.gif" />
+    <Content Include="templates\orange\images\attachment_image.gif" />
+    <Content Include="templates\orange\images\avatar_shadow.gif" />
+    <Content Include="templates\orange\images\bigbtn.gif" />
+    <Content Include="templates\orange\images\blog.gif" />
+    <Content Include="templates\orange\images\bodybg.jpg" />
+    <Content Include="templates\orange\images\bonus.gif" />
+    <Content Include="templates\orange\images\bonusflag.gif" />
+    <Content Include="templates\orange\images\btn_post.gif" />
+    <Content Include="templates\orange\images\btn_silverlight.gif" />
+    <Content Include="templates\orange\images\check_error.gif" />
+    <Content Include="templates\orange\images\check_right.gif" />
+    <Content Include="templates\orange\images\cls.gif" />
+    <Content Include="templates\orange\images\collapse.gif" />
+    <Content Include="templates\orange\images\collapsed_no.gif" />
+    <Content Include="templates\orange\images\collapsed_yes.gif" />
+    <Content Include="templates\orange\images\data_invalid.gif" />
+    <Content Include="templates\orange\images\data_valid.gif" />
+    <Content Include="templates\orange\images\debatesmall.gif" />
+    <Content Include="templates\orange\images\delete.gif" />
+    <Content Include="templates\orange\images\digest.gif" />
+    <Content Include="templates\orange\images\digest1.gif" />
+    <Content Include="templates\orange\images\digest2.gif" />
+    <Content Include="templates\orange\images\digest3.gif" />
+    <Content Include="templates\orange\images\disagree.gif" />
+    <Content Include="templates\orange\images\discuznt_logo.gif" />
+    <Content Include="templates\orange\images\error.gif" />
+    <Content Include="templates\orange\images\expand.gif" />
+    <Content Include="templates\orange\images\external.png" />
+    <Content Include="templates\orange\images\external2.png" />
+    <Content Include="templates\orange\images\favorite.gif" />
+    <Content Include="templates\orange\images\folder_closed.gif" />
+    <Content Include="templates\orange\images\folder_move.gif" />
+    <Content Include="templates\orange\images\folder_mytopic.gif" />
+    <Content Include="templates\orange\images\folder_new.gif" />
+    <Content Include="templates\orange\images\folder_newhot.gif" />
+    <Content Include="templates\orange\images\folder_old.gif" />
+    <Content Include="templates\orange\images\folder_oldhot.gif" />
+    <Content Include="templates\orange\images\folder_s.gif" />
+    <Content Include="templates\orange\images\forum.gif" />
+    <Content Include="templates\orange\images\forumdigest.gif" />
+    <Content Include="templates\orange\images\forum_new.gif" />
+    <Content Include="templates\orange\images\frame_back.gif" />
+    <Content Include="templates\orange\images\frame_go.gif" />
+    <Content Include="templates\orange\images\gather\album_bg.gif" />
+    <Content Include="templates\orange\images\gather\bignews_btn_bg.gif" />
+    <Content Include="templates\orange\images\gather\commend_bg.gif" />
+    <Content Include="templates\orange\images\gather\discuznt_logo.gif" />
+    <Content Include="templates\orange\images\gather\nav_bot.gif" />
+    <Content Include="templates\orange\images\gather\nophoto.jpg" />
+    <Content Include="templates\orange\images\gather\photobox_bg.png" />
+    <Content Include="templates\orange\images\gather\titlebg.gif" />
+    <Content Include="templates\orange\images\gather\title_bg.gif" />
+    <Content Include="templates\orange\images\gather\title_bg2.gif" />
+    <Content Include="templates\orange\images\gotop.gif" />
+    <Content Include="templates\orange\images\hint.gif" />
+    <Content Include="templates\orange\images\home.gif" />
+    <Content Include="templates\orange\images\hotbg.png" />
+    <Content Include="templates\orange\images\icon_announcement.gif" />
+    <Content Include="templates\orange\images\icon_drop.gif" />
+    <Content Include="templates\orange\images\icon_feed.gif" />
+    <Content Include="templates\orange\images\icon_quote_e.gif" />
+    <Content Include="templates\orange\images\icon_quote_s.gif" />
+    <Content Include="templates\orange\images\icon_search.gif" />
+    <Content Include="templates\orange\images\icon_subnav.gif" />
+    <Content Include="templates\orange\images\info_small.gif" />
+    <Content Include="templates\orange\images\ip.gif" />
+    <Content Include="templates\orange\images\lastedit.gif" />
+    <Content Include="templates\orange\images\legend_reward.gif" />
+    <Content Include="templates\orange\images\loading.gif" />
+    <Content Include="templates\orange\images\locked.gif" />
+    <Content Include="templates\orange\images\logo.png" />
+    <Content Include="templates\orange\images\l_collapsed_no.gif" />
+    <Content Include="templates\orange\images\l_collapsed_yes.gif" />
+    <Content Include="templates\orange\images\mdly.png" />
+    <Content Include="templates\orange\images\mu.png" />
+    <Content Include="templates\orange\images\mymenubg.gif" />
+    <Content Include="templates\orange\images\mytopic.gif" />
+    <Content Include="templates\orange\images\newarow.gif" />
+    <Content Include="templates\orange\images\newtopic.png" />
+    <Content Include="templates\orange\images\online.gif" />
+    <Content Include="templates\orange\images\op.png" />
+    <Content Include="templates\orange\images\pmto.gif" />
+    <Content Include="templates\orange\images\pm_0.gif" />
+    <Content Include="templates\orange\images\pm_1.gif" />
+    <Content Include="templates\orange\images\pollsmall.gif" />
+    <Content Include="templates\orange\images\pope_bg.png" />
+    <Content Include="templates\orange\images\popupcredit_bg.gif" />
+    <Content Include="templates\orange\images\popupcredit_btn.gif" />
+    <Content Include="templates\orange\images\poster_action.png" />
+    <Content Include="templates\orange\images\posts_new.gif" />
+    <Content Include="templates\orange\images\qa.gif" />
+    <Content Include="templates\orange\images\qz.gif" />
+    <Content Include="templates\orange\images\ratbg.gif" />
+    <Content Include="templates\orange\images\ratesrcorebg.gif" />
+    <Content Include="templates\orange\images\reply.png" />
+    <Content Include="templates\orange\images\rewardsmall.gif" />
+    <Content Include="templates\orange\images\rewardsmallend.gif" />
+    <Content Include="templates\orange\images\re_unsolved.gif" />
+    <Content Include="templates\orange\images\right.gif" />
+    <Content Include="templates\orange\images\rss2.gif" />
+    <Content Include="templates\orange\images\rwd.gif" />
+    <Content Include="templates\orange\images\share.png" />
+    <Content Include="templates\orange\images\showdigest.gif" />
+    <Content Include="templates\orange\images\sidebg.gif" />
+    <Content Include="templates\orange\images\sigline.gif" />
+    <Content Include="templates\orange\images\sortnum.png" />
+    <Content Include="templates\orange\images\star_level1.gif" />
+    <Content Include="templates\orange\images\star_level2.gif" />
+    <Content Include="templates\orange\images\star_level3.gif" />
+    <Content Include="templates\orange\images\style.gif" />
+    <Content Include="templates\orange\images\systempm.gif" />
+    <Content Include="templates\orange\images\tbn.png" />
+    <Content Include="templates\orange\images\text_control.png" />
+    <Content Include="templates\orange\images\titlebg.png" />
+    <Content Include="templates\orange\images\tradesmall.gif" />
+    <Content Include="templates\orange\images\t_top1.gif" />
+    <Content Include="templates\orange\images\t_top2.gif" />
+    <Content Include="templates\orange\images\t_top3.gif" />
+    <Content Include="templates\orange\images\uc_bg.png" />
+    <Content Include="templates\orange\images\usericon.gif" />
+    <Content Include="templates\orange\images\useronline.gif" />
+    <Content Include="templates\orange\images\useroutline.gif" />
+    <Content Include="templates\orange\images\user_cp.png" />
+    <Content Include="templates\orange\images\user_info.png" />
+    <Content Include="templates\orange\images\user_online.gif" />
+    <Content Include="templates\orange\images\user_tool.png" />
+    <Content Include="templates\orange\search.css" />
+    <Content Include="templates\orange\seditor.css" />
+    <Content Include="templates\orange\templatevariable.xml" />
+    <Content Include="templates\orange\website.css" />
+    <Content Include="templates\orange\widthauto.css" />
+    <Content Include="templates\orange\wysiwyg.css" />
+    <Content Include="templates\red\about.xml" />
+    <Content Include="templates\red\bbx.css" />
+    <Content Include="templates\red\css.css" />
+    <Content Include="templates\red\editor.css" />
+    <Content Include="templates\red\float.css" />
+    <Content Include="templates\red\forumhot.css" />
+    <Content Include="templates\red\highlight.css" />
+    <Content Include="templates\red\images\access_allow.gif" />
+    <Content Include="templates\red\images\access_normal.gif" />
+    <Content Include="templates\red\images\add_invite.gif" />
+    <Content Include="templates\red\images\ad_icon.gif" />
+    <Content Include="templates\red\images\agree.gif" />
+    <Content Include="templates\red\images\announcement.gif" />
+    <Content Include="templates\red\images\arrow_left.gif" />
+    <Content Include="templates\red\images\arrow_right.gif" />
+    <Content Include="templates\red\images\atarget.png" />
+    <Content Include="templates\red\images\attachment.gif" />
+    <Content Include="templates\red\images\attachment_image.gif" />
+    <Content Include="templates\red\images\avatar_shadow.gif" />
+    <Content Include="templates\red\images\background.png" />
+    <Content Include="templates\red\images\bigbtn.gif" />
+    <Content Include="templates\red\images\blog.gif" />
+    <Content Include="templates\red\images\bodybg.jpg" />
+    <Content Include="templates\red\images\bonus.gif" />
+    <Content Include="templates\red\images\bonusflag.gif" />
+    <Content Include="templates\red\images\btn_post.gif" />
+    <Content Include="templates\red\images\btn_silverlight.gif" />
+    <Content Include="templates\red\images\check_error.gif" />
+    <Content Include="templates\red\images\check_right.gif" />
+    <Content Include="templates\red\images\cls.gif" />
+    <Content Include="templates\red\images\collapse.gif" />
+    <Content Include="templates\red\images\collapsed_no.gif" />
+    <Content Include="templates\red\images\collapsed_yes.gif" />
+    <Content Include="templates\red\images\data_invalid.gif" />
+    <Content Include="templates\red\images\data_valid.gif" />
+    <Content Include="templates\red\images\debatesmall.gif" />
+    <Content Include="templates\red\images\delete.gif" />
+    <Content Include="templates\red\images\digest.gif" />
+    <Content Include="templates\red\images\digest1.gif" />
+    <Content Include="templates\red\images\digest2.gif" />
+    <Content Include="templates\red\images\digest3.gif" />
+    <Content Include="templates\red\images\disagree.gif" />
+    <Content Include="templates\red\images\discuznt_logo.gif" />
+    <Content Include="templates\red\images\error.gif" />
+    <Content Include="templates\red\images\expand.gif" />
+    <Content Include="templates\red\images\external.png" />
+    <Content Include="templates\red\images\external2.png" />
+    <Content Include="templates\red\images\favorite.gif" />
+    <Content Include="templates\red\images\folder_closed.gif" />
+    <Content Include="templates\red\images\folder_move.gif" />
+    <Content Include="templates\red\images\folder_mytopic.gif" />
+    <Content Include="templates\red\images\folder_new.gif" />
+    <Content Include="templates\red\images\folder_newhot.gif" />
+    <Content Include="templates\red\images\folder_old.gif" />
+    <Content Include="templates\red\images\folder_oldhot.gif" />
+    <Content Include="templates\red\images\folder_s.gif" />
+    <Content Include="templates\red\images\forum.gif" />
+    <Content Include="templates\red\images\forumdigest.gif" />
+    <Content Include="templates\red\images\forum_new.gif" />
+    <Content Include="templates\red\images\frame_back.gif" />
+    <Content Include="templates\red\images\frame_go.gif" />
+    <Content Include="templates\red\images\gather\album_bg.gif" />
+    <Content Include="templates\red\images\gather\bignews_btn_bg.gif" />
+    <Content Include="templates\red\images\gather\commend_bg.gif" />
+    <Content Include="templates\red\images\gather\discuznt_logo.gif" />
+    <Content Include="templates\red\images\gather\nav_bot.gif" />
+    <Content Include="templates\red\images\gather\nophoto.jpg" />
+    <Content Include="templates\red\images\gather\photobox_bg.png" />
+    <Content Include="templates\red\images\gather\titlebg.gif" />
+    <Content Include="templates\red\images\gather\title_bg.gif" />
+    <Content Include="templates\red\images\gather\title_bg2.gif" />
+    <Content Include="templates\red\images\gotop.gif" />
+    <Content Include="templates\red\images\hint.gif" />
+    <Content Include="templates\red\images\home.gif" />
+    <Content Include="templates\red\images\hotbg.png" />
+    <Content Include="templates\red\images\icon_announcement.gif" />
+    <Content Include="templates\red\images\icon_drop.gif" />
+    <Content Include="templates\red\images\icon_feed.gif" />
+    <Content Include="templates\red\images\icon_quote_e.gif" />
+    <Content Include="templates\red\images\icon_quote_s.gif" />
+    <Content Include="templates\red\images\icon_search.gif" />
+    <Content Include="templates\red\images\icon_subnav.gif" />
+    <Content Include="templates\red\images\info_small.gif" />
+    <Content Include="templates\red\images\ip.gif" />
+    <Content Include="templates\red\images\lastedit.gif" />
+    <Content Include="templates\red\images\legend_reward.gif" />
+    <Content Include="templates\red\images\loading.gif" />
+    <Content Include="templates\red\images\locked.gif" />
+    <Content Include="templates\red\images\logo.png" />
+    <Content Include="templates\red\images\l_collapsed_no.gif" />
+    <Content Include="templates\red\images\l_collapsed_yes.gif" />
+    <Content Include="templates\red\images\mdly.png" />
+    <Content Include="templates\red\images\mu.png" />
+    <Content Include="templates\red\images\mymenubg.gif" />
+    <Content Include="templates\red\images\mytopic.gif" />
+    <Content Include="templates\red\images\newarow.gif" />
+    <Content Include="templates\red\images\newtopic.png" />
+    <Content Include="templates\red\images\online.gif" />
+    <Content Include="templates\red\images\op.png" />
+    <Content Include="templates\red\images\pmto.gif" />
+    <Content Include="templates\red\images\pm_0.gif" />
+    <Content Include="templates\red\images\pm_1.gif" />
+    <Content Include="templates\red\images\pollsmall.gif" />
+    <Content Include="templates\red\images\pope_bg.png" />
+    <Content Include="templates\red\images\popupcredit_bg.gif" />
+    <Content Include="templates\red\images\popupcredit_btn.gif" />
+    <Content Include="templates\red\images\poster_action.png" />
+    <Content Include="templates\red\images\posts_new.gif" />
+    <Content Include="templates\red\images\qa.gif" />
+    <Content Include="templates\red\images\qz.gif" />
+    <Content Include="templates\red\images\ratbg.gif" />
+    <Content Include="templates\red\images\ratesrcorebg.gif" />
+    <Content Include="templates\red\images\reply.png" />
+    <Content Include="templates\red\images\rewardsmall.gif" />
+    <Content Include="templates\red\images\rewardsmallend.gif" />
+    <Content Include="templates\red\images\re_unsolved.gif" />
+    <Content Include="templates\red\images\right.gif" />
+    <Content Include="templates\red\images\rss2.gif" />
+    <Content Include="templates\red\images\rwd.gif" />
+    <Content Include="templates\red\images\share.png" />
+    <Content Include="templates\red\images\showdigest.gif" />
+    <Content Include="templates\red\images\sidebg.gif" />
+    <Content Include="templates\red\images\sigline.gif" />
+    <Content Include="templates\red\images\sortnum.png" />
+    <Content Include="templates\red\images\star_level1.gif" />
+    <Content Include="templates\red\images\star_level2.gif" />
+    <Content Include="templates\red\images\star_level3.gif" />
+    <Content Include="templates\red\images\style.gif" />
+    <Content Include="templates\red\images\systempm.gif" />
+    <Content Include="templates\red\images\tbn.png" />
+    <Content Include="templates\red\images\text_control.png" />
+    <Content Include="templates\red\images\titlebg.png" />
+    <Content Include="templates\red\images\tradesmall.gif" />
+    <Content Include="templates\red\images\t_top1.gif" />
+    <Content Include="templates\red\images\t_top2.gif" />
+    <Content Include="templates\red\images\t_top3.gif" />
+    <Content Include="templates\red\images\uc_bg.png" />
+    <Content Include="templates\red\images\usericon.gif" />
+    <Content Include="templates\red\images\useronline.gif" />
+    <Content Include="templates\red\images\useroutline.gif" />
+    <Content Include="templates\red\images\user_cp.png" />
+    <Content Include="templates\red\images\user_info.png" />
+    <Content Include="templates\red\images\user_online.gif" />
+    <Content Include="templates\red\images\user_tool.png" />
+    <Content Include="templates\red\search.css" />
+    <Content Include="templates\red\seditor.css" />
+    <Content Include="templates\red\templatevariable.xml" />
+    <Content Include="templates\red\website.css" />
+    <Content Include="templates\red\widthauto.css" />
+    <Content Include="templates\red\wysiwyg.css" />
+    <Content Include="templates\year\about.xml" />
+    <Content Include="templates\year\bbx.css" />
+    <Content Include="templates\year\css.css" />
+    <Content Include="templates\year\editor.css" />
+    <Content Include="templates\year\float.css" />
+    <Content Include="templates\year\forumhot.css" />
+    <Content Include="templates\year\highlight.css" />
+    <Content Include="templates\year\images\access_allow.gif" />
+    <Content Include="templates\year\images\access_normal.gif" />
+    <Content Include="templates\year\images\add_invite.gif" />
+    <Content Include="templates\year\images\ad_icon.gif" />
+    <Content Include="templates\year\images\agree.gif" />
+    <Content Include="templates\year\images\announcement.gif" />
+    <Content Include="templates\year\images\arrow_left.gif" />
+    <Content Include="templates\year\images\arrow_right.gif" />
+    <Content Include="templates\year\images\atarget.png" />
+    <Content Include="templates\year\images\attachment.gif" />
+    <Content Include="templates\year\images\attachment_image.gif" />
+    <Content Include="templates\year\images\avatar_shadow.gif" />
+    <Content Include="templates\year\images\background.png" />
+    <Content Include="templates\year\images\bigbtn.gif" />
+    <Content Include="templates\year\images\blog.gif" />
+    <Content Include="templates\year\images\bonus.gif" />
+    <Content Include="templates\year\images\bonusflag.gif" />
+    <Content Include="templates\year\images\btn_post.gif" />
+    <Content Include="templates\year\images\btn_silverlight.gif" />
+    <Content Include="templates\year\images\check_error.gif" />
+    <Content Include="templates\year\images\check_right.gif" />
+    <Content Include="templates\year\images\cls.gif" />
+    <Content Include="templates\year\images\collapse.gif" />
+    <Content Include="templates\year\images\collapsed_no.gif" />
+    <Content Include="templates\year\images\collapsed_yes.gif" />
+    <Content Include="templates\year\images\data_invalid.gif" />
+    <Content Include="templates\year\images\data_valid.gif" />
+    <Content Include="templates\year\images\debatesmall.gif" />
+    <Content Include="templates\year\images\delete.gif" />
+    <Content Include="templates\year\images\digest.gif" />
+    <Content Include="templates\year\images\digest1.gif" />
+    <Content Include="templates\year\images\digest2.gif" />
+    <Content Include="templates\year\images\digest3.gif" />
+    <Content Include="templates\year\images\disagree.gif" />
+    <Content Include="templates\year\images\discuznt_logo.gif" />
+    <Content Include="templates\year\images\error.gif" />
+    <Content Include="templates\year\images\expand.gif" />
+    <Content Include="templates\year\images\external.png" />
+    <Content Include="templates\year\images\external2.png" />
+    <Content Include="templates\year\images\favorite.gif" />
+    <Content Include="templates\year\images\folder_closed.gif" />
+    <Content Include="templates\year\images\folder_move.gif" />
+    <Content Include="templates\year\images\folder_mytopic.gif" />
+    <Content Include="templates\year\images\folder_new.gif" />
+    <Content Include="templates\year\images\folder_newhot.gif" />
+    <Content Include="templates\year\images\folder_old.gif" />
+    <Content Include="templates\year\images\folder_oldhot.gif" />
+    <Content Include="templates\year\images\folder_s.gif" />
+    <Content Include="templates\year\images\forum.gif" />
+    <Content Include="templates\year\images\forumdigest.gif" />
+    <Content Include="templates\year\images\forum_new.gif" />
+    <Content Include="templates\year\images\frame_back.gif" />
+    <Content Include="templates\year\images\frame_go.gif" />
+    <Content Include="templates\year\images\gather\album_bg.gif" />
+    <Content Include="templates\year\images\gather\bignews_btn_bg.gif" />
+    <Content Include="templates\year\images\gather\commend_bg.gif" />
+    <Content Include="templates\year\images\gather\discuznt_logo.gif" />
+    <Content Include="templates\year\images\gather\nav_bot.gif" />
+    <Content Include="templates\year\images\gather\nophoto.jpg" />
+    <Content Include="templates\year\images\gather\photobox_bg.png" />
+    <Content Include="templates\year\images\gather\titlebg.gif" />
+    <Content Include="templates\year\images\gather\title_bg.gif" />
+    <Content Include="templates\year\images\gather\title_bg2.gif" />
+    <Content Include="templates\year\images\gotop.gif" />
+    <Content Include="templates\year\images\hint.gif" />
+    <Content Include="templates\year\images\home.gif" />
+    <Content Include="templates\year\images\hotbg.png" />
+    <Content Include="templates\year\images\icon_announcement.gif" />
+    <Content Include="templates\year\images\icon_drop.gif" />
+    <Content Include="templates\year\images\icon_feed.gif" />
+    <Content Include="templates\year\images\icon_quote_e.gif" />
+    <Content Include="templates\year\images\icon_quote_s.gif" />
+    <Content Include="templates\year\images\icon_search.gif" />
+    <Content Include="templates\year\images\icon_subnav.gif" />
+    <Content Include="templates\year\images\info_small.gif" />
+    <Content Include="templates\year\images\ip.gif" />
+    <Content Include="templates\year\images\lastedit.gif" />
+    <Content Include="templates\year\images\legend_reward.gif" />
+    <Content Include="templates\year\images\loading.gif" />
+    <Content Include="templates\year\images\locked.gif" />
+    <Content Include="templates\year\images\logo.png" />
+    <Content Include="templates\year\images\l_collapsed_no.gif" />
+    <Content Include="templates\year\images\l_collapsed_yes.gif" />
+    <Content Include="templates\year\images\mdly.png" />
+    <Content Include="templates\year\images\mu.png" />
+    <Content Include="templates\year\images\mymenubg.gif" />
+    <Content Include="templates\year\images\mytopic.gif" />
+    <Content Include="templates\year\images\newarow.gif" />
+    <Content Include="templates\year\images\newtopic.png" />
+    <Content Include="templates\year\images\online.gif" />
+    <Content Include="templates\year\images\op.png" />
+    <Content Include="templates\year\images\pmto.gif" />
+    <Content Include="templates\year\images\pm_0.gif" />
+    <Content Include="templates\year\images\pm_1.gif" />
+    <Content Include="templates\year\images\pollsmall.gif" />
+    <Content Include="templates\year\images\pope_bg.png" />
+    <Content Include="templates\year\images\popupcredit_bg.gif" />
+    <Content Include="templates\year\images\popupcredit_btn.gif" />
+    <Content Include="templates\year\images\poster_action.png" />
+    <Content Include="templates\year\images\posts_new.gif" />
+    <Content Include="templates\year\images\qa.gif" />
+    <Content Include="templates\year\images\qz.gif" />
+    <Content Include="templates\year\images\ratbg.gif" />
+    <Content Include="templates\year\images\ratesrcorebg.gif" />
+    <Content Include="templates\year\images\reply.png" />
+    <Content Include="templates\year\images\rewardsmall.gif" />
+    <Content Include="templates\year\images\rewardsmallend.gif" />
+    <Content Include="templates\year\images\re_unsolved.gif" />
+    <Content Include="templates\year\images\right.gif" />
+    <Content Include="templates\year\images\rss2.gif" />
+    <Content Include="templates\year\images\rwd.gif" />
+    <Content Include="templates\year\images\share.png" />
+    <Content Include="templates\year\images\showdigest.gif" />
+    <Content Include="templates\year\images\sidebg.gif" />
+    <Content Include="templates\year\images\sigline.gif" />
+    <Content Include="templates\year\images\sortnum.png" />
+    <Content Include="templates\year\images\star_level1.gif" />
+    <Content Include="templates\year\images\star_level2.gif" />
+    <Content Include="templates\year\images\star_level3.gif" />
+    <Content Include="templates\year\images\style.gif" />
+    <Content Include="templates\year\images\systempm.gif" />
+    <Content Include="templates\year\images\tbn.png" />
+    <Content Include="templates\year\images\text_control.png" />
+    <Content Include="templates\year\images\titlebg.png" />
+    <Content Include="templates\year\images\tradesmall.gif" />
+    <Content Include="templates\year\images\t_top1.gif" />
+    <Content Include="templates\year\images\t_top2.gif" />
+    <Content Include="templates\year\images\t_top3.gif" />
+    <Content Include="templates\year\images\uc_bg.png" />
+    <Content Include="templates\year\images\usericon.gif" />
+    <Content Include="templates\year\images\useronline.gif" />
+    <Content Include="templates\year\images\useroutline.gif" />
+    <Content Include="templates\year\images\user_cp.png" />
+    <Content Include="templates\year\images\user_info.png" />
+    <Content Include="templates\year\images\user_online.gif" />
+    <Content Include="templates\year\images\user_tool.png" />
+    <Content Include="templates\year\search.css" />
+    <Content Include="templates\year\seditor.css" />
+    <Content Include="templates\year\templatevariable.xml" />
+    <Content Include="templates\year\website.css" />
+    <Content Include="templates\year\widthauto.css" />
+    <Content Include="templates\year\wysiwyg.css" />
+    <Content Include="tools\AttachUpload.aspx" />
+    <Content Include="tools\avatar.aspx" />
+    <Content Include="tools\crossdomain.xml" />
+    <Content Include="tools\error.htm" />
+    <Content Include="tools\help.aspx" />
+    <Content Include="tools\ImageConverter.aspx" />
+    <Content Include="tools\notifypage.aspx" />
+    <Content Include="tools\rss.aspx" />
+    <Content Include="tools\rss.xsl" />
+    <Content Include="tools\showtopics.aspx" />
+    <Content Include="tools\sitemap.aspx" />
+    <Content Include="tools\verifyimagepage.aspx" />
+    <Content Include="watermark\water.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.Config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="admin\xml\navmenu.config" />
+    <Content Include="config\Agent.config" />
+    <Content Include="config\api.config" />
+    <Content Include="config\base.config" />
+    <Content Include="config\email.config" />
+    <Content Include="config\forumhotsetting.config" />
+    <Content Include="config\ftp.config" />
+    <Content Include="config\general.config" />
+    <Content Include="config\invitation.config" />
+    <Content Include="config\myattachment.config" />
+    <Content Include="config\mymenu.config" />
+    <Content Include="config\QzoneConnect.config" />
+    <Content Include="config\schedule.config" />
+    <Content Include="config\scoreset.config" />
+    <Content Include="config\scriptevent.config" />
+    <Content Include="config\spread.config" />
+    <Content Include="config\trade.config" />
+    <Content Include="config\urls.config" />
+    <Content Include="tools\ajax.ashx" />
+    <None Include="Web.Debug.Config">
+      <DependentUpon>Web.Config</DependentUpon>
+    </None>
+    <None Include="Web.Release.Config">
+      <DependentUpon>Web.Config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\BBX.Common\BBX.Common.csproj">
+      <Project>{d4cd57d2-3084-4878-bfdc-8c15603f6878}</Project>
+      <Name>BBX.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BBX.Control\BBX.Control.csproj">
+      <Project>{6ac03465-ce02-4f00-8b8e-a771c687482b}</Project>
+      <Name>BBX.Control</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BBX.Entity\BBX.Entity.csproj">
+      <Project>{f2d7522a-311d-46fa-b7ce-bd5b7686eab2}</Project>
+      <Name>BBX.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BBX.Forum\BBX.Forum.csproj">
+      <Project>{6998bf8a-1a54-417b-8d92-07fd7144e228}</Project>
+      <Name>BBX.Forum</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BBX.Plugin\BBX.Plugin.csproj">
+      <Project>{aadf896c-c093-47ca-a13f-6ce3e9aa6a38}</Project>
+      <Name>BBX.Plugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BBX.Web.Admin\BBX.Web.Admin.csproj">
+      <Project>{be800d61-b09a-4ac6-8f98-4a5a57acf7ea}</Project>
+      <Name>BBX.Web.Admin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BBX.Web\BBX.Web.csproj">
+      <Project>{f5b23b54-c4ca-43ad-baa7-a7b14d0720e0}</Project>
+      <Name>BBX.Web</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>64204</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:16862/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

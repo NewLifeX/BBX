@@ -1,0 +1,42 @@
+﻿<%template _header%>
+<div class="wrap cl pageinfo">
+	<div id="nav">
+		<%if {usergroupinfo.AllowSearch}%>
+			<%template _quicksearch%>
+		<%/if%>
+		<a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <strong>{pagetitle}</strong>
+	</div>
+</div>
+<%if page_err==0%>
+<div class="wrap cl">
+    <div class="main datalist">
+        <h3>评分列表</h3>
+        <table cellspacing="0" cellpadding="0" class="datatable">
+            <thead class="colplural">
+                <tr><td class="user" style="width:80px">用户名</td><td style="width:100px">时间</td><td style="width:180px">积分</td><td>理由</td></tr>
+            </thead>
+            <%loop (RateLog) ratelog rateloglist%>
+            <tbody>
+                <tr>
+                    <td style="width:80px"><a href="{forumurl}{GetAvatarUrl(ratelog.Uid)}">{ratelog.UserName}</a></td>
+                    <td style="width:100px">{ratelog.PostDateTime}</td>
+                    <td style="width:180px">
+                    {GetExtCreditName(ratelog.ExtCredits)}<span class="xg2">{GetScoreMark(ratelog.Score)}{ratelog.Score}</span>{GetExtCreditUnit(ratelog.ExtCredits)}
+                    </td>
+                    <td>{ratelog.Reason}</td>
+                </tr>
+            </tbody>
+            <%/loop%>
+        </table>
+    </div>
+    <div class="pages_btns cl">
+		<div class="pages">
+			<kbd>共{ratecount}条评分</kbd>{pagenumbers}<kbd>共{pagecount}页</kbd>
+		</div>
+	</div>
+</div>
+<%else%>
+<%template _errmsgbox%>
+<%/if%>
+<%template _copyright%>
+<%template _footer%>

@@ -1,0 +1,272 @@
+﻿<%template _header%>
+<script type="text/javascript"  src="{jsdir}/ajax.js"></script>
+<script type="text/javascript">
+var templatepath = "{templatepath}";
+var imagedir = "{imagedir}";
+var fid = parseInt({forumid});
+</script>
+<script type="text/javascript" src="{jsdir}/template_showforum.js"></script>
+<div class="wrap cl pageinfo">
+	<div id="nav">	
+		<span class="y">
+		    <%if {forumid}==-1%>
+			    <a href="forumindex.aspx">全部</a>
+			    <a href="showtopiclist.aspx?type=digest&amp;forums={forums}">精华帖区</a>
+		    <%else%>
+		        <%set {aspxrewriteurl} = this.ShowForumAspxRewrite({forumid},0)%>
+			    <a href="{aspxrewriteurl}">全部</a>
+			    <a href="showtopiclist.aspx?forumid={forumid}&type=digest">精华帖区</a>
+		    <%/if%>
+		    <%if {config.rssstatus}!=0%>
+			    <a href="tools/rss.aspx" target="_blank"><img src="{imagedir}/icon_feed.gif" alt="Rss" class="absmiddle"/></a>
+		    <%/if%>
+		</span>
+		<a id="forumlist" href="{forumpath}" <%if {config.forumjump}==1%>onmouseover="showMenu(this.id);" onmouseout="showMenu(this.id);"<%/if%> class="title">{config.forumtitle}</a> &raquo; 
+		<strong>
+		    <%if {forumid}>0&&{forum}!=null%>
+		        <%set {aspxrewriteurl} = this.ShowForumAspxRewrite({forum.fid},0)%>
+		        <a href="{aspxrewriteurl}">{forum.name}</a>
+		    <%else if {type}=="digest"%>
+			    精华帖
+		    <%else%>
+			    新帖
+		    <%/if%>
+		</strong>
+	</div>
+</div>
+<%if page_err==0%>
+<%if {showforumlogin}==1%>
+<div class="wrap cl" id="wrap">
+	<div class="main">
+		<h3>本版块已经被管理员设置了密码</h3>
+		<form id="forumlogin" name="forumlogin" method="post" action="">
+		<table cellpadding="0" cellspacing="0" border="0">
+		<tbody>
+		<tr>
+			<th><label for="forumpassword">请输入密码</label></th>
+			<td><input name="forumpassword" type="password" id="forumpassword" size="20" class="txt"/></td>
+		</tr>
+		</tbody>
+		<%if {isseccode}%>	
+		<tbody>
+		<tr>
+			<th><label for="vcode">输入验证码</label></th>
+			<td>
+				<div style="position: relative;">
+				<%template _vcode%>
+				</div>
+		    </td>
+		</tr>
+		</tbody>
+		<%/if%>
+		<tbody>
+		<tr>
+			<th></th>
+			<td><input type="submit"  value="确定"/></td>
+		</tr>
+		</tbody>
+		</table>
+		</form>
+	</div>
+</div>
+<%else%>
+<div class="wrap cl">
+<div class="pages_btns cl">
+	<div class="pages">
+		{pagenumbers}<em>{pageid} / {pagecount}</em>
+	</div>
+</div>
+<div class="main thread hslice">
+	<div class="category">
+		<table cellspacing="0" cellpadding="0" summary="19">
+		<tbody>
+		<tr>
+			<th>标题</th>
+			<td class="by">作者</td>
+			<td class="num">回复/查看</td>
+			<td class="by">最后发表</td>
+		</tr>
+		</tbody>
+		</table>
+	</div>
+	<div class="threadlist">
+	<table cellpadding="0" cellspacing="0" border="0">
+	<%loop (Announcement) announcement Announcement.GetAvailableList()%>
+	<tbody>
+		<tr>
+			<td class="folder"><img alt="announcement" src="{imagedir}/icon_announcement.gif"></td>
+			<td class="icon">&nbsp;</td>
+			<th class="subject f_bold">
+				<a href="{forumpath}announcement.aspx#{announcement[id]}">{announcement[title]}</a>
+			</th>
+			<td class="by">
+			<%if {strtoint({announcement[posterid]})}==-1%>
+				游客
+			<%else%>
+				<%set {aspxrewriteurl} = this.UserInfoAspxRewrite({announcement[posterid]})%>
+				<a href="{aspxrewriteurl}">{announcement[poster]}</a>
+			<%/if%>
+			</td>
+			<td class="num">&nbsp;</td>
+			<td class="by">&nbsp;</td>
+		</tr>
+	</tbody>
+	<%/loop%>
+	<%if {topiclist.count}>0%>
+	<%loop (Topic) topic topiclist%>
+	<tbody id="normalthread_{topic.ID}" >
+	<tr>
+		<td class="folder">
+		<%if {topic.folder}!=""%>
+			<%set {aspxrewriteurl} = this.ShowTopicAspxRewrite({topic.ID},0)%>
+			<a href="{aspxrewriteurl}" target="_blank"><img src="{imagedir}/folder_{topic.folder}.gif" alt="主题图标"/></a>
+		<%else%>
+			&nbsp;
+		<%/if%>
+		</td>
+		<td class="icon">
+		<%if {topic.IconID}!=0%>
+				<img src="{posticondir}/{topic.IconID}.gif" alt="示图"/>
+			<%else%>
+				&nbsp;
+			<%/if%>
+		</td>
+		<th class="subject">	
+			<label class="y">
+			<%if {topic.digest}>0%>
+				<img src="{imagedir}/digest{topic.digest}.gif" alt="digtest"/>
+			<%/if%>
+			<%if {topic.special}==1%>
+				<img src="{imagedir}/pollsmall.gif" alt="投票" />
+			<%/if%>
+			<%if {topic.special}==2 || {topic.special}==3%>
+				<img src="{imagedir}/bonus.gif" alt="悬赏"/>
+			<%/if%>
+			<%if {topic.special}==4%>
+				<img src="{imagedir}/debatesmall.gif" alt="辩论"/>
+			<%/if%>
+			</label>
+			<%set {aspxrewriteurl} = this.ShowTopicAspxRewrite({topic.ID},0)%>
+			<a href="{aspxrewriteurl}">{topic.title}</a>
+			<%if {topic.attachment}>0%>
+				<img src="{imagedir}/attachment.gif" alt="附件"/>
+			<%/if%>
+			<%if {topic.replies}/{config.ppp}>0%>
+				<script type="text/javascript">getpagenumbers("{config.extname}", {topic.replies},{config.ppp},0,"",{topic.ID},"","",{config.aspxrewrite});</script>
+			<%/if%>
+		</th>
+		<td class="by">
+			<cite>
+			<%if {topic.PosterID}==-1%>
+				游客
+			<%else%>
+				<%set {aspxrewriteurl} = this.UserInfoAspxRewrite({topic.PosterID})%>
+				<a href="{aspxrewriteurl}">{topic.poster}</a>
+			<%/if%>
+			</cite>
+			<%set (string){ttpdtime} = ForumUtils.ConvertDateTime({topic.PostDateTime})%>
+			<em>{ttpdtime}</em>
+		</td>
+		<td class="num"><a href="#">{topic.replies}</a><em>{topic.views}</em></td>
+		<td class="by">
+			<cite>
+			<%if {topic.LastPosterID}==-1%>
+				游客
+			<%else%>
+				<a href="{UserInfoAspxRewrite(topic.LastPosterID)}" target="_blank">{topic.LastPoster}</a>
+			<%/if%>
+			</cite>
+			<%set (string){lptime} = ForumUtils.ConvertDateTime({topic.LastPost})%>
+			<em><a href="showtopic.aspx?topicid={topic.ID}&page=end#lastpost">{lptime}</a></em>
+		</td>
+	</tr>
+	</tbody>
+    <%/loop%>
+	<%else%>
+		<tbody><tr><td colspan="6"><div class="zerothreads">暂无帖子</div></td></tr></tbody>
+	<%/if%>
+	</table>
+	</div>
+</div>
+<div class="pages_btns cl">
+	<div class="pages">
+		{pagenumbers}<em>{pageid} / {pagecount}</em>		
+	</div>
+</div>
+<script type="text/javascript">
+function CheckAll(form)
+{
+	for (var i = 0; i < form.elements.length; i++)
+	{
+		var e = form.elements[i];
+		if (e.id == "fidlist"){
+		   e.checked = form.chkall.checked;
+		}
+	}
+}
+
+function SH_SelectOne(obj)
+{
+	for (var i = 0; i < document.getElementById("LookBySearch").elements.length; i++)
+	{
+		var e = document.getElementById("LookBySearch").elements[i];
+		if (e.id == "fidlist"){
+		   if (!e.checked){
+			document.getElementById("chkall").checked = false;
+			return;
+		   }
+		}
+	}
+	document.getElementById("chkall").checked = true;
+
+}
+
+function ShowDetailGrid(tid)
+{
+   if({config.aspxrewrite})
+   {
+       window.location.href = "showforum-" + tid + "{config.extname}";
+   }
+   else
+   {
+       window.location.href = "showforum.aspx?forumid=" + tid ;
+   }
+}
+</script>
+<%if {forumid}==-1%>
+<div class="main">
+	<h1>以下论坛版块:</h1>
+	<form name="LookBySearch" method="post" action="showtopiclist.aspx?search=1&forumid={forumid}&type={type}&newtopic={newtopic}" ID="LookBySearch">
+	    <table width="100%" border="0" cellspacing="3" cellpadding="0">
+		    <tr>
+			     {GetForumCheckBoxListCache()}
+		    </tr>
+	    </table>
+	    <div id="footfilter">
+            <span class="right">
+			    排序方式
+			    <select name="order" id="order">
+			      <option value="1" <%if {order}==1%>selected<%/if%>>最后回复时间</option>
+			      <option value="2" <%if {order}==2%>selected<%/if%>>发布时间</option>
+			    </select>	
+			    <select name="direct" id="direct">
+			      <option value="0" <%if {direct}==0%>selected<%/if%>>按升序排列</option>
+			      <option value="1" <%if {direct}==1%>selected<%/if%>>按降序排列</option>
+			    </select>
+			    <button type="submit" onclick="document.LookBySearch.submit();">提交</button>
+		    </span>
+		    <input title="选中/取消选中 本页所有Case" onclick="CheckAll(this.form)" type="checkbox" name="chkall" id="chkall"/>全选/取消全选
+	    </div>
+	</form>
+	</div>
+<%/if%>
+<%/if%>
+</div>
+<%else%>
+<%template _errmsgbox%>
+<%/if%>
+<%if {config.forumjump}==1%>
+	{navhomemenu}
+<%/if%>
+<%template _copyright%>
+<%template _footer%>

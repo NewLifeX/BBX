@@ -1,0 +1,86 @@
+﻿<%template _header%>
+<%if {infloat}!=1%>
+<div class="wrap cl pageinfo">
+	<div id="nav">
+	<%if {usergroupinfo.AllowSearch}%>
+		<%template _quicksearch%>
+	<%/if%>
+	<a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; {forumnav}
+		<%set {aspxrewriteurl} = this.ShowTopicAspxRewrite({topicid},0)%>
+	 &raquo; <a href="{aspxrewriteurl}">{pagetitle}</a> &raquo;<strong>查看IP</strong>
+	</div>
+</div>
+<%/if%>
+<%if page_err==0%>
+<%if {ispost}%>
+   <%if {infloat}==1%>
+   	<script type="text/javascript">
+	location.href='{rooturl}{msgbox_url}';	
+    location.reload();	
+    </script>
+   <%else%>
+   <%template _msgbox%>
+   <%/if%>
+<%else%>
+<%if {infloat}==1%>
+<div class="float" id="floatlayout_mods">
+<form id="form2" name="form2" action="getip.aspx?topicid={topicid}&pid={postid}&action=ipban&ip={ip}&infloat=1&" method="post" onsubmit="if(!confirm('你确实要禁止此IP吗?'))return false;$('form2').action='{rooturl}getip.aspx?topicid={topicid}&pid={postid}&action=ipban&ip={ip}&infloat=1&';ajaxpost('form2', 'return_mods', 'return_mods','onerror');return false;">
+	<h3 class="flb">
+		<span class="y"><a href="javascript:;" class="flbc" onclick="hideWindow('getip')" title="关闭">关闭</a></span>
+	    <em id="return_mods">查看 IP</em>
+	</h3>
+	<div class="c cl">
+	    <table cellpadding="0" cellspacing="0" border="0" class="formtable">
+		    <tbody>
+			    <tr>
+				    <th width="60">IP地址:</th>
+				    <td>{ip}</td>
+			    </tr>
+			    <tr>
+				    <th>所在地:</th>
+				    <td>{iplocation}</td>
+			    </tr>
+			    <tr>
+				    <th> </th>
+				    <td><button type="submit">禁止此 IP</button> </td>
+			    </tr>
+		    </tbody>
+	    </table>
+	</form>    
+</div>
+<%else%>
+<div class="wrap cl">
+<div class="main">
+	<h3>查看 IP</h3>
+	<table cellpadding="0" cellspacing="0" border="0" class="formtable">
+		<tbody>
+			<tr>
+				<th width="60">IP地址:</th>
+				<td>{ip}</td>
+			</tr>
+			<tr>
+				<th>所在地:</th>
+				<td>{iplocation}</td>
+			</tr>
+			<tr>
+				<th> </th>
+				<td>
+				<a href="###" onClick="if(confirm('你确实要禁止此IP吗?')){window.location.replace('getip.aspx?topicid={topicid}&pid={postid}&action=ipban&ip={ip}')}">禁止此 IP</a>
+				<a href="###" onclick="history.go(-1)">返回上一页</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</div>
+<%/if%>
+<%/if%>
+<%else%>
+	<%if {infloat}==1%>
+	<p>{msgbox_text}</p>
+	<%else%>
+	<%template _errmsgbox%>
+	<%/if%>
+<%/if%>
+<%template _copyright%>
+<%template _footer%>

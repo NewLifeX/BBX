@@ -1,0 +1,229 @@
+<%template _pageheader%>
+<body onkeydown="if(event.keyCode==27) return false;">
+<div id="append_parent"></div><div id="ajaxwaitid"></div>
+<%if {headerad}!=""%>
+	<div id="ad_headerbanner">{headerad}</div>
+<%/if%>
+<div id="hd">
+	<div class="wrap">
+		<div class="head cl">
+			<h2><a href="{forumpath}index.aspx" title="{config.forumtitle}"><img src="{imagedir}/logo.png" alt="{config.forumtitle}"/></a></h2>
+<div style="float: left; margin: 0px">
+<img src="{forumpath}images/banner.png" border="0" />
+</div>
+			<%if {userid}==-1%>
+            <%if {pagename}!="login.aspx"&&{pagename}!="register.aspx"%>
+            <%if {config.Regstatus}>0%>
+			<form onsubmit="if ($('ls_username').value == '' || $('ls_username').value == '用户名/Email') showWindow('login', '{rooturl}login.aspx');hideWindow('register');return" action="{rooturl}login.aspx?referer={pagename}" id="lsform" autocomplete="off" method="post">
+				<div class="fastlg c1">
+					<div class="y pns">
+						<p>
+							<label for="ls_username">帐号</label> <input type="text" tabindex="901" value="用户名/Email" id="ls_username" name="username" class="txt" onblur="if(this.value == '') this.value = '用户名/Email';" onfocus="if(this.value == '用户名/Email') this.value = '';"/><a href="{forumpath}register.aspx" onClick="showWindow('register', '{rooturl}register.aspx');hideWindow('login');" style="margin-left: 7px;" class="xg2">注册</a>							
+						</p>
+						<p>
+							<label for="ls_password">密码</label> <input type="password" onfocus="lsShowmore();innerVcode();" tabindex="902" autocomplete="off" id="ls_password" name="password"  class="txt"/>
+							&nbsp;<input type=submit style="width:0px;filter:alpha(opacity=0);-moz-opacity:0;opacity:0;display:none;"/><button class="pn" type="submit"><span>登录</span></button>
+						</p>
+					</div>
+                    <%if {isopenconnect}%>
+					<div class="fastlg_fm y">
+						<p><a href="{forumpath}QzoneConnect.aspx"><img alt="QQ登录" class="vm" src="{forumpath}images/common/qq_login.gif"/></a></p>
+						<p class="hm xg1">只需一步，快速开始</p>
+					</div>
+                    <%/if%>
+				</div>
+                <div id="ls_more" style="position:absolute;display:none;">
+                <h3 class="cl"><em class="y"><a href="###" class="flbc" title="关闭" onclick="closeIsMore();return false;">关闭</a></em>安全选项</h3>
+                <%if {isLoginCode}%>
+                    <div id="vcode_header"></div>
+                    <script type="text/javascript" reload="1">
+                        if (typeof vcodeimgid == 'undefined') {
+                            var vcodeimgid = 1;
+                        }
+                        else
+                            vcodeimgid++;
+                        var secclick = new Array();
+                        var seccodefocus = 0;
+                        var optionVcode = function (id, type) {
+                            id = vcodeimgid;
+                            if ($('vcode')) {
+                                $('vcode').parentNode.removeChild($('vcode'));
+                            }
+
+                            if (!secclick['vcodetext_header' + id]) {
+                                if ($('vcodetext_header' + id) != null)
+                                    $('vcodetext_header' + id).value = '';
+                                secclick['vcodetext_header' + id] = 1;
+                                if (type)
+                                    $('vcodetext_header' + id + '_menu').style.top = parseInt($('vcodetext_header' + id + '_menu').style.top) - parseInt($('vcodetext_header' + id + '_menu').style.height) + 'px';
+                            }
+                            $('vcodetext_header' + id + '_menu').style.display = '';
+                            $('vcodetext_header' + id).unselectable = 'off';
+                            $('vcodeimg' + id).src = '{rooturl}tools/VerifyImagePage.aspx?id={olid}&time=' + Math.random();
+                        }
+
+                        function innerVcode() {
+                            if ($('vcodetext_header1') == null) {
+                                $('vcode_header').innerHTML = '<input name="vcodetext" tabindex="903" size="20" onkeyup="changevcode(this.form, this.value);" class="txt" style="width:50px;" id="vcodetext_header' + vcodeimgid + '" value="" autocomplete="off"/>' +
+                                                            '<span><a href="###" onclick="vcodeimg' + vcodeimgid + '.src=\'{rooturl}tools/VerifyImagePage.aspx?id={olid}&time=\' + Math.random();return false;" style="margin-left: 7px;">看不清</a></span>' + '<p style="margin:6px 0">输入下图中的字符</p>' +
+	                                                        '<div  style="cursor: pointer;width: 124px; height: 44px;top:256px;z-index:10009;padding:0;" id="vcodetext_header' + vcodeimgid + '_menu" onmouseout="seccodefocus = 0" onmouseover="seccodefocus = 1"><img src="{rooturl}tools/VerifyImagePage.aspx?time={Processtime}" class="cursor" id="vcodeimg' + vcodeimgid + '" onclick="this.src=\'{rooturl}tools/VerifyImagePage.aspx?id={olid}&time=\' + Math.random();"/></div>';
+                                optionVcode();
+                            }
+                        }
+
+                        function changevcode(form, value) {
+                            if (!$('vcode')) {
+                                var vcode = document.createElement('input');
+                                vcode.id = 'vcode';
+                                vcode.name = 'vcode';
+                                vcode.type = 'hidden';
+                                vcode.value = value;
+                                form.appendChild(vcode);
+                            } else {
+                                $('vcode').value = value;
+                            }
+                        }
+                    </script>
+                <%else%>
+                    <script type="text/javascript">
+                        function innerVcode() {
+                        }
+                    </script>
+                <%/if%>
+                <%if {config.secques}==1%>
+			    <div id="floatlayout_login" class="pbm">
+					<select style="width:156px;margin-bottom:8px;" id="question" name="question" name="question" onchange="displayAnswer();" tabindex="904">
+						<option id="question" value="0" selected="selected">安全提问(未设置请忽略)</option>
+						<option id="question" value="1">母亲的名字</option>
+						<option id="question" value="2">爷爷的名字</option>
+						<option id="question" value="3">父亲出生的城市</option>
+						<option id="question" value="4">您其中一位老师的名字</option>
+						<option id="question" value="5">您个人计算机的型号</option>
+						<option id="question" value="6">您最喜欢的餐馆名称</option>
+						<option id="question" value="7">驾驶执照的最后四位数字</option>
+					</select>
+					<input type="text" tabindex="905" class="txt" size="20" autocomplete="off" style="width:140px;display:none;"  id="answer" name="answer"/>
+		        </div>
+                <%/if%>
+                <script type="text/javascript">
+                    function closeIsMore() {
+                        $('ls_more').style.display = 'none';
+                    }
+                    function displayAnswer() {
+                        if ($("question").value > 0)
+                            $("answer").style.display = "";
+                        else
+                            $("answer").style.display = "none";
+                    }
+                </script>
+				<div class="ptm cl" style="border-top:1px dashed #CDCDCD;">
+					<a class="y xg2" href="{forumpath}getpassword.aspx" onclick="hideWindow('register');hideWindow('login');showWindow('getpassword', this.href);">找回密码</a>
+					<label class="z" for="ls_cookietime"><input type="checkbox" tabindex="906" value="2592000" id="ls_cookietime" name="expires" checked="checked" tabindex="906"><span title="下次访问自动登录">记住我</span></label>
+				</div>
+            </div>
+			</form>
+            <%/if%>
+            <%/if%>
+			<%else%>
+			<div id="um">
+				<div class="avt y"><a alt="用户名称" target="_blank" href="{forumpath}usercp.aspx"><img src="{useravatar}" onerror="this.onerror=null;this.src='{forumpath}images/common/noavatar_small.gif';" /></a></div>
+				<p>
+					<strong><a href="{forumpath}userinfo.aspx?userid={userid}" class="vwmy<%if {isbindconnect}%> qq<%/if%>">{username}</a></strong><span class="xg1">在线</span><span class="pipe">|</span>
+					<%if {isopenconnect}&&{!isbindconnect}%> <a href="{forumpath}QzoneConnect.aspx"><img alt="QQ绑定" class="vm qq_bind" src="{forumpath}images/common/qq_bind_small.gif"></a><span class="pipe">|</span><%/if%>
+                    <%set (string){linktitle} = ""%>
+                    <%set (string){showoverflow} = ""%>
+                    <%if {oluserinfo.newpms}>0%>
+                        <%if {oluserinfo.newpms}>=1000%>
+                            <%set {showoverflow} = "大于"%>
+                        <%/if%>
+                        <%set {linktitle} = "您有"+{showoverflow}+{oluserinfo.newpms}+"条新短消息"%>
+                    <%else%>
+                        <%set {linktitle} = "您没有新短消息"%>
+                    <%/if%>
+					<a id="pm_ntc" href="{forumpath}usercpinbox.aspx" title="{linktitle}">短消息
+                    <%if {oluserinfo.newpms}>0 && {oluserinfo.newpms}<=1000%>
+                                ({oluserinfo.newpms}<%if {oluserinfo.newpms}>1000%>1000+<%/if%>)
+                    <%/if%></a>
+                    <span class="pipe">|</span>
+                    <%set {showoverflow} = ""%>
+                    <%if {oluserinfo.newnotices}>0%>
+                        <%if {oluserinfo.newnotices}>=1000%>
+                            <%set {showoverflow} = "大于"%>
+                        <%/if%>
+                        <%set {linktitle} = "您有"+{showoverflow}+{oluserinfo.newnotices}+"条新通知"%>
+                    <%else%>
+                        <%set {linktitle} = "您没有新通知"%>
+                    <%/if%>
+					<a href="{forumpath}usercpnotice.aspx?filter=all" title="{linktitle}">
+                        通知<%if {oluserinfo.newnotices}>0%>
+                                ({oluserinfo.newnotices}<%if {oluserinfo.newnotices}>=1000%>+<%/if%>)
+                            <%/if%>
+                    </a>
+                    <span class="pipe">|</span>
+					<a id="usercenter" class="drop" onmouseover="showMenu(this.id);" href="{forumpath}usercp.aspx">用户中心</a>
+				<%if {config.Regstatus}==2||{config.Regstatus}==3%>
+					<%if {userid}>0%>
+					<span class="pipe">|</span><a href="{forumpath}invite.aspx">邀请</a>
+					<%/if%>
+				<%/if%>
+					<%if {useradminid}==1%>
+					<span class="pipe">|</span><a href="{forumpath}admin/index.aspx" target="_blank">系统设置</a>
+					<%/if%>
+					<span class="pipe">|</span><a href="{forumpath}logout.aspx?userkey={userkey}">退出</a>
+				</p>
+				{userinfotips}
+			</div> 
+			<div id="pm_ntc_menu" class="g_up" style="display:none;">
+				<div class="mncr"></div>
+				<div class="crly">
+					<div style="clear:both;font-size:0;"></div>
+					<span class="y"><a onclick="javascript:$('pm_ntc_menu').style.display='none';closenotice({oluserinfo.newpms});" href="javascript:;"><img src="{imagedir}/delete.gif" alt="关闭"/></a></span>
+					<a href="{forumpath}usercpinbox.aspx">您有<%if {oluserinfo.newpms}>=1000%>大于<%/if%>{oluserinfo.newpms}条新消息</a>
+				</div>
+			</div>
+            <script type="text/javascript">
+            setMenuPosition('pm_ntc', 'pm_ntc_menu', '43');
+            if({oluserinfo.newpms} > 0 && (getcookie("shownotice") != "0" || getcookie("newpms") != {oluserinfo.newpms}))
+            {
+                $("pm_ntc_menu").style.display='';
+            }            
+            </script>
+            <%/if%>
+		</div>
+		<div id="menubar">
+			<a onMouseOver="showMenu(this.id, false);" href="javascript:void(0);" id="mymenu">我的中心</a>
+            <div class="popupmenu_popup headermenu_popup" id="mymenu_menu" style="display: none">
+            <%if {userid}!=-1%>
+			<ul class="sel_my">
+				<li><a href="{forumpath}mytopics.aspx">我的主题</a></li>
+				<li><a href="{forumpath}myposts.aspx">我的帖子</a></li>
+				<li><a href="{forumpath}search.aspx?posterid=current&type=digest&searchsubmit=1">我的精华</a></li>
+				<li><a href="{forumpath}myattachment.aspx">我的附件</a></li>
+				<li><a href="{forumpath}usercpsubscribe.aspx">我的收藏</a></li>
+            </ul>
+            <%else%>
+			<p class="reg_tip">
+				<a href="{forumpath}register.aspx" onClick="showWindow('register', '{rooturl}register.aspx');hideWindow('login');" class="xg2">登录或注册新用户,开通自己的个人中心</a>
+			</p>
+            <%/if%>
+        <%if {config.allowchangewidth}==1&&pagename!="website.aspx"%>
+           <ul class="sel_mb">
+				<li><a href="javascript:;" onclick="widthauto(this,'{cssdir}')"><%if {isnarrowpage}%>切换到宽版<%else%>切换到窄版<%/if%></a></li>
+ 			</ul>
+        <%/if%>
+            </div>
+			<ul id="menu" class="cl">
+				{mainnavigation}
+			</ul>
+		</div>
+	</div>
+</div>
+<%else%>
+<%csharp%>
+Response.Clear();
+Response.ContentType = "Text/XML";
+Response.Expires = 0;
+Response.Cache.SetNoStore();
+<%/csharp%>
+<?xml version="1.0" encoding="utf-8"?><root><![CDATA[
+<%/if%>

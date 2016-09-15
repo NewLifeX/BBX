@@ -1,0 +1,36 @@
+<%if  {canpostattach} && {postinfo.attachment}>0%>
+	<table summary="附件" cellspacing="0" cellpadding="0" width="100%">
+		<%loop (Attachment) attachment attachmentlist%>
+		<%if {strtoint({attachment.Pid})}=={postinfo.pid}%>
+		<script type="text/javascript" reload="1">try{ $("num2upload").innerHTML=--num2upload; }catch(e) { setTimeout('$(\'num2upload\').innerHTML=--num2upload;', 1000); }</script>
+		<tbody id="attach_{attachment.ID}">
+			<tr>
+				<td class="attachnum"><img src="images/attachicons/common.gif" /></td>
+				<td class="attachctrl">
+						<a href="javascript:;"<%if {attachment.FileType}.IndexOf("image")>-1%> onmouseover="showpreview(this, 'imgpreview_{attachment.ID}')"<%/if%> onclick="<%if {attachment.FileType}.IndexOf("image")>-1%>insertAttachimgTag('{attachment.ID}');<%else%>insertAttachTag('{attachment.ID}');<%/if%>" title="点击这里将本附件插入帖子内容中当前光标的位置">插入</a>
+						<script type="text/javascript" reload="1">var attachimgurl_{attachment.ID} = ['attachment.aspx?attachmentid={attachment.ID}', 400];</script>
+						<input type="hidden" value="{attachment.ID}" name="attachupdateid" />
+				</td>
+				<td class="attachname" title="{attachment.FileName}  {attachment.PostDateTime}  {attachment.FileSize} 字节  下载{attachment.Downloads}次">
+					<a href="javascript:;" class="right" onclick="attachupdate('{attachment.ID}', this)">更新</a>
+					<div id="attach{attachment.ID}">
+						<p>
+							<input type="hidden" name="attachupdatedesc" value="{attachment.Description}"  />
+							<a href="javascript:;" onclick="parentNode.innerHTML='<input type=\'text\' name=\'attachupdatedesc\' value=\'{attachment.Description}\' size=\'25\' class=\'txt\' />'">描述</a>
+							<span<%if {attachment.FileType}.IndexOf("image")>-1%> onmouseover="showpreview(this, 'imgpreview_{attachment.ID}');"<%/if%>>{attachment.Name}</span>
+						</p>
+						<%if {attachment.FileType}.IndexOf("image")>-1%>
+							<div id="imgpreview_{attachment.ID}" style="display: none; "><img id="preview_{attachment.ID}" style=" max-width: 200px; max-height: 200px" src="attachment.aspx?attachmentid={attachment.ID}" onerror="this.onerror=null;try{  this.src=attachimgurl_{attachment.ID}; } catch(e){}" /></div>
+						<%/if%>
+					</div>
+					<span id="attachupdate{attachment.ID}"></span>
+				</td>
+				<%if {userid}!=-1 && {usergroupinfo.AllowSetattachPerm}%><td class="attachview"><input name="attachupdatereadperm" value="{attachment.ReadPerm}" size="1" class="txt" /></td><%/if%>
+				<%if {topicattachscorefield}>0 && usergroupinfo.MaxPrice>0%><td class="attachpr"><input name="attachupdateprice" value="{attachment.AttachPrice}" size="1" class="txt" /></td><%/if%>
+				<td class="attachdel"><input class="checkbox" name="deleteaid" value="{attachment.ID}" type="checkbox">删?</td>
+			</tr>
+			</tbody>
+			<%/if%>
+			<%/loop%>
+	</table>
+<%/if%>

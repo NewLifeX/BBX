@@ -1,0 +1,72 @@
+﻿<%template _header%>
+<div class="wrap cl pageinfo">
+    <div id="nav">
+        <%if {usergroupinfo.AllowSearch}%>
+            <%template _quicksearch%>
+        <%/if%>
+        <a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <a href="usercpprofile.aspx">用户中心</a> &raquo; <strong>积分收入记录</strong>
+    </div>
+</div>
+<div class="wrap uc cl">
+    <%template _menu%>
+    <div class="uc_main">
+    <div class="uc_content">
+        <h1>积分收入记录</h1>
+        <%template _scoremenu%>	
+<%if page_err==0%>
+    <%if ispost%>
+        <%template _usercpmsgbox%>
+    <%else%>
+       <%if {payloglist.Count}>0%>
+        <form id="form1" name="form1" method="post" action="">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="datatable">
+        <tr class="colplural">
+            <th width="28%">标题</th>
+            <th width="10%">作者</th>
+            <th width="10%">发表时间</th>
+            <th width="17%">论坛</th>
+            <th width="13%">付费时间</th>
+            <th width="5%">售价</th>
+            <th>作者所得</th>
+        </tr>
+        <tbody>
+        <%loop (PaymentLog) paylog payloglist%>
+        <tr>
+            <td>
+            <%set {aspxrewriteurl} = this.ShowTopicAspxRewrite({paylog.Tid},0)%>
+            <a href="{aspxrewriteurl}" target="_blank">{paylog.Title}</a>
+            </td>
+            <td>
+            <%set {aspxrewriteurl} = this.UserInfoAspxRewrite({paylog.Uid})%>
+            <a href="{aspxrewriteurl}" target="_blank">{paylog.AuthorName}</a>
+            </td>
+            <td class="time">{paylog.PostDateTime}</td>
+            <td>
+            <%set {aspxrewriteurl} = this.ShowForumAspxRewrite({paylog.Fid},0)%>                  
+            <a href="{aspxrewriteurl}" target="_blank">{paylog.ForumName}</a>
+            </td>
+            <td class="time">{paylog.BuyDate]}</td>
+            <td>{paylog.Amount}</td>
+            <td>{paylog.Netamount}</td>
+        </tr>
+        <%/loop%>
+        </tbody>
+        </table>
+        </form>
+        <div class="pages_btns">
+            <div class="pages">
+            <em>{pageid}/{pagecount}页</em> {pagenumbers}
+            </div>
+        </div>
+        <%else%>
+        <div class="zerothreads">暂无记录</div>
+        <%/if%>
+    <%/if%>
+<%else%>
+    <%template _usercperrmsgbox%>
+<%/if%>
+    </div>
+    </div>
+</div>
+<%template _copyright%>
+<%template _footer%>

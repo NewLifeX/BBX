@@ -1,0 +1,80 @@
+
+body {
+	font-size: 12px;
+	color: #333;
+	font-family: Arial, Helvetica, sans-serif, "宋体";
+}
+a {
+	text-decoration: none;
+	color: #036;
+}
+a:hover {
+	text-decoration: underline;
+}
+h1 {
+	font-size: 16px;
+}
+
+#wrap {
+	border: 1px solid #aaa;
+}
+
+h2 {
+	font-size: 12px;
+	margin: 5px;
+}
+h2 a {
+	color: #000;
+}
+h3 {
+	font-size: 12px;
+	margin: 5px;
+	font-weight: normal;
+}
+
+/*导航*/
+.forumnav {
+	margin: 8px 0;
+}
+.forumnav a {
+	margin-right: 5px;
+	color: #000;
+}
+
+/*分页*/
+.pagenumbers {
+	margin: 8px 0;
+	text-align: center;
+	font-weight: bold;
+}
+.pagenumbers a {
+	font-weight: normal;
+}
+
+/*帖子页面*/
+.postitem {
+	border: 1px solid #aaa;
+	margin-bottom: 8px;
+}
+.postitemtitle {
+	background: #F8F8F8;
+	line-height: 24px;
+	font-weight: bold;
+	padding-left: 10px;
+}
+.postitemcontent {
+	padding: 10px;
+	line-height: 1.6em;
+}
+.fullversion {
+	margin-top: 10px;
+	font-weight: bold;
+}
+.fullversion a {
+	text-decoration: none;
+	color: #333;
+}
+.copyright {
+	margin-top: 60px;
+	font-size: 12px;
+}

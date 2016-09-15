@@ -1,0 +1,162 @@
+﻿<%template _header%>
+<div class="wrap s_clear pageinfo">
+	<div id="nav">
+		<a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo;{ShowForumAspxRewrite(forum.Pathlist,forumid,forumpid)}
+		 <%set {aspxrewriteurl} = this.ShowTopicAspxRewrite({topicid},0)%>
+	     &raquo; <a href="{aspxrewriteurl}">{topic.title}</a> &raquo; <strong>交易信息</strong>
+	</div>
+</div>
+<%if page_err==0%>
+	<%if {ispost}%>
+		<%template _msgbox%>
+	<%else%>
+    <div class="wrap s_clear" id="wrap">
+	<div class="main datalist">
+	    <%if {buyit}==1%>
+		    <form id="form1" name="form1" method="post" action="">
+		    <table cellpadding="0" cellspacing="0" border="0" summary="购买主题" class="datatable infotable">
+		    <tbody>
+		    <tr>
+			    <th>用户名:</th>
+			    <td>{username} [<a href="logout.aspx?userkey={userkey}">退出登录</a>]</td>
+		    </tr>
+		    <tr>
+			    <th>作者:</th>
+			    <td><%set {aspxrewriteurl} = this.UserInfoAspxRewrite({topic.PosterID})%>
+			    <a href="{aspxrewriteurl}">{topic.Poster}</a>
+			    </td>
+		    </tr>
+		    <tr>
+			    <th>标题:</th>
+			    <td class="datatitle">
+			    <%set {aspxrewriteurl} = this.ShowTopicAspxRewrite({topicid},0)%>
+			    <a href="{aspxrewriteurl}">{topic.title}</a>
+			    </td>
+		    </tr>
+		    <tr>
+			    <th>售价:</th>
+			    <td>{topicprice} {userextcreditsinfo.name}</td>
+		    </tr>
+		    <tr>
+			    <th>作者所得:</th>
+			    <td>{netamount} {userextcreditsinfo.name}</td>
+		    </tr>
+		    <tr>
+			    <th>购买后余额:</th>
+			    <td>{userlastprice} {userextcreditsinfo.name}</td>
+		    </tr>
+		    <tr>
+			    <th>&nbsp;</th>
+			    <td>
+			    <input type="submit" name="paysubmit" value="提交">
+			    </td>
+		    </tr>
+		    </tbody>
+		    </table>
+		    </form>
+        <%else%>
+	        <%if {showpayments}==1&&({topic.PosterID}=={userid}||{ismoder}==1)%>
+	            <%if {paymentloglist.Count}>0%>
+                <h3>标题:{topic.title}</h3>
+		        <table cellpadding="0" cellspacing="0" border="0"  summary="购买主题"  class="datatable infotable">
+			        <thead>
+			        <tr>
+				        <th>{userextcreditsinfo.name}</th>
+				        <th>用户名</th>
+				        <th>时间</th>
+			        </tr>
+			        </thead>
+			        <%loop (PaymentLog) paymentlog paymentloglist%>
+			        <tbody>
+			        <tr>
+				        <td><div class="ForumBuyTopicLeft">{paymentlog.Amount}</div></td>
+				        <th><%set {aspxrewriteurl} = this.UserInfoAspxRewrite({paymentlog.Uid})%>
+                          <a href="{aspxrewriteurl}" target="_blank">{paymentlog.UserName}</a></th>
+				        <td>{paymentlog.BuyDate}</td>
+			        </tr>
+			        </tbody>
+			        <%/loop%>
+		        </table>
+		        <%else%>
+		        该主题暂无购买记录
+	            <%/if%>
+	        <%else if {price}>0%>
+	        <h3>标题:{topic.title}</h3>
+	        {postmessage}
+	        <table cellpadding="0" cellspacing="0" border="0"  class="datatable infotable">
+	        <thead>
+	        <tr>
+		        <th>&nbsp</th>
+		        <td>本主题需向作者支付相应积分才能浏览，您可根据作者信誉、出售价格及已购买用户的评价确定购买与否。</td>
+	        </tr>
+	        </thead>
+	        <tbody>
+	        <tr>
+		        <th >售价</th>
+		        <td>{topicprice} {userextcreditsinfo.name}</td>
+	        </tr>
+	        <tr>
+		        <th>积分交易税</th>
+		        <td>{creditstax}%</td>
+	        </tr>
+	        <tr>
+		        <th>作者所得</th>
+		        <td>{netamount} {userextcreditsinfo.name}</td>
+	        </tr>
+	        <tr>
+		        <th>已购买人数</th>
+		        <td>{buyers} 人</td>
+	        </tr>
+	        <tr>
+		        <th>作者最高收入</th>
+		        <td>{maxincpertopic} {userextcreditsinfo.name}</td>
+	        </tr>
+	        <tr>
+		        <th>强制免费期限</th>
+		        <td>
+                <%if {maxchargespan}==0%>
+                永不免费
+                <%else%>
+                {expirehours} 小时后免费
+                <%/if%>
+                </td>
+	        </tr>
+	        <tr>
+		        <th>&nbsp;</th>
+		        <td>
+		        <a href="buytopic.aspx?topicid={topicid}&buyit=1">[购买主题]</a> <a href="#" onclick="history.go(-1)">[返回上一页]</a>
+		        </td>
+	        </tr>
+	        </tbody>
+	        </table>
+	        <h3>最后5帖</h3>
+	        <table cellpadding="0" cellspacing="0" border="0"  class="datatable infotable">
+	        <%loop (Post) lastpost lastpostlist%>
+	        <tbody>
+	        <tr>
+		        <th><%set {aspxrewriteurl} = this.UserInfoAspxRewrite({lastpost.PosterID})%>
+		        <a href="{aspxrewriteurl}"><strong>{lastpost.Poster}</strong></a>&nbsp;&nbsp;{lastpost.PostDateTime}
+		        </th>
+	        </tr>
+	        <tr>
+		        <td>{lastpost.Message}</td>
+	        </tr>
+	        </tbody>
+	        <%/loop%>
+	        </table>
+	        <%else%>
+		        此主题无需购买
+	        <%/if%>
+        <%/if%>
+    <%/if%>
+    </div>
+    </div>
+<%else%>
+	<%if {needlogin}%>
+		<%template _login%>
+	<%else%>
+		<%template _errmsgbox%>
+	<%/if%>
+<%/if%>
+<%template _copyright%>
+<%template _footer%>

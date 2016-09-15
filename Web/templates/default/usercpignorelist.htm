@@ -1,0 +1,48 @@
+﻿<%template _header%>
+<script type="text/javascript" src="{jsdir}/template_usercpnotice.js"></script>
+<div class="wrap c1 pageinfo">
+	<div id="nav">
+		<%if {usergroupinfo.AllowSearch}%>
+			<%template _quicksearch%>
+		<%/if%>
+        <a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <a href="usercpprofile.aspx">用户中心</a> &raquo; <strong>黑名单</strong>
+    </div>
+</div>
+<div class="wrap uc cl">
+    <%template _menu%>
+	<div class="uc_main">
+	<div class="uc_content">
+		<h1>黑名单</h1>
+		<%template _smsmenu%>
+		<%if page_err==0%>
+			<%if ispost%>
+                <%template _usercpmsgbox%>
+            <%else%>
+			<form id="postignorelist" name="postignorelist" method="post" action="">
+			<table cellspacing="0" cellpadding="0" class="tfm" summary="个人资料">
+				<caption>
+					如果某用户被加入到黑名单中，那么该用户给您发送的短消息将不会被接收。<br />
+					将多个用户添加到黑名单时需要用逗号(英文半角)分割，如“张三,李四,王五”。<br />
+					如需禁止接受所有用户发来的短消息，请设置为 "{ignoreexample}" (注意区分大小写)。<br />
+				</caption>
+				<tbody>
+				<tr>
+					<td>
+					<textarea name="ignorepm" class="txtarea" cols="40" rows="10" id="ignorepm" onkeydown="if((event.ctrlKey && event.keyCode == 13) || (event.altKey && event.keyCode == 83)) document.getElementById('postignorelist').submit();" style="width:80%;">{user.ignorepm}</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td><input name="sendignorelist" type="submit" id="sendignorelist" value="保存" class="btn"/></td>
+				</tr>
+				</tbody>
+			</table>
+			</form>
+            <%/if%>
+		<%else%>
+			<%template _usercperrmsgbox%>
+		<%/if%>
+    </div>
+</div>
+</div>
+<%template _copyright%>
+<%template _footer%>

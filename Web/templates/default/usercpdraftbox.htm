@@ -1,0 +1,96 @@
+﻿<%template _header%>
+<div class="wrap cl pageinfo">
+	<div id="nav">
+		<%if {usergroupinfo.AllowSearch}%>
+			<%template _quicksearch%>
+		<%/if%>
+		<a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <a href="usercpprofile.aspx">用户中心</a> &raquo; <strong>草稿箱</strong>
+	</div>
+</div>
+<div class="wrap uc cl">
+	<%template _menu%>
+	<div class="uc_main">
+	<div class="uc_content">
+		<h1>草稿箱</h1>
+		<%template _smsmenu%>
+		<%if page_err==0%>
+			<%if ispost%>
+				<%template _usercpmsgbox%>
+			<%else%>			   
+				<form id="pmform" name="pmform" method="post" action="">
+				<table cellspacing="0" cellpadding="0" class="pm_list" summary="草稿箱">
+					<tbody>
+					<%loop (ShortMessage) pm ShortMessage.GetList(userid,2,16,pageid,2)%>
+					<tr id="{pm.ID}">
+						<td class="msg_icon"><img src="{imagedir}/pm_{pm.new}.gif"  <%if {pm.new}%>title="未读"<%else%>title="已读"<%/if%>/></td>
+						<td class="checkbox_toggle"><input name="pmitemid" id="id{pm.ID}" type="checkbox" id="pmitemid" value="{pm.ID}"/></td>
+						<td class="profile_pic">
+						<%set {aspxrewriteurl} = this.UserInfoAspxRewrite({pm.MsgtoID})%>
+						<a href="{forumurl}{aspxrewriteurl}" target="blank">
+						<%set (string){avatarurl}=Avatars.GetAvatarUrl(pm.MsgtoID,AvatarSize.Small) %>
+						<img width="48" onerror="this.onerror=null;this.src='{forumpath}images/common/noavatar_small.gif'" src="{avatarurl}"/>
+						</a>
+						</td>
+						<td class="name_and_date">
+							<span class="name xg2">
+								<%set {aspxrewriteurl} = this.UserInfoAspxRewrite({pm.MsgtoID})%>
+								<a href="{aspxrewriteurl}" target="_blank">{pm.msgfrom}</a>
+							</span>
+							<%set (string){postdatetime}=ForumUtils.ConvertDateTime({pm.PostDateTime})%>	
+							<span class="date">{postdatetime}</span>
+						</td>
+						<td class="pmsubject">
+							<div class="subject_wrap xg2">
+								<p <%if {pm.new}%>class="f_bold"<%/if%>><a href="usercpshowpm.aspx?pmid={pm.ID}">{pm.subject}</a></p>
+								<div class="snippet_wrap xg1">
+									<a href="usercpshowpm.aspx?pmid={pm.ID}"><%getsubstring({pm.message},40,"...")%></a>
+								</div>
+							</div>
+						</td>
+						<td class="delete_msg"><a href="###" onclick="if (confirm('您确定要删除吗?')){ $('id{pm.ID}').checked=true;$('pmform').submit();}"></a></td>
+					</tr>
+					<%/loop%>
+					</tbody>
+				</table>
+				</form>
+				  <%if {pmcount}>0%>
+					<div class="pages_btns">
+						<div class="pages">
+						<em>共有短消息:{usedmsgcount}条</em> <em>上限:{maxmsg}条</em> {pagenumbers} <em>{pageid}/{pagecount}页</em>
+						</div>
+						<a href="###" onclick="checkCheckBox($('pmform'),this)">全选</a>
+						<span class="pipe">|</span>
+						<a href="###" onclick="if (confirm('您确定要删除吗?'))$('pmform').submit();">删除</a>
+					</div>
+				  <%else%>
+				    <div class="zerothreads">草稿箱暂无短信息</div>
+				  <%/if%>
+				<%/if%>
+			<%else%>
+			<%template _usercperrmsgbox%>
+			<%/if%>
+		</div>
+	</div>
+</div>
+<!--主体-->
+</div>
+<script type="text/javascript">
+	function checkCheckBox(form,objtag)
+	{
+		if (typeof(objtag.checked) == "undefined")
+		{
+			objtag.checked = true;
+		}
+		for(var i = 0; i < form.elements.length; i++) 
+		{
+			var e = form.elements[i];
+			if(e.name == "pmitemid") 
+			{
+				e.checked = objtag.checked;
+			}
+		}
+		objtag.checked = !objtag.checked;
+	}
+</script>
+<%template _copyright%>
+<%template _footer%>

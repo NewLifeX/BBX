@@ -1,0 +1,18 @@
+﻿#BOX_overlay {
+	    position: absolute;
+	    z-index:100;
+	    top: 0px;
+	    left: 0px;
+	    background-color:#000;
+	    filter:alpha(opacity=60);
+	    -moz-opacity: 0.6;
+	    opacity: 0.6;
+    }
+    .PopUpModel{ background-color:#FFFFFF; border: 1px solid BLACK;  height:auto; text-align:center;width:900px; }
+    .ctrl_title{ background:#f1f1f1 url(images/topbarbg.gif) repeat-x 0 100%; color:#000000; margin:0px; padding:1px 1px;text-align:left; font-size:12px; FONT-WEIGHT: bold;}
+		.ctrl_title img {float:right; padding-top:3px; padding-right:3px;}
+    .ctrl_footer{ padding:7px 7px 15px 7px}
+    .ctrl_Button{ border:1px solid #666;  margin:0 5px 0 5px;}
+    .ctrl_input{ border:1px solid #666;}
+    #searchresult {padding:2px;}
+		#searchresult a{color:#999;}

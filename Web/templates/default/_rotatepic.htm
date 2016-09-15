@@ -1,0 +1,24 @@
+﻿<div class="modulebox sidebox" style="padding:1px;margin-top:0;">
+<script type='text/javascript'>
+var imgwidth = 228;
+var imgheight = 127;
+</script>			
+<!--图片轮换代码开始-->
+<script type='text/javascript' src='javascript/template_rotatepic.js'></script>
+<script type='text/javascript'>
+var data = { };
+
+{rotatepicdata}
+
+var ri = new MzRotateImage();
+ri.dataSource = data;
+ri.width = 228;
+
+ri.height = 127;
+ri.interval = 3000;
+ri.duration = 2000;
+document.write(ri.render());
+
+</script>
+<!--图片轮换代码结束-->	   	
+</div>

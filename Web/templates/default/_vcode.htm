@@ -1,0 +1,51 @@
+<div id="vcode_temp"></div>
+<script type="text/javascript" reload="1">
+	var infloat = {infloat};
+	if (typeof vcodeimgid == 'undefined'){
+		var vcodeimgid = 1;
+	}
+	else
+	    vcodeimgid++;
+
+    $('vcode_temp').parentNode.innerHTML = '<input name="vcodetext" <%if {infloat}==1%>tabindex="4"<%else%>tabindex="7"<%/if%> size="20" onkeyup="changevcode(this.form, this.value);" class="txt" style="width:90px;" id="vcodetext' + vcodeimgid + '"  onblur="if(!seccodefocus) {display(this.id + \'_menu\')};"  onfocus="opensecwin('+vcodeimgid+',1)"   value="验证码" autocomplete="off"/>' +
+	                                       '<div class="seccodecontent"  style="display:none;cursor: pointer;width: 124px; height: 44px;top:256px;z-index:10009;padding:0;" id="vcodetext' + vcodeimgid + '_menu" onmouseout="seccodefocus = 0" onmouseover="seccodefocus = 1"><img src="{rooturl}tools/VerifyImagePage.aspx?time={Processtime}" class="cursor" id="vcodeimg' + vcodeimgid + '" onclick="vcodeimg_click(this,' + vcodeimgid + ');"/></div>';
+	function vcodeimg_click(obj,vcodeimgid){
+        obj.src='{rooturl}tools/VerifyImagePage.aspx?id={olid}&time=' + Math.random();
+        $('vcodetext' + vcodeimgid).focus();
+    }
+	function changevcode(form, value){
+		if (!$('vcode')){
+			var vcode = document.createElement('input');
+			vcode.id = 'vcode';
+			vcode.name = 'vcode';
+			vcode.type = 'hidden';
+			vcode.value = value;
+			form.appendChild(vcode);
+		}else{
+			$('vcode').value = value;
+		}
+	}
+</script>
+<script type="text/javascript">
+var secclick = new Array();
+var seccodefocus = 0;
+function opensecwin(id,type) {
+	if($('vcode')){
+	$('vcode').parentNode.removeChild($('vcode'));}
+
+	if (!secclick['vcodetext' + id]) {
+	    $('vcodetext' + id).value = '';
+	    secclick['vcodetext' + id] = 1;
+	    if(type)
+	        $('vcodetext' + id + '_menu').style.top = parseInt($('vcodetext' + id + '_menu').style.top) - parseInt($('vcodetext' + id + '_menu').style.height) + 'px';
+	}
+
+	$('vcodetext' + id + '_menu').style.position = 'absolute';
+	$('vcodetext' + id + '_menu').style.top = (-parseInt($('vcodetext' + id + '_menu').style.height) - 2) + 'px';
+	$('vcodetext' + id + '_menu').style.left = '0px';
+	$('vcodetext' + id + '_menu').style.display = '';
+	$('vcodetext' + id).focus();
+	$('vcodetext' + id).unselectable = 'off';
+	$('vcodeimg' + id).src = '{rooturl}tools/VerifyImagePage.aspx?id={olid}&time=' + Math.random();
+}
+</script>

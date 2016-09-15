@@ -1,0 +1,84 @@
+﻿<%template _header%>
+<script type="text/javascript" src="{jsdir}/bbcode.js"></script>
+<script type="text/javascript" src="{jsdir}/editor.js"></script>
+<script type="text/javascript"  src="{jsdir}/template_calendar.js"></script>
+<div class="wrap cl pageinfo">
+    <div id="nav">
+    <%if {usergroupinfo.AllowSearch}%>
+        <%template _quicksearch%>
+    <%/if%>
+        <a href="{config.forumurl}" class="title">{config.forumtitle}</a>  <%if {forum.Pathlist}!=""%>&raquo;{ShowForumAspxRewrite(forum.Pathlist,forumid,forumpageid)} &raquo; <%/if%>
+        <a href="{ShowTopicAspxRewrite(topicid,0)}">{topictitle}</a> &raquo; <strong>回复主题</strong>
+    </div>
+</div>
+<script type="text/javascript" reload="1" >
+    var postminchars = parseInt({config.minpostsize});
+    var postmaxchars = parseInt({config.maxpostsize});
+    var disablepostctrl = {disablepost.ToString().ToLower()};
+    var forumpath = "{forumpath}";
+    var posturl=forumpath+'postreply.aspx?topicid={topicid}&forumpage={forumpageid}';
+    var postaction='postreply.aspx?infloat=1&topicid={topicid}&';
+</script>
+<%if page_err==0%>
+    <%if {ispost}%>
+<%template _msgbox%>
+    <%else%>
+<div class="wrap cl post">
+    <script type="text/javascript">
+        function geteditormessage(theform)
+        {
+            var message = wysiwyg ? html2bbcode(getEditorContents()) : (!theform.parseurloff.checked ? parseurl(theform.message.value) : theform.message.value);
+            theform.message.value = message;
+        }
+    </script>
+    <form method="post" name="postform" id="postform" action="" enctype="multipart/form-data" onsubmit="return validate(this)">
+        <%csharp%>
+        string formatNow = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        <%/csharp%>
+        <input type="hidden" name="posttime" id="posttime" value="{formatNow}" />
+        <%template _post%>
+        <div style="display: none;">
+            <p class="textmsg" id="divshowuploadmsg" style="display:none"></p>
+            <p class="textmsg succ" id="divshowuploadmsgok" style="display:none"></p>
+            <input type="hidden" name="uploadallowmax" value="10">
+            <input type="hidden" name="uploadallowtype" value="jpg,gif">
+            <input type="hidden" name="thumbwidth" value="300">
+            <input type="hidden" name="thumbheight" value="250">
+            <input type="hidden" name="noinsert" value="0">
+        </div>
+        <div class="margint" id="realmoreinfo" style="display: none;">
+            <div id="newpost"><input name="continuereply" type="checkbox" <%if {continuereply}!=""%>checked<%/if%> /> 连续回复</div>
+        </div>
+        <script type="text/javascript">$("moreinfo").innerHTML = $("realmoreinfo").innerHTML;$("moreinfo").className="margint"</script>
+    </form>
+    <%template _postattachments%>
+</div>
+<script type="text/javascript" reload="1" >
+    if (getQueryString('restore') == 1)
+    {
+        loadData(true);
+    }
+</script>
+    <%/if%>
+<%else%>
+    <%if {ispost}%>
+        <%if {needlogin}%>
+            <%template _login%>
+        <%else%>
+            <%csharp%>
+                string backLink = HttpContext.Current.Request.UrlReferrer+"";
+                SetBackLink(backLink.Contains("&cedit=yes") ? backLink : backLink + "&cedit=yes");
+            <%/csharp%>
+           <%template _errmsgbox%>
+        <%/if%>
+    <%else%>
+        <%if {needlogin}%>
+            <%template _login%>
+        <%else%>
+           <%template _errmsgbox%>
+            <script type="text/javascript">setcookie("dnt_title", '', 1);</script>
+        <%/if%>
+    <%/if%>
+<%/if%>
+<%template _copyright%>
+<%template _footer%>

@@ -1,0 +1,351 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link id="editorcss" rel="stylesheet" href="editor.css" type="text/css" media="all"/>
+<style>
+body,td,input,textarea,select,button{font:12px/1.6em Verdana,Helvetica,Arial,sans-serif;}
+body,ul,li,p,form{margin:0;padding:0;}
+a img { border: none; }
+a { color:#000; }
+</style>
+<script type="text/javascript" src="../javascript/common.js"></script>
+<script type="text/javascript" src="../javascript/menu.js"></script>
+<script type="text/javascript" src="../javascript/bbcode.js"></script>
+<script type="text/javascript" src="../javascript/ajax.js"></script>
+<script type="text/javascript">
+	var infloat = 0;
+	var InFloat_Editor = 'floatlayout_newthread';
+	var editoraction = 'newthread';
+	var lang	= new Array();
+	lang['post_bbxcode_code'] = '请输入要插入的代码';
+	lang['post_bbxcode_quote'] = '请输入要插入的引用';
+	lang['post_bbxcode_free'] = '请输入要插入的免费信息';
+	lang['post_bbxcode_hide'] = '请输入要插入的隐藏内容';
+	lang['board_allowed'] = '系统限制';
+	lang['lento'] = '到';
+	lang['bytes'] = '字节';
+	lang['post_curlength'] = '当前长度';
+	lang['post_title_and_message_isnull'] = '请完成标题或内容栏。';
+	lang['post_title_toolong'] = '您的标题超过 60 个字符的限制。';
+	lang['post_message_length_invalid'] = '您的帖子长度不符合要求。';
+	lang['post_type_isnull'] = '请选择主题对应的分类。';
+	lang['post_reward_credits_null'] = '对不起，您输入悬赏积分。';
+	lang['post_attachment_ext_notallowed']	= '对不起，不支持上传此类扩展名的附件。';
+	lang['post_attachment_img_invalid']		= '无效的图片文件。';
+	lang['post_attachment_deletelink']		= '删除';
+	lang['post_attachment_insert']			= '点击这里将本附件插入帖子内容中当前光标的位置';
+	lang['post_attachment_insertlink']		= '插入';
+
+	lang['enter_list_item']			= "输入一个列表项目.\r\n留空或者点击取消完成此列表.";
+	lang['enter_link_url']			= "请输入链接的地址:";
+	lang['enter_image_url']			= "请输入图片链接地址:";
+	lang['enter_email_link']		= "请输入此链接的邮箱地址:";
+	lang['fontname']				= "字体";
+	lang['fontsize']				= "大小";
+	lang['post_advanceeditor']		= "全部功能";
+	lang['post_simpleeditor']		= "简单功能";
+	lang['submit']					= "提交";
+	lang['cancel']					= "取消";
+	lang['post_autosave_none'] = "没有可以恢复的数据";
+	lang['post_autosave_confirm'] = "本操作将覆盖当前帖子内容，确定要恢复数据吗？";
+	lang['enter_tag_option']		= "请输入 %1 标签的选项:";
+	lang['enter_table_rows']		= "请输入行数，最多 30 行:";
+	lang['enter_table_columns']		= "请输入列数，最多 30 列:";
+
+	var editorcss = getQueryString('style')==''?'editor/editor.css':getQueryString('style');
+	var typerequired = parseInt('0');
+//		var bbinsert = parseInt('1');
+	var seccodecheck = parseInt('0');
+	var secqaacheck = parseInt('0');
+	var special = parseInt('0');
+	var isfirstpost = 1;
+	var allowposttrade = parseInt('1');
+	var allowpostreward = parseInt('1');
+	var allowpostactivity = parseInt('1');
+
+	var bbinsert = parseInt('1');
+	var editorid = 'e';
+	var allowhtml = parseInt('1');
+	var forumallowhtml = parseInt('1');
+	var allowsmilies = 0;	
+	var allowbbcode = parseInt('1');
+	var allowimgcode = 1;
+
+	var wysiwyg = (is_ie || is_moz || (is_opera && opera.version() >= 9)) && parseInt('1') && allowbbcode == 1 ? 1 : 0;
+	var allowswitcheditor = 1;
+
+	var smileyinsert = parseInt('1');
+	var smiliesCount = 16;//显示表情总数
+	var colCount = 8; //每行显示表情个数
+	var title = "";				   //标题
+	var showsmiliestitle = 1;        //是否显示标题(0不显示 1显示)
+	var smiliesIsCreate = 0;		   //编辑器是否已被创建(0否 1是)
+	var smilies_HASH = {};
+
+	var smiliePageSize = 16; //表情每页显示数量 (共4列)
+	//table变量
+	var msgheader = "margin:0 2em; font: 11px Arial, Tahoma; font-weight: bold; background: #F3F8D7; padding: 5px;";
+	var msgborder = "margin: 0 2em; padding: 10px; border: 1px solid #dbddd3; word-break: break-all; background-color: #fdfff2;";
+	var INNERBORDERCOLOR = "#D6E0EF";
+	var BORDERWIDTH = "1";
+	var BORDERCOLOR = "#7ac4ea";
+	var TABLEBG = '#FFF';
+	var ALTBG2 = "#ffffff";
+	var FONTSIZE = "12px";
+	var FONT = "Tahoma, Verdana";
+
+	var altbg1 = '#f5fbff';
+	var altbg2 = 'background: #ffffff;font: 12px Tahoma, Verdana;';
+	var tableborder = 'background: #D6E0EF;border: 1px solid #7ac4ea;';
+
+	function showInputDialog(cmd)
+	{
+		var selection = getSel();
+		if(is_ie) {
+			var pos = getCaret();
+		}
+		var ctrlid = editorid + '_cus_' + cmd;
+		//var tag = cmd == 'insertflash' ? 'img' : (cmd == 'createlink' ? 'url' : 'email');
+		var str = '<br />请输入Flash的地址:<br /><input type="text" id="' + ctrlid + '_param_1" size="50" value=""><br />宽度: <input type="text" id="' + ctrlid + '_param_2" size="6" value="400">px   高度: <input type="text" id="' + ctrlid + '_param_3" size="6" value="300">px<br />';
+		var div = editorMenu(ctrlid, str);
+		$(ctrlid + '_param_1').focus();
+		$(ctrlid + '_submit').onclick = function() {
+			checkFocus();
+			if(is_ie) {
+				setCaret(pos);
+			}
+			var v = $(ctrlid + '_param_1').value;
+			var width = isNaN(parseInt($(ctrlid + '_param_2').value)) ? 400 : parseInt($(ctrlid + '_param_2').value);
+			var height = isNaN(parseInt($(ctrlid + '_param_3').value)) ? 300 : parseInt($(ctrlid + '_param_3').value);
+			if(v != '') {
+				var text = selection ? selection : v;
+				var flashcode = '<embed type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" width="' + width + '" height="' + height + '" src="' + text + '" /></div>';
+				insertText(flashcode);
+			}
+			hideMenu();
+			document.body.removeChild(div);
+		}
+	}
+</script>
+</head>
+<body>
+<div id="cp_editor_owner">
+<form id="postform">
+<input style="display:none;" type="checkbox" name="htmlon" id="htmlon" value="1" checked />
+<input type="hidden" name="wysiwyg" id="e_mode" value="0" />
+<div class="postbox" id="postbox">
+	<div id="e_controls" class="editorrow" style="margin-top:0;">
+		<div class="editor">
+			<a id="e_switcher" class="plugeditor editormode"><input type="checkbox" name="checkbox" value="0" onclick="switchEditor(this.checked?0:1)">源码</a>
+			<div class="editorbtn" id="editorbtn">
+				<a id="e_cmd_bold" title="粗体" href="javascript:;"></a>
+				<a id="e_popup_simple" title="粗体 斜体 下划线" href="javascript:;"></a>
+				<a id="e_popup_fontname" title="字体" href="javascript:;"/></a>
+				<a id="e_popup_fontsize" title="大小" href="javascript:;"/></a>
+				<a id="e_popup_forecolor" title="颜色" href="javascript:;"/></a>
+
+				<a id="e_popup_justify" title="对齐" href="javascript:;"/></a>
+				<a id="e_cmd_createlink" title="链接" href="javascript:;"/></a>
+				<a id="e_cmd_email" title="Email" href="javascript:;"/></a>
+				<a id="e_cmd_insertimage" title="图片" href="javascript:;"/></a>
+				<a id="e_cmd_quote" title="引用" href="javascript:;"/></a>
+				<a id="e_popup_list" title="列表" href="javascript:;"/></a>
+				<a id="e_popup_dent" title="缩进" href="javascript:;"/></a>
+				<a id="e_popup_float" title="浮动" href="javascript:;"/></a>
+
+				<a id="e_cmd_table" title="表格" style="display: none;" href="javascript:;"/></a>
+				<a id="e_popup_tools" title="工具" href="javascript:;"></a>
+			</div>
+		</div>
+		<div class="editortoolbar">
+			<div class="popupmenu_popup fontstyle_menu" id="e_popup_simple_menu" style="display: none">
+			<ul unselectable="on">
+				<li><a id="e_cmd_italic" title="斜体">斜体</a></li>
+				<li><a id="e_cmd_underline" title="下划线">下划线</a></li>
+			</ul>
+			</div>
+
+			<div class="popupmenu_popup fontname_menu" id="e_popup_fontname_menu" style="display: none">
+			<ul unselectable="on">
+				<li onclick="bbxcode('fontname', '仿宋_GB2312')" style="font-family: 仿宋_GB2312" unselectable="on">仿宋_GB2312</li>
+				<li onclick="bbxcode('fontname', '黑体')" style="font-family: 黑体" unselectable="on">黑体</li>
+				<li onclick="bbxcode('fontname', '楷体_GB2312')" style="font-family: 楷体_GB2312" unselectable="on">楷体_GB2312</li>
+				<li onclick="bbxcode('fontname', '宋体')" style="font-family: 宋体" unselectable="on">宋体</li>
+				<li onclick="bbxcode('fontname', '新宋体')" style="font-family: 新宋体" unselectable="on">新宋体</li>
+				<li onclick="bbxcode('fontname', '微软雅黑')" style="font-family: 微软雅黑" unselectable="on">微软雅黑</li>
+				<li onclick="bbxcode('fontname', 'TrebuchetMS')" style="font-family: TrebuchetMS" unselectable="on">TrebuchetMS</li>
+				<li onclick="bbxcode('fontname', 'Tahoma')" style="font-family: Tahoma" unselectable="on">Tahoma</li>
+				<li onclick="bbxcode('fontname', 'Arial')" style="font-family: Arial" unselectable="on">Arial</li>
+				<li onclick="bbxcode('fontname', 'Impact')" style="font-family: Impact" unselectable="on">Impact</li>
+				<li onclick="bbxcode('fontname', 'Verdana')" style="font-family: Verdana" unselectable="on">Verdana</li>
+				<li onclick="bbxcode('fontname', 'TimesNewRoman')" style="font-family: TimesNewRoman" unselectable="on">TimesNewRoman</li>
+			</ul>
+			</div>
+
+			<div class="popupmenu_popup fontsize_menu" id="e_popup_fontsize_menu" style="display: none">
+			<ul unselectable="on">
+				<li onclick="bbxcode('fontsize', 1)" unselectable="on"><font size="1" unselectable="on">1</font></li>
+				<li onclick="bbxcode('fontsize', 2)" unselectable="on"><font size="2" unselectable="on">2</font></li>
+				<li onclick="bbxcode('fontsize', 3)" unselectable="on"><font size="3" unselectable="on">3</font></li>
+				<li onclick="bbxcode('fontsize', 4)" unselectable="on"><font size="4" unselectable="on">4</font></li>
+				<li onclick="bbxcode('fontsize', 5)" unselectable="on"><font size="5" unselectable="on">5</font></li>
+				<li onclick="bbxcode('fontsize', 6)" unselectable="on"><font size="6" unselectable="on">6</font></li>
+				<li onclick="bbxcode('fontsize', 7)" unselectable="on"><font size="7" unselectable="on">7</font></li>
+			</ul>
+			</div>
+			<div class="popupmenu_popup" id="e_popup_forecolor_menu" style="display: none">
+			<table cellpadding="0" cellspacing="0" border="0" unselectable="on" style="width: auto;"><tr>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'Black')" unselectable="on"><div style="background-color: Black" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'Sienna')" unselectable="on"><div style="background-color: Sienna" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'DarkOliveGreen')" unselectable="on"><div style="background-color: DarkOliveGreen" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'DarkGreen')" unselectable="on"><div style="background-color: DarkGreen" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'DarkSlateBlue')" unselectable="on"><div style="background-color: DarkSlateBlue" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'Navy')" unselectable="on"><div style="background-color: Navy" unselectable="on"></div></td>
+
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'Indigo')" unselectable="on"><div style="background-color: Indigo" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'DarkSlateGray')" unselectable="on"><div style="background-color: DarkSlateGray" unselectable="on"></div></td>
+</tr><tr>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'DarkRed')" unselectable="on"><div style="background-color: DarkRed" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'DarkOrange')" unselectable="on"><div style="background-color: DarkOrange" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'Olive')" unselectable="on"><div style="background-color: Olive" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'Green')" unselectable="on"><div style="background-color: Green" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'Teal')" unselectable="on"><div style="background-color: Teal" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'Blue')" unselectable="on"><div style="background-color: Blue" unselectable="on"></div></td>
+
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'SlateGray')" unselectable="on"><div style="background-color: SlateGray" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'DimGray')" unselectable="on"><div style="background-color: DimGray" unselectable="on"></div></td>
+</tr><tr>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'Red')" unselectable="on"><div style="background-color: Red" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'SandyBrown')" unselectable="on"><div style="background-color: SandyBrown" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'YellowGreen')" unselectable="on"><div style="background-color: YellowGreen" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'SeaGreen')" unselectable="on"><div style="background-color: SeaGreen" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'MediumTurquoise')" unselectable="on"><div style="background-color: MediumTurquoise" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'RoyalBlue')" unselectable="on"><div style="background-color: RoyalBlue" unselectable="on"></div></td>
+
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'Purple')" unselectable="on"><div style="background-color: Purple" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'Gray')" unselectable="on"><div style="background-color: Gray" unselectable="on"></div></td>
+</tr><tr>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'Magenta')" unselectable="on"><div style="background-color: Magenta" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'Orange')" unselectable="on"><div style="background-color: Orange" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'Yellow')" unselectable="on"><div style="background-color: Yellow" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'Lime')" unselectable="on"><div style="background-color: Lime" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'Cyan')" unselectable="on"><div style="background-color: Cyan" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'DeepSkyBlue')" unselectable="on"><div style="background-color: DeepSkyBlue" unselectable="on"></div></td>
+
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'DarkOrchid')" unselectable="on"><div style="background-color: DarkOrchid" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'Silver')" unselectable="on"><div style="background-color: Silver" unselectable="on"></div></td>
+</tr><tr>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'Pink')" unselectable="on"><div style="background-color: Pink" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'Wheat')" unselectable="on"><div style="background-color: Wheat" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'LemonChiffon')" unselectable="on"><div style="background-color: LemonChiffon" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'PaleGreen')" unselectable="on"><div style="background-color: PaleGreen" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'PaleTurquoise')" unselectable="on"><div style="background-color: PaleTurquoise" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'LightBlue')" unselectable="on"><div style="background-color: LightBlue" unselectable="on"></div></td>
+
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'Plum')" unselectable="on"><div style="background-color: Plum" unselectable="on"></div></td>
+				<td class="editor_colornormal" onclick="bbxcode('forecolor', 'White')" unselectable="on"><div style="background-color: White" unselectable="on"></div></td>
+</tr><tr>
+			</tr>
+			</table>
+			</div>
+			<div class="popupmenu_popup" id="e_popup_justify_menu" style="display: none">
+			<ul unselectable="on">
+				<li><a id="e_cmd_justifyleft" title="居左" href="#">居左</a></li>
+				<li><a id="e_cmd_justifycenter" title="居中" href="#">居中</a></li>
+				<li><a id="e_cmd_justifyright" title="居右" href="#">居右</a></li>
+			</ul>
+			</div>
+
+			<div class="popupmenu_popup" id="e_popup_dent_menu" style="display: none">
+			<ul unselectable="on">
+				<li><a id="e_cmd_indent" title="增加缩进">增加缩进</a></li>
+				<li><a id="e_cmd_outdent" title="减少缩进">减少缩进</a></li>
+			</ul>
+			</div>
+
+			<div class="popupmenu_popup" id="e_popup_float_menu" style="display: none">
+			<ul unselectable="on">
+				<li><a id="e_cmd_floatleft" title="左浮动">左浮动</a></li>
+				<li><a id="e_cmd_floatright" title="右浮动">右浮动</a></li>
+			</ul>
+			</div>
+
+			<div class="popupmenu_popup" id="e_popup_list_menu" style="display: none">
+			<ul unselectable="on">
+				<li><a id="e_cmd_insertorderedlist" title="排序的列表">排序的列表</a></li>
+				<li><a id="e_cmd_insertunorderedlist" title="未排序的列表">未排序的列表</a></li>
+			</ul>
+			</div>
+
+			<div class="popupmenu_popup" id="e_popup_tools_menu" style="display: none">
+			<ul unselectable="on">
+				<a id="e_cmd_removeformat" title="清除文本格式">清除文本格式</a>
+				<a id="e_cmd_unlink" title="移除链接">移除链接</a>
+				<a id="e_cmd_undo" title="撤销">撤销</a>
+				<a id="e_cmd_redo" title="重做">重做</a>
+				<a id="e_cmd_checklength" title="字数检查">字数检查</a>
+				<a id="e_cmd_clearcontent" title="清空内容">清空内容</a>
+				<br />
+				<a id="e_cmd_autosave" title="自动保存">自动保存<em id="autsavet">(60秒)</em></a>
+				<a id="e_cmd_saveData" title="保存数据">保存数据</a>
+				<a id="e_cmd_loadData" title="恢复数据">恢复数据</a>
+			</ul>
+			</div>
+
+			<div class="popupmenu_popup" id="e_cmd_insertimage_menu" style="display: none" unselectable="on">
+				<div class="popupmenu_option" unselectable="on" id="insertimage_www_div">
+					请输入图片地址:<br /><input id="e_cmd_insertimage_param_url" style="width: 300px;" value="" class="txt" type="text" onkeydown="editorMenuEvent_onkeydown(this);" />
+					<br /><center><input id="e_cmd_insertimage_submit" value="提交" type="button" onclick="insertimagesubmit()" /> &nbsp; <input onclick="hideMenu();" value="取消" type="button" /></center>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<div class="newediter">
+		<table cellpadding="0" cellspacing="0" border="0" width="100%" style="table-layout:fixed">
+			<tr><td><textarea class="autosave max txt" name="message" id="e_textarea" tabindex="1" style="height:300px"></textarea></td></tr>
+		</table>
+	</div>
+</div>
+</form>
+</div>
+<script type="text/javascript">
+	var textobj = $(editorid + '_textarea');
+	var charset = 'utf-8';
+</script>
+<script type="text/javascript">
+	var thumbwidth = parseInt(400);
+	var thumbheight = parseInt(300);
+	var extensions = '';
+</script>
+<script src="../javascript/post.js" type="text/javascript"></script>
+<script type="text/javascript">
+	var fontoptions = new Array("仿宋_GB2312", "黑体", "楷体_GB2312", "宋体", "新宋体", "微软雅黑", "Trebuchet MS", "Tahoma", "Arial", "Impact", "Verdana", "Times New Roman");
+	//var custombbcodes = new Array();
+	//custombbcodes["qq"] = {'prompt' : '请输入显示在线状态 QQ 号码:'};
+</script>
+<script type="text/javascript" src="../javascript/editor.js"></script>
+<script type="text/javascript" src="../javascript/post_editor.js"></script>
+<script type="text/javascript">
+	initialized = false;
+	newEditor(1);
+	//textobj.value = bbcode2html(textobj.value);
+
+		// 需要开启tools
+	if(!getcookie('disableautosave')) {
+		clearInterval(autosaveDatai);
+		autosaveData(1);
+	}
+	if(is_ie >= 5 || is_moz >= 2) {
+		window.onbeforeunload = function () {
+			try {
+				saveData(wysiwyg ? editdoc.body.innerHTML : textobj.value);
+			} catch(e) {}
+		};
+	}
+	//alert(textobj.value);
+	//textobj.value =  "";
+</script>
+</body>
+</html>

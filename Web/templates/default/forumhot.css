@@ -1,0 +1,29 @@
+.forumhot table{table-layout:fixed;}
+.forumhot td{vertical-align:top;}
+.forumhot .title_bar{background:url(images/hotbg.png) repeat-x 0 0;height:30px;line-height:30px;border-top:1px solid #DCDCDC;padding-left:12px;}
+#focusViwer{margin-top:8px;margin-left:12px;margin-bottom:8px;width:360px;height:216px;}
+.window {height:216px;width: 360px;overflow: hidden;position:relative;}
+.image_reel ul {position: absolute;top: 0;left: 0;}
+	.image_reel li{float:left;width:360px;display:inline;height:216px;}
+	.image_reel li a{display:block;height:216px;line-height:216px;text-align:center;vertical-align:middle;}
+.paging {position:absolute;bottom:0;right:0;width:360px;height:30px;z-index:100;text-align:right;line-height:30px;background-color:#000;display:none;}
+	.paging a {padding:2px 5px;text-decoration: none;color: #FFF;}
+	.paging a.active {font-weight:700;background:#005DC3;color:#FFF;border:1px solid #224BAE;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;}
+	.paging a:hover {font-weight: bold;}
+	.paging span{float:left;color:#FFF;margin-left:10px;display:block;height:30px;overflow:hidden;width:240px;text-align:left;}
+.pd{overflow:hidden;padding:0 15px;height:238px;}
+.newHotB{margin-top:10px;}
+.tab_forumhot{margin-top:4px;height:26px;line-height:26px;}
+	.tab_forumhot li{float:left;display:inline;float:left;font-weight:100;height:25px;line-height: 25px;padding:0px 12px 0;cursor:pointer;}
+	.tab_forumhot li.current {background:#FFF;border-color: #DCDCDC #DCDCDC;border-style: solid solid none;border-width: 1px 1px 0;color:#333;}
+.i_hot{overflow:hidden;height:66px;margin-left:6px;margin-bottom:10px;}
+	.i_hot dt{font-weight:700;font-size:16px;}
+	.i_hot dd{color:#666;padding:5px 0 10px;}
+.hotlist{overflow:hidden;float:left;width:49.5%;}
+	.hotlist li{overflow:hidden;height:23px;line-height:23px;word-break:break-all;}
+	.hotlist li em{float:right;font-style:normal;padding-right:10px;}
+	.hotlist li a.xg2{word-wrap:break-word;}
+.one{background:url(images/sortnum.png) no-repeat 0 6px;}
+.two{background:url(images/sortnum.png) no-repeat 0 -225px;}
+	.one li,.two li{padding-left:20px;}
+	.one li img,.two li img{vertical-align:middle;margin-right:4px;margin-top:4px;float:left;}

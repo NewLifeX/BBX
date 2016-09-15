@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{6AC03465-CE02-4F00-8B8E-A771C687482B}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <AssemblyName>BBX.Control</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <WarningLevel>4</WarningLevel>
+    <RootNamespace>BBX.Control</RootNamespace>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <OutputPath>..\Web\bin\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <Optimize>false</Optimize>
+    <ErrorReport>prompt</ErrorReport>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>..\Web\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="NewLife.Core">
+      <HintPath>..\DLL\NewLife.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="XCode">
+      <HintPath>..\DLL\XCode.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Version.cs">
+      <Link>Properties\Version.cs</Link>
+    </Compile>
+    <Compile Include="BorderStyleConverter.cs" />
+    <Compile Include="Button.cs" />
+    <Compile Include="Calendar.cs" />
+    <Compile Include="CanBeNullControlsConverter.cs" />
+    <Compile Include="CheckBoxList.cs" />
+    <Compile Include="ColorPicker.cs" />
+    <Compile Include="DataGrid.cs" />
+    <Compile Include="DropDownList.cs" />
+    <Compile Include="DropDownTreeList.cs" />
+    <Compile Include="Hint.cs" />
+    <Compile Include="ListBox.cs" />
+    <Compile Include="ListBoxTreeList.cs" />
+    <Compile Include="RadioButtonList.cs" />
+    <Compile Include="RequiredFieldTypeControlsConverter.cs" />
+    <Compile Include="TabControl.cs" />
+    <Compile Include="TabPage.cs" />
+    <Compile Include="TabPageCollection.cs" />
+    <Compile Include="TextBox.cs" />
+    <Compile Include="ThumbnailImageConverter.cs" />
+    <Compile Include="UpFile.cs" />
+    <Compile Include="WebControl.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BBX.Common\BBX.Common.csproj">
+      <Project>{D4CD57D2-3084-4878-BFDC-8C15603F6878}</Project>
+      <Name>BBX.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

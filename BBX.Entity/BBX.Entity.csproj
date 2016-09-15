@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{F2D7522A-311D-46FA-B7CE-BD5B7686EAB2}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <AssemblyName>BBX.Entity</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <WarningLevel>4</WarningLevel>
+    <RootNamespace>BBX.Entity</RootNamespace>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <OutputPath>..\Web\bin\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <Optimize>false</Optimize>
+    <ErrorReport>prompt</ErrorReport>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>..\..\Bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NewLife.Core">
+      <HintPath>..\DLL\NewLife.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="XCode">
+      <HintPath>..\DLL\XCode.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Version.cs">
+      <Link>Properties\Version.cs</Link>
+    </Compile>
+    <Compile Include="Common\EntityBase.cs" />
+    <Compile Include="MyManageProvider.cs" />
+    <Compile Include="_OLD\BatchSetParams.cs" />
+    <Compile Include="_OLD\CreditsOperationType.cs" />
+    <Compile Include="_OLD\CustomEditorButtonInfo.cs" />
+    <Compile Include="_OLD\ForumSpecialUserPower.cs" />
+    <Compile Include="_OLD\PostOrderType.cs" />
+    <Compile Include="Common\PostpramsInfo.cs" />
+    <Compile Include="_OLD\ShowtopicPagePostInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_OLD\TopicTimeType.cs" />
+    <Compile Include="_OLD\UserExtcreditsInfo.cs" />
+    <Compile Include="全局\趋势统计.Biz.cs" />
+    <Compile Include="全局\趋势统计.cs" />
+    <Compile Include="内容\主题.Biz.cs" />
+    <Compile Include="内容\主题.cs" />
+    <Compile Include="内容\主题标签.Biz.cs" />
+    <Compile Include="内容\主题标签.cs" />
+    <Compile Include="内容\单词.Biz.cs" />
+    <Compile Include="内容\单词.cs" />
+    <Compile Include="内容\我的主题.Biz.cs" />
+    <Compile Include="内容\我的主题.cs" />
+    <Compile Include="内容\我的帖子.Biz.cs" />
+    <Compile Include="内容\我的帖子.cs" />
+    <Compile Include="内容\我的附件.Biz.cs" />
+    <Compile Include="内容\我的附件.cs" />
+    <Compile Include="内容\标签.Biz.cs" />
+    <Compile Include="内容\标签.cs" />
+    <Compile Include="内容\短消息.Biz.cs" />
+    <Compile Include="内容\短消息.cs" />
+    <Compile Include="论坛\辩论.Biz.cs" />
+    <Compile Include="论坛\辩论.cs" />
+    <Compile Include="论坛\辩论字段.Biz.cs" />
+    <Compile Include="论坛\辩论字段.cs" />
+    <Compile Include="论坛\辩论项.Biz.cs" />
+    <Compile Include="论坛\辩论项.cs" />
+    <Compile Include="内容\通知.Biz.cs" />
+    <Compile Include="内容\通知.cs" />
+    <Compile Include="内容\附件.Biz.cs" />
+    <Compile Include="内容\附件.cs" />
+    <Compile Include="内容\附件类型.Biz.cs" />
+    <Compile Include="内容\附件类型.cs" />
+    <Compile Include="工具\奖励日志.cs" />
+    <Compile Include="工具\等级日志.cs" />
+    <Compile Include="工具\统计.Biz.cs" />
+    <Compile Include="工具\统计.cs" />
+    <Compile Include="工具\统计信息.Biz.cs" />
+    <Compile Include="工具\统计信息.cs" />
+    <Compile Include="工具\统计变量.Biz.cs" />
+    <Compile Include="工具\统计变量.cs" />
+    <Compile Include="工具\订单.Biz.cs" />
+    <Compile Include="工具\订单.cs" />
+    <Compile Include="用户\Qq空间连接令牌.Biz.cs" />
+    <Compile Include="用户\Qq空间连接令牌.cs" />
+    <Compile Include="工具\位置.Biz.cs" />
+    <Compile Include="工具\位置.cs" />
+    <Compile Include="全局\公告.Biz.cs" />
+    <Compile Include="全局\公告.cs" />
+    <Compile Include="界面\BB代码.Biz.cs" />
+    <Compile Include="界面\BB代码.cs" />
+    <Compile Include="界面\勋章.Biz.cs" />
+    <Compile Include="界面\勋章.cs" />
+    <Compile Include="界面\勋章日志.Biz.cs" />
+    <Compile Include="界面\勋章日志.cs" />
+    <Compile Include="用户\在线.Biz.cs" />
+    <Compile Include="用户\在线.cs" />
+    <Compile Include="界面\在线列表.Biz.cs" />
+    <Compile Include="界面\在线列表.cs" />
+    <Compile Include="用户\在线时间.Biz.cs" />
+    <Compile Include="用户\在线时间.cs" />
+    <Compile Include="用户\失败登录.Biz.cs" />
+    <Compile Include="用户\失败登录.cs" />
+    <Compile Include="工具\奖励日志.Biz.cs" />
+    <Compile Include="工具\威望日志.Biz.cs" />
+    <Compile Include="工具\威望日志.cs" />
+    <Compile Include="界面\表情符号.Biz.cs" />
+    <Compile Include="界面\表情符号.cs" />
+    <Compile Include="论坛\帖子.Biz.cs" />
+    <Compile Include="论坛\帖子.cs" />
+    <Compile Include="界面\导航.Biz.cs" />
+    <Compile Include="界面\导航.cs" />
+    <Compile Include="论坛\帖子索引.Biz.cs" />
+    <Compile Include="论坛\帖子索引.cs" />
+    <Compile Include="论坛\投票.Biz.cs" />
+    <Compile Include="论坛\投票.cs" />
+    <Compile Include="论坛\投票项.Biz.cs" />
+    <Compile Include="论坛\投票项.cs" />
+    <Compile Include="内容\主题鉴定.Biz.cs" />
+    <Compile Include="内容\主题鉴定.cs" />
+    <Compile Include="内容\主题类型.Biz.cs" />
+    <Compile Include="内容\主题类型.cs" />
+    <Compile Include="内容\主题缓存.Biz.cs" />
+    <Compile Include="内容\主题缓存.cs" />
+    <Compile Include="全局\帮助.Biz.cs" />
+    <Compile Include="全局\帮助.cs" />
+    <Compile Include="工具\推送日志.Biz.cs" />
+    <Compile Include="工具\推送日志.cs" />
+    <Compile Include="全局\搜索缓存.Biz.cs" />
+    <Compile Include="全局\搜索缓存.cs" />
+    <Compile Include="工具\支付日志.Biz.cs" />
+    <Compile Include="工具\支付日志.cs" />
+    <Compile Include="全局\收藏.Biz.cs" />
+    <Compile Include="全局\收藏.cs" />
+    <Compile Include="界面\模板.Biz.cs" />
+    <Compile Include="界面\模板.cs" />
+    <Compile Include="论坛\版主.Biz.cs" />
+    <Compile Include="论坛\版主.cs" />
+    <Compile Include="工具\版主管理日志.Biz.cs" />
+    <Compile Include="工具\版主管理日志.cs" />
+    <Compile Include="用户\用户.Biz.cs" />
+    <Compile Include="用户\用户.cs" />
+    <Compile Include="用户\用户字段.Biz.cs" />
+    <Compile Include="用户\用户字段.cs" />
+    <Compile Include="用户\用户组.Biz.cs" />
+    <Compile Include="用户\用户组.cs" />
+    <Compile Include="用户\用户链接.Biz.cs" />
+    <Compile Include="用户\用户链接.cs" />
+    <Compile Include="全局\广告.Biz.cs" />
+    <Compile Include="全局\广告.cs" />
+    <Compile Include="全局\禁止.Biz.cs" />
+    <Compile Include="全局\禁止.cs" />
+    <Compile Include="工具\等级日志.Biz.cs" />
+    <Compile Include="用户\管理日志.Biz.cs" />
+    <Compile Include="用户\管理日志.cs" />
+    <Compile Include="用户\管理组.Biz.cs" />
+    <Compile Include="用户\管理组.cs" />
+    <Compile Include="全局\计划任务.Biz.cs" />
+    <Compile Include="全局\计划任务.cs" />
+    <Compile Include="论坛\论坛.Biz.cs" />
+    <Compile Include="论坛\论坛.cs" />
+    <Compile Include="论坛\论坛字段.Biz.cs" />
+    <Compile Include="论坛\论坛字段.cs" />
+    <Compile Include="界面\论坛链接.Biz.cs" />
+    <Compile Include="界面\论坛链接.cs" />
+    <Compile Include="用户\邀请.Biz.cs" />
+    <Compile Include="用户\邀请.cs" />
+    <Compile Include="用户\链接绑定日志.Biz.cs" />
+    <Compile Include="用户\链接绑定日志.cs" />
+    <Compile Include="内容\附件支付日志.Biz.cs" />
+    <Compile Include="内容\附件支付日志.cs" />
+    <Compile Include="用户\验证注册.Biz.cs" />
+    <Compile Include="用户\验证注册.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BBX.Common\BBX.Common.csproj">
+      <Project>{D4CD57D2-3084-4878-BFDC-8C15603F6878}</Project>
+      <Name>BBX.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="_Entities\BBX.xml">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_Entities\XCoder.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>XCoder.log</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,104 @@
+﻿<%if {topic.Special}==1%>
+<!--投票区开始-->
+<div class="pollpanel">
+	<h4>
+	投票：<strong>{topic.title}</strong>
+	<%if {pollinfo.multiple}==1%>
+	- 多选(最多可选{pollinfo.MaxChoices}项)
+	<%/if%>
+	- 截止时间：{pollinfo.expiration}
+	</h4>
+	<table border="0" cellpadding="0" cellspacing="0" summary="pollpanel">
+        投票编号{topicid}
+	<%loop (PollOption) polloption PollOption.FindAllByTid(topicid)%>
+	<tbody>
+	<tr>
+		<%if {allowvote}%>
+		<td class="selector">
+			<%if {pollinfo.multiple}==1%>
+				<input type="checkbox" name="pollitemid" value="{polloption.ID}" onclick='checkbox(this)'/>
+			<%else%>
+				<input type="radio" name="pollitemid"  value="{polloption.ID}"  />
+			<%/if%>
+		</td>
+		<%/if%>
+		<td colspan="2">
+			{polloption.DisplayOrder}. {polloption.Name}
+		</td>
+	</tr>
+	<%if {showpollresult}%>
+	<tr>
+		<%if {allowvote}%>
+		<td> </td>
+		<%/if%>
+		<td class="optionvessel">
+			<div class="optionbar">
+			<%set (int){styleid}={polloption[_id]} % 10%>
+				</div>
+		</td>
+		<td>
+		</td>
+	</tr>
+	<%/if%>
+	</tbody>
+	<%/loop%>
+	<script language="javascript">
+	    var max_obj = {pollinfo.MaxChoices};
+	var p = 0;
+	
+	function checkbox(obj) {
+		if(obj.checked) {
+			p++;
+			for (var i = 0; i < $('postsform').elements.length; i++) {
+				var e = $('postsform').elements[i];
+				if(p == max_obj) {
+					if(e.name.match('pollitemid') && !e.checked) {
+						e.disabled = true;
+					}
+				}
+			}
+		} else {
+			p--;
+			for (var i = 0; i < $('postsform').elements.length; i++) {
+				var e = $('postsform').elements[i];
+				if(e.name.match('pollitemid') && e.disabled) {
+					e.disabled = false;
+				}
+			}
+		}
+	}	   
+	 
+	function displayvoter(objid) {
+		if(objid.style.display == 'block') {
+		   objid.style.display = 'none';
+		}
+		else {
+		   objid.style.display = 'block';
+		}
+	}	    
+	</script>
+	<tr>
+		<td colspan="2">
+			<%if {usergroupinfo.AllowVote}%>
+				<%if {allowvote}%>
+					<button  name="Submit" onclick="$('postsform').action='poll.aspx?topicid={topicid}';$('postsform').submit();" >马上投票</button>
+				<%else%>							
+					提示: 您已经投过票或者投票已经过期
+				<%/if%>			
+			<%else%>
+				抱歉,您所在的用户组没有参与投票的权限,请注册或登录!
+			<%/if%>
+		 </td>
+	</tr>
+	<%if {voters}!=""&&(pollinfo.AllowView||pollinfo.Uid==userid||ismoder==1)%>   
+	<tbody>
+	<tr>
+		<td colspan="2">
+			<button type="button" onclick="showWindow('mods', 'misc.aspx?action=viewvote&tid={topicid}');return false;" class="pn"/><span>查看投票用户名单>></span></button>
+		</td>
+	</tr>
+	</tbody>
+	<%/if%>
+	</table>
+</div>
+<%/if%>

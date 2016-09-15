@@ -1,0 +1,102 @@
+<link rel="stylesheet" type="text/css" href="{cssdir}/editor.css" />
+<script type="text/javascript" src="{jsdir}/post_editor.js" ></script>
+<script type="text/javascript">
+	var infloat = {infloat};
+	var InFloat_Editor = 'floatlayout_{action}';
+	var editoraction = '{action}';
+	var lang	= new Array();
+	lang['post_bbxcode_code'] = '请输入要插入的代码';
+	lang['post_bbxcode_quote'] = '请输入要插入的引用';
+	lang['post_bbxcode_free'] = '请输入要插入的免费信息';
+	lang['post_bbxcode_hide'] = '请输入要插入的隐藏内容';
+	lang['board_allowed'] = '系统限制';
+	lang['lento'] = '到';
+	lang['bytes'] = '字节';
+	lang['post_curlength'] = '当前长度';
+	lang['post_title_and_message_isnull'] = '请完成标题或内容栏。';
+	lang['post_title_toolong'] = '您的标题超过 60 个字符的限制。';
+	lang['post_message_length_invalid'] = '您的帖子长度不符合要求。';
+	lang['post_type_isnull'] = '请选择主题对应的分类。';
+	lang['post_reward_credits_null'] = '对不起，您输入悬赏积分。';
+	lang['post_attachment_ext_notallowed']	= '对不起，不支持上传此类扩展名的附件。';
+	lang['post_attachment_img_invalid']		= '无效的图片文件。';
+	lang['post_attachment_deletelink']		= '删除';
+	lang['post_attachment_insert']			= '点击这里将本附件插入帖子内容中当前光标的位置';
+	lang['post_attachment_insertlink']		= '插入';
+
+	lang['enter_list_item']			= "输入一个列表项目.\r\n留空或者点击取消完成此列表.";
+	lang['enter_link_url']			= "请输入链接的地址:";
+	lang['enter_image_url']			= "请输入图片链接地址:";
+	lang['enter_email_link']		= "请输入此链接的邮箱地址:";
+	lang['fontname']				= "字体";
+	lang['fontsize']				= "大小";
+	lang['post_advanceeditor']		= "全部功能";
+	lang['post_simpleeditor']		= "简单功能";
+	lang['submit']					= "提交";
+	lang['cancel']					= "取消";
+	lang['post_autosave_none'] = "没有可以恢复的数据";
+	lang['post_autosave_confirm'] = "本操作将覆盖当前帖子内容，确定要恢复数据吗？";
+	lang['enter_tag_option']		= "请输入 %1 标签的选项:";
+	lang['enter_table_rows']		= "请输入行数，最多 30 行:";
+	lang['enter_table_columns']		= "请输入列数，最多 30 列:";
+var editorid = '{editorid}';
+	var editorcss = 'templates/{templatepath}/editor.css';
+	var textobj = $(editorid + '_textarea');
+	var typerequired = parseInt('0');
+	var seccodecheck = parseInt('0');
+	var secqaacheck = parseInt('0');
+	var special = 1;
+	<%if {special}==""%>
+	special = 0;
+	<%/if%>
+	var isfirstpost = 0;
+	<%if {isfirstpost}%>
+	isfirstpost = 1;
+	<%/if%>
+	var allowposttrade = parseInt('1');
+	var allowpostreward = parseInt('1');
+	var allowpostactivity = parseInt('1');
+
+	var bbinsert = parseInt('1');
+	
+	var allowhtml = parseInt('{htmlon}');
+	var forumallowhtml = parseInt('1');
+	var allowsmilies = 1 - parseInt('{smileyoff}');
+	var allowbbcode = {usergroupinfo.AllowCusbbCode.ToString().ToLower()} && {forum.allowbbcode} == 1;
+	var allowimgcode = {forum.allowimgcode} == 1;
+
+	//var wysiwyg = (is_ie || is_moz || (is_opera && opera.version() >= 9)) && parseInt('{config.Defaulteditormode}') && allowbbcode == 1 ? 1 : 0;//bbinsert == 1 ? 1 : 0;
+	var wysiwyg = (BROWSER.ie || BROWSER.firefox || (BROWSER.opera >= 9)) && parseInt('{config.Defaulteditormode}') && allowbbcode == 1 ? 1 : 0;//bbinsert == 1 ? 1 : 0;
+	var allowswitcheditor = {config.allowswitcheditor} == 1 && allowbbcode == 1 ;
+
+	var custombbcodes = { {Caches.GetCustomEditButtonList()} };
+
+	var smileyinsert = parseInt('1');
+	var smiliesCount = 32;//显示表情总数
+	var colCount = 8; //每行显示表情个数
+	var title = "";				   //标题
+	var showsmiliestitle = 1;        //是否显示标题（0不显示 1显示）
+	var smiliesIsCreate = 0;		   //编辑器是否已被创建(0否，1是）
+	
+	var maxpolloptions = parseInt('{config.maxpolloptions}');
+	function alloweditorhtml() {
+		if($('htmlon').checked) {
+			allowhtml = 1;
+			forumallowhtml = 1;
+		} else {
+			allowhtml = 0;
+			forumallowhtml = 0;
+		}
+	}
+	var simplodemode = parseInt('1');
+		editorsimple();
+</script>
+<div id="{editorid}_bbar" class="bbar">
+	<em id="{editorid}_tip"></em>
+	<span id="{editorid}_svdsecond"></span>
+	<a href="javascript:;" onclick="bbxcode('svd',{'titlename':'{config.antispamposttitle}','contentname':'{config.antispampostmessage}'});return false;" id="{editorid}_svd">保存数据</a> |
+	<a href="javascript:;" onclick="bbxcode('rst','{config.antispampostmessage}');return false;" id="{editorid}_rst">恢复数据</a> &nbsp;&nbsp;
+	<a href="javascript:;" onclick="bbxcode('chck');return false;" id="{editorid}_chck">字数检查</a> |
+	<a href="javascript:;" onclick="bbxcode('tpr');return false;" id="{editorid}_tpr">清空内容</a> &nbsp;&nbsp;
+	<span id="{editorid}_resize"><a href="javascript:;" onclick="editorsize('+')">加大编辑框</a> | <a href="javascript:;" onclick="editorsize('-')">缩小编辑器</a><img src="{forumpath}editor/images/resize.gif" onmousedown="editorresize(event)" /></span>
+</div>

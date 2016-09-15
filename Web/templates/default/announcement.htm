@@ -1,0 +1,30 @@
+﻿<%template _header%>
+<div class="wrap s_clear pageinfo">
+	<div id="nav">
+		<a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <strong>公告</strong>
+	</div>
+</div>
+<div class="wrap s_clear" id="wrap">
+<div class="main">
+<%if page_err==0%>
+	<%loop (Announcement) announcement announcementlist%>
+	<dl class="announce s_clear">
+		<dt class="f_bold"><a name="{announcement[id]}"></a>{announcement[title]}</dt>
+		<dd>
+			<%set {aspxrewriteurl} = this.UserInfoAspxRewrite({announcement[posterid]})%>
+			<a href="{aspxrewriteurl}" class="lightlink">{announcement[poster]}</a>  发表于: <span class="time"><%Format({announcement.StartTime}, "yyyy-MM-dd HH:mm")%></span>
+			结束于:<span class="time"><%Format({announcement.EndTime}, "yyyy-MM-dd HH:mm")%></span>
+		</dd>
+		<dd>
+			{announcement[message]}
+		</dd>
+	</dl>
+	<hr class="solidline"/>
+	<%/loop%>
+<%else%>
+	<%template _errmsgbox%>
+<%/if%>
+</div>
+</div>
+<%template _copyright%>
+<%template _footer%>

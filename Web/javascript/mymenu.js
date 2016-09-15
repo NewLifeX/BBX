@@ -1,0 +1,2 @@
+document.write('<li><a href="###" onclick="setcopy(this.href.substr(0, this.href.lastIndexOf(\'/\')) + \'/plugin/spread/?uid=\' + getUserid(), \'已经复制到剪贴板，分享此链接给好友，您将获得积分\');return false;" >我的推广</a></li>');
+            

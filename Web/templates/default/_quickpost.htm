@@ -1,0 +1,88 @@
+<script type="text/javascript"  src="{jsdir}/post.js"></script>
+<%set (string){seditorid} = "infloatquickposttopic"%>	
+<%if {infloat}!=1%>
+<%set {seditorid} = "quickposttopic"%>					
+<%/if%>
+<%set (string){poster} = ""%>
+<%set (int){postid} = 0%>
+<%set (int){postlayer} = 0%>
+<form method="post" name="postform" id="{seditorid}form" action="{forumurl}posttopic.aspx?forumid={forumid}" enctype="multipart/form-data" onsubmit="return fastvalidate(this,'{seditorid}');">
+<div id="quickpost" class="quickpost cl <%if {infloat}!=1%>main<%/if%>">
+    <%if {infloat}!=1%>
+    <h4 class="bm_h">
+    <%else%>
+    <h4 class="flb">
+    <%/if%>
+    <%if {infloat}==1%>
+    <span class="y">
+        <a title="关闭" onclick="hideWindow('newthread')" class="flbc" href="javascript:;">关闭</a>
+    </span>
+    <%/if%>
+    <em>快速发帖</em>
+    <%if {infloat}==1 && {needaudit}%>
+    <span class="needverify">需审核</span>
+    <%/if%>
+    </h4>
+    <div class="bm_inner c cl">
+        <%if {infloat}!=1%>
+        <%if {quickeditorad}!=""%>
+        <div class="leaderboard">{quickeditorad}</div>
+        <%/if%>
+        <%/if%>
+        <div class="pbt cl">
+            <%if {forum.ApplytopicType}==1 && {topictypeselectoptions}!=""%>
+            <div class="ftid">
+                <select name="typeid" id="typeid" <%if {infloat}==1%>tabindex="1"<%else%>tabindex="5"<%/if%>>{topictypeselectoptions}</select>
+                <script type="text/javascript">simulateSelect('typeid');</script>
+            </div>
+            <%/if%>
+            <input type="text" id="{seditorid}title" name="{config.antispamposttitle}" size="60" <%if {infloat}==1%>tabindex="2"<%else%>tabindex="6"<%/if%> value="" class="txt postpx"/>
+            标题最多为60个字符，还可输入<b><span id="chLeft">60</span></b>
+            <script type="text/javascript">checkLength($('{seditorid}title'), 60); //检查标题长度</script>
+            <em id="{seditorid}validatemessage"></em>
+        </div>
+        <div class="pbt cl">
+            <span>
+            <input type="hidden" value="{usergroupinfo.AllowHtml}" name="htmlon" id="htmlon"/>
+            <input type="hidden" value="{parseurloff}" name="parseurloff" id="parseurloff"/>
+            <input type="hidden" value="{smileyoff}" name="smileyoff" id="smileyoff" />
+            <input type="hidden" value="{bbcodeoff}" name="bbcodeoff" id="bbcodeoff"/>
+            <input type="hidden" value="{usesig}" name="usesig" id="usesig"/>
+            </span>
+            <script type="text/javascript">
+                var bbinsert = parseInt('1');
+                var smiliesCount = 24;
+                var colCount = 8;
+            </script>
+            <div <%if {infloat}!=1%>style="margin-right:170px;" <%else%>style="width:600px;"<%/if%>>
+            <%set (char){comma} = ','%>
+            <%template _seditor%>
+            <div class="postarea cl">
+                <div class="postinner">
+                <%if {canposttopic}%>
+                <textarea <%if {infloat}!=1%>rows="5"<%else%>rows="7"<%/if%> cols="80" name="{config.antispampostmessage}" id="{seditorid}message" onKeyDown="seditor_ctlent(event, 'fastvalidate($(\'{seditorid}form\'),\'{seditorid}\')','{seditorid}');" <%if {infloat}==1%>tabindex="3"<%else%>tabindex="6"<%/if%>  style="background-image:url({quickbgad[1]});background-repeat:no-repeat;background-position:50% 50%;" <%if {quickbgad[0]}!=""%> onfocus="$('adlinkbtn').style.display='';$('closebtn').style.display='';this.onfocus=null;"<%/if%>></textarea>
+                <%else%>
+                <div class="hm p_login cl">你需要登录后才可以发帖 <a class="xg2" onclick="hideWindow('register');showWindow('login', this.href);" href="{forumpath}login.aspx">登录</a> | <a class="xg2" onclick="hideWindow('login');showWindow('register', this.href);" href="{forumpath}register.aspx">注册</a></div>
+                <%/if%>
+                </div>
+            </div>
+            </div>
+        </div>
+        <%if {isseccode}%>
+        <div class="pbt" style="position: relative;">
+        <%template _vcode%>
+        </div>
+        <%/if%>
+        <div class="pbt">
+            <%if {canposttopic}%>
+            <button type="button" id="{seditorid}submit" onclick="fastsubmit('{seditorid}');" name="topicsubmit" <%if {infloat}==1%>tabindex="5"<%else%>tabindex="8"<%/if%> class="pn"><span>发表帖子</span></button> <span class="grayfont">[Ctrl+Enter快速发布]</span>
+            <%else%>
+            <button type="button" id="{seditorid}submit" name="topicsubmit" <%if {infloat}==1%>tabindex="5"<%else%>tabindex="8"<%/if%> onclick="hideWindow('register');showWindow('login', '{forumpath}login.aspx');" class="pn"><span>发表帖子</span></button>
+            <%/if%>
+            <a href="###" id="adlinkbtn" style="display:none;" onclick="window.open('{quickbgad[0]}','_blank');">查看背景广告</a>
+            <a href="###" id="closebtn" style="display:none;" onclick="$('quickpostmessage').style.background='';this.style.display='none';$('adlinkbtn').style.display='none';">隐藏</a>
+            <input type="hidden" id="postbytopictype" name="postbytopictype" value="{forum.PostbytopicType}" tabindex="3" />
+        </div>
+    </div>
+</div>
+</form>

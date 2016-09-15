@@ -1,0 +1,91 @@
+﻿<%template _header%>	
+<%if !{ispost}%>
+    <%if page_err==0%>
+	    <div id="floatlayout_topicadmin">
+			<h3 class="flb">
+				<em id="return_emailfriend">{title}</em>
+				<span><a href="javascript:;" class="flbc" onclick="hideWindow('mods')" title="关闭">关闭</a></span>
+			</h3>
+			<div class="c cl">
+				<%if {infloat}==1%>
+				<!--分享开始-->
+				<%if {action}=="emailfriend"%>
+				<table cellspacing="0" cellpadding="2">
+					<tr>
+						<td class="f_bold" style="padding-bottom:10px;">通过 QQ、MSN 分享给朋友</td>
+					</tr>
+					<tr>
+						<td>
+							<input onclick="hideWindow('mods');setcopy('{topictitle}\r\n' + window.location.toString().replace(/#(.*?)$/ig, ''), '帖子地址已经复制到剪贴板，您可以用快捷键 Ctrl + V 粘贴到 QQ、MSN 里。')" type="button" value="复制本帖标题和链接" class="pn" style="font-size:12px;font-weight:400;"/>
+						</td>
+					</tr>
+				</table>
+				<hr class="solidline" />
+				<form id="emailfriendform" name="emailfriendform" method="post" action="misc.aspx?action=emailfriend&sendsubmit=yes&infloat=1" onsubmit="ajaxpost('emailfriendform', 'return_emailfriend', 'return_emailfriend', 'onerror');return false;">
+					<input type="hidden" name="tid" value="{tid}" />
+					<table cellspacing="0" cellpadding="2">
+						<tr>
+							<td class="f_bold">通过 Email 分享给朋友</td>
+						</tr>
+						<tr>
+							<td>
+								接收者 Email<br />
+								<input type="text" name="sendtoemail" size="25" class="txt" /><br />
+								内容<br />
+								<textarea class="txtarea" name="message" style="margin-bottom: 5px; width: 202px; height: 70px;">{emailcontent}</textarea>
+								<br />
+								<input name="sendsubmit" type="submit" value="发送" class="pn" style="font-size:12px;font-weight:400;" />
+							</td>
+						</tr>
+					</table>
+				</form>
+				<hr class="solidline" />
+				<div class="f_bold"><a href="javascript:;" onclick="hideWindow('mods');showWindow('postpm', 'usercppostpm.aspx?tid={tid}&operation=pmfriend');">通过站内短消息分享给朋友</a></div>
+				<%/if%>
+				<!--分享结束-->
+				<!--投票用户名单开始-->
+				<%if {action}=="viewvote"%>
+				<div style="width: 450px; height: 200px; overflow: auto;">
+					<p>查看
+					<select onchange="hideWindow('mods');showWindow('mods', 'misc.aspx?action=viewvote&tid={tid}&polloptionid=' + this.value)" class="ps">
+					<option value="0"<%if {polloptionid}==0%> selected="selected"<%/if%>>全部</option>
+					<%loop (PollOption) polloption pollOptionList%>
+					<option value="{polloption.ID}"<%if {polloptionid}=={polloption.ID}%> selected="selected"<%/if%>>{polloption.name}</option>
+					<%/loop%>
+					</select>项的投票人
+					</p>
+					<ul class="voters cl">
+					{voters}
+					</ul>
+                </div>
+				<%/if%>
+				<!--投票用户名单结束-->
+				<%/if%>
+			</div>
+        </div>
+    <%else%>
+         <%if {infloat}==1%>
+            <div class="float" id="floatboxnarrow" style="width: 500px; height: 350px;">
+	        <h3 class="flb">
+	            <em id="return_emailfriend">{title}</em>
+		        <span><a href="javascript:;" class="flbc" onclick="hideWindow('mods')" title="关闭">关闭</a></span>
+	        </h3>
+	        <div class="gateform" style="margin:0 auto;">
+		    <p>{msgbox_text}</p>
+		    </div>
+		    </div>
+	      <%else%>
+		    <%template _errmsgbox%>
+	      <%/if%>
+    <%/if%>
+<%else%>
+	<%if {infloat}==1%>
+        <script type="text/javascript"  reload="1">
+            hideWindow('mods');	
+        </script>
+	<%else%>
+	    <%template _msgbox%>
+	<%/if%>
+<%/if%>
+<%template _copyright%>
+<%template _footer%>

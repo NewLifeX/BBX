@@ -1,0 +1,18 @@
+﻿<%if {userid}>0%>
+<div class="uc_header">
+	<a class="btn_uc" onclick="showWindow('postpm', this.href, 'get', 0);doane(event);" href="usercppostpm.aspx">+ 写新消息</a>	
+	<ul class="f_tab">
+		<li <%if pagename=="usercpinbox.aspx"%>class="cur_tab"<%/if%>><a href="usercpinbox.aspx">收件箱</a></li>
+		<li <%if {pagename}=="usercpsentbox.aspx"%>class="cur_tab"<%/if%>><a href="usercpsentbox.aspx">发件箱</a></li>
+		<li <%if {pagename}=="usercpdraftbox.aspx"%>class="cur_tab"<%/if%>><a href="usercpdraftbox.aspx">草稿箱</a></li>
+		<li <%if {pagename}=="usercpannouncepm.aspx"%>class="cur_tab"<%/if%>><a href="usercpannouncepm.aspx">公共消息<%if {announcepmcount}>0%>({announcepmcount})<%/if%></a></li>
+		<li <%if pagename=="usercpignorelist.aspx"%>class="cur_tab"<%/if%>><a href="usercpignorelist.aspx">黑名单</a></li>
+		<li <%if pagename=="usercpnotice.aspx"%>class="cur_tab"<%/if%>><a id="notice" onMouseOver="showMenu(this.id);" onMouseOut="showMenu(this.id);" onclick="javascript:window.location.href=this.href;" href="usercpnotice.aspx"><cite class="drop">通知<%if {newnoticecount}>0%>({newnoticecount})<%/if%></cite></a></li>
+	</ul>
+</div>
+<%/if%>
+<ul class="p_pop" id="notice_menu" style="display: none">
+	<li><a href="usercpnotice.aspx?filter=postreply">主题回复</a></li>
+	<li><a href="usercpnotice.aspx?filter=all">全部通知</a></li>
+	<li><a href="usercpnotice.aspx?filter=topicadmin">管理通知</a></li>
+</ul>

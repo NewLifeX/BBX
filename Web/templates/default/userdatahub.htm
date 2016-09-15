@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>用户发帖信息保存功能页面</title>
+    <meta content="用户发帖信息保存功能页面，用来解决当论坛版块设置了重写目录的情况下，保存的userdata无法在posttopic等页面中被读取出来，因为userdata不能跨目录" />
+    <script type="text/javascript" src="{jsdir}/common.js"></script>
+    <script type="text/javascript" src="{jsdir}/template_report.js"></script>
+    <script type="text/javascript" src="{jsdir}/template_utils.js"></script>
+    <script type="text/javascript" src="{jsdir}/ajax.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        function saveDataInIFrame() {
+            var obj = window.parent.document.getElementById('{formname}');
+            if (!obj)
+                return;
+            var data = subject = message = '';
+            for (var i = 0; i < obj.elements.length; i++) {
+                var el = obj.elements[i];
+                if (el.name != '' && (el.tagName == 'SELECT' || el.tagName == 'TEXTAREA' || el.tagName == 'INPUT' && (el.type == 'text' || el.type == 'checkbox' || el.type == 'radio' || el.type == 'hidden' || el.type == 'select')) && el.name.substr(0, 6) != 'attach') {
+                    var elvalue = el.value;
+                    if (el.name == '{config.antispamposttitle}') {
+                        subject = trim(elvalue);
+                    } else if (el.name == '{config.antispampostmessage}') {
+                        if (typeof wysiwyg != 'undefined' && wysiwyg == 1) {
+                            elvalue = html2bbcode(editdoc.body.innerHTML);
+                        }
+                        message = trim(elvalue);
+                    }
+
+                    if ((el.type == 'checkbox' || el.type == 'radio') && !el.checked) {
+                        continue;
+                    } else if (el.tagName == 'SELECT') {
+                        elvalue = el.value;
+                    } else if (el.type == 'hidden') {
+                        if (el.id) {
+                            eval('var check = typeof ' + el.id + '_upload == \'function\'');
+                            if (check) {
+                                elvalue = elvalue;
+                                if ($(el.id + '_url')) {
+                                    elvalue += String.fromCharCode(1) + $(el.id + '_url').value;
+                                }
+                            } else {
+                                continue;
+                            }
+                        } else {
+                            continue;
+                        }
+                    }
+                    if (trim(elvalue)) {
+                        data += el.name + String.fromCharCode(9) + el.tagName + String.fromCharCode(9) + el.type + String.fromCharCode(9) + elvalue + String.fromCharCode(9, 9);
+                    }
+                }
+            }
+            if (!subject && !message && !ignoreempty) {
+                return;
+            }
+            saveUserdata('forum', data);
+        }
+        saveDataInIFrame();
+    </script>
+</body>
+</html>

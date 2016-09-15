@@ -1,0 +1,95 @@
+﻿<%template _header%>
+<div class="wrap cl pageinfo">
+	<div id="nav">
+		<%if {usergroupinfo.AllowSearch}%>
+			<%template _quicksearch%>
+		<%/if%>
+		<a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <a href="usercpprofile.aspx">用户中心</a> &raquo; <strong>查看短消息</strong>
+	</div>
+</div>
+<div class="wrap uc cl">
+    <%template _menu%>
+	<div class="uc_main">
+	<div class="uc_content">
+		<h1>查看短消息</h1>
+		<%template _smsmenu%>	
+	<%if page_err==0%>
+		<%if ispost%>
+			<%template _usercpmsgbox%>
+		<%else%>
+		<ul class="note" style="margin:15px;">
+			<li class="f_bold">{subject}<span class="time" style="padding-left: 10px">{postdatetime}</span></li>
+			<li><cite>发送人:{msgfrom}</cite></li>
+			<li></li>
+			<li id="msg">{message}</li>
+		</ul>
+		<script type="text/javascript">
+			$('msg').innerHTML = parseurl($('msg').innerHTML, 'html', false);
+		</script>
+		<div class="notefilter">
+			<a href="usercpinbox.aspx">返回列表</a>
+			<a href="usercppostpm.aspx?action=re&amp;pmid={pmid}">回复</a>
+			<a href="usercppostpm.aspx?action=fw&amp;pmid={pmid}">转发</a>
+			<a href="usercpshowpm.aspx?action=noread&amp;pmid={pmid}">标记为未读</a>
+			<a href="usercpshowpm.aspx?action=delete&amp;pmid={pmid}"  onclick="return confirm('您确定要删除吗?')">删除</a>
+		</div>
+		<%if {canreplypm}%>
+		<form id="postpm" name="postpm" method="post" action="usercppostpm.aspx?action=re&amp;pmid={pmid}" style="display:none;">
+			<table cellspacing="0" cellpadding="0" class="tfm" summary="个人资料">
+			<tbody>
+			<tr>
+				<th>接件人</th>
+				<td>
+					<input name="msgto" type="text" id="msgto" value="{msgto}" size="25"  class="txt"/>
+				</td>
+			</tr>
+			<tr>
+				<th>标题</th>
+				<td>
+					<input name="subject" type="text" id="subject" value="{resubject}" size="40"  class="txt"/>
+				</td>
+			</tr>
+			<tr>
+				<th>内容</th>
+				<td>
+					<textarea name="message" cols="80" rows="20" id="message" onkeydown="if((event.ctrlKey && event.keyCode == 13) || (event.altKey && event.keyCode == 83)) document.getElementById('postpm').submit();" class="txtarea">{remessage}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<th> </th>
+				<td>
+					<input name="savetosentbox" type="checkbox" id="Checkbox1" value="1" />保存到发件箱
+					<input type="checkbox" name="emailnotify" id="emailnotify" />E-mail通知
+				</td>
+			</tr>
+			<%if {isseccode}%>
+			<tr>
+				<th>验证码</th>
+				<td>
+					<div style="position: relative;">
+					<%template _vcode%>
+					</div>
+		        </td>
+			</tr>
+			<%/if%>
+			<tr>
+				<th> </th>
+				<td>
+					<input name="sendmsg" type="submit" id="sendmsg" value="立即发送" class="btn"/>
+					<input name="savetousercpdraftbox" type="submit" id="savetousercpdraftbox" value="存为草稿" class="btn"/>
+					[可按Ctrl+Enter提交]
+				</td>
+			</tr>
+			</tbody>
+			</table>
+		</form>
+		<%/if%>
+		<%/if%>
+<%else%>
+	<%template _errmsgbox%>
+<%/if%>
+	</div>
+	</div>
+</div>
+<%template _copyright%>
+<%template _footer%>

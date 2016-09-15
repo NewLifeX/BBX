@@ -1,0 +1,11 @@
+.content{ clear:both; margin:0 auto;}
+.content .left{
+	width:100%;
+	border:1px solid #ccc;
+	margin:3px;
+	min-height:25px;
+}
+.mo{height:auto;border:1px solid #ebebeb;margin:3px;background:#FFF}
+.mo h1{background:#ECF9FF;height:18px;padding:3px;cursor:move;}
+h1{margin:0px;padding:0px;text-align:left;font-size:12px}
+.navsubmit {clear:both;margin-top:20px;}

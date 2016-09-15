@@ -1,0 +1,77 @@
+﻿<%template _header%>
+<div class="wrap cl pageinfo">
+	<div id="nav">
+	<%if {usergroupinfo.AllowSearch}%>
+		<%template _quicksearch%>
+	<%/if%>
+		<a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <strong>在线用户列表</strong>
+	</div>
+</div>
+<div class="wrap cl">
+<div class="main cl">
+	<h6><span class="y">
+		共{totalonline}人在线 - {totalonlineuser}位会员 
+		<%if {totalonlineinvisibleuser}>0%>
+		{totalonlineinvisibleuser}隐身
+		,<%/if%>{totalonlineguest}位游客 | 最高纪录是 {highestonlineusercount} 于 {highestonlineusertime}
+		</span>
+	在线用户列表</h6>
+	<table summary="用户列表" cellspacing="0" cellpadding="0" class="datatable">
+		<thead class="colplural">
+		<tr>
+			<th width="30"><a href="onlineuser.aspx?order=UserID&dir={dir}">编号</a></th>
+			<th><a href="onlineuser.aspx?order=UserName&dir={dir}">用户名</a></th><%if {useradminid}==1%>
+            <th><a href="onlineuser.aspx?order=IsBot&dir={dir}">爬虫</a></th>
+            <th><a href="onlineuser.aspx?order=ip&dir={dir}">IP</a></th>
+			<th>地址</th>
+			<th><a href="onlineuser.aspx?order=sessionid&dir={dir}">会话</a></th>
+			<th><a href="onlineuser.aspx?order=useragent&dir={dir}">终端</a></th><%/if%>
+			<th><a href="onlineuser.aspx?order=lastupdatetime&dir={dir}">时间</a></th>
+			<th><a href="onlineuser.aspx?order=ActionName&dir={dir}">当前动作</a></th>
+			<th><a href="onlineuser.aspx?order=ForumName&dir={dir}">所在论坛</a></th>
+			<th><a href="onlineuser.aspx?order=Title&dir={dir}">所在主题</a></th>
+		</tr>
+		</thead>
+		<%loop (Online) onlineuserinfo onlineuserlist%>
+		<tbody>
+		<tr>
+			<td>{onlineuserinfo.olimg}</td>
+			<th class="datatitle">
+				<%if {onlineuserinfo.UserID}==-1%>
+					 {onlineuserinfo.NickName}
+				  <%else%>
+					 <%if {onlineuserinfo.Invisible} %>
+					 <%if {useradminid}==1%><a href="{aspxrewriteurl}">{onlineuserinfo.UserName}</a><%/if%>(隐身用户)
+					 <%else%>
+					 <%set {aspxrewriteurl} = this.UserInfoAspxRewrite({onlineuserinfo.UserID})%>
+					 <a href="{aspxrewriteurl}">{onlineuserinfo.UserName}</a>
+					 <%/if%>
+				  <%/if%>
+			</td><%if {useradminid}==1%>
+			<td>{onlineuserinfo.IsBot}&nbsp;</td>
+            <td>{onlineuserinfo.IP}&nbsp;</td>
+			<td>{onlineuserinfo.Address}&nbsp;</td>
+			<td>{onlineuserinfo.SessionID}&nbsp;</td>
+			<td>{onlineuserinfo.UserAgent}&nbsp;</td><%/if%>
+			<td class="time">{onlineuserinfo.LastUpdateTime}</td>
+			<td>{onlineuserinfo.ActionName}&nbsp;</td>
+			<%set {aspxrewriteurl} = this.ShowForumAspxRewrite({onlineuserinfo.ForumID},0)%>
+			<td><a href="{aspxrewriteurl}">{onlineuserinfo.ForumName}</a>&nbsp;</td>
+			<%set {aspxrewriteurl} = this.ShowTopicAspxRewrite({onlineuserinfo.TitleID},0)%>
+			<td><a href="{aspxrewriteurl}">{onlineuserinfo.Title}</a>&nbsp;</td>
+		</tr>
+		</tbody>
+		<%/loop%>
+	</table>
+	<div class="pages_btns cl">
+		<div class="pages">
+			<em>共{onlineusernumber}名用户/{pagecount}页</em>{pagenumbers}
+			<kbd>跳转<input name="gopage" type="text" id="gopage" onKeyDown="if(event.keyCode==13) {
+		window.location='onlineuser.aspx?page='+this.value;}"  size="4" maxlength="9" class="colorblue2"/>页
+			</kbd>
+		</div>
+	</div>
+</div>
+</div>
+<%template _copyright%>
+<%template _footer%>

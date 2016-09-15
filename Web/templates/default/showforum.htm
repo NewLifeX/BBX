@@ -1,0 +1,816 @@
+﻿<%template _header%>
+<%if {infloat}!=1%>
+<div class="wrap cl pageinfo">
+    <div id="nav">
+        <%if {usergroupinfo.AllowSearch}%>
+            <%template _quicksearch%>
+        <%/if%>
+        <a id="forumlist" href="{forumpath}" <%if {config.forumjump}==1%>onmouseover="showMenu(this.id);" onmouseout="showMenu(this.id);"<%/if%> class="title">{config.forumtitle}</a> &raquo; {forumnav}
+    </div>
+</div>
+<script type="text/javascript"  src="{jsdir}/ajax.js"></script>
+<%if {page_err}==0%>
+    <script type="text/javascript">
+    var templatepath = "{templatepath}";
+    var imagedir = "{imagedir}";
+    var fid = parseInt({forum.fid});
+    var postminchars = parseInt({config.minpostsize});
+    var postmaxchars = parseInt({config.maxpostsize});
+    var disablepostctrl = {disablepostctrl.ToString().ToLower()};
+    var forumurl = forumpath = "{forumpath}";
+    </script>
+<%/if%>
+<script type="text/javascript" src="{jsdir}/template_showforum.js"></script>
+<%if {page_err}==0%>
+<div class="wrap cl">
+<%template _pagewordadlist%>
+<%if {showforumlogin}==1%>
+    <div class="main">
+        <h3>本版块已经被管理员设置了密码</h3>
+        <form id="forumlogin" name="forumlogin" method="post" action="">
+        <table cellpadding="0" cellspacing="0" border="0" class="formtable">
+        <tbody>
+        <tr>
+            <th><label for="forumpassword">请输入密码</label></th>
+            <td><input name="forumpassword" type="password" id="forumpassword" size="20" class="txt"/></td>
+        </tr>
+        </tbody>
+        <%if {isseccode}%>	
+        <tbody>
+        <tr>
+            <th><label for="vcode">输入验证码</label></th>
+            <td>
+                <div style="position: relative;">
+                <%template _vcode%>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+        <%/if%>
+        <tbody>
+        <tr>
+            <th></th>
+            <td><input type="submit"  value="确定"/></td>
+        </tr>
+        </tbody>
+        </table>
+        </form>
+    </div>
+</div>
+<%else%>
+<div id="forumheader" class="main cl">
+    <span class="y o">
+        <%if {forum.rules}!=""%>
+        <img id="rules_img"  src="{imagedir}/collapsed_no.gif" alt="展开/收起" onclick="toggle_collapse('rules');"/>
+        <%/if%>
+    </span>
+    <%if {page_err}==0%>
+    <span class="y">
+    <%if {ismoder}%><a href="{forumurl}modcp.aspx?operation=attention&forumid={forumid}" target="_blank" class="f_bold">管理面板</a><%/if%>
+    </span>
+    <%/if%>
+    <div class="forumaction y">
+        <a href="{forumpath}showforum.aspx?forumid={forumid}&filter=digest" class="digest">精华</a>
+        <%if {config.rssstatus}!=0&&{forum.AllowRss}%>		
+        <%set {aspxrewriteurl} = Urls.RssAspxRewrite({forum.ID})%>	
+        <a class="feed" target="_blank" href="{forumpath}tools/{aspxrewriteurl}">RSS</a>	
+        <%/if%>
+    </div>
+    <h1><%set {aspxrewriteurl} = this.ShowForumAspxRewrite({forum.ID},0)%>{forum.Name}</h1>
+    <span class="forumstats">今日: <strong class="xi1">{forum.TodayPosts}</strong><span class="pipe">|</span>主题: <strong class="xi1">{topiccount}</strong><span class="pipe">|</span>帖子: <strong class="xi1">{forum.Posts}</strong></span>
+<%if {forum.description}!=""%>
+    <p>{forum.description}</p>
+<%/if%>
+    <p id="modedby">
+<%if {page_err}==0%>版主: <span class="f_c">
+    <%if !String.IsNullOrEmpty({forum.ModeratorsHtml})%>
+        {forum.ModeratorsHtml}
+    <%else%>
+        *空缺中*
+    <%/if%></span>
+<%/if%>
+    </p>
+<%if {forum.rules}!=""%>
+    <div id="rules">{forum.rules}</div>
+<%/if%>
+</div>
+<%if {subforumlist.Count}>0%>
+    <%template _subforum%>
+<%/if%>
+<%if {forum.layer}!=0%>
+<div class="pages_btns cl">
+    <div class="pages">
+        <cite class="pageback z" id="visitedforums"<%if {showvisitedforumsmenu}%> onmouseover="$('visitedforums').id = 'visitedforumstmp';this.id = 'visitedforums';showMenu({'ctrlid':this.id, 'pos':'34'});"<%/if%>><a href="{forumpath}">返回</a></cite>
+        <%if {pagecount}!=1%>
+            {pagenumbers}
+            <%if {pagecount}>8%>
+            <kbd>
+            <input name="gopage" type="text" class="txt" id="pageidinput1" title="可以输入页码按回车键自动跳转" value="{pageid}" style="text-align:center;" onfocus="this.value=this.defaultValue;this.select();" onKeyDown="pageinputOnKeyDown(this,event);" size="2" maxlength="9" />/ {pagecount}</kbd>
+            <script type="text/javascript">
+                function pageinputOnKeyDown(obj, event) {
+                    if (event.keyCode == 13) {
+                        var typeid = getQueryString("typeid");
+                        typeid = typeid == "" ? -1 : parseInt(typeid);
+                        if (parseInt('{config.aspxrewrite}') == 1 && typeid <0) {
+                            window.location = '{forumpath}showforum-{forumid}-' + (parseInt(obj.value) > 0 ? parseInt(obj.value) : 1) + '{config.extname}';
+                        }
+                        else {
+                            (typeid>0) ? window.location = '{forumpath}showforum.aspx?forumid={forumid}&page=' + (parseInt(obj.value) > 0 ? parseInt(obj.value) : 1) + '&typeid=' + typeid : window.location = '{forumpath}showforum.aspx?forumid={forumid}&page=' + (parseInt(obj.value) > 0 ? parseInt(obj.value) : 1);
+                        }
+                    }
+                    return (event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 97 && event.keyCode <= 105) || event.keyCode == 8;
+                }
+            </script>
+            <%/if%>
+            {nextpage}
+        <%/if%>
+    </div>
+<%if {userid}<0||{canposttopic}%>
+    <%set (string){newtopicurl} = ""%>
+    <%if !{forum.AllowSpecialOnly}%>
+        <%set {newtopicurl} = {forumpath} + "posttopic.aspx?forumid=" + {forum.fid} + "&forumpage=" + {pageid} %>
+    <%else if 1==({forum.allowpostspecial}&1)&&{usergroupinfo.AllowPostpoll}%>
+        <%set {newtopicurl} = {forumpath} + "posttopic.aspx?forumid=" + {forum.fid} + "&type=poll&forumpage=" + {pageid} %>
+    <%else if 4==({forum.allowpostspecial}&4)&&{usergroupinfo.AllowBonus}%>
+        <%set {newtopicurl} = {forumpath} + "posttopic.aspx?forumid=" + {forum.fid} + "&type=bonus&forumpage=" + {pageid} %>
+    <%else if 16==({forum.allowpostspecial}&16)&&{usergroupinfo.AllowDebate}%>
+        <%set {newtopicurl} = {forumpath} + "posttopic.aspx?forumid=" + {forum.fid} + "&type=debate&forumpage=" + {pageid} %>
+    <%/if%>
+    <%set (string){newtopiconclick} = ""%>
+    <%if !{forum.AllowSpecialOnly}&&{canposttopic}&&!{isnewbie}%>
+        <%set {newtopiconclick} = "showWindow('newthread', '" + {forumpath} + "showforum.aspx?forumid=" + {forum.fid} + "')"%>
+    <%/if%>
+    <%set (bool){allowpost}={userid}<=0&&(forum.PostPerm==""?!usergroupinfo.AllowPost:!Utils.InArray({usergroupid}.ToString(),{forum.PostPerm}))%>
+    <%if {allowpost}%>
+        <%set {newtopiconclick} = "showWindow('login', '" + {forumpath} + "login.aspx');hideWindow('register');"%>
+    <%else%>
+        <%set {newtopiconclick} = "showWindow('newthread', '" + {forumpath} + "showforum.aspx?forumid=" + {forum.fid} + "')"%>
+    <%/if%>
+    <span <%if {userid}>0%> onmouseover="if($('newspecial_menu')!=null&&$('newspecial_menu').childNodes.length>0) showMenu(this.id);"<%/if%> id="newspecial">
+        <a title="发新话题" id="newtopic" href="{newtopicurl}" onclick="{newtopiconclick}">
+        <img alt="发新话题" src="{imagedir}/newtopic.png" style="display:inline"/></a>
+    </span>
+<%/if%>
+</div>
+<%if {forum.ViewbytopicType}==1%>
+    <div id="headfilter" class="cl">
+          <a href="{forumpath}{ShowForumAspxRewrite(forumid,0)}">全部</a>
+            {topictypeselectlink}
+    </div>
+<%/if%>
+<ul id="rewardmenu_menu" class="p_pop"  style="display: none">
+    <li><a href="{forumpath}showforum.aspx?forumid={forumid}&filter=rewarding">进行中的悬赏</a></li>
+    <li><a href="{forumpath}showforum.aspx?forumid={forumid}&filter=rewarded">已结束的悬赏</a></li>
+</ul>
+<div class="main thread">
+    <form id="moderate" name="moderate" method="post" action="{forumpath}topicadmin.aspx?action=moderate&forumid={forumid}&infloat=1">
+        <div class="category">
+        <table summary="{forum.fid}" cellspacing="0" cellpadding="0">
+            <tr>
+            <th><span title="在新窗口中打开帖子" id="atarget" style="float:right;">新窗</span>筛选:
+                <%if {forum.allowpostspecial}!=0%>
+                <a id="specialmenu" onclick="showMenu(this.id);" href="javascript:;" class="drop xg2">全部主题</a>
+                <ul id="specialmenu_menu" class="p_pop" style="display: none">
+                    <li><a href="javascript:selectspecial('all');">全部主题</a></li>
+                    <%if ({forum.allowpostspecial}&1)==1%>
+                    <li><a href="javascript:selectspecial('poll');">投票</a></li>
+                    <%/if%>
+                    <%if ({forum.allowpostspecial}&4)==4%>
+                    <li><a href="javascript:selectspecial('reward');">悬赏</a></li>
+                    <li><a href="javascript:selectspecial('rewarding');">悬赏(进行中)</a></li>
+                    <li><a href="javascript:selectspecial('rewarded');">悬赏(已结束)</a></li>
+                    <%/if%>
+                    <%if ({forum.allowpostspecial}&16)==16%>
+                    <li><a href="javascript:selectspecial('debate');">辩论</a></li>
+                    <%/if%>
+                </ul>
+                <%/if%>
+                <%if {topictypeid}==-1%>
+                    <a id="intervalmenu" onclick="showMenu(this.id);" href="javascript:;" class="drop xg2">全部时间</a>
+                    <ul id="intervalmenu_menu" class="p_pop" style="display: none">
+                        <li><a href="javascript:selectinterval(0);">全部时间</a></li>
+                        <li><a href="javascript:selectinterval(1);">一天</a></li>
+                        <li><a href="javascript:selectinterval(2);">二天</a></li>
+                        <li><a href="javascript:selectinterval(7);">一周</a></li>
+                        <li><a href="javascript:selectinterval(30);">一个月</a></li>
+                        <li><a href="javascript:selectinterval(90);">三个月</a></li>
+                        <li><a href="javascript:selectinterval(180);">半年</a></li>
+                        <li><a href="javascript:selectinterval(365);">一年</a></li>
+                    </ul>
+                <%/if%>
+                <a id="ordermenu" onclick="showMenu(this.id);" href="javascript:;"  class="drop xg2">最后回复时间</a>
+                <ul id="ordermenu_menu" class="p_pop" style="display: none">
+                    <li><a href="javascript:selectorder(1);">最后回复时间</a></li>
+                    <li><a href="javascript:selectorder(2);">发布时间</a></li>
+                    <li><a href="javascript:selectorder(3);">查看次数</a></li>
+                    <li><a href="javascript:selectorder(4);">回复次数</a></li>
+                </ul>
+                <span class="pipe">|</span>排序:
+                <a id="directmenu" onclick="showMenu(this.id);" href="javascript:;" class="drop xg2">按降序排列</a>
+                <ul id="directmenu_menu" class="p_pop" style="display: none">
+                    <li><a href="javascript:selectdirect(1);">按降序排列</a></li>
+                    <li><a href="javascript:selectdirect(0);">按升序排列</a></li>
+                </ul>
+                <span class="pipe">|</span>
+                <a href="{forumpath}showforum.aspx?forumid={forumid}&filter=digest" <%if {filter}!="digest"%>class="xg2"<%/if%>>精华</a>
+                <script type="text/javascript" reload=1>
+                    <%csharp%>
+                    string url = forumpath + "showforum.aspx?search=1&forumid=" + forumid + "&typeid=" + topictypeid;
+                    string showforumurl = url;
+                    url += String.IsNullOrEmpty(filter) ? "" : "&filter=" + filter;
+                    filter = filter == "" ? "all" : filter;
+                    <%/csharp%>
+                    var prefix = '{url}';
+                    function loadsearchconditionlink() {
+                        var specialarray = {'digest':'全部主题','all':'全部主题','poll':'投票','reward':'悬赏','debate':'辩论','rewarding':'悬赏(进行中)','rewarded':'悬赏(已结束)'};
+                        var intervalarray = {'d1':'一天','d2':'二天','d7':'一周','d30':'一个月','d90':'三个月','d180':'半年','d365':'一年'};
+                        if($('specialmenu'))
+                            $('specialmenu').innerHTML = specialarray.{filter};
+                        if({interval}!=0)
+                            $('intervalmenu').innerHTML = intervalarray.d{interval};
+                        var ordermenuarray = ['最后回复时间','发布时间','查看次数','回复次数'];
+                        $('ordermenu').innerHTML = ordermenuarray[{order} - 1];
+                        if({direct} == 0)
+                            $('directmenu').innerHTML = '按升序排列';
+                    }
+                    loadsearchconditionlink();
+                    function selectspecial(selectvalue){
+                        window.location.href = '{showforumurl}&filter=' + selectvalue;
+                    }
+                    function selectinterval(selectvalue) {
+                        window.location.href = '{showforumurl}&order={order}&direct={direct}&interval=' + selectvalue;
+                    }
+                    function selectorder(selectvalue){
+                        window.location.href = '{showforumurl}&order=' + selectvalue + '&direct={direct}&interval={interval}';
+                    }
+                    function selectdirect(selectvalue){
+                        window.location.href = '{showforumurl}&order={order}&direct=' + selectvalue + '&interval={interval}';
+                    }
+                </script>
+            </th>
+            <td class="by">作者</td>
+            <td class="num">回复/查看</td>
+            <td class="by">最后发表</td>
+            </tr>
+        </table>
+        </div>
+        <div class="threadlist">
+        <table summary="{forum.fid}" id="threadlist" cellspacing="0" cellpadding="0">
+            <%loop (Announcement) announcement announcementlist%>
+            <tbody>
+            <tr>
+                <td class="folder"><img src="{imagedir}/icon_announcement.gif" alt="announcement" /></td>
+                <%if {useradminid}>0 && {ismoder}%>
+                <td class="icon">&nbsp;</td>		
+                <%/if%>
+                <th class="subject f_bold">
+                    <a href="{forumpath}announcement.aspx#{announcement[id]}">{announcement[title]}</a>
+                </th>
+                <td class="by">
+                    <cite><%if {strtoint({announcement[posterid]})}==-1%>
+                        游客
+                    <%else%>
+                       <%set {aspxrewriteurl} = this.UserInfoAspxRewrite({announcement[posterid]})%>
+                        <a href="{forumpath}{aspxrewriteurl}">{announcement[poster]}</a>
+                    <%/if%>
+                    </cite>
+                    <em>{announcement[starttime]}</em>
+                </td>
+                <td class="num">&nbsp;</td>
+                <td class="by">&nbsp;</td>
+            </tr>
+            </tbody>
+            <%csharp%>break;<%/csharp%>
+            <%/loop%>
+            <%set (string){tdivimg} = ""%>
+            <%loop (Topic) toptopic toptopiclist%>			
+            <tbody>
+                <tr>
+                    <td class="folder">
+                        <%csharp%>//特殊帖图标<%/csharp%>
+                        <%if {toptopic.special}==1%>
+                            <img src="{imagedir}/pollsmall.gif" alt="投票" />
+                        <%else if {toptopic.special}==2%>
+                            <img src="{imagedir}/bonus.gif" alt="悬赏"/>
+                        <%else if {toptopic.special}==3%>
+                            <img src="{imagedir}/rewardsmallend.gif" alt="悬赏已结束"/>
+                        <%else if {toptopic.special}==4%>
+                            <img src="{imagedir}/debatesmall.gif" alt="辩论"/>
+                        <%else%>
+                            <%set {aspxrewriteurl} = this.ShowTopicAspxRewrite({toptopic.ID},0)%>
+                            <a href="{forumpath}{aspxrewriteurl}" target="_blank"><img src="{imagedir}/t_top{toptopic.DisplayOrder}.gif"/></a>
+                        <%/if%>
+                    </td>
+                    <%if {useradminid}>0 && {ismoder}%>
+                    <td class="icon">						
+                        <%if {toptopic.fid}=={forum.fid}%>
+                        <input type="checkbox" name="topicid" topictype="displayorder" value="<%if {toptopic.closed}>1%>{toptopic.closed}<%else%>{toptopic.ID}<%/if%>" onclick="modclick(this);" />
+                        <%else%>
+                        <input type="checkbox" disabled />
+                        <%/if%>	
+                    </td>
+                    <%/if%>
+                    <th class="subject hot">
+                        <%if {toptopic.digest}>0%>
+                            <label class="y"><img src="{imagedir}/digest{toptopic.digest}.gif" alt="digtest"/></label>
+                        <%/if%>
+                        <%if {toptopic.rate}>0%>
+                            <label class="y"><img src="{imagedir}/agree.gif" alt="正分"/></label>
+                        <%/if%>
+                        <%if {toptopic.rate}<0%>
+                            <label class="y"><img src="{imagedir}/disagree.gif" alt="负分"/></label>
+                        <%/if%>
+                        <%if {forum.topictypeprefix}==1%>						
+                            <%if {forum.ViewbytopicType}==1 && {toptopic.TypeName}!=""%>
+                            <em>[<a href="{forumpath}showforum.aspx?forumid={toptopic.fid}&typeid={toptopic.TypeID}" >{toptopic.TypeName}</a>]</em>
+                            <%else if {toptopic.TypeName}!=""%>
+                            <em>[{toptopic.TypeName}]</em>
+                            <%/if%>
+                        <%/if%>
+                        <%set {aspxrewriteurl} = this.ShowTopicAspxRewrite({toptopic.ID},0)%>
+                        <%set (int){ishtmltitle} = Topics.GetMagicValue(toptopic.Magic, MagicType.HtmlTitle)%>
+                        <%if {ishtmltitle}==1%>
+                            <a href="{forumpath}{aspxrewriteurl}">{Topics.GetHtmlTitle(toptopic.ID)}</a>
+                        <%else%>
+                            <a onclick="atarget(this)" href="{forumpath}{aspxrewriteurl}">{toptopic.TitleHighlight}</a>
+                        <%/if%>
+                        <%if {toptopic.identify}>0%>
+                        <%csharp%>
+                        TopicIdentify topicidentify = TopicIdentify.FindByID(toptopic.Identify);
+                        if(topicidentify!=null)
+                        {
+                        string smalltopicidentify = topicidentify.FileName.Split('.')[0] + "_small." + topicidentify.FileName.Split('.')[1];
+                        <%/csharp%>
+                        <img align="absmiddle" alt="{topicidentify.name}" src="{topicidentifydir}/{smalltopicidentify}">
+                        <%csharp%>
+                        }
+                        <%/csharp%>
+                        <%/if%>
+                        <%if {toptopic.folder}=="new"%>
+                            <span class="new">NEW</span>
+                        <%/if%>
+                        <%if {toptopic.attachment}==1%>
+                            <img src="{imagedir}/attachment.gif" alt="附件"/>
+                        <%else if {toptopic.attachment}==2%>
+                           <img src="{imagedir}/attachment_image.gif" alt="图片附件"/>
+                        <%/if%>
+                        <%if {toptopic.special}==2%>
+                            - [悬赏 {bonusextcreditsinfo.name} <span class="bold">{toptopic.price}</span> {bonusextcreditsinfo.unit}] 
+                        <%else if {toptopic.special}==3%>
+                            - [悬赏已结束]
+                        <%else if {toptopic.special}==0%>
+                            <%if {toptopic.price}>0%>
+                                - [售价 {topicextcreditsinfo.name} <span class="bold">{toptopic.price}</span> {topicextcreditsinfo.unit}] 
+                            <%/if%>
+                        <%/if%>					
+                        <%if {toptopic.ReadPerm}>0%>
+                            - [阅读权限 <span class="bold">{toptopic.ReadPerm}</span>] 
+                        <%/if%>
+                        <%if {toptopic.replies}/{ppp}>0%>					
+                            <span class="threadpages"><script type="text/javascript">getpagenumbers("{config.extname}",{toptopic.replies},{ppp},0,"",{toptopic.ID},1, "{forumpath}", aspxrewrite);</script></span>				
+                        <%/if%>
+                    </th>
+                    <td class="by">
+                        <cite>
+                        <%if {toptopic.PosterID}==-1%>
+                            游客
+                        <%else%>
+                            <%set {aspxrewriteurl} = this.UserInfoAspxRewrite({toptopic.PosterID})%>
+                            <a href="{forumpath}{aspxrewriteurl}">{toptopic.poster}</a>
+                        <%/if%></cite>
+                        <%set (string){ttpdtime} = ForumUtils.ConvertDateTime({toptopic.PostDateTime})%>
+                        <em>{ttpdtime}</em>
+                    </td>
+                    <td class="num"><a href="{forumpath}{aspxrewriteurl}" class="xg2">{toptopic.replies}</a><em>{toptopic.views}</em></td>
+                    <td class="by">
+                        <cite>
+                            <%if {toptopic.LastPosterID}==-1%>
+                                游客
+                            <%else%>
+                                <a href="{forumpath}{UserInfoAspxRewrite(toptopic.LastPosterID)}" target="_blank">{toptopic.LastPoster}</a>
+                            <%/if%>
+                        </cite>
+                        <em><a href="{forumpath}showtopic.aspx?topicid={toptopic.ID}<%if {config.Aspxrewrite}!=1%>&forumpage={pageid}<%/if%>&page=end#lastpost">
+                        <%set (string){ttlp} = ForumUtils.ConvertDateTime({toptopic.LastPost})%>
+                        {ttlp}</a></em>
+                    </td>
+                </tr>
+            </tbody>
+            <%/loop%>
+            <%if {toptopiclist.Count}>0 && {topiclist.Count}>0%>
+            <tbody class="separation">
+                <tr>
+                    <td class="folder">&nbsp;</td>
+                    <%if {useradminid}>0 && {ismoder}%>
+                    <td class="icon">&nbsp;</td>
+                    <%/if%>
+                    <th>版块主题</th>
+                    <td class="author">&nbsp;</td>
+                    <td class="nums">&nbsp;</td>
+                    <td class="lastpost">&nbsp;</td>
+                </tr>
+            </tbody>
+            <%/if%>
+            <%loop (Topic) topic topiclist%>
+            <tbody>
+                <tr>
+                    <td class="folder">
+                    <%csharp%>/*特殊帖图标*/<%/csharp%>
+                    <%if {topic.special}==1%>
+                        <img src="{imagedir}/pollsmall.gif" alt="投票" />
+                    <%else if {topic.special}==2%>
+                        <img src="{imagedir}/bonus.gif" alt="悬赏"/>
+                    <%else if {topic.special}==3%>
+                        <img src="{imagedir}/rewardsmallend.gif" alt="悬赏已结束"/>
+                    <%else if {topic.special}==4%>
+                        <img src="{imagedir}/debatesmall.gif" alt="辩论"/>
+                    <%else%>
+                        <%if {topic.folder}!=""%>
+                            <%set {aspxrewriteurl} = Urls.ShowTopicAspxRewrite({topic.ID},0, DNTRequest.GetInt("typeid", -1))%>
+                            <a href="{forumpath}{aspxrewriteurl}<%if {config.Aspxrewrite}!=1%>&forumpage={pageid}<%/if%>" target="_blank"><img src="{imagedir}/folder_{topic.folder}.gif" alt="topicicon" /></a>
+                        <%/if%>
+                    <%/if%>
+                    </td>
+                    <%if {useradminid}>0 && {ismoder}%>
+                    <td class="icon">
+                        <input type="checkbox" name="topicid" value="<%if {topic.closed}>1%>{topic.closed}<%else%>{topic.ID}<%/if%>" onclick="modclick(this);"/>
+                    </td>
+                    <%/if%>
+                    <th class="subject">
+                        <%if {topic.digest}>0%>							
+                        <label class="y"><img src="{imagedir}/digest{topic.digest}.gif" alt="精华"/></label>
+                        <%/if%>
+                        <%if {topic.rate}>0%>
+                        <label class="y"><img src="{imagedir}/agree.gif" alt="正分"/></label>
+                        <%/if%>
+                        <%if {topic.rate}<0%>
+                        <label class="y"><img src="{imagedir}/disagree.gif" alt="负分"/></label>
+                        <%/if%>
+                        <%if {pageid}<3 && {forum.AllowThumbnail}%>
+                            <%if {topic.attachment}==2 || {topic.attachment}==3%>
+                                <span id="t_thumbnail_{topic.ID}" onmouseover="showMenu(this.id, 0, 0, 1, 0)">
+                                <%if {forum.topictypeprefix}==1%>
+                                    <em>
+                                    <%if {forum.ViewbytopicType}==1 && {topic.TypeName}!=""%>
+                                    [<a href="{forumpath}showforum.aspx?forumid={forumid}&typeid={topic.TypeID}" >{topic.TypeName}</a>]
+                                    <%else if {topic.TypeName}!=""%>
+                                    [{topic.TypeName}]
+                                    <%/if%>
+                                    </em>
+                                <%/if%>	
+                                <%set {aspxrewriteurl} = Urls.ShowTopicAspxRewrite({topic.ID},0, DNTRequest.GetInt("typeid", -1))%>
+                                <%set (int){ishtmltitle} = Topics.GetMagicValue(topic.Magic, MagicType.HtmlTitle)%>
+                                <%if {ishtmltitle}==1%>
+                                    <a href="{forumpath}{aspxrewriteurl}<%if {config.Aspxrewrite}!=1%>&forumpage={pageid}<%/if%>">{Topics.GetHtmlTitle(topic.ID)}</a>
+                                <%else%>
+                                    <a onclick="atarget(this)" href="{forumpath}{aspxrewriteurl}<%if {config.Aspxrewrite}!=1%>&forumpage={pageid}<%/if%>">{topic.TitleHighlight}</a>
+                                <%/if%>
+                               <%if {topic.identify}>0%>
+                                <%csharp%>
+                                TopicIdentify topicidentify = TopicIdentify.FindByID(topic.Identify);
+                                if(topicidentify!=null)
+                                {
+                                string smalltopicidentify = topicidentify.FileName.Split('.')[0] + "_small." + topicidentify.FileName.Split('.')[1];
+                                <%/csharp%>
+                                <img align="absmiddle" alt="{topicidentify.Name}" src="{topicidentifydir}/{smalltopicidentify}">
+                                <%csharp%>
+                                }
+                                <%/csharp%>
+                                <%/if%>
+                                <%if {topic.folder}=="new"%>
+                                    <span class="new">NEW</span>
+                                <%/if%>
+                                </span>
+                            <%else%>
+                               <%if {forum.topictypeprefix}==1%>
+                                    <%if {forum.ViewbytopicType}==1 && {topic.TypeName}!=""%>
+                                    <em>[<a href="{forumpath}showforum.aspx?forumid={forumid}&typeid={topic.TypeID}" >{topic.TypeName}</a>]</em>
+                                    <%else if {topic.TypeName}!=""%>
+                                    <em>[{topic.TypeName}]</em>
+                                    <%/if%>
+                                <%/if%>	
+                                <%set {aspxrewriteurl} = Urls.ShowTopicAspxRewrite({topic.ID},0, DNTRequest.GetInt("typeid", -1))%>
+                                <%set (int){ishtmltitle} = Topics.GetMagicValue(topic.Magic, MagicType.HtmlTitle)%>
+                                <%if {ishtmltitle}==1%>
+                                    <a href="{forumpath}{aspxrewriteurl}<%if {config.Aspxrewrite}!=1%>&forumpage={pageid}<%/if%>">{Topics.GetHtmlTitle(topic.ID)}</a>
+                                <%else%>
+                                    <a onclick="atarget(this)" href="{forumpath}{aspxrewriteurl}<%if {config.Aspxrewrite}!=1%>&forumpage={pageid}<%/if%>">{topic.TitleHighlight}</a>
+                                <%/if%>
+                                <%if {topic.identify}>0%>
+                                <%csharp%>
+                                TopicIdentify topicidentify = TopicIdentify.FindByID(topic.Identify);
+                                if(topicidentify!=null)
+                                {
+                                string smalltopicidentify = topicidentify.FileName.Split('.')[0] + "_small." + topicidentify.FileName.Split('.')[1];
+                                <%/csharp%>
+                                <img align="absmiddle" alt="{topicidentify.Name}" src="{topicidentifydir}/{smalltopicidentify}">
+                                <%csharp%>
+                                }
+                                <%/csharp%>
+                                <%/if%>
+                                <%if {topic.folder}=="new"%>
+                                    <span class="new">NEW</span>
+                                <%/if%>
+                            <%/if%>
+                        <%else%>
+                            <%if {forum.ApplytopicType}==1 && {forum.topictypeprefix}==1%>
+                                    <%if {forum.ViewbytopicType}==1 && {topic.TypeName}!=""%>
+                                    <em>[<a href="{forumpath}showforum.aspx?forumid={forumid}&typeid={topic.TypeID}" >{topic.TypeName}</a>]</em>
+                                    <%else if {topic.TypeName}!=""%>
+                                    <em>[{topic.TypeName}]</em>
+                                    <%/if%>
+                            <%/if%>
+                            <%set {aspxrewriteurl} = Urls.ShowTopicAspxRewrite({topic.ID},0, DNTRequest.GetInt("typeid", -1))%>
+                            <%set (int){ishtmltitle} = Topics.GetMagicValue(topic.Magic, MagicType.HtmlTitle)%>
+                            <%if {ishtmltitle}==1%>
+                                <a href="{forumpath}{aspxrewriteurl}<%if {config.Aspxrewrite}!=1%>&forumpage={pageid}<%/if%>">{Topics.GetHtmlTitle(topic.ID)}</a>
+                            <%else%>
+                                <a onclick="atarget(this)" href="{forumpath}{aspxrewriteurl}<%if {config.Aspxrewrite}!=1%>&forumpage={pageid}<%/if%>">{topic.TitleHighlight}</a>
+                            <%/if%>
+                            <%if {topic.identify}>0%>
+                            <%csharp%>
+                            TopicIdentify topicidentify = TopicIdentify.FindByID(topic.Identify);
+                            if(topicidentify!=null)
+                            {
+                            string smalltopicidentify = topicidentify.FileName.Split('.')[0] + "_small." + topicidentify.FileName.Split('.')[1];
+                            <%/csharp%>
+                            <img align="absmiddle" alt="{topicidentify.Name}" src="{topicidentifydir}/{smalltopicidentify}">
+                            <%csharp%>
+                            }
+                            <%/csharp%>
+                            <%/if%>
+                            <%if {topic.folder}=="new"%>
+                                <span class="new">NEW</span>
+                            <%/if%>
+                        <%/if%>
+                        <%if {topic.attachment}==1%>
+                            <img src="{imagedir}/attachment.gif" alt="附件"/>
+                        <%else if {topic.attachment}==2%>
+                            <img src="{imagedir}/attachment_image.gif" alt="图片附件"/>
+                        <%else if {topic.attachment}==3%>
+                            <img src="{imagedir}/attachment_image.gif" alt="图片附件"/>&nbsp;<img src="{imagedir}/attachment.gif" alt="附件"/>
+                        <%/if%>						
+                        <%if {topic.special}==2%>
+                            - [悬赏 {bonusextcreditsinfo.name} <span class="bold">{topic.price}</span> {bonusextcreditsinfo.unit}] 
+                        <%else if {topic.special}==3%>
+                            - [悬赏已结束]
+                        <%else if {topic.special}==0%>
+                            <%if {topic.price}>0%>
+                                - [售价 {topicextcreditsinfo.name} <span class="bold">{topic.price}</span> {topicextcreditsinfo.unit}] 
+                            <%/if%>
+                        <%/if%>
+                        <%if {topic.ReadPerm}>0%>
+                            - [阅读权限 <span class="bold">{topic.ReadPerm}</span>] 
+                        <%/if%>
+                        <%if {topic.replies}/{ppp}>0%>
+                            <span class="threadpages"><script type="text/javascript">getpagenumbers("{config.extname}", {topic.replies},{ppp},0,"",{topic.ID},1, "{forumpath}", aspxrewrite);</script></span>
+                        <%/if%>
+                    </th>
+                    <td class="by">
+                        <cite>
+                            <%if {topic.PosterID}==-1%>
+                                游客
+                            <%else%>
+                                <%set {aspxrewriteurl} = this.UserInfoAspxRewrite({topic.PosterID})%>
+                                <a href="{forumpath}{aspxrewriteurl}">{topic.poster}</a>
+                            <%/if%>
+                        </cite>
+                        <%set (string){tpdtime} = ForumUtils.ConvertDateTime({topic.PostDateTime})%>
+                        <em>{tpdtime}</em>
+                    </td>
+                    <td class="num"><a href="{forumpath}{aspxrewriteurl}" class="xg2">{topic.replies}</a><em>{topic.views}</em></td>
+                    <td class="by">
+                        <cite>
+                        <%if {topic.LastPosterID}==-1%>
+                            游客
+                        <%else%>
+                            <a href="{forumpath}{UserInfoAspxRewrite(topic.LastPosterID)}" target="_blank">{topic.LastPoster}</a>
+                        <%/if%>
+                        </cite>
+                        <em><a href="{forumpath}showtopic.aspx?topicid={topic.ID}<%if {config.Aspxrewrite}!=1%>&forumpage={pageid}<%/if%>&page=end#lastpost">
+                        <%set (string){tlp} = ForumUtils.ConvertDateTime({topic.LastPost})%>
+                        {tlp}</a></em>
+                    </td>
+                </tr>
+                <%if {pageid}<3 && {forum.AllowThumbnail}%>
+                    <%if {topic.attachment}==2 || {topic.attachment}==3%>
+                        <%set (string){timg} = Attachments.GetThumbnailByTid({topic.ID},160,ThumbnailType.Thumbnail)%>
+                        <%if {timg}!=""%>
+                            <%set {tdivimg}={tdivimg}+"<div id='t_thumbnail_" + {topic.ID} + "_menu' style='display: none;' class='popupmenu_popup'><img src='" + {timg} + "' /></div>" %>
+                        <%/if%>
+                    <%/if%>
+                <%/if%>
+            </tbody>
+            <%/loop%>
+        </table>
+        <%if {topiclist.Count}<=0%>
+            <div class="zerothreads">当前板块暂无主题</div>
+        <%/if%>
+        <%if {useradminid}>0 && {ismoder}%>
+            <div id="modlayer" style="display: none;">
+                <input type="hidden" name="optgroup" />
+                <input type="hidden" name="operat" />
+                <input type="hidden" name="winheight" />
+                <a class="collapse" href="javascript:;" onclick="$('modlayer').className='collapsed'">最小化</a>
+                <label><input class="checkbox" type="checkbox" name="chkall" onclick="if(!($('modcount').innerHTML = modclickcount = checkall(this.form, 'topicid'))) {$('modlayer').style.display = 'none';}" /> 全选</label>
+                <h4><span>选中</span><strong onmouseover="$('moremodoption').style.display='block'" onclick="$('modlayer').className=''" id="modcount"></strong><span>篇: </span></h4>
+                <p>
+                    <strong><a href="javascript:;" onclick="modthreads(3, 'delete');return false;">删除</a></strong>
+                    <span class="pipe">|</span>
+                    <strong><a href="javascript:;" onclick="modthreads(2, 'move');return false;">移动</a></strong>
+                    <span class="pipe">|</span>
+                    <strong><a href="javascript:;" onclick="modthreads(2, 'type');return false;">分类</a></strong>
+                    <span class="pipe">|</span>
+                    <strong><a href="javascript:;" onclick="modthreads(2, 'identify');return false;">鉴定</a></strong>
+                </p>
+                <div id="moremodoption">
+                    <a href="javascript:;" onclick="modthreads(1, 'displayorder');return false;">置顶</a>
+                    <a href="javascript:;" onclick="modthreads(1, 'highlight');return false;">高亮</a>
+                    <a href="javascript:;" onclick="modthreads(1, 'digest');return false;">精华</a>
+                    <span class="pipe">|</span>
+                    <a href="javascript:;" onclick="modthreads(3, 'bump');return false;">提升下沉</a>
+                    <a href="javascript:;" onclick="modthreads(4,'close');return false;">关闭打开</a>
+                </div>
+            </div>
+        <%/if%>
+        </form>
+    </div>
+</div>
+<div class="pages_btns cl">
+    <div class="pages">
+        <cite class="pageback z" id="visitedforums"<%if {showvisitedforumsmenu}%> onmouseover="$('visitedforums').id = 'visitedforumstmp';this.id = 'visitedforums';showMenu({'ctrlid':this.id, 'pos':'34'});"<%/if%>><a href="{forumpath}">返回</a></cite>
+        <%if {pagecount}!=1%>
+            {pagenumbers}
+            <%if {pagecount}>8%>
+            <kbd>
+            <input name="gopage" type="text" class="txt" id="pageidinput2" title="可以输入页码按回车键自动跳转" value="{pageid}" style="text-align:center;" onfocus="this.value=this.defaultValue;this.select();" onKeyDown="pageinputOnKeyDown(this,event);" size="2" maxlength="9" />/ {pagecount}</kbd>
+            <%/if%>
+            {nextpage}
+        <%/if%>
+    </div>
+<%if {userid}<0||{canposttopic}%>
+    <%set (string){newtopicurl} = ""%>
+    <%if !{forum.AllowSpecialOnly}%>
+        <%set {newtopicurl} = {forumpath} + "posttopic.aspx?forumid=" + {forum.fid} + "&forumpage=" + {pageid} %>
+    <%else if 1==({forum.allowpostspecial}&1)&&{usergroupinfo.AllowPostpoll}%>
+        <%set {newtopicurl} = {forumpath} + "posttopic.aspx?forumid=" + {forum.fid} + "&type=poll&forumpage=" + {pageid} %>
+    <%else if 4==({forum.allowpostspecial}&4)&&{usergroupinfo.AllowBonus}%>
+        <%set {newtopicurl} = {forumpath} + "posttopic.aspx?forumid=" + {forum.fid} + "&type=bonus&forumpage=" + {pageid} %>
+    <%else if 16==({forum.allowpostspecial}&16)&&{usergroupinfo.AllowDebate}%>
+        <%set {newtopicurl} = {forumpath} + "posttopic.aspx?forumid=" + {forum.fid} + "&type=debate&forumpage=" + {pageid} %>
+    <%/if%>
+    <%set (string){newtopiconclick} = ""%>
+    <%if !{forum.AllowSpecialOnly}&&{canposttopic}%>
+        <%set {newtopiconclick} = "showWindow('newthread', '" + {forumpath} + "showforum.aspx?forumid=" + {forum.fid} + "')"%>
+    <%/if%>
+    <%set (bool){allowpost}={userid}<=0&&(forum.PostPerm==""?!usergroupinfo.AllowPost:!Utils.InArray({usergroupid}.ToString(),{forum.PostPerm}))%>
+    <%if {allowpost}%>
+        <%set {newtopiconclick} = "showWindow('login', '" + {forumpath} + "login.aspx');hideWindow('register');"%>
+    <%else%>
+        <%set {newtopiconclick} = "showWindow('newthread', '" + {forumpath} + "showforum.aspx?forumid=" + {forum.fid} + "')"%>
+    <%/if%>
+    <span <%if {userid}>0%> onmouseover="if($('newspecial2_menu')!=null&&$('newspecial_menu').childNodes.length>0)  showMenu(this.id);"<%/if%> id="newspecial2">
+        <a title="发新话题" id="newtopic2" href="{newtopicurl}" onclick="{newtopiconclick}">
+            <img alt="发新话题" src="{imagedir}/newtopic.png"  style="display:inline"/></a>
+    </span>
+<%/if%>
+</div>
+{tdivimg}
+<%if {canquickpost}%>
+    <%template _quickpost%>
+<%/if%>
+<%if {config.whosonlinestatus}!=0 && {config.whosonlinestatus}!=1%>
+    <div class="bm cl" id="online">
+        <div class="bm_h">		
+            <span class="l_action" style="display:none">
+                <%if {request[showonline]}=="no"%>
+                    <a href="showforum.aspx?forumid={forumid}&showonline=yes#online"><img src="{imagedir}/collapsed_no.gif" alt="收起" />
+                <%else%>
+                    <a href="showforum.aspx?forumid={forumid}&showonline=no#online"><img src="{imagedir}/collapsed_yes.gif" alt="展开" />
+                <%/if%></a>
+            </span>
+            <h3>
+                <strong>在线用户</strong> - <em id="forumtotalonline">{forumtotalonline}</em> 人在线<span id="invisible"></span>
+            </h3>
+        </div>
+        <dl id="onlinelist">
+            <dt style="display:none">{onlineiconlist}</dt>
+            <%if {showforumonline}%>
+            <dd>
+            <ul class="userlist cl">
+                <%set (int){invisiblecount} = 0%>				
+                <%if {forumtotalonline}!=0%>				
+                <%loop (Online) onlineuser onlineuserlist%>
+                    <%if {onlineuser.invisible}%>
+                        <%set {invisiblecount} = {invisiblecount} + 1%>
+                        <li style="overflow:hidden;text-align:center;height:70px;width:80px;line-height:60px">(隐身会员)</li>
+                    <%else%>
+                        <li style="overflow:hidden;text-align:center;height:70px;width:80px">
+                            <%set (string){avatarurl}=Avatars.GetAvatarUrl({onlineuser.UserID}, AvatarSize.Small) %>
+                                <img src="{avatarurl}" onerror="this.onerror=null;this.src='{imagedir}/noavatar_small.gif';"  alt="头像" id="memberinfo_{onlineuser[_id]}" style="border:1px solid #E8E8E8;padding:1px;width:48px;height:48px;" />
+                            <%if {onlineuser.UserID}==-1%>
+                                <p>{onlineuser.UserName}</p>
+                            <%else%>
+                               <%set {aspxrewriteurl} = this.UserInfoAspxRewrite({onlineuser.UserID})%>
+                                <p><a href="{forumpath}{aspxrewriteurl}" target="_blank">{onlineuser.UserName}</a></p>
+                            <%/if%>
+                        </li>
+                    <%/if%>
+                <%/loop%>
+                <%if {invisiblecount}>0%>
+                    <script type="text/javascript">$('invisible').innerHTML = '({invisiblecount}' + " 隐身)";</script>
+                <%/if%>				
+                <%else%>
+                  <script type="text/javascript">$('forumtotalonline').innerHTML = parseInt($('forumtotalonline').innerHTML)+1;</script>
+                    <li style="overflow:hidden;text-align:center;height:70px;width:80px">
+                        <%set (string){avatarurl}=Avatars.GetAvatarUrl({userid}, AvatarSize.Small) %>
+                            <img src="{avatarurl}" onerror="this.onerror=null;this.src='{imagedir}/noavatar_small.gif';"  alt="头像" style="border:1px solid #E8E8E8;padding:1px;width:48px;height:48px;" />
+                        <%if {userid}==-1%>
+                            <p>{username}</p>
+                        <%else%>
+                           <%set {aspxrewriteurl} = this.UserInfoAspxRewrite({userid})%>
+                            <p><a href="{forumpath}{aspxrewriteurl}" target="_blank">{username}</a></p>
+                        <%/if%>
+                    </li>
+                <%/if%>
+            </ul>
+            </dd>
+            <%/if%>
+        </dl>
+    </div>
+    <%/if%>
+</div>
+<%if {userid<0}||{canposttopic}%>
+    <ul class="popupmenu_popup newspecialmenu" id="newspecial_menu" style="display: none">
+    <%if !{forum.AllowSpecialOnly}%>
+    <li><a href="{forumpath}posttopic.aspx?forumid={forum.fid}&forumpage={pageid}" >发新主题</a></li>
+    <%/if%>
+    <%if ({forum.allowpostspecial}&1)==1 && {usergroupinfo.AllowPostpoll}%>
+        <li class="poll"><a href="{forumpath}posttopic.aspx?forumid={forum.fid}&type=poll&forumpage={pageid}">发布投票</a></li>
+    <%/if%>
+    <%if ({forum.allowpostspecial}&4)==4 && {usergroupinfo.AllowBonus}%>
+        <li class="reward"><a href="{forumpath}posttopic.aspx?forumid={forum.fid}&type=bonus&forumpage={pageid}">发布悬赏</a></li>
+    <%/if%>
+    <%if ({forum.allowpostspecial}&16)==16 && {usergroupinfo.AllowDebate}%>
+        <li class="debate"><a href="{forumpath}posttopic.aspx?forumid={forum.fid}&type=debate&forumpage={pageid}" >发起辩论</a></li>
+    <%/if%>
+    </ul>
+    <ul class="popupmenu_popup newspecialmenu" id="newspecial2_menu" style="display: none">
+    </ul>
+    <ul class="popupmenu_popup newspecialmenu" id="seditor_newspecial_menu" style="display: none">
+    </ul>
+    <script type="text/javascript">
+        $('newspecial2_menu').innerHTML = $('newspecial_menu').innerHTML;
+        $('seditor_newspecial_menu').innerHTML = $('newspecial_menu').innerHTML;
+    </script>
+<%/if%>
+<%/if%>
+    <script type="text/javascript">
+        var maxpage = parseInt('{pagecount}');
+        var pageid = parseInt('{pageid}');
+        if(maxpage > 1) {
+            document.onkeyup = function(e){
+                e = e ? e : window.event;
+                var tagname = is_ie ? e.srcElement.tagName : e.target.tagName;
+                if(tagname == 'INPUT' || tagname == 'TEXTAREA') return;
+                actualCode = e.keyCode ? e.keyCode : e.charCode;
+                if(pageid < maxpage && actualCode == 39) {
+                    window.location = '{forumpath}{Urls.ShowForumAspxRewrite(forumid,pageid+1,forum.Rewritename)}';
+                }
+                if(pageid > 1 && actualCode == 37) {
+                    window.location = '{forumpath}{Urls.ShowForumAspxRewrite(forumid,pageid-1,forum.Rewritename)}';
+                }
+            }
+        }
+    </script>
+    <%/if%>
+</div>
+<%else%>
+    <%if {needlogin}%>
+        <%template _login%>
+    <%else%>
+        <%template _errmsgbox%>
+    <%/if%>
+<%/if%>
+<%if {config.forumjump}==1%>
+    {navhomemenu}
+<%/if%>
+<%if {showvisitedforumsmenu}%>
+<div class="p_pop" id="visitedforums_menu" style="display: none">
+    <h3 class="xi1">浏览过的版块</h3>
+    <ul>
+    <%loop (IXForum) fi visitedforums%>
+        <%if {fi.ID}!=forumid%>
+        <li><a href="{forumpath}{Urls.ShowForumAspxRewrite(fi.ID,1,fi.Rewritename)}">{fi.Name}</a></li>
+        <%/if%>
+    <%/loop%>
+    </ul>
+</div>
+<%/if%>
+<%template _adlist%>
+{mediaad}
+<%else%>
+<%template _quickpost%>
+<%/if%>
+<%template _copyright%>
+<%template _footer%>

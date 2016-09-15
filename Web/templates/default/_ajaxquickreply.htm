@@ -1,0 +1,150 @@
+<script type="text/javascript"  src="{jsdir}/bbcode.js"></script>
+<script type="text/javascript"  src="{jsdir}/post.js"></script>
+<%set (string){seditorid} = ""%>	
+<%set (string){poster} = DNTRequest.GetString("poster")%>	
+<%set (int){postlayer} = DNTRequest.GetInt("postlayer",0)%>
+<%set (string){urlreferrer} = DNTRequest.GetUrlReferrer()%>
+<%if {infloat}!=1%>
+<%set {seditorid} = "quickpost"%>						
+<%/if%>
+<%if {infloat}==1%>
+<form method="post" name="postform" id="form" action="postreply.aspx?topicid={topicid}&poster={poster}&postid={postid}&postlayer={postlayer}" enctype="multipart/form-data" onsubmit="return validate(this,'{seditorid}');" >
+<%else%>
+<form method="post" name="postform" id="quickpostform" action="postreply.aspx?topicid={topicid}&poster={poster}&postid={postid}&postlayer={postlayer}" enctype="multipart/form-data" onsubmit="return validate(this,'{seditorid}');" >
+<%/if%>
+<span  id="hiddenlayer" style="display:none;"></span>
+<div id="quickpost" class="<%if {infloat}!=1%>main<%/if%> quickpost">
+	<%if {infloat}==1%>
+	<h3 class="flb">
+		<span class="y">
+			<a title="关闭" onclick="hideWindow('reply')" class="flbc" href="javascript:;">关闭</a>
+		</span><em>无刷新回复主题</em>
+	</h3>
+	<%/if%>
+	<%if {infloat}!=1%>
+	<table cellspacing="0" cellpadding="0" summary="无刷新快速回复" >
+	<tbody>
+		<tr>
+		<td class="postauthor">
+			<div class="avatar">	
+			<%if {canreply}||{userid}>0%>
+			<%set (string){avatarurl}=Avatars.GetAvatarUrl(userid) %>	
+			<img src="{avatarurl}" onerror="this.onerror=null;this.src='{forumpath}images/common/noavatar_medium.gif';" alt="回复者"/>
+			<%/if%>
+			</div>
+		</td>
+		<td class="postcontent">
+	<%/if%>
+			<div class="post_inner c cl">
+			<%if {quickeditorad}!=""%>
+			<div class="leaderboard">{quickeditorad}</div>
+			<%/if%>
+			<em id="{seditorid}validatemessage"><%if {infloat}==1%>参与/回复主题<%/if%></em>
+			<div class="pbt">
+				<input type="text" id="{seditorid}title" name="{config.antispamposttitle}" size="84" tabindex="1" value="" style="display:none;" />
+				<input type="hidden" id="postlayer" name="postlayer" value="-1" />
+				<input type="hidden" id="postid" name="postid" value="{postid}" />
+				<span style="display:none">
+				<input type="checkbox" value="1" name="htmlon" id="htmlon" <%if !{usergroupinfo.AllowHtml}%> disabled<%/if%>/>
+				<input type="checkbox" name="parseurloff" id="parseurloff" value="1" <%if {parseurloff}==1%> checked <%/if%>/>
+				<input type="checkbox" name="smileyoff" id="smileyoff" value="1" <%if {smileyoff}==1%> checked disabled <%/if%>/>
+				<input type="checkbox" name="bbcodeoff" id="bbcodeoff" value="1" <%if {bbcodeoff}==1%> checked disabled <%/if%>/>
+				<input type="checkbox" name="usesig" id="usesig" value="1" <%if {usesig}==1%> checked <%/if%>/>
+				<input type="checkbox" name="emailnotify" id="emailnotify" <%if {replyemailstatus}==1%> checked <%/if%>/>
+				<input type="checkbox" name="postreplynotice" id="postreplynotice" <%if {replynotificationstatus}==1%> checked <%/if%>/>
+				</span>
+				<script type="text/javascript">
+					var bbinsert = parseInt('1');
+					var smiliesCount = 24;
+					var colCount = 8;
+				</script>
+				<%set (char){comma} = ','%>
+				<%if {infloat}==1%>
+				<div class="pbt cl" id="{seditorid}title_text">RE:{topic.Title}<a href="javascript:void(0)" onclick="modifytitle();" class="xg2" style="margin-left:10px;">修改</a></div>
+				<script type="text/javascript">
+				function modifytitle(){
+				    $('{seditorid}title_text').style.display = 'none';
+				    $('{seditorid}title').style.display = '';
+				    $('{seditorid}title').ClassName = 'txt postpx';
+				    $('{seditorid}title').value = 'RE:{topic.Title}';
+				}
+				</script>
+				<%/if%>
+			</div>
+			<%if {poster}!=""%>
+			<div class="pbt cl" id="toreplay_div">
+			<strong>回复 <a target="_blank" href="{rooturl}showtopic.aspx?topicid={topicid}&postid={postid}#{postid}">{postlayer}楼<font color="Olive">{poster}</font>的帖子</a></strong>
+			</div>
+			<input type="hidden" name="{seditorid}toreplay_user" id="{seditorid}toreplay_user"  value=""/>	
+			<%/if%>
+			<div <%if {infloat}!=1%>style="margin-right:170px;" <%else%>style="width:600px;"<%/if%>>
+			<div class="pbt">
+				<%template _seditor%>
+				<div class="postarea cl">
+					<div class="postinner">
+					<%if {canreply}%>
+					<%if {infloat}==1%>
+					  <textarea rows="7" cols="80" name="{config.antispampostmessage}" id="message" tabindex="3" style="background:url({quickbgad[1]}) no-repeat 50% 50%;" <%if {quickbgad[0]}!=""%> onfocus="$('adlinkbtn').style.display='';$('closebtn').style.display='';this.onfocus=null;"<%/if%> onkeydown="ajaxctlent(event, this.form, {topicid}, isendpage, '{imagedir}','{seditorid}',{hide});"></textarea>
+					<%else%>
+					  <textarea rows="5" cols="80" name="{config.antispampostmessage}" id="quickpostmessage" tabindex="6"  style="background-image:url({quickbgad[1]});background-repeat:no-repeat;background-position:50% 50%;" <%if {quickbgad[0]}!=""%> onfocus="$('adlinkbtn').style.display='';$('closebtn').style.display='';this.onfocus=null;"<%/if%> onkeydown="ajaxctlent(event, this.form, {topicid}, isendpage, '{imagedir}','{seditorid}',{hide});"></textarea>
+					<%/if%>
+					<%else%>
+					<div class="hm p_login cl">你需要登录后才可以发帖 <a class="xg2" onclick="hideWindow('register');showWindow('login', this.href);" href="{forumpath}login.aspx">登录</a> | <a class="xg2" onclick="hideWindow('login');showWindow('register', this.href);" href="{forumpath}register.aspx">注册</a></div>
+					<%/if%>
+					</div>
+				</div>
+			</div>
+			</div>
+			<%if {isseccode}%>
+			<div class="pbt" style="position: relative;">
+				<%template _vcode%>
+			</div>
+			<%/if%>
+			<div class="pbt">
+				<%if {topic.Special}==4 && {isenddebate}==false%>
+				<div class="ftid">
+                    <%set (int){stand} = DNTRequest.GetInt("stand",0)%>
+					<select name="debateopinion" id="debateopinion">
+						<option value="0"<%if {stand}==0%> selected<%/if%>>观点</option>
+						<option value="1"<%if {stand}==1%> selected<%/if%>>正方</option>
+						<option value="2"<%if {stand}==2%> selected<%/if%>>反方</option>
+					</select>
+				</div>
+				<script type="text/javascript">simulateSelect('debateopinion');</script>
+				<%/if%>
+				<%if {canreply}%>
+					<button type="button" id="{seditorid}submit" name="replysubmit" <%if {infloat}==1%>tabindex="5"<%else%>tabindex="8"<%/if%> onclick="ajaxreply(this.form, {topicid}, isendpage, '{imagedir}', false,'{seditorid}',{hide});" class="pn"><span>发表回复</span></button><span class="grayfont">[Ctrl+Enter快速发布]</span>
+				<%else%>
+				    <button type="button" id="{seditorid}submit" name="replysubmit" <%if {infloat}==1%>tabindex="5"<%else%>tabindex="8"<%/if%> onclick="hideWindow('register');showWindow('login', '{forumpath}login.aspx');" class="pn"><span>发表回复</span></button>
+				<%/if%>
+				<a href="###" id="adlinkbtn" style="display:none;" onclick="window.open('{quickbgad[0]}','_blank');">查看背景广告</a>
+				<a href="###" id="closebtn" style="display:none;" onclick="$('quickpostmessage').style.background='';this.style.display='none';$('adlinkbtn').style.display='none';">隐藏</a>
+			</div>
+			</div>
+			<script type="text/javascript">
+			var isendpage = ({pageid}=={pagecount});
+			var textobj = $('quickpostmessage');	
+			var smileyinsert = 1;
+			var showsmiliestitle = 0;
+			var smiliesIsCreate = 0;	
+			var smilies_HASH = {};
+			</script>
+	<%if {infloat}!=1%>
+		</td>
+		</tr>
+	</tbody>
+	</table>
+	<%/if%>
+</div>
+<script type="text/javascript"  reload="1">
+String.prototype.trim = function()
+{
+return this.replace(/(^\s*)|(\s*$)/g, "");
+} 
+<%if {poster}!=""%>
+$("toreplay_user").value=trim(html2bbcode1($("toreplay_div").innerHTML)).trim();
+<%/if%>
+</script>
+<script type="text/javascript" src="{jsdir}/template_quickreply.js"></script>
+</form>
+

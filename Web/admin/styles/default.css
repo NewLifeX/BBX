@@ -1,0 +1,152 @@
+﻿body {
+	font-size: 12px;
+	font-family: Tahoma, Verdana;
+	margin: 0px;
+	padding: 0px;
+	scrollbar-darkshadow-color: #808080;
+	scrollbar-face-color: #DDDDDD;
+	scrollbar-highlight-color: #EEEEEE;
+	scrollbar-shadow-color: #DEE3E7;
+	scrollbar-3dlight-color: #D1D7DC;
+	scrollbar-arrow-color:  #000000;
+	scrollbar-track-color: #EDEDED;
+	background-color: #FFFFFF;
+}
+form {
+	margin:0;
+	padding:0;
+}
+img {
+	border:0;
+	
+}
+
+input {  
+	border-top-width: 1px;
+	padding-right: 1px; 
+	padding-left: 1px;
+	padding-bottom: 1px; 
+	padding-top: 1px; 
+	border-left-width: 1px; 
+	border-bottom-width: 1px; 
+	border-right-width: 1px;
+
+	border-left-color: #C0C0C0; 
+	border-bottom-color: #C0C0C0;
+	border-top-color: #C0C0C0; 
+	border-right-color: #C0C0C0;
+	font-family: Tahoma, Verdana, "宋体"; 
+	font-size: 12px; 
+	color: #000000; 
+	background-color: #FFFFFF; 
+	
+	}
+	
+label
+{
+	border:0px;
+	position:relative;
+	top:-3px;
+	
+}
+	
+	
+textarea,subject { 
+	border-width: 1; 
+	border-color: #c0c0c0; 
+	background-color: #FFFFFF;
+	font-family: Tahoma, Verdana, "宋体"; 
+	font-size: 12px; 
+	color: #000000; 
+}
+
+select { 
+	font-family: Tahoma, Verdana, "宋体"; 
+	font-size: 12px;  
+	color: #000000; 
+	background-color: #FFFFFF;
+}
+table {
+	font-family: Tahoma, Verdana, "宋体";
+	font-size: 12px;
+	word-break: break-all ;
+	
+}
+.table1 {
+	font-family: Tahoma, Verdana, "宋体";
+	font-size: 12px;
+	word-break : break-all;
+	background-color: #FFFFFF;
+	background-image: ;
+}
+
+.td1
+{
+   font-size: 12px;
+   padding:12px;
+}
+
+.td2
+{
+    /*
+   font-size: 12px;
+   background-color: #F5F7F8;
+   padding:12px;
+   */
+   font-size: 12px;
+   padding:12px;
+}
+.colorfocus {
+	border: 1px #4B4B6F double;
+	background-color: #FFEEC2;
+}
+.colorblur {
+	border: 1px #cccccc double;
+	background-color: #ffffff;
+}
+
+a:link{
+	text-decoration: none;
+	color: #003366;
+	font-family: Tahoma, Verdana, "宋体";
+}
+
+a:visited {
+	text-decoration: none;
+	color: #003366;
+	font-family: Tahoma, Verdana, "宋体";
+}
+a:hover {
+	text-decoration: none;
+	color:#FF9900;
+	font-family: Tahoma, Verdana, "宋体";
+}
+
+
+
+.ImageTextButtonTree { BORDER-RIGHT: #999999 1px solid; PADDING-RIGHT: 3px; BACKGROUND-POSITION: 1px 1px; BORDER-TOP: #cccccc 1px solid; DISPLAY: inline-block; PADDING-LEFT: 22px;  FONT-SIZE: 12px; PADDING-BOTTOM: 1px; MARGIN: 1px; BORDER-LEFT: #cccccc 1px solid; CURSOR: pointer; COLOR: #333333; LINE-HEIGHT: normal; PADDING-TOP: 0px; BORDER-BOTTOM: #999999 1px solid; BACKGROUND-REPEAT: no-repeat;  WHITE-SPACE: nowrap; BACKGROUND-COLOR: #eeeeee; TEXT-DECORATION: none }
+.ImageTextButtonTree:link { COLOR: black; TEXT-DECORATION: none }
+.ImageTextButtonTree:visited { COLOR: black; TEXT-DECORATION: none }
+.ImageTextButtonTree:active { COLOR: black; TEXT-DECORATION: none }
+.ImageTextButtonTree:hover { CURSOR: black; COLOR: #666666; TEXT-DECORATION: none }
+	
+
+.ImageTextButton { BORDER-RIGHT: #999999 1px solid; PADDING-RIGHT: 3px; BACKGROUND-POSITION: 1px 1px; BORDER-TOP: #cccccc 1px solid;PADDING-BOTTOM: 3px; PADDING-TOP:3px; DISPLAY: inline-block; PADDING-LEFT: 22px;  FONT-SIZE: 12px;  MARGIN: 1px; BORDER-LEFT: #cccccc 1px solid; CURSOR: pointer; COLOR: #333333; LINE-HEIGHT: normal; BORDER-BOTTOM: #999999 1px solid; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: Arial, Helvetica; WHITE-SPACE: nowrap; BACKGROUND-COLOR: #eeeeee; TEXT-DECORATION: none }
+.ImageTextButton:link { COLOR: black; TEXT-DECORATION: none }
+.ImageTextButton:visited { COLOR: black; TEXT-DECORATION: none }
+.ImageTextButton:active { COLOR: black; TEXT-DECORATION: none }
+.ImageTextButton:hover { CURSOR: pointer; COLOR: #666666; TEXT-DECORATION: none }
+	
+		
+.TextButton { background:url(images/buttonbg.jpg) no-repeat left top; BORDER-RIGHT: #999999 1px solid; PADDING-RIGHT: 10px; BACKGROUND-POSITION: 1px 1px; BORDER-TOP: #cccccc 1px solid; DISPLAY: inline-block; PADDING-LEFT: 10px;  FONT-SIZE: 12px; PADDING-BOTTOM: 3px; MARGIN: 1px; BORDER-LEFT: #cccccc 1px solid; CURSOR: pointer; COLOR: #333333; LINE-HEIGHT: normal; PADDING-TOP: 3px; BORDER-BOTTOM: #999999 1px solid; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: Arial, Helvetica; WHITE-SPACE: nowrap; BACKGROUND-COLOR: #eeeeee; TEXT-DECORATION: none }
+.TextButton:link { COLOR: black; TEXT-DECORATION: none }
+.TextButton:visited { COLOR: black; TEXT-DECORATION: none }
+.TextButton:active { COLOR: black; TEXT-DECORATION: none }
+.TextButton:hover { CURSOR: pointer; COLOR: #666666; TEXT-DECORATION: none }
+		
+.RoundImageButtonLeft { BACKGROUND-POSITION: left top; DISPLAY: inline-block;display: -moz-inline-box; PADDING-LEFT: 4px; FONT-WEIGHT: bold; FONT-SIZE: 12px; BACKGROUND-IMAGE: url(../images/xpbuttonbg_l.gif); MARGIN-LEFT: 4px; CURSOR: pointer; BACKGROUND-REPEAT: no-repeat; TEXT-ALIGN: left }
+.RoundImageButtonRight { PADDING-RIGHT: 9px; BACKGROUND-POSITION: right top;display: -moz-inline-box; DISPLAY: inline-block; PADDING-LEFT: 5px; FONT-WEIGHT: bold; FONT-SIZE: 12px; BACKGROUND-IMAGE: url(../images/xpbuttonbg_r.gif); PADDING-BOTTOM: 5px; CURSOR: pointer; COLOR: #444444; PADDING-TOP: 3px; BACKGROUND-REPEAT: no-repeat; TEXT-ALIGN: left; TEXT-DECORATION: none }
+.RoundImageButtonRight:link { COLOR: #444444; TEXT-DECORATION: none }
+.RoundImageButtonRight:visited { COLOR: #444444; TEXT-DECORATION: none }
+.RoundImageButtonRight:active { COLOR: #444444; TEXT-DECORATION: none }
+.RoundImageButtonRight:hover { CURSOR: pointer; COLOR: #666666; TEXT-DECORATION: none }

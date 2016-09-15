@@ -1,0 +1,203 @@
+﻿<%template _header%>
+<script type="text/javascript" src="{jsdir}/template_register.js"></script>
+<script type="text/javascript" src="{jsdir}/ajax.js"></script>
+<%if {infloat}!=1%>
+<div class="wrap cl pageinfo">
+	<div id="nav">
+		<%if {usergroupinfo.AllowSearch}%>
+			<%template _quicksearch%>
+		<%/if%>
+		<a href="{config.forumurl}">{config.forumtitle}</a> &raquo; <strong>用户注册</strong>
+	</div>
+</div>
+<%/if%>
+<%if page_err==0%>
+    <%if {infloat}!=1&&{!ispost}%>
+    <div class="wrap cl">
+        <div class="main cl regbox">
+    <%/if%>
+        <%if {action}=="rules" && {infloat}!=1%>
+		    <div class="bm_h xg2">
+			    <h2>网站服务条款</h2>
+		    </div>
+	        <div class="blr">
+		        <form id="rule" name="agreerule" method="post" action="?action=rules">
+		            <div class="c cl floatwrap">
+			            {config.rulestxt}
+		            </div>
+		            <p class="fsb pns cl">
+			            <input name="agree" type="hidden" value="true" />
+                        <input name="invitecode" type="hidden" value="{invitecode}" />
+			            <button type="submit" id="btnagree" class="pn pnc"><span>同意</span></button>
+			            <button name="cancel" id="cancel" type="button" onclick="javascript:location.replace('index.aspx')" class="pn"><span>不同意</span></button>	  
+		            </p>
+		        </form>
+	        </div>
+        <%else%>
+            <%if {!ispost}%>
+                <%if {infloat}!=1%>
+		        <div class="bm_h xg2">
+			        <span class="y">
+				        已有帐号？
+				        <a href="{rooturl}login.aspx" title="现在登录" class="xg2">现在登录</a>
+			        </span>
+			        <h2><%if {action}=="verify"%>提交注册请求<%else%>立即注册<%/if%></h2>
+		        </div>
+                <%/if%>
+                <%if {action}=="reg"%>
+                    <%if {infloat}==1%>
+                    <div id="bbreg" class="regbox">
+                        <h3 class="flb"><em id="returnregmessage">注册</em>
+                            <span><a href="javascript:;" class="flbc" onclick="hideWindow('register')" title="关闭">关闭</a></span>
+                        </h3>
+                        <div id="succeedmessage" class="c cl" style="display:none"></div>
+                        <form id="ajaxform" name="register" method="post" onsubmit="$('ajaxform').action='{rooturl}register.aspx?infloat=1&action=reg&createuser=1&';ajaxpost('ajaxform', 'returnregmessage', 'returnregmessage', 'onerror');return false;" action="{rooturl}register.aspx?infloat=1&action=reg&createuser=1&">
+                    <%else%>
+                    <div class="blr" id="floatlayout_register">
+                        <div id="succeedmessage" class="c cl" style="display:none"></div>
+                        <form id="reg" name="register" method="post" action="?action=reg&createuser=1">
+                    <%/if%>
+	                    <div class="c cl">
+		                    <div style="overflow:hidden;overflow-y:auto" class="lgfm" id="reginfo_a">
+			                    <span id="activation_hidden">
+                                    <input type="hidden" id="verifycode" name="verifycode" value="{verifycode}" />
+				                    <%if {invitecode}!=""||{config.Regstatus}==3%>
+				                    <label><em>邀请码:</em><input name="invitecode" type="text" id="invitecode" size="20" class="txt" maxlength="7"<%if {invitecode}!=""%> value="{invitecode}" readonly="readonly"<%/if%> /> *</label>
+				                    <%/if%>
+				                    <label><em>用户名:</em><input type="text" class="txt" tabindex="1"  value="" maxlength="20" size="25" autocomplete="off" name="{config.antispamregisterusername}" id="username" onfocus="showTipInfo(this);" onblur="checkusername(this);"/> *<i id="username_tip"></i><span id="username_error"></span></label>
+				                    <label><em>密码:</em><input type="password" class="txt" tabindex="1"  id="password" size="25" name="password" onfocus="showTipInfo(this);" onblur="checkpasswd(this);"/> *<i id="password_tip"></i><span id="password_error"></span></label>	
+				                    <label id="passwdpower" style="display: none;"><em>密码强度</em><strong id="showmsg"></strong></label>
+				                    <label><em>确认密码:</em><input type="password" class="txt" value="" tabindex="1"  id="password2" size="25" name="password2" onfocus="showTipInfo(this);" onblur="checkdoublepassword(this.form)"/> *<i id="password2_tip"></i><span id="password2_error"></span></label>
+				                    <label><em>Email:</em><input type="text" class="txt" tabindex="1"  id="email" size="25" autocomplete="off" <%if {config.regverify}==1%> value="{verifyinfo.email}" readonly="readonly"<%/if%> name="{config.antispamregisteremail}" onfocus="showTipInfo(this);" onblur="checkemail(this)"/> *<i id="email_tip"></i><span id="email_error"></span></label>
+                                    <%if {config.Realnamesystem}==1%>
+				                    <label><em>真实姓名:</em><input name="realname" type="text" id="realname" size="10" class="txt" /> *</label>
+				                    <label><em>身份证:</em><input name="idcard" type="text" id="idcard" size="20" class="txt" /> *</label>
+				                    <label><em>移动电话:</em><input name="mobile" type="text" id="mobile" size="20" class="txt" /> *</label>
+				                    <label><em>固定电话:</em><input name="phone" type="text" id="phone" size="20" class="txt" /> *</label>
+				                    <%/if%>
+			                        <%if {isseccode}%>
+									<label><em>验证码: </em><cite style="display:inline;position: relative;"><%template _vcode%></cite></label>
+			                        <%/if%>
+			                    </span>
+                                <%if {config.rules}!=1 || {infloat}!=1%>
+                                <script type="text/javascript" reload="1">setTimeout(setUsernameFocus,300);</script>
+                                <%/if%>
+		                    </div>
+	                    </div>
+                        <p class="fsb pns cl">
+		                    <span id="reginfo_b_btn">
+		                        <button tabindex="5" value="true" name="regsubmit" type="submit" id="registerformsubmit" class="pn"><span>创建用户</span></button>
+		                    </span>
+	                    </p>
+                        </form>
+                    </div>
+	                <script type="text/javascript" src="{jsdir}/ajax.js"></script>
+                <%else%>
+                    <%if {infloat}==1%>
+                    <div id="bbreg" class="regbox">
+                        <h3 class="flb"><em id="returnregmessage">提交注册请求</em>
+                            <span><a href="javascript:;" class="flbc" onclick="hideWindow('register')" title="关闭">关闭</a></span>
+                        </h3>
+                        <div id="succeedmessage" class="c cl" style="display:none"></div>
+                        <form id="ajaxform" name="verify" method="post" onsubmit="$('ajaxform').action='{rooturl}register.aspx?infloat=1&action=verify';ajaxpost('ajaxform', 'returnregmessage', 'returnregmessage', 'onerror');return false;" action="{rooturl}register.aspx?infloat=1&action=verify">
+                    <%else%>
+                    <div class="blr" id="floatlayout_register">
+                        <div id="succeedmessage" class="c cl" style="display:none"></div>
+                        <form id="verify" name="verify" method="post" action="?action=verify">
+                    <%/if%>
+                        <div class="c cl">
+                            <div style="overflow:hidden;overflow-y:auto" class="lgfm" id="verify_info">
+                                <span id="verify_hidden">
+                                   <p>请首先填写您的常用E-mail地址,系统会发送网站注册链接的到您填写的电子信箱中。</p>
+                                   <%if {config.Regstatus}==3%>
+                                   <p>系统当前只接受提供了邀请码的用户注册,请填写您获得的邀请码。</p>
+                                   <%/if%>
+                                    <label><em>Email:</em><input type="text" class="txt" tabindex="1"  id="email" size="25" autocomplete="off" name="{config.antispamregisteremail}" onblur="checkemail(this)" onkeyup="checkemail(this)"/> *<span id="email_tip"></span></label>
+                                    <%if {invitecode}!=""||{config.Regstatus}==3%>
+				                    <label><em>邀请码:</em><input name="invitecode" type="text" id="Text1" size="20" class="txt" maxlength="7"<%if {invitecode}!=""%> value="{invitecode}" readonly="readonly"<%/if%> /> *</label>
+				                    <%/if%>
+                                </span>
+                                <%if {isseccode}%>
+			                    <div class="regsec">
+				                    <label style="display: inline;"><em>验证: </em><span style="position: relative;">
+		                                <%template _vcode%>
+	                                </span></label>
+			                    </div>
+			                    <%/if%>
+                            </div>
+                        </div>
+                        <p class="fsb pns cl">
+		                    <span id="requestverify">
+		                        <button tabindex="5" value="true" name="regsubmit" type="submit" id="requestverifysubmit" class="pn"><span>提交请求</span></button>
+		                    </span>
+	                    </p>
+                        </form>
+                    </div>
+                <%/if%>
+                <%if {infloat}==1 && {config.rules}==1%>
+                <div id="bbrule" style="display:none">
+			        <h3 class="flb" id="fctrl_register" style="cursor: move;">
+                        <em fwin="register">网站服务条款</em>
+                        <span><a title="关闭" onclick="hideWindow('register')" class="flbc">关闭</a></span>
+                    </h3>
+			        <div class="c cl floatwrap">
+				        {config.rulestxt}
+			        </div>
+			        <p class="fsb pns cl">
+				        <button type="submit" id="btnagree" class="pn pnc"  onclick="$('bbrule').style.display='none';$('bbreg').style.display='';setUsernameFocus();"><span>同意</span></button>
+				        <button name="cancel" id="cancel" onclick="hideWindow('register');" class="pn"><span>不同意</span></button>
+			        </p>
+                    <script type="text/javascript" reload="1">
+                        $('bbrule').style.display = '';
+                        $('bbreg').style.display = 'none';
+                    </script>
+		        </div>
+                <%/if%>
+            <%else%>
+                <%if {infloat}==1%>
+                    <script type="text/javascript">
+                        $('ajaxform').style.display = 'none';
+                        $('returnregmessage').className = '';
+	                </script>
+	                <div class="msgbox cl" id="succeemessage">
+		                <div class="msg_inner">
+		                <p style="margin-bottom:16px;">{msgbox_text}</p>
+		                <%if {msgbox_url}!=""%>
+		                <p><a href="javascript:;" onclick="location.reload()" class="xg2">如果长时间没有响应请点击此处</a></p>
+		                <script type="text/javascript">setTimeout('location.reload()', 3000);</script>
+		                <%/if%>
+		                </div>
+	                </div>
+	                <script type="text/javascript">
+	                    $('succeedmessage').style.display = '';
+	                    $('succeedmessage').innerHTML = $('succeemessage').innerHTML;
+	                    $('returnregmessage').innerHTML = '注册';
+	                </script>
+                <%else%>
+                    <%template _msgbox%>
+                <%/if%>
+            <%/if%>
+        <%/if%>
+    <%if {infloat}!=1&&{!ispost}%>
+        </div>
+    </div>
+    <%/if%>
+<%else%>
+    <%if {infloat}==1%>
+        <%if {!ispost}%>
+            <h3 class="flb"><em>出现了{page_err}个错误</em><span><a href="javascript:;" class="flbc" onclick="hideWindow('register')" title="关闭">关闭</a></span></h3>
+            <div class="c cl" id="errormsg">
+		        <div class="msg_inner error_msg">
+		            <p style="margin-bottom:16px;line-height:60px;">{msgbox_text}</p>
+		        </div>
+	        </div>
+        <%else%>
+            <p>{msgbox_text}</p>
+            <script type="text/javascript" reload="1">$("{errorControlId}").focus();</script>
+        <%/if%>
+    <%else%>
+        <%template _errmsgbox%>
+    <%/if%>
+<%/if%>
+<%template _copyright%>
+<%template _footer%>

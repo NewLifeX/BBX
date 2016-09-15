@@ -1,0 +1,118 @@
+﻿<%template _header%>
+<div class="wrap cl pageinfo">
+	<div id="nav">
+		<%if {usergroupinfo.AllowSearch}%>
+			<%template _quicksearch%>
+		<%/if%>
+		<a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <a href="usercpprofile.aspx">用户中心</a> &raquo; <strong>积分兑换</strong>
+	</div>
+</div>
+<div class="wrap uc cl">
+	<%template _menu%>
+	<div class="uc_main">
+	<div class="uc_content">
+		<h1>积分充值</h1>
+		<%template _scoremenu%>	
+	<%if page_err==0%>
+		{jscreditsratearray}
+	<%if ispost%>
+		<%template _usercpmsgbox%>
+	<%else%>
+	    <script type="text/javascript" reload="1">
+	        function RedirectPayPage() {
+	            var paytype = $('paytype').value;
+	            var amount = $('paycredits').value;
+	            if (amount == '') {
+	                alert('您还没有填写需要充值的积分数量');
+	                return false;
+	            }
+	            if(isNaN(amount)){
+	                alert('请输入正确的数值');
+	                return false;
+	            }
+	            if (paytype == '') {
+	                alert('您还没有选择充值平台');
+	                return false;
+	            }
+	            if(amount<{config.Mincreditstobuy}){
+	                alert('您购买的积分数超过了系统要求的最低数量，无法购买');
+	                return false;
+	            }
+	            if({config.Maxcreditstobuy}>0&&amount>{config.Maxcreditstobuy}){
+	                alert('您购买的积分数超过了系统要求的最高数量，无法购买');
+	                return false;
+	            }
+	            if(amount%1!=0){
+	                alert('购买的积分数必须是整数');
+	                return false;
+	            }
+	            if(!is_ie){
+	                alert('由于您使用的浏览器为非IE浏览器，所以可能造成支付失败，请最好使用IE浏览器');
+	            }
+//	            amount=amount-(amount%1);
+	            window.location.href = "usercpcreditsbuy.aspx?redirect=" + paytype + "&amount=" + amount;
+	        }
+
+	        function ShowPayRMB() {
+	            var amount = $('paycredits').value;
+	            if(isNaN(amount)){
+	                $('rmbmsg').style.color = '#FF0000';
+	                $('rmbmsg').innerHTML = '请输入正确的数值';
+	                return false;
+	            }	                
+	            if(amount!=''){
+	                var result = amount/{config.Cashtocreditrate};
+	                if(amount%1!=0){
+	                    $('rmbmsg').style.color = '#FF0000';
+	                    $('rmbmsg').innerHTML = '购买的积分数必须是整数';
+	                }
+	                else if(amount<{config.Mincreditstobuy}){
+	                    $('rmbmsg').style.color = '#FF0000';
+	                    $('rmbmsg').innerHTML = '系统规定您至少应购买{config.Mincreditstobuy}个积分';
+	                }
+	                else if({config.Maxcreditstobuy}>0&&amount>{config.Maxcreditstobuy}){
+	                     $('rmbmsg').style.color = '#FF0000';
+	                     $('rmbmsg').innerHTML = '系统规定您至多可以购买{config.Maxcreditstobuy}个积分';
+	                }
+	                else{
+	                    $('rmbmsg').style.color = '#000000';
+	                    $('rmbmsg').innerHTML = '需要支付 ￥'+ Math.round((Math.floor(result*1000)/10))/100 + '元';
+	                }
+	            }
+	            else{
+	                $('rmbmsg').innerHTML = '';
+	            }
+	        }
+	    </script>
+        <table cellspacing="0" cellpadding="0" class="tfm" summary="积分充值">
+            <caption>
+                <div class="hintinfo" style="margin:0;">您可以通过充值论坛积分享受论坛的增值体验</div>
+            </caption>
+            <tbody>
+                <tr>
+	                <th>积分充值</th>
+	                <td>{creditstransname}&nbsp;<input name="paycredits" type="text" id="paycredits" size="3" class="txt" onkeyup="ShowPayRMB();"/> &nbsp;{creditstransunit}&nbsp;<span id="rmbmsg" style="color:#FF0000"></span></td>
+                </tr>
+                <tr>
+	                <th>选择支付平台</th>
+	                <td>
+		                <input id="paytype" type="hidden" value="alipay" />
+		                <input id="paytype1" name="paytype" value="alipay" type="radio" checked="checked" onclick="$('paytype').value=this.value;" style=" margin-top:-3px;"/><img src="{rooturl}images/epayment/alipay_logo.gif" style=" vertical-align:middle;" />
+	                </td>
+                </tr>
+                <tr>
+	                <td colspan="2">
+		                <button type="button" class="pn" onclick="RedirectPayPage();"><span>点击充值</span></button>
+	                </td>
+                </tr>
+            </tbody>
+        </table>
+	<%/if%>
+<%else%>
+	<%template _usercperrmsgbox%>
+<%/if%>
+	</div>
+	</div>
+</div>
+<%template _copyright%>
+<%template _footer%>

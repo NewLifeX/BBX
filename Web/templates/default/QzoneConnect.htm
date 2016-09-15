@@ -1,0 +1,174 @@
+﻿<%template _header%>
+<script type="text/javascript" src="{jsdir}/template_register.js"></script>
+<div class="wrap cl pageinfo">
+    <div id="nav">
+        <a href="{config.forumurl}">{config.forumtitle}</a> &raquo; <strong>QQ互联</strong>
+    </div>
+</div>
+<%if page_err==0%>
+    <%if ispost%>
+        <script type="text/javascript">
+            function con_handle_response(obj) {
+                if (obj.errMessage != '')
+                    alert(obj.errMessage);
+            }
+        </script>
+        <%template _msgbox%>
+    <%else%>
+        <div class="wrap cl">
+            <div class="main cl regbox">
+                <%if {action}=="bind"%>
+                <div class="f_tab cl">
+                    <ul style="padding-left: 100px;">
+                        <%if {allowreg}&&{userid}<0%>
+                        <li id="connect_tab_1"><a tabindex="900" onclick="connect_switch(1);" href="javascript:;">完善帐号信息</a></li>
+                        <%/if%>
+                        <li id="connect_tab_2"><a tabindex="900" href="javascript:;" onclick="connect_switch(2);">已有帐号？ 绑定我的帐号</a></li>
+                    </ul>
+                </div>
+                <div class="blr">
+                    <form id="form1" action="{qzoneconnectpagename}?act=bind" method="post" name="form1">
+                    <input type="hidden" id="bindtype" name="bind_type" />
+                    <div class="c cl">
+                        <div style="overflow: hidden; overflow-y: auto" class="lgfm" id="reginfo_a">
+                            <span id="activation_hidden_1" style="display:none;">
+                                <label><em><img class="mtn" alt="QQ" src="{forumpath}images/common/connect_qq.gif" /></em>您将使用QQ账号接入本站：<strong>{qqnikename}</strong>
+                                    <a href="{qzoneconnectpagename}" class="xg2">不是你的QQ号，更换账号？</a>
+                                </label>
+                                <%if {config.regstatus}==3%>
+                                <label>
+                                    <em>邀请码:</em><input name="invitecode" type="text" id="invitecode" size="20" class="txt"/>
+                                </label>
+                                <%/if%>
+                                <label><em>用户名:</em>
+                                    <input name="{config.antispamregisterusername}" type="text" id="username" onfocus="showTipInfo(this);" onblur="checkusername(this);" size="20" class="txt" maxlength="20" />* 
+                                    <i id="username_tip"></i><span id="username_error"></span>
+                                </label>
+                                <label>
+                                    <em>Email:</em><input type="text" class="txt" value="{email}" maxlength="20" size="25" autocomplete="off" name="{config.antispamregisteremail}" id="email" onfocus="showTipInfo(this);" onblur="checkemail(this)"/>
+                                    * <i id="email_tip"></i><span id="email_error"></span>
+                                </label>
+                                <!--<label>
+                                    <em>生日:</em>
+                                    <input name="bday" type="text" class="txt" id="bday" size="10" value="{nowdate}" style="cursor:default" onclick="showcalendar(event, 'bday', 'cal_startdate', 'cal_enddate', this.value);" readonly="readonly" />&nbsp;<button type="button" onclick="$('bday').value='';" class="pn">清空</button>
+                                    <input type="hidden" name="cal_startdate" id="cal_startdate" size="10"  value="1900-01-01" />
+					                <input type="hidden" name="cal_enddate" id="cal_enddate" size="10"  value="{nowdatetime}" />
+                                </label>-->
+                                <label>
+                                    <em>性别:</em>
+							        <select name="gender" id="gender">
+								        <option value="0" <%if {qqgender}==0%>selected="selected"<%/if%>>保密</option>
+								        <option value="1" <%if {qqgender}==1%>selected="selected"<%/if%>>男</option>
+								        <option value="2" <%if {qqgender}==2%>selected="selected"<%/if%>>女</option>
+							        </select>
+                                    <script type="text/javascript">simulateSelect('gender');</script>
+                                </label>
+                                <%if {qzconfig.AllowUseQZAvater}%>
+                                <label><em>头像:</em><img src="{avatarurl}"  onerror="this.onerror=null;this.src='{forumpath}images/common/noavatar_medium.gif';"  alt="用户头像" /><p style="padding-left: 70px; margin-top: 4px;">
+                                    <input id="use_qzone_avatar" class="pc" type="checkbox" tabindex="1" checked="checked" value="1" name="use_qzone_avatar" />使用QQ空间头像</p>
+                                </label>
+                                <%/if%>
+                            </span>
+                            <span id="activation_hidden_2" style="display:none;">
+                                <label><em><img class="mtn" alt="QQ" src="{forumpath}images/common/connect_qq.gif" /></em>您将使用QQ账号接入本站：<strong>{qqnikename}</strong>
+                                    <a href="{qzoneconnectpagename}" class="xg2">不是你的QQ号，更换账号？</a>
+                                </label>
+                                <label>
+                                    <em>帐号:</em><input name="loginusername" type="text" id="loginusername" size="20" class="txt"/>
+                                </label>
+                                <label>
+                                    <em>密码:</em><input name="password" type="password" id="password" size="20" class="txt"/>
+                                </label>
+                                <label>
+                                    <em>安全提问:</em>
+                                    <select name="question" id="bindquestion" change="changequestion();">
+						                <option value="0" selected="selected">安全提问</option>
+						                <option value="1">母亲的名字</option>
+						                <option value="2">爷爷的名字</option>
+						                <option value="3">父亲出生的城市</option>
+						                <option value="4">您其中一位老师的名字</option>
+						                <option value="5">您个人计算机的型号</option>
+						                <option value="6">您最喜欢的餐馆名称</option>
+						                <option value="7">驾驶执照的最后四位数字</option>
+					                </select>
+					                <script type="text/javascript">simulateSelect('bindquestion','214');</script>
+                                </label>
+                                <label id="answerlabel" style=" display:none;">
+                                    <em>答案:</em><input name="answer" type="text" id="answer" size="20" class="txt" />
+                                </label>
+                                <script type="text/javascript">
+                                    function changequestion() {
+                                        if ($('bindquestion').getAttribute("selecti") != "0") {
+                                            $('answerlabel').style.display = '';
+                                            $('answerlabel').focus();
+                                        }
+                                        else {
+                                            $('answerlabel').style.display = 'none';
+                                        }
+                                    }
+                                </script>
+                            </span>
+                        </div>
+                    </div>
+                    <p class="fsb pns cl">
+                        <span id="submit_b_btn_1" style="display:none;">
+                            <button tabindex="5" value="true" name="regsubmit" type="submit" id="registerformsubmit" class="pn"><span>完成，继续浏览</span></button>
+                            <a tabindex="900" href="{qzoneconnectpagename}?act=bind&bind_type=pure" class="pn">免注册，直接进入</a>
+                        </span>
+                        <span id="submit_b_btn_2" style="display:none;">
+                            <button tabindex="5" value="true" name="bindsubmit" type="submit" id="bindsubmit" class="pn"><span>绑定帐号,继续浏览</span></button>
+                        </span>
+                    </p>
+                    <ul id="usedusername_menu" class="popupmenu_popup" style="display: none;">
+                    </ul>
+                    <script type="text/javascript">
+                        if ($('username').value != "") {
+                            checkusername($('username'));
+                        }
+                        if ($('email').value != "") {
+                            checkemail($('email'));
+                        }
+
+                        function connect_switch(type) {
+                            jQuery('#connect_tab_1').attr('class', '');
+                            jQuery('#activation_hidden_1').css('display', 'none');
+                            jQuery('#submit_b_btn_1').css('display', 'none');
+                            jQuery('#connect_tab_2').attr('class', '');
+                            jQuery('#activation_hidden_2').css('display', 'none');
+                            jQuery('#submit_b_btn_2').css('display', 'none');
+
+                            jQuery('#connect_tab_' + type).attr('class', 'cur_tab');
+                            jQuery('#activation_hidden_' + type).css('display', '');
+                            jQuery('#submit_b_btn_' + type).css('display', '');
+                            jQuery('#bindtype').val(type == 1 ? 'new' : 'bind');
+                        }
+                        connect_switch(1);
+                    </script>
+                    </form>
+                    <!--<div id="regrules_d" style="display:none;">
+                        <div id="regrules">
+			                <div class="c cl floatwrap">
+				                {config.rulestxt}
+			                </div>
+			                <p class="fsb pns cl">
+				                <button type="submit" id="btnagree" class="pn pnc"  onclick="hideMenu('fwin_dialog', 'dialog');"><span>同意</span></button>
+				                <button name="cancel" id="cancel" onclick="window.location.href = forumpath + 'index.aspx';" class="pn"><span>不同意</span></button>
+			                </p>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        showDialog($('regrules_d').innerHTML, 'info', '网站服务条款', null, 1);
+                    </script>-->
+                </div>
+                <%else if {action}=="unbind"%>
+                    <%template _msgbox%>
+                <%/if%>
+            </div>
+        </div>
+        <script type="text/javascript"  src="{jsdir}/template_calendar.js"></script>
+    <%/if%>
+<%else%>
+    <%template _errmsgbox%>
+<%/if%>
+<%template _copyright%>
+<%template _footer%>

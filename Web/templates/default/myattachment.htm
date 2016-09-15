@@ -1,0 +1,74 @@
+﻿<%template _header%>
+<%namespace "BBX.Config"%>
+<div class="wrap cl pageinfo">
+	<div id="nav">
+		<%if {usergroupinfo.AllowSearch}%>
+			<%template _quicksearch%>
+		<%/if%>
+		<a href="{config.forumurl}" class="title">{config.forumtitle}</a> &raquo; <a href="usercpprofile.aspx">用户中心</a> &raquo; <strong>附件</strong>
+	</div>
+</div>
+<script type="text/javascript">
+	function checkCheckBox(form,objtag)
+	{
+		for(var i = 0; i < form.elements.length; i++) 
+		{
+			var e = form.elements[i];
+			if(e.name == "pmitemid") 
+			{
+				e.checked = objtag.checked;
+			}
+		}
+		objtag.checked = !objtag.checked;
+	}
+</script>
+<div class="wrap uc cl">
+   <%template _menu%>
+   	<div class="uc_main">
+	<div class="uc_content">
+		<h1>附件</h1>
+<%if page_err==0%>
+		<%template _attachmentmenu%>
+	<%if ispost%>
+		<%template _msgbox%>
+	<%else%>
+	<%if {myattachmentlist.count}>0%>
+		<form id="pmform" name="pmform" method="post" action="">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="datatable">
+		<thead class="colplural">
+			<tr>
+				<th width="22%">附件名称</th>
+				<th>附件描述</th>
+				<th width="20%">上传时间</th>
+				<th width="10%">下载次数</th>
+			</tr>
+		</thead>
+		<tbody>
+		<%loop (MyAttachment) myatinfo myattachmentlist%>
+			<tr>
+			<td><a href="{myatinfo.FileName}" title="{myatinfo.Name}" target="_blank">{myatinfo.SimpleName}</a></td>
+			<td>{myatinfo.Description}</td>
+			<td>{myatinfo.PostDateTime}</td>
+			<td>{myatinfo.Downloads}</td>
+			</tr>
+		<%/loop%>
+		</tbody>
+		</table>
+		</form>
+		<div class="pages_btns cl">
+			<div class="pages">
+				{pagenumbers}<em>{pageid}/{pagecount}页</em>
+			</div>
+		</div>
+		<%else%>
+		<div class="zerothreads">暂无附件</div>
+		<%/if%>
+	<%/if%>
+<%else%>
+		<%template _usercperrmsgbox%>
+<%/if%>
+	</div>
+	</div>
+</div>
+<%template _copyright%>
+<%template _footer%>

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<about>
+<template name="默认模板"
+  author="NewLife"
+  createdate = "2012-10-31"
+  ver="1.0"
+  fordntver="1.0"
+  copyright="http://www.NewLifeX.com" 
+  width="750" />
+</about>

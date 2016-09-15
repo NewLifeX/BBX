@@ -1,0 +1,102 @@
+<link href="{forumpath}templates/{templatepath}/seditor.css" rel="stylesheet" type="text/css" />
+<link href="{forumpath}templates/{templatepath}/editor.css" rel="stylesheet" type="text/css" />
+<div class="editor_tb">
+    <span id="hiddenlayer">
+        <%csharp%>
+        string formatNow = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        <%/csharp%>
+        <input type="hidden" name="posttime" id="posttime" value="{formatNow}" />
+        <input type="hidden" name="fid" id="fid" value="{forumid}" />
+    </span>
+	<span class="y">
+		<%if {topicid}>0%>
+            <%set (string){replyurl} = {rooturl}+"postreply.aspx?topicid="+{topicid}%>
+            <%if {postid}>0%>
+                <%set {replyurl} = {replyurl}+"&postid="+{postid}+"&postlayer="+{postlayer}+"&poster="+{Utils.UrlEncode(poster)}%>
+            <%/if%>
+		    <a onclick="switchAdvanceMode(this.href, '{seditorid}');doane(event);" href="{replyurl}"><img src="{imagedir}/external2.png" alt="高级编辑器" class="vm"/>高级编辑器</a>
+		<%else%>
+		    <a onclick="switchAdvanceMode(this.href, '{seditorid}');doane(event);" href="{rooturl}posttopic.aspx?forumid={forum.fid}"><img src="{imagedir}/external2.png" alt="高级编辑器" class="vm"/>高级编辑器</a>
+		<%/if%>
+
+		<%if {infloat}!=1%>
+        <%if {userid<0}||{canposttopic}%>
+            <%set (string){newtopicurl} = ""%>
+            <%if !{forum.AllowSpecialOnly}%>
+	            <%set {newtopicurl} = {forumpath} + "posttopic.aspx?forumid=" + {forum.fid} + "&forumpage=" + {pageid} %>
+            <%else if 1==({forum.allowpostspecial}&1)&&{usergroupinfo.AllowPostpoll}%>
+                <%set {newtopicurl} = {forumpath} + "posttopic.aspx?forumid=" + {forum.fid} + "&type=poll&forumpage=" + {pageid} %>
+            <%else if 4==({forum.allowpostspecial}&4)&&{usergroupinfo.AllowBonus}%>
+                <%set {newtopicurl} = {forumpath} + "posttopic.aspx?forumid=" + {forum.fid} + "&type=reward&forumpage=" + {pageid} %>
+            <%else if 16==({forum.allowpostspecial}&16)&&{usergroupinfo.AllowDebate}%>
+                <%set {newtopicurl} = {forumpath} + "posttopic.aspx?forumid=" + {forum.fid} + "&type=debate&forumpage=" + {pageid} %>
+            <%/if%>
+            <%set (string){newtopiconclick} = ""%>
+            <%if !{forum.AllowSpecialOnly}&&{canposttopic}%>
+                <%set {newtopiconclick} = "showWindow('newthread', '" + {forumpath} + "showforum.aspx?forumid=" + {forum.fid} + "')"%>
+            <%/if%>
+            <%if {userid}<=0%>
+                <%set {newtopiconclick} = "showWindow('login', '" + {forumpath} + "login.aspx');hideWindow('register');"%>
+            <%/if%>
+        <%/if%>
+		<%/if%>
+	</span>
+	<div>
+		<a href="javascript:;" title="粗体" class="tb_bold" onclick="seditor_insertunit('{seditorid}', '[b]', '[/b]')">B</a>
+		<a href="javascript:;" title="颜色" class="tb_color" id="{seditorid}forecolor" onclick="showMenu(this.id, true, 0, 2)">Color</a>
+		<%set (string){coloroptions} = "Black,Sienna,DarkOliveGreen,DarkGreen,DarkSlateBlue,Navy,Indigo,DarkSlateGray,DarkRed,DarkOrange,Olive,Green,Teal,Blue,SlateGray,DimGray,Red,SandyBrown,YellowGreen,SeaGreen,MediumTurquoise,RoyalBlue,Purple,Gray,Magenta,Orange,Yellow,Lime,Cyan,DeepSkyBlue,DarkOrchid,Silver,Pink,Wheat,LemonChiffon,PaleGreen,PaleTurquoise,LightBlue,Plum,White"%>
+		<div class="popupmenu_popup tb_color" id="{seditorid}forecolor_menu" style="display: none">
+			<%loop (string) colorname coloroptions.Split(comma)%>
+				<input type="button" style="background-color: {colorname}" onclick="seditor_insertunit('{seditorid}', '[color={colorname}]', '[/color]')" /><%if {colorname[_id]}%8==0%><br /><%/if%>
+			<%/loop%>
+		</div>
+		<a href="javascript:;" title="附件和图片" class="tb_img tb_upload" id="{seditorid}img" onclick="seditor_menu('{seditorid}', 'img')">Image</a>
+		<a href="javascript:;" title="链接" class="tb_link" id="{seditorid}url" onclick="seditor_menu('{seditorid}', 'url')">Link</a>
+		<a href="javascript:;" title="引用" class="tb_quote" onclick="seditor_insertunit('{seditorid}', '[quote]', '[/quote]')">Quote</a>
+		<a href="javascript:;" title="代码" class="tb_code" onclick="seditor_insertunit('{seditorid}', '[code]', '[/code]')">Code</a>
+	<%if {config.smileyinsert}==1 && {forum.AllowSmilies}%>
+		<a href="javascript:;" class="tb_smilies" id="{seditorid}smilies" onclick="{seditorid}getSmilies({seditorid}getSmilies_callback);showMenu({'ctrlid':this.id, 'evt':'click', 'layer':2})">Smilies</a>
+	<%/if%>
+	</div>
+</div>
+<%if {config.smileyinsert}==1 && {forum.AllowSmilies}%>
+	<div class="smilies" id="{seditorid}smilies_menu" style="display:none;width:315px;">
+		<div class="smilieslist">
+			<%set (string){defaulttypname} = string.Empty%>
+			<div id="smiliesdiv">
+				<div class="smiliesgroup" style="margin-right: 0pt;">
+					<ul>
+					<%loop (Smilie) stype Smilie.GetSmiliesTypes()%>
+						<%if {stype[_id]}==1%>
+						<%set {defaulttypname} = {stype.Code}%>
+						<%/if%>
+						<%if {stype[_id]}==1%>
+						<li id="t_s_{stype[_id]}"><a id="s_{stype[_id]}" hidefocus="true" href="javascript:;" onclick="showsmiles({stype[_id]}, '{stype.Code}', 1, '{seditorid}');" class="current">{stype.Code}</a></li>
+						<%else%>
+						<li id="t_s_{stype[_id]}"><a id="s_{stype[_id]}" hidefocus="true" href="javascript:;" onclick="showsmiles({stype[_id]}, '{stype.Code}', 1, '{seditorid}');">{stype.Code}</a></li>
+						<%/if%>
+					<%/loop%>
+					</ul>
+				 </div>
+				 <div style="clear: both;" class="float_typeid" id="{seditorid}showsmilie"></div>
+				 <table class="smilieslist_table" id="s_preview_table" style="display: none"><tr><td class="smilieslist_preview" id="s_preview"></td></tr></table>
+				 <div id="{seditorid}showsmilie_pagenum" class="smilieslist_page">&nbsp;</div>
+			</div>
+		</div>
+		<script type="text/javascript" reload="1">
+			function {seditorid}getSmilies(func){
+				if($('{seditorid}showsmilie').innerHTML !='' && $('{seditorid}showsmilie').innerHTML != '正在加载表情...')
+					return;
+				var c = "{forumpath}tools/ajax.ashx?t=smilies";
+				_sendRequest(c,function(d){var e={};try{e=eval("("+d+")")}catch(f){e={}}var h=e?e:null;func(h);e=null;func=null},false,false);
+				setTimeout("if($('{seditorid}showsmilie').innerHTML=='')$('{seditorid}showsmilie').innerHTML = '正在加载表情...'", 2000);
+			}
+			function {seditorid}getSmilies_callback(obj) {
+				smilies_HASH = obj; 
+				showsmiles(1, '{defaulttypname}', 1, '{seditorid}');
+			}
+            var editorid = 'e';
+            var seditorkey = '{seditorid}';
+		</script>
+	</div>
+<%/if%>

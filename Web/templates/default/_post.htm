@@ -1,0 +1,234 @@
+﻿<div id="editorbox">
+    <div class="edt_main">
+    <div class="edt_content cl">
+        <%set (string){special} = DNTRequest.GetString("type").ToLower();%>
+        <%if {special}=="" && {topic.special}>0%>
+            <%if {topic.special}==1 %><%set {special} = "poll"%><%/if%>
+            <%if {topic.special}==2 || {topic.special}==3%><%set {special} = "bonus"%><%/if%>
+            <%if {topic.special}==4%><%set {special} = "debate"%><%/if%>
+        <%/if%>
+        <%set (bool){adveditor} = ({special}!="" || {topic.special}>0)&&{isfirstpost}%>
+        <%set (string){action} = pagename.Replace("post","").Replace(".aspx","").Replace("topic","newthread")%>
+        <%set (string){actiontitle} = ""%>
+        <ul class="f_tab cl mbw">
+            <%if {pagename}=="posttopic.aspx"%>
+                <%if {special}=="bonus"%>
+                    <%set {actiontitle} = "发布悬赏"%>
+                <%else if {special}=="poll"%>
+                    <%set {actiontitle} = "发布投票"%>
+                <%else if {special}=="debate"%>
+                    <%set {actiontitle} = "发布辩论"%>
+                <%else%>
+                    <%set {actiontitle} = "发新主题"%>
+                <%/if%>
+                <li<%if {special}==""%> class="cur_tab"<%/if%>><a onclick="switchpost('posttopic.aspx?forumid={forumid}&forumpage={forumpageid}&cedit=yes')" href="javascript:;">发表帖子</a></li>
+                <%if !{forum.AllowSpecialOnly}%>
+                <%if 1==({forum.allowpostspecial}&1)&&{usergroupinfo.AllowPostpoll}%>
+                <li<%if {special}=="poll"%> class="cur_tab"<%/if%>><a onclick="switchpost('posttopic.aspx?forumid={forumid}&forumpage={forumpageid}&type=poll&cedit=yes')" href="javascript:;">发起投票</a></li>
+                <%/if%>
+                <%if 4==({forum.allowpostspecial}&4)&&{usergroupinfo.AllowBonus}%>
+                <li<%if {special}=="bonus"%> class="cur_tab"<%/if%>><a onclick="switchpost('posttopic.aspx?forumid={forumid}&forumpage={forumpageid}&type=bonus&cedit=yes')" href="javascript:;">发布悬赏</a></li>
+                <%/if%>
+                <%if 16==({forum.allowpostspecial}&16)&&{usergroupinfo.AllowDebate}%>
+                <li<%if {special}=="debate"%> class="cur_tab"<%/if%>><a onclick="switchpost('posttopic.aspx?forumid={forumid}&forumpage={forumpageid}&type=debate&cedit=yes')" href="javascript:;">发起辩论</a></li>
+                <%/if%>
+                <%/if%>
+            <%else if {pagename}=="postreply.aspx"%>
+                <%set (int){postlayer} = DNTRequest.GetInt("postlayer", -1)%>
+                <%set (string){replyposter} = DNTRequest.GetHtmlEncodeString("poster")%>
+                <%if {postlayer}>0%>
+                    <%set {actiontitle} = "回复帖子"%>
+                    <div style="display:none;">
+                        <div id="toreplay_div"><strong>回复 <a target="_blank" href="{DNTRequest.GetUrlReferrer()}#{postid}">{postlayer}楼<font color="Olive">{replyposter}</font>的帖子</a></strong></div>
+                        <input type="hidden" id="toreplay_user" name="toreplay_user"/>
+                        <script type="text/javascript">
+                            String.prototype.trim = function(){return this.replace(/(^\s*)|(\s*$)/g, "");}
+                            <%if {replyposter}!=""%>$("toreplay_user").value=trim(html2bbcode1($("toreplay_div").innerHTML)).trim();<%/if%>
+                        </script>
+                    </div>
+                    <%set (string){url}= "postreply.aspx?topicid="+{topicid}+"&forumpage="+{forumpageid}+"&postid="+{DNTRequest.GetString("pageid")}+"&postlayer="+{DNTRequest.GetString("postlayer")}+"&poster="+{DNTRequest.GetString("poster")}%>
+                    <li class="a"><a onclick="switchpost('{url}')" href="javascript:;">回复帖子</a></li>
+                <%else%>
+                    <%set {actiontitle} = "回复主题"%>
+                    <%set (string){url}= "postreply.aspx?topicid="+{topicid}+"&forumpage="+{forumpageid}+"&postid="+{DNTRequest.GetString("pageid")}+"&postlayer="+{DNTRequest.GetString("postlayer")}+"&poster="+{DNTRequest.GetString("poster")}%>
+                    <li class="a"><a onclick="switchpost('{url}')" href="javascript:;">回复主题</a></li>
+                <%/if%>
+            <%else if {pagename}=="editpost.aspx"%>
+                <%set {actiontitle} = "编辑帖子"%>
+                <%set (string){url}= "editpost.aspx?topicid="+{topicid}+"&postid="+{DNTRequest.GetString("postid")}+"&forumpage="+{forumpageid}%>
+                <li class="a"><a onclick="switchpost('{url}')" href="javascript:;">编辑帖子</a></li>
+            <%/if%>
+        </ul>
+        <%set (char){comma} = ','%>
+        <%set (string){editorid} = "e"%>
+        <%set (int){thumbwidth} = 400%>
+        <%set (int){thumbheight} = 300%>
+        <div id="postbox">
+        <div class="pbt cl">
+        <%if {forum.ApplytopicType}==1 && {topictypeselectoptions}!=""&&{isfirstpost}%>
+            <div class="ftid">
+                <select name="typeid" id="typeid">{topictypeselectoptions}</select>
+            </div>
+            <script type="text/javascript" reload="1">$('typeid').value = '{topic.TypeID}';</script>
+            <script type="text/javascript">simulateSelect("typeid");</script>
+        <%/if%>
+        <%if !{isfirstpost} && ({topic.special==4}||{special}=="debate")%>
+            <div class="ftid">
+                <select id="debateopinion" name="debateopinion">
+                    <option value="0">观点</option>
+                    <option value="1">正方</option>
+                    <option value="2">反方</option>
+                </select>
+            </div>
+            <script type="text/javascript">simulateSelect("debateopinion");</script>
+            <script type="text/javascript" reload="1">$('debateopinion').selectedIndex = parseInt(getQueryString("debate"));</script>
+        <%/if%>
+            <span class="z">
+            <input name="{config.antispamposttitle}" type="text" id="title" value="{postinfo.title}" class="txt postpx"/>
+        <%if {action}=="reply" || {postinfo.layer}>0%>
+            <cite class="tips">(可选)</cite>
+        <%/if%>标题最多为60个字符，还可输入<b><span id="chLeft">60</span></b>
+        <%if {canhtmltitle}%><a href="###" id="titleEditorButton" onclick="RootTitleEditor();" class="xg2" style="margin-left:10px;">高级编辑</a><%/if%>
+            </span>
+        <%if {needaudit}%><em class="needverify">需审核</em><%/if%>
+        </div>
+        <%if {canhtmltitle}%>
+        <script type="text/javascript" src="{jsdir}/simplyeditor.js" reload="1"></script>
+        <div class="pbt cl" id="editorDiv" style="display: none;">
+            <div class="title_editor" id="titleEditorDiv">
+                <script type="text/javascript">
+                    var titleEditor;
+                    function RootTitleEditor(){
+                        if($('editorDiv').style.display == 'none')
+                        AdvancedTitleEditor();
+                        else
+                        TextTitleBox();
+                    }
+                    function AdvancedTitleEditor() {
+                        $('editorDiv').style.display = '';
+                        $('title').style.display = 'none';
+                        if(titleEditor==null){
+                            titleEditor = new SimplyEditor('htmltitle', 'titleEditorDiv', '{cssdir}', '{htmltitle}');
+                        }
+                        $('titleEditorButton').innerHTML='普通编辑';
+                    }
+                    function TextTitleBox(){
+                        $('editorDiv').style.display = 'none';
+                        $('title').style.display = '';
+                        $('titleEditorButton').innerHTML='高级编辑';
+                    }
+//                    $('titleEditorButton').onclick = function () {
+//                        AdvancedTitleEditor();
+//                    };
+                    <%if {htmltitle}!=""%>
+                        AdvancedTitleEditor();
+                    <%/if%>
+                </script>
+            </div>
+        </div>
+        <%/if%>
+        <%if {adveditor}%>
+        <div id="specialpost" class="pbt cl"></div>
+        <script type="text/javascript" reload="1">
+            _attachEvent(window, "load", function(){ 
+            if($('specialposttable')) {
+                $('specialpost').innerHTML = $('specialposttable').innerHTML;
+                $('specialposttable').innerHTML = '';
+            }
+            });
+        </script>
+        <%/if%>
+        <%template _subeditor%>
+        <%if {pagename}=="posttopic.aspx" || ({pagename}=="editpost.aspx"&&{isfirstpost})%>
+            <%if {enabletag}%>
+            <div class="pbt cl margint">
+                <p><strong>标签(Tags):</strong>(用空格隔开多个标签，最多可填写 5 个)</p>
+                <p><input type="text" name="tags" id="tags" class="txt" value="{topictags}" tabindex="1" /><button name="addtags" type="button" onclick="relatekw();return false">+可用标签</button> <span id="tagselect"></span></p>
+            </div>
+            <%/if%>
+        <%/if%>
+        <div id="moreinfo"></div>
+        <div style="clear:both;"></div>
+        <div class="pbt cl margint">
+            <div class="custominfoarea" id="custominfoarea" style="display: none;"></div>
+            <%if {postinfo.layer}==0 && {forum.ApplytopicType}==1%>
+            <input type="hidden" id="postbytopictype" name="postbytopictype" value="{forum.PostbytopicType}" tabindex="3">
+            <%/if%>
+            <script type="text/javascript">
+                function RunMutiUpload() {
+                if ($('MultiUploadFile').content != null)
+                    $('MultiUploadFile').content.MultiFileUpload.GetAttachmentList();	
+                }
+                checkLength($('title'), 60);//检查标题长度
+                function switchpost(href) {
+                    editchange = false;
+                    saveData(undefined,'postform','{config.antispamposttitle}', '{config.antispampostmessage}');
+                    location.href = href;
+                    doane();
+                }
+                
+                if (getQueryString('cedit') == '' && loadUserdata('forum')){
+                    $('rstnotice').style.display = '';
+                }
+            </script>
+            <button type="submit" id="postsubmit" value="true"<%if {pagename}=="posttopic.aspx"%> name="topicsubmit"<%else if {pagename}=="postreply.aspx"%> name="replysubmit"<%else if {pagename}=="editpost.aspx"%> name="editsubmit"<%/if%> tabindex="1" class="pn"><span>{actiontitle}</span></button>
+            <%if {isseccode}%><span style="position:relative"><%template _vcode%></span><%/if%>
+        </div>
+        </div>
+    </div>
+    </div>
+    <script type="text/javascript">
+        var topicreadperm = [
+            {readaccess:'',grouptitle:'不限'},
+            <%loop (UserGroup) userGroupInfo userGroupInfoList%>
+            <%if {userGroupInfo.Readaccess}!=0%>
+            {readaccess:'{userGroupInfo.Readaccess}',grouptitle:'{Utils.RemoveHtml(userGroupInfo.GroupTitle)}'},
+            <%/if%>
+            <%/loop%>
+            {readaccess:'255',grouptitle:'最高权限'}
+        ];
+    </script>
+    <div class="edt_app">
+        <%if {pagename}=="posttopic.aspx" || ({pagename}=="editpost.aspx"&&{isfirstpost})%>
+        <%if {userid}!=-1 && {usergroupinfo.AllowSetreadPerm}%>
+            <p><strong>阅读权限:</strong></p>
+            <p class="mbn">
+                <em class="ftid">
+                    <select name="topicreadperm" id="topicreadperm" class="ps" style="width:90px"></select>
+                </em>
+                <script type="text/javascript">
+                    for (var i = 0 ; i < topicreadperm.length ; i++) {
+                        var option = new Option(topicreadperm[i].grouptitle, topicreadperm[i].readaccess);
+                        option.title = "阅读权限:" + topicreadperm[i].readaccess;
+                        $('topicreadperm').options.add(option);
+                        if(topicreadperm[i].readaccess == {topic.ReadPerm})
+                            $('topicreadperm').options.selectedIndex = i;
+                    }
+                    simulateSelect("topicreadperm");
+                </script>
+                <img src="{forumpath}images/common/faq.gif" alt="Tip" class="mtn vm" style="margin: 0;" onmouseover="showTip(this)" tip="阅读权限按由高到低排列，高于或等于选中组的用户才可以阅读。" />
+            </p>
+        <%/if%>
+        <%/if%>
+        <h4 style="clear:both;">发帖选项:</h4>
+        <p class="mbn">
+            <input type="checkbox" value="1" name="htmlon" id="htmlon"  onclick="alloweditorhtml()" <%if !{usergroupinfo.AllowHtml}%>disabled<%/if%> <%if {htmlon}==1%>checked<%/if%> /><label for="htmlon">html 代码</label>
+            <img src="{forumpath}images/common/warning.gif" alt="Tip" class="mtn vm" style="margin: 0;vertical-align: top;" onmouseover="showTip(this)" tip="使用html代码可能会与表情符冲突，如“:D”等表情符。建议在使用html代码时勾选“禁用表情”。" />
+        </p>
+        <p class="mbn"><input type="checkbox" id="allowimgcode" disabled<%if {forum.AllowImgCode}%> checked="checked"<%/if%> /><label for="allowimgcode">[img] 代码</label></p>
+        <p class="mbn"><input type="checkbox" value="1" name="parseurloff" id="parseurloff" <%if {parseurloff}==1%>checked<%/if%> /><label for="parseurloff">禁用 网址自动识别</label></p>
+        <p class="mbn"><input type="checkbox" value="1" name="smileyoff" id="smileyoff" <%if {smileyoff}==1%>checked<%/if%><%if !{forum.AllowSmilies}%>disabled<%/if%> /><label for="smileyoff">禁用 表情</label></p>
+        <p class="mbn"><input type="checkbox" value="1" name="bbcodeoff" id="bbcodeoff" <%if {bbcodeoff}==1%> checked<%/if%>	<%if !{usergroupinfo.AllowCusbbCode}%> disabled<%else if {forum.allowbbcode}!=1%> disabled<%/if%> /><label for="bbcodeoff">禁用 论坛代码</label></p>
+        <p class="mbn"><input type="checkbox" value="1" name="usesig" id="usesig" <%if {usesig}==1%>checked<%/if%> /><label for="usesig">使用个人签名</label></p>
+        <%if {pagename}=="postreply.aspx"%>
+        <p class="mbn"><input type="checkbox" name="emailnotify" id="emailnotify" <%if {config.replyemailstatus}==1%> checked<%/if%> /><label for="emailnotify">发送邮件告知楼主</label></p>
+        <p class="mbn"><input type="checkbox" name="postreplynotice" id="postreplynotice" <%if {config.replynotificationstatus}==1%> checked <%/if%>/><label for="emailnotify">发送论坛通知给楼主</label></p>
+        <%/if%>
+        <%if {pagename}=="posttopic.aspx" || ({pagename}=="editpost.aspx"&&{isfirstpost})%>
+        <%if {special}==""&&{Scoresets.GetCreditsTrans()}!=0 && {usergroupinfo.MaxPrice}>0%>
+            <p style="clear:both;"><strong>售价</strong>({userextcreditsinfo.name}):</p>
+            <p><input type="text" name="topicprice" value="{topic.price}" class="txt"  size="6"/> {userextcreditsinfo.unit} <br/>最高 {usergroupinfo.MaxPrice} {userextcreditsinfo.unit}售价只允许非负整数, 单个主题最大收入 {Scoresets.GetMaxIncPerTopic()}{userextcreditsinfo.unit}</p>
+        <%/if%>
+        <%/if%>
+    </div>
+</div>

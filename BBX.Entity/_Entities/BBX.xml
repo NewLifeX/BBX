@@ -1,0 +1,1063 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Tables Version="8.20.5869.42914">
+  <Table Name="BbCode" Description="BB代码" DbType="SqlServer" 实体分类="界面">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Available" DataType="Int32" Description="是否可用" />
+      <Column Name="Tag" DataType="String" Length="100" NumOfByte="100" Nullable="False" Description="标签" />
+      <Column Name="Icon" DataType="String" NumOfByte="50" Description="图标" />
+      <Column Name="Example" DataType="String" Length="255" Nullable="False" Description="示例" />
+      <Column Name="Params" DataType="Int32" Description="参数" />
+      <Column Name="Nest" DataType="Int32" Description="鸟巢" />
+      <Column Name="Explanation" DataType="String" Length="-1" Description="解释" />
+      <Column Name="Replacement" DataType="String" Length="-1" Description="更换" />
+      <Column Name="ParamsDescript" DataType="String" Length="-1" Description="参数描述" />
+      <Column Name="ParamsDefValue" DataType="String" Length="-1" Description="参数默认值" />
+    </Columns>
+  </Table>
+  <Table Name="Nav" Description="导航" DbType="SqlServer" 实体分类="界面">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="ParentID" DataType="Int32" Description="父分类" />
+      <Column Name="Name" DataType="String" Master="True" Nullable="False" Description="名称" />
+      <Column Name="Title" DataType="String" Length="255" Nullable="False" Description="标题" />
+      <Column Name="Url" DataType="String" Length="500" Nullable="False" Description="网址" />
+      <Column Name="Target" DataType="Int32" Description="打开位置" />
+      <Column Name="Type" DataType="Int32" Description="类型" />
+      <Column Name="Available" DataType="Int32" Description="是否可用" />
+      <Column Name="DisplayOrder" DataType="Int32" Description="显示顺序" />
+      <Column Name="Highlight" DataType="SByte" Description="高亮" />
+      <Column Name="Level" DataType="Int32" Description="级别" />
+    </Columns>
+  </Table>
+  <Table Name="Smilie" Description="表情符号" DbType="SqlServer" 实体分类="界面">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="DisplayOrder" DataType="Int32" Description="显示顺序" />
+      <Column Name="Type" DataType="Int32" Description="类型" />
+      <Column Name="Code" DataType="String" Description="代码" />
+      <Column Name="Url" DataType="String" Description="网站" />
+    </Columns>
+  </Table>
+  <Table Name="Medal" Description="勋章" DbType="SqlServer" 实体分类="界面">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Name" DataType="String" Master="True" Nullable="False" Description="名称" />
+      <Column Name="Available" DataType="Boolean" Description="是否可用" />
+      <Column Name="Image" DataType="String" Description="图片" />
+    </Columns>
+  </Table>
+  <Table Name="MedalsLog" Description="勋章日志" DbType="SqlServer" 实体分类="界面">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="AdminName" DataType="String" Description="管理员" />
+      <Column Name="AdminID" DataType="Int32" Description="操作人" />
+      <Column Name="IP" DataType="String" Length="15" Description="IP地址" />
+      <Column Name="PostDateTime" DataType="DateTime" Description="发送时间" />
+      <Column Name="UserName" DataType="String" Description="登录账户" />
+      <Column Name="Uid" DataType="Int32" Description="用户编号" />
+      <Column Name="Actions" DataType="String" Length="100" Description="动作" />
+      <Column Name="Medals" DataType="Int32" Description="奖牌" />
+      <Column Name="Reason" DataType="String" Length="100" Description="原因" />
+    </Columns>
+  </Table>
+  <Table Name="ForumLink" Description="论坛链接" DbType="SqlServer" 实体分类="界面">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="DisplayOrder" DataType="Int32" Description="显示顺序" />
+      <Column Name="Name" DataType="String" Master="True" Length="100" Nullable="False" Description="名称" />
+      <Column Name="Url" DataType="String" Length="100" Nullable="False" Description="网址" />
+      <Column Name="Note" DataType="String" Length="200" Nullable="False" Description="描述" />
+      <Column Name="Logo" DataType="String" Length="100" Nullable="False" Description="图标" />
+    </Columns>
+  </Table>
+  <Table Name="Template" Description="模板" DbType="SqlServer" 实体分类="界面">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Directory" DataType="String" Description="目录" />
+      <Column Name="Name" DataType="String" Master="True" Description="名称" />
+      <Column Name="Author" DataType="String" Description="授权人" />
+      <Column Name="Createdate" DataType="String" Description="创建时间" />
+      <Column Name="Ver" DataType="String" Description="版本" />
+      <Column Name="Fordntver" DataType="String" Description="版本" />
+      <Column Name="Copyright" DataType="String" Description="版权信息" />
+      <Column Name="Url" DataType="String" Length="100" Description="地址" />
+      <Column Name="Width" DataType="Int32" Description="宽度" />
+      <Column Name="Enable" DataType="Boolean" Length="100" Description="是否有效" />
+    </Columns>
+  </Table>
+  <Table Name="OnlineList" Description="在线列表" DbType="SqlServer" 实体分类="界面">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="GroupID" DataType="Int32" Description="用户组" />
+      <Column Name="DisplayOrder" DataType="Int32" Description="显示顺序" />
+      <Column Name="Title" DataType="String" Master="True" Description="事项名称" />
+      <Column Name="Img" DataType="String" Description="图片" />
+    </Columns>
+  </Table>
+  <Table Name="AdminGroup" Description="管理组" DbType="SqlServer" 实体分类="用户">
+    <Columns>
+      <Column Name="ID" DataType="Int32" PrimaryKey="True" Nullable="False" Description="编号" />
+      <Column Name="AllowEditPost" DataType="Boolean" />
+      <Column Name="AllowEditpoll" DataType="Boolean" />
+      <Column Name="AllowStickthread" DataType="Int32" />
+      <Column Name="AllowModPost" DataType="Boolean" />
+      <Column Name="AllowDelPost" DataType="Boolean" />
+      <Column Name="AllowMassprune" DataType="Boolean" />
+      <Column Name="AllowRefund" DataType="Boolean" />
+      <Column Name="AllowCensorword" DataType="Boolean" />
+      <Column Name="AllowViewIP" DataType="Boolean" />
+      <Column Name="AllowBanIP" DataType="Boolean" />
+      <Column Name="AllowEditUser" DataType="Boolean" />
+      <Column Name="AllowModUser" DataType="Boolean" />
+      <Column Name="AllowBanUser" DataType="Boolean" />
+      <Column Name="AllowPostannounce" DataType="Boolean" />
+      <Column Name="AllowViewLog" DataType="Boolean" />
+      <Column Name="DisablePostctrl" DataType="Boolean" />
+      <Column Name="AllowViewrealName" DataType="Boolean" />
+    </Columns>
+  </Table>
+  <Table Name="Invitation" Description="邀请" DbType="SqlServer" 实体分类="用户">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Code" DataType="String" Length="7" Nullable="False" Description="邀请码" />
+      <Column Name="CreatorID" DataType="Int32" Description="作者" />
+      <Column Name="Creator" DataType="String" Length="20" Description="作者" />
+      <Column Name="SuccessCount" DataType="Int32" Description="成功数" />
+      <Column Name="CreateTime" DataType="DateTime" Description="创建时间" />
+      <Column Name="ExpireTime" DataType="DateTime" Description="到期时间" />
+      <Column Name="MaxCount" DataType="Int32" Description="最大数" />
+      <Column Name="InviteType" DataType="Int32" Description="邀请类型" />
+      <Column Name="IsDeleted" DataType="Boolean" Description="是否审核" />
+    </Columns>
+    <Indexes>
+      <Index Columns="Code" />
+      <Index Columns="CreatorID" />
+      <Index Columns="InviteType" />
+    </Indexes>
+  </Table>
+  <Table Name="Online" Description="在线" DbType="SqlServer" 实体分类="用户">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="SessionID" DataType="String" Description="会话标识" />
+      <Column Name="UserID" DataType="Int32" Description="用户编号" />
+      <Column Name="IP" DataType="String" Length="15" Description="IP地址" />
+      <Column Name="UserName" DataType="String" Description="登录账户" />
+      <Column Name="NickName" DataType="String" Description="昵称。如果为空,则显示UserName" />
+      <Column Name="Password" DataType="String" Description="登录密码" />
+      <Column Name="GroupID" DataType="Int32" Description="聊天组" />
+      <Column Name="Olimg" DataType="String" Length="80" Description="在线图标" />
+      <Column Name="AdminID" DataType="Int32" Description="操作人" />
+      <Column Name="Invisible" DataType="Boolean" Description="是否隐身" />
+      <Column Name="Action" DataType="Int32" Description="动作" />
+      <Column Name="LastActivity" DataType="Int32" Description="最后活动时间" />
+      <Column Name="LastPostTime" DataType="DateTime" Description="最后发帖时间" />
+      <Column Name="LastPostpmTime" DataType="DateTime" Description="最后私信时间" />
+      <Column Name="LastSearchTime" DataType="DateTime" Description="最后搜索时间" />
+      <Column Name="LastUpdateTime" DataType="DateTime" Description="最后更新时间" />
+      <Column Name="ForumID" DataType="Int32" Description="论坛编号" />
+      <Column Name="ForumName" DataType="String" Description="论坛名称" />
+      <Column Name="TitleID" DataType="Int32" Description="帖子编号" />
+      <Column Name="Title" DataType="String" Master="True" Length="80" Description="帖子" />
+      <Column Name="VerifyCode" DataType="String" Length="10" Description="验证码" />
+      <Column Name="Newpms" DataType="Int32" Description="私信数量" />
+      <Column Name="Newnotices" DataType="Int32" Description="通知数量" />
+      <Column Name="UserAgent" DataType="String" Length="250" Description="用户终端" />
+      <Column Name="IsBot" DataType="Boolean" Description="是否爬虫" />
+    </Columns>
+    <Indexes>
+      <Index Columns="LastUpdateTime" />
+      <Index Columns="ForumID" />
+    </Indexes>
+  </Table>
+  <Table Name="OnlineTime" Description="在线时间" DbType="SqlServer" 实体分类="用户">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Uid" DataType="Int32" Nullable="False" Description="用户编号" />
+      <Column Name="Thismonth" DataType="Int32" Description="本月" />
+      <Column Name="Total" DataType="Int32" Description="总数" />
+      <Column Name="LastUpdate" DataType="DateTime" Description="最后更新时间" />
+    </Columns>
+    <Indexes>
+      <Index Columns="Uid" Unique="True" />
+    </Indexes>
+  </Table>
+  <Table Name="UserConnect" Description="用户链接" DbType="SqlServer" 实体分类="用户">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="OpenId" DataType="String" Length="32" Nullable="False" Description="邮箱账号" />
+      <Column Name="Uid" DataType="Int32" Description="用户编号" />
+      <Column Name="Token" DataType="String" Length="16" Description="令牌" />
+      <Column Name="Secret" DataType="String" Length="16" Description="客户保密信息" />
+      <Column Name="AllowVisitQQUserInfo" DataType="Boolean" />
+      <Column Name="AllowPushFeed" DataType="Boolean" />
+      <Column Name="IsSetPassword" DataType="Boolean" />
+      <Column Name="CallbackInfo" DataType="String" Length="100" Nullable="False" />
+    </Columns>
+    <Indexes>
+      <Index Columns="OpenId" Unique="True" />
+      <Index Columns="uid" />
+    </Indexes>
+  </Table>
+  <Table Name="UserField" Description="用户字段" DbType="SqlServer" 实体分类="用户">
+    <Columns>
+      <Column Name="Uid" DataType="Int32" PrimaryKey="True" Nullable="False" Description="用户编号" />
+      <Column Name="Website" DataType="String" Length="80" Nullable="False" Description="公司网址" />
+      <Column Name="Icq" DataType="String" Length="12" Nullable="False" Description="ICQ号码" />
+      <Column Name="qq" DataType="String" Length="12" Nullable="False" Description="QQ号码" />
+      <Column Name="Yahoo" DataType="String" Description="雅虎通帐号" />
+      <Column Name="Msn" DataType="String" Description="MSN帐号" />
+      <Column Name="Skype" DataType="String" />
+      <Column Name="Location" DataType="String" Nullable="False" Description="办理地点" />
+      <Column Name="Customstatus" DataType="String" Nullable="False" />
+      <Column Name="Avatar" DataType="String" Length="255" Nullable="False" Description="会员头像" />
+      <Column Name="Avatarwidth" DataType="Int32" />
+      <Column Name="Avatarheight" DataType="Int32" />
+      <Column Name="Medals" DataType="String" Length="300" Nullable="False" Description="奖牌" />
+      <Column Name="Bio" DataType="String" Length="500" Nullable="False" Description="生物" />
+      <Column Name="Signature" DataType="String" Length="500" Nullable="False" Description="签字" />
+      <Column Name="Sightml" DataType="String" Length="1000" Nullable="False" />
+      <Column Name="Authstr" DataType="String" />
+      <Column Name="AuthTime" DataType="DateTime" />
+      <Column Name="Authflag" DataType="SByte" />
+      <Column Name="RealName" DataType="String" Length="10" Nullable="False" Description="真实姓名" />
+      <Column Name="Idcard" DataType="String" Description="身份证号码" />
+      <Column Name="Mobile" DataType="String" Description="手机号码" />
+      <Column Name="Phone" DataType="String" Description="手机" />
+      <Column Name="Ignorepm" DataType="String" Length="1000" Nullable="False" />
+    </Columns>
+  </Table>
+  <Table Name="UserGroup" Description="用户组" DbType="SqlServer" 实体分类="用户">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="RadminID" DataType="Int32" />
+      <Column Name="Type" DataType="Int32" Description="类型" />
+      <Column Name="System" DataType="Int16" Description="系统" />
+      <Column Name="GroupTitle" DataType="String" Nullable="False" Description="分组标签" />
+      <Column Name="Creditshigher" DataType="Int32" />
+      <Column Name="Creditslower" DataType="Int32" />
+      <Column Name="Stars" DataType="Int32" Description="评分等级" />
+      <Column Name="Color" DataType="String" Length="7" Nullable="False" Description="颜色" />
+      <Column Name="Groupavatar" DataType="String" Length="60" Nullable="False" />
+      <Column Name="Readaccess" DataType="Int32" />
+      <Column Name="AllowVisit" DataType="Boolean" />
+      <Column Name="AllowPost" DataType="Boolean" />
+      <Column Name="AllowReply" DataType="Boolean" />
+      <Column Name="AllowPostpoll" DataType="Boolean" />
+      <Column Name="AllowDirectPost" DataType="Boolean" />
+      <Column Name="AllowGetattach" DataType="Boolean" />
+      <Column Name="AllowPostattach" DataType="Boolean" />
+      <Column Name="AllowVote" DataType="Boolean" />
+      <Column Name="AllowMultigroups" DataType="Boolean" />
+      <Column Name="AllowSearch" DataType="Boolean" />
+      <Column Name="AllowAvatar" DataType="Boolean" />
+      <Column Name="AllowCstatus" DataType="Boolean" />
+      <Column Name="AllowUsebLog" DataType="Boolean" />
+      <Column Name="AllowInvisible" DataType="Boolean" />
+      <Column Name="AllowTransfer" DataType="Boolean" />
+      <Column Name="AllowSetreadPerm" DataType="Boolean" />
+      <Column Name="AllowSetattachPerm" DataType="Boolean" />
+      <Column Name="AllowHideCode" DataType="Boolean" />
+      <Column Name="AllowHtml" DataType="Boolean" />
+      <Column Name="AllowHtmlTitle" DataType="Boolean" />
+      <Column Name="AllowCusbbCode" DataType="Boolean" />
+      <Column Name="AllowNickName" DataType="Boolean" />
+      <Column Name="AllowSigbbCode" DataType="Boolean" />
+      <Column Name="AllowSigimgCode" DataType="Boolean" />
+      <Column Name="AllowViewpro" DataType="Boolean" />
+      <Column Name="AllowViewstats" DataType="Boolean" />
+      <Column Name="DisablePeriodctrl" DataType="Boolean" />
+      <Column Name="ReasonPm" DataType="Int32" />
+      <Column Name="MaxPrice" DataType="Int32" />
+      <Column Name="MaxPmNum" DataType="Int32" />
+      <Column Name="MaxSigSize" DataType="Int32" />
+      <Column Name="MaxAttachSize" DataType="Int32" />
+      <Column Name="MaxSizeperday" DataType="Int32" />
+      <Column Name="AttachExtensions" DataType="String" Length="100" />
+      <Column Name="Raterange" DataType="String" Length="500" Nullable="False" />
+      <Column Name="AllowSpace" DataType="Boolean" />
+      <Column Name="MaxSpaceattachSize" DataType="Int32" />
+      <Column Name="MaxSpacephotoSize" DataType="Int32" />
+      <Column Name="AllowDebate" DataType="Boolean" />
+      <Column Name="AllowBonus" DataType="Boolean" />
+      <Column Name="MinBonusprice" DataType="Int16" />
+      <Column Name="MaxBonusprice" DataType="Int16" />
+      <Column Name="AllowTrade" DataType="Boolean" />
+      <Column Name="AllowDiggs" DataType="Boolean" />
+      <Column Name="ModNewTopics" DataType="Int16" />
+      <Column Name="ModNewPosts" DataType="Int16" />
+      <Column Name="IgnoresecCode" DataType="Int32" />
+    </Columns>
+  </Table>
+  <Table Name="User" Description="用户" DbType="SqlServer" 实体分类="用户">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Name" DataType="String" Master="True" Nullable="False" Description="登录账户" />
+      <Column Name="NickName" DataType="String" Nullable="False" Description="昵称" />
+      <Column Name="Password" DataType="String" Nullable="False" Description="登录密码" />
+      <Column Name="Secques" DataType="String" Length="8" Nullable="False" Description="用户安全提问码" />
+      <Column Name="SpaceID" DataType="Int32" Description="空间" />
+      <Column Name="Gender" DataType="Int32" Description="性别" />
+      <Column Name="AdminID" DataType="Int32" Description="管理权限" />
+      <Column Name="GroupID" DataType="Int32" Description="用户组" />
+      <Column Name="GroupExpiry" DataType="Int32" Description="组过期时间" />
+      <Column Name="ExtGroupIds" DataType="String" Nullable="False" Description="扩展用户组" />
+      <Column Name="RegIP" DataType="String" Nullable="False" Description="注册IP" />
+      <Column Name="JoinDate" DataType="DateTime" Description="注册时间" />
+      <Column Name="LastIP" DataType="String" Description="上次登录IP" />
+      <Column Name="LastVisit" DataType="DateTime" Description="上次访问时间" />
+      <Column Name="LastActivity" DataType="DateTime" Description="最后活动时间" />
+      <Column Name="LastPost" DataType="DateTime" Description="最后发帖时间" />
+      <Column Name="LastPostID" DataType="Int32" Description="最后帖子编号" />
+      <Column Name="LastPostTitle" DataType="String" Length="60" Nullable="False" Description="最后帖子标题" />
+      <Column Name="Posts" DataType="Int32" Description="发帖数" />
+      <Column Name="DigestPosts" DataType="Int32" Description="精华帖数" />
+      <Column Name="OLTime" DataType="Int32" Description="在线时间" />
+      <Column Name="PageViews" DataType="Int32" Description="页面访问量" />
+      <Column Name="Credits" DataType="Int32" Description="积分数" />
+      <Column Name="ExtCredits1" DataType="Single" Description="扩展积分" />
+      <Column Name="ExtCredits2" DataType="Single" Description="扩展积分" />
+      <Column Name="ExtCredits3" DataType="Single" Description="扩展积分" />
+      <Column Name="ExtCredits4" DataType="Single" Description="扩展积分" />
+      <Column Name="ExtCredits5" DataType="Single" Description="扩展积分" />
+      <Column Name="ExtCredits6" DataType="Single" Description="扩展积分" />
+      <Column Name="ExtCredits7" DataType="Single" Description="扩展积分" />
+      <Column Name="ExtCredits8" DataType="Single" Description="扩展积分" />
+      <Column Name="AvatarShowId" DataType="Int32" Description="头像" />
+      <Column Name="Email" DataType="String" Nullable="False" Description="邮件" />
+      <Column Name="Bday" DataType="String" Nullable="False" Description="生日" />
+      <Column Name="Sigstatus" DataType="Int32" Description="是否签名" />
+      <Column Name="Tpp" DataType="Int32" />
+      <Column Name="Ppp" DataType="Int32" />
+      <Column Name="TemplateID" DataType="Int32" Description="模板Id" />
+      <Column Name="Pmsound" DataType="Int32" Description="短消息铃声" />
+      <Column Name="ShowEmail" DataType="Boolean" Description="是否显示邮箱" />
+      <Column Name="Invisible" DataType="Boolean" Description="是否隐身" />
+      <Column Name="Newpm" DataType="Boolean" Description="是否有新消息" />
+      <Column Name="NewpmCount" DataType="Int32" Description="新短消息数量" />
+      <Column Name="AccessMasks" DataType="Int32" />
+      <Column Name="OnlineState" DataType="Int32" Description="在线状态,1为在线,0为不在线" />
+      <Column Name="NewsLetter" DataType="Int32" Description="是否接收论坛通知" />
+      <Column Name="Salt" DataType="String" Length="6" Nullable="False" Description="MD5加密盐" />
+    </Columns>
+    <Indexes>
+      <Index Columns="email" />
+      <Index Columns="groupid,adminid" />
+      <Index Columns="regip" />
+      <Index Columns="username" />
+    </Indexes>
+  </Table>
+  <Table Name="VerifyReg" Description="验证注册" DbType="SqlServer" 实体分类="用户">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="IP" DataType="String" Description="IP地址" />
+      <Column Name="Email" DataType="String" Description="邮件" />
+      <Column Name="CreateTime" DataType="DateTime" Description="可用积分" />
+      <Column Name="ExpireTime" DataType="DateTime" Description="到期时间" />
+      <Column Name="InviteCode" DataType="String" Length="7" Nullable="False" Description="邀请码表" />
+      <Column Name="VerifyCode" DataType="String" Length="16" Nullable="False" Description="12位在线验证码" />
+    </Columns>
+    <Indexes>
+      <Index Columns="CreateTime" />
+      <Index Columns="Email" />
+      <Index Columns="IP" Unique="True" />
+      <Index Columns="VerifyCode" Unique="True" />
+    </Indexes>
+  </Table>
+  <Table Name="ConnectbindLog" Description="链接绑定日志" DbType="SqlServer" 实体分类="用户">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="OpenID" DataType="String" Length="32" Nullable="False" Description="邮箱账号" />
+      <Column Name="Uid" DataType="Int32" Description="用户编号" />
+      <Column Name="Type" DataType="Int16" Nullable="False" Description="类型" />
+      <Column Name="BindCount" DataType="Int16" />
+    </Columns>
+    <Indexes>
+      <Index Columns="OpenID" />
+      <Index Columns="uid" />
+    </Indexes>
+  </Table>
+  <Table Name="AdminVisitLog" Description="管理日志" DbType="SqlServer" 实体分类="用户">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Uid" DataType="Int32" Description="用户编号" />
+      <Column Name="UserName" DataType="String" Description="登录账户" />
+      <Column Name="GroupID" DataType="Int32" Description="聊天组" />
+      <Column Name="GroupTitle" DataType="String" Nullable="False" Description="分组标签" />
+      <Column Name="IP" DataType="String" Description="IP地址" />
+      <Column Name="PostDateTime" DataType="DateTime" Description="发送时间" />
+      <Column Name="Actions" DataType="String" Length="100" Nullable="False" Description="行动" />
+      <Column Name="Others" DataType="String" Length="200" Nullable="False" Description="其他费用" />
+    </Columns>
+  </Table>
+  <Table Name="Failedlogin" Description="失败登录" DbType="SqlServer" 实体分类="用户">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="IP" DataType="String" Description="IP地址" />
+      <Column Name="ErrCount" DataType="Int32" Description="错误数" />
+      <Column Name="LastUpdate" DataType="DateTime" Description="最后更新时间" />
+    </Columns>
+    <Indexes>
+      <Index Columns="IP" Unique="True" />
+    </Indexes>
+  </Table>
+  <Table Name="QzoneConnectToken" Description="Qq空间连接令牌" DbType="SqlServer" 实体分类="用户">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="OpenId" DataType="String" Nullable="False" Description="邮箱账号" />
+      <Column Name="Uid" DataType="Int32" Nullable="False" Description="用户ID" />
+      <Column Name="AccessToken" DataType="String" Nullable="False" Description="访问令牌" />
+      <Column Name="ExpiresAt" DataType="DateTime" Nullable="False" Description="过期在" />
+      <Column Name="PushToQzone" DataType="Boolean" Nullable="False" Description="推送表自Qq空间" />
+      <Column Name="PushToWeibo" DataType="Boolean" Nullable="False" Description="推送表自微博" />
+      <Column Name="IsPure" DataType="Boolean" Nullable="False" Description="是纯" />
+    </Columns>
+    <Indexes>
+      <Index Columns="Uid" Unique="True" />
+      <Index Columns="OpenId" Unique="True" />
+    </Indexes>
+  </Table>
+  <Table Name="Advertisement" Description="广告" DbType="SqlServer" 实体分类="全局">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Available" DataType="Int32" Description="是否可用" />
+      <Column Name="Type" DataType="String" Nullable="False" Description="类型" />
+      <Column Name="DisplayOrder" DataType="Int32" Description="显示顺序" />
+      <Column Name="Title" DataType="String" Master="True" Nullable="False" Description="事项名称" />
+      <Column Name="Targets" DataType="String" Length="255" Nullable="False" Description="目标" />
+      <Column Name="StartTime" DataType="DateTime" Nullable="False" Description="政策文件生效日期" />
+      <Column Name="EndTime" DataType="DateTime" Nullable="False" Description="过期时间" />
+      <Column Name="Code" DataType="String" Length="-1" Nullable="False" Description="代码" />
+      <Column Name="Parameters" DataType="String" Length="-1" Nullable="False" Description="参数" />
+    </Columns>
+  </Table>
+  <Table Name="Announcement" Description="公告" DbType="SqlServer" 实体分类="全局">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Poster" DataType="String" Description="发布人" />
+      <Column Name="PosterID" DataType="Int32" Description="发布人" />
+      <Column Name="Title" DataType="String" Master="True" Length="250" Nullable="False" Description="事项名称" />
+      <Column Name="DisplayOrder" DataType="Int32" Description="显示顺序" />
+      <Column Name="StartTime" DataType="DateTime" Nullable="False" Description="开始时间" />
+      <Column Name="EndTime" DataType="DateTime" Nullable="False" Description="结束时间" />
+      <Column Name="Message" DataType="String" Length="-1" Nullable="False" Description="短消息内容" />
+    </Columns>
+  </Table>
+  <Table Name="Banned" Description="禁止" DbType="SqlServer" 实体分类="全局">
+    <Columns>
+      <Column Name="ID" DataType="Int32" PrimaryKey="True" Nullable="False" Description="编号" />
+      <Column Name="Ip1" DataType="Int16" Nullable="False" />
+      <Column Name="Ip2" DataType="Int16" Nullable="False" />
+      <Column Name="Ip3" DataType="Int16" Nullable="False" Description="联通" />
+      <Column Name="Ip4" DataType="Int16" Nullable="False" Description="IP地址4" />
+      <Column Name="Admin" DataType="String" Nullable="False" Description="管理员" />
+      <Column Name="Dateline" DataType="DateTime" Nullable="False" Description="日界线" />
+      <Column Name="Expiration" DataType="DateTime" Nullable="False" Description="过期时间" />
+    </Columns>
+  </Table>
+  <Table Name="Help" Description="帮助" DbType="SqlServer" 实体分类="全局">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Title" DataType="String" Master="True" Length="100" Nullable="False" Description="事项名称" />
+      <Column Name="Message" DataType="String" Length="-1" Description="短消息内容" />
+      <Column Name="Pid" DataType="Int32" Description="帖子编号" />
+      <Column Name="Orderby" DataType="Int32" Description="排序" />
+    </Columns>
+  </Table>
+  <Table Name="ScheduledEvent" Description="计划任务" DbType="SqlServer" 实体分类="全局">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Key" DataType="String" Nullable="False" Description="事件名" />
+      <Column Name="ServerName" DataType="String" Description="服务器名" />
+      <Column Name="LastExecuted" DataType="DateTime" Description="最后执行" />
+    </Columns>
+  </Table>
+  <Table Name="Attachment" Description="附件" DbType="SqlServer" 实体分类="内容">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Uid" DataType="Int32" Description="用户编号" />
+      <Column Name="Tid" DataType="Int32" Description="主题编号" />
+      <Column Name="Pid" DataType="Int32" Description="帖子编号" />
+      <Column Name="PostDateTime" DataType="DateTime" Description="发送时间" />
+      <Column Name="ReadPerm" DataType="Int32" Description="阅读权限" />
+      <Column Name="FileName" DataType="String" Length="100" Description="Word文件名" />
+      <Column Name="Description" DataType="String" Length="100" Description="描述" />
+      <Column Name="FileType" DataType="String" Description="生成文件扩展名" />
+      <Column Name="FileSize" DataType="Int32" Description="文件大小" />
+      <Column Name="Name" DataType="String" Master="True" Length="255" Description="名称" />
+      <Column Name="Downloads" DataType="Int32" Description="下载次数" />
+      <Column Name="Width" DataType="Int32" Description="广告宽度" />
+      <Column Name="Height" DataType="Int32" Description="广告高度" />
+      <Column Name="AttachPrice" DataType="Int32" Description="售价" />
+      <Column Name="IsImage" DataType="Boolean" Description="1—为有缩略图；0—为没有缩略图" />
+    </Columns>
+    <Indexes>
+      <Index Columns="pid" />
+      <Index Columns="tid" />
+      <Index Columns="uid" />
+    </Indexes>
+  </Table>
+  <Table Name="AttachPaymentLog" Description="附件支付日志" DbType="SqlServer" 实体分类="内容">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Uid" DataType="Int32" Description="用户编号" />
+      <Column Name="UserName" DataType="String" Description="登录账户" />
+      <Column Name="Aid" DataType="Int32" Description="附件编号" />
+      <Column Name="AuthorID" DataType="Int32" Description="作者编号" />
+      <Column Name="PostDateTime" DataType="DateTime" Nullable="False" Description="发送时间" />
+      <Column Name="Amount" DataType="Int32" Description="充值金额" />
+      <Column Name="NetAmount" DataType="Int32" />
+    </Columns>
+    <Indexes>
+      <Index Columns="uid,aid" />
+    </Indexes>
+  </Table>
+  <Table Name="AttachType" Description="附件类型" DbType="SqlServer" 实体分类="内容">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Extension" DataType="String" Description="扩展名" />
+      <Column Name="MaxSize" DataType="Int32" Description="最大尺寸" />
+    </Columns>
+  </Table>
+  <Table Name="TableList" Description="表列表" DbType="SqlServer" 实体分类="工具">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="CreateDateTime" DataType="DateTime" Description="创建时间" />
+      <Column Name="Description" DataType="String" Description="描述" />
+      <Column Name="MintID" DataType="Int32" Description="最小编号" />
+      <Column Name="MaxtID" DataType="Int32" Description="最大编号" />
+    </Columns>
+  </Table>
+  <Table Name="Tag" Description="标签" DbType="SqlServer" 实体分类="内容">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Name" DataType="String" Master="True" Description="名称" />
+      <Column Name="UserID" DataType="Int32" Description="用户编号" />
+      <Column Name="PostDateTime" DataType="DateTime" Description="发送时间" />
+      <Column Name="OrderID" DataType="Int32" Description="排序" />
+      <Column Name="Color" DataType="String" Description="颜色" />
+      <Column Name="Count" DataType="Int32" Description="数量" />
+      <Column Name="FCount" DataType="Int32" />
+      <Column Name="PCount" DataType="Int32" />
+      <Column Name="SCount" DataType="Int32" />
+      <Column Name="VCount" DataType="Int32" />
+      <Column Name="GCount" DataType="Int32" />
+    </Columns>
+  </Table>
+  <Table Name="TopicIdentify" Description="主题鉴定" DbType="SqlServer" 实体分类="内容">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Name" DataType="String" Master="True" Nullable="False" Description="名称" />
+      <Column Name="FileName" DataType="String" Description="Word文件名" />
+    </Columns>
+  </Table>
+  <Table Name="Topic" Description="主题" DbType="SqlServer" 实体分类="内容">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Fid" DataType="Int32" Description="论坛" />
+      <Column Name="IconID" DataType="Int32" Description="图标" />
+      <Column Name="TypeID" DataType="Int32" Description="类型" />
+      <Column Name="ReadPerm" DataType="Int32" Description="读取权限" />
+      <Column Name="Price" DataType="Int32" Description="价格" />
+      <Column Name="Poster" DataType="String" Description="发帖人" />
+      <Column Name="PosterID" DataType="Int32" Description="发帖人ID" />
+      <Column Name="Title" DataType="String" Master="True" Length="60" Nullable="False" Description="标题" />
+      <Column Name="Attention" DataType="Int32" Description="注意" />
+      <Column Name="PostDateTime" DataType="DateTime" Description="发送时间" />
+      <Column Name="LastPost" DataType="DateTime" Description="最后发表时间" />
+      <Column Name="LastPostID" DataType="Int32" Description="最后帖子ID" />
+      <Column Name="LastPoster" DataType="String" Description="最后帖子发表者" />
+      <Column Name="LastPosterID" DataType="Int32" Description="最后发帖人ID" />
+      <Column Name="Views" DataType="Int32" Description="浏览数" />
+      <Column Name="Replies" DataType="Int32" Description="答复" />
+      <Column Name="DisplayOrder" DataType="Int32" Description="显示顺序" />
+      <Column Name="Highlight" DataType="String" Length="500" Description="高亮显示" />
+      <Column Name="Digest" DataType="Int32" Description="精华帖" />
+      <Column Name="Rate" DataType="Int32" Description="评分" />
+      <Column Name="Hide" DataType="Int32" Description="隐藏" />
+      <Column Name="Attachment" DataType="Int32" Description="附件类型。1普通附件，2图片附件" />
+      <Column Name="Moderated" DataType="Int32" Description="放缓" />
+      <Column Name="Closed" DataType="Int32" Description="关闭" />
+      <Column Name="Magic" DataType="Int32" Description="魔术" />
+      <Column Name="Identify" DataType="Int32" Description="鉴定" />
+      <Column Name="Special" DataType="Int32" Description="专题。1投票，2悬赏，3悬赏已结束，4辩论" />
+    </Columns>
+    <Indexes>
+      <Index Columns="fid,displayorder" />
+      <Index Columns="fid,displayorder,lastpostid" />
+      <Index Columns="fid,displayorder,postdatetime,lastpostid" />
+      <Index Columns="fid,displayorder,postdatetime,replies" />
+      <Index Columns="fid,displayorder,postdatetime,views" />
+    </Indexes>
+  </Table>
+  <Table Name="TopicTagCache" Description="主题缓存" DbType="SqlServer" 实体分类="内容">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Tid" DataType="Int32" Description="主题编号" />
+      <Column Name="LinktID" DataType="Int32" />
+      <Column Name="LinkTitle" DataType="String" Length="60" />
+    </Columns>
+    <Indexes>
+      <Index Columns="Tid" />
+    </Indexes>
+  </Table>
+  <Table Name="TopicTag" Description="主题标签" DbType="SqlServer" 实体分类="内容">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="TagID" DataType="Int32" Description="标签编号" />
+      <Column Name="Tid" DataType="Int32" Description="帖子编号" />
+    </Columns>
+  </Table>
+  <Table Name="TrendStat" Description="趋势统计" DbType="SqlServer" 实体分类="全局">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="DayTime" DataType="Int32" Description="白天" />
+      <Column Name="Login" DataType="Int32" Description="登录" />
+      <Column Name="Register" DataType="Int32" Description="登记册" />
+      <Column Name="Topic" DataType="Int32" Description="主题" />
+      <Column Name="Post" DataType="Int32" Description="职务" />
+      <Column Name="Poll" DataType="Int32" Description="投票" />
+      <Column Name="Debate" DataType="Int32" Description="辩论" />
+      <Column Name="Bonus" DataType="Int32" Description="奖金" />
+    </Columns>
+    <Indexes>
+      <Index Columns="daytime" Unique="True" />
+    </Indexes>
+  </Table>
+  <Table Name="Word" Description="单词" DbType="SqlServer" 实体分类="内容">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Admin" DataType="String" Description="管理员" />
+      <Column Name="Key" DataType="String" Length="255" Nullable="False" Description="查找" />
+      <Column Name="Replacement" DataType="String" Length="255" Nullable="False" Description="更换" />
+    </Columns>
+  </Table>
+  <Table Name="MyAttachment" Description="我的附件" DbType="SqlServer" 实体分类="内容">
+    <Columns>
+      <Column Name="ID" DataType="Int32" PrimaryKey="True" Nullable="False" Description="附件编号" />
+      <Column Name="Uid" DataType="Int32" Nullable="False" Description="用户编号" />
+      <Column Name="Name" DataType="String" Master="True" Length="100" Description="名称" />
+      <Column Name="Description" DataType="String" Length="100" Nullable="False" Description="描述" />
+      <Column Name="PostDateTime" DataType="DateTime" Description="发送时间" />
+      <Column Name="Downloads" DataType="Int32" Description="下载次数" />
+      <Column Name="FileName" DataType="String" Length="100" Nullable="False" Description="文件名" />
+      <Column Name="Pid" DataType="Int32" Description="帖子编号" />
+      <Column Name="Tid" DataType="Int32" Description="主题编号" />
+      <Column Name="Extname" DataType="String" Nullable="False" Description="扩展名" />
+    </Columns>
+    <Indexes>
+      <Index Columns="uid,extname" />
+    </Indexes>
+  </Table>
+  <Table Name="ShortMessage" Description="短消息" DbType="SqlServer" 实体分类="内容">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Msgfrom" DataType="String" Description="发送人姓名" />
+      <Column Name="MsgfromID" DataType="Int32" Description="发件人UID" />
+      <Column Name="Msgto" DataType="String" Description="收送人姓名" />
+      <Column Name="MsgtoID" DataType="Int32" Description="收件人UID" />
+      <Column Name="Folder" DataType="Int16" Description="文件箱" />
+      <Column Name="New" DataType="Boolean" Description="未读新消息" />
+      <Column Name="Subject" DataType="String" Length="60" Description="公告主题" />
+      <Column Name="PostDateTime" DataType="DateTime" Description="发送时间" />
+      <Column Name="Message" DataType="String" Length="-1" Description="短消息内容" />
+    </Columns>
+    <Indexes>
+      <Index Columns="msgtoid" />
+    </Indexes>
+  </Table>
+  <Table Name="MyPost" Description="我的帖子" DbType="SqlServer" 实体分类="内容">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Uid" DataType="Int32" Description="用户编号" />
+      <Column Name="Tid" DataType="Int32" Description="主题编号" />
+      <Column Name="Pid" DataType="Int32" Description="帖子编号" />
+      <Column Name="Dateline" DataType="DateTime" Description="日界线" />
+    </Columns>
+  </Table>
+  <Table Name="MyTopic" Description="我的主题" DbType="SqlServer" 实体分类="内容">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Uid" DataType="Int32" Description="用户编号" />
+      <Column Name="Tid" DataType="Int32" Description="主题编号" />
+      <Column Name="Dateline" DataType="DateTime" Description="日界线" />
+    </Columns>
+  </Table>
+  <Table Name="Notice" Description="通知" DbType="SqlServer" 实体分类="内容">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Uid" DataType="Int32" Description="用户编号" />
+      <Column Name="Type" DataType="Int32" Description="类型" />
+      <Column Name="New" DataType="Int32" Description="新增功能" />
+      <Column Name="PosterID" DataType="Int32" Description="发送人" />
+      <Column Name="Poster" DataType="String" Description="发送人" />
+      <Column Name="Note" DataType="String" Length="-1" Nullable="False" Description="描述" />
+      <Column Name="PostDateTime" DataType="DateTime" Description="发送时间" />
+      <Column Name="FromID" DataType="Int32" Description="从" />
+    </Columns>
+  </Table>
+  <Table Name="TopicType" Description="主题类型" DbType="SqlServer" 实体分类="内容">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="DisplayOrder" DataType="Int32" Description="显示顺序" />
+      <Column Name="Name" DataType="String" Master="True" Length="30" Nullable="False" Description="名称" />
+      <Column Name="Description" DataType="String" Length="500" Nullable="False" Description="描述" />
+    </Columns>
+  </Table>
+  <Table Name="BonusLog" Description="奖励日志" DbType="SqlServer" 实体分类="工具">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Tid" DataType="Int32" Description="主题编号" />
+      <Column Name="AuthorID" DataType="Int32" Description="作者编号" />
+      <Column Name="AnswerID" DataType="Int32" Description="挑战编号" />
+      <Column Name="AnswerName" DataType="String" Description="挑战名称" />
+      <Column Name="Pid" DataType="Int32" Description="帖子编号" />
+      <Column Name="Dateline" DataType="DateTime" Nullable="False" Description="时间日期" />
+      <Column Name="Bonus" DataType="Int32" Description="奖金" />
+      <Column Name="ExtID" DataType="Byte" Description="奖励积分分组" />
+      <Column Name="IsBest" DataType="Byte" Description="是否最佳" />
+    </Columns>
+  </Table>
+  <Table Name="CreditsLog" Description="威望日志" DbType="SqlServer" 实体分类="工具">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Uid" DataType="Int32" Description="用户编号" />
+      <Column Name="FromTo" DataType="Int32" Description="来去" />
+      <Column Name="SendCredits" DataType="Int32" Description="发送威望" />
+      <Column Name="ReceiveCredits" DataType="Int32" Description="接收威望" />
+      <Column Name="Send" DataType="Double" RawType="float" Description="发送" />
+      <Column Name="Receive" DataType="Double" RawType="float" Description="接收" />
+      <Column Name="PayDate" DataType="DateTime" Description="支付时间" />
+      <Column Name="Operation" DataType="Int32" Description="操作" />
+    </Columns>
+  </Table>
+  <Table Name="Debatedigg" Description="辩论项" DbType="SqlServer" 实体分类="论坛">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Tid" DataType="Int32" Description="主题编号" />
+      <Column Name="Pid" DataType="Int32" Description="帖子编号" />
+      <Column Name="Digger" DataType="String" Description="挖掘机" />
+      <Column Name="DiggerID" DataType="Int32" />
+      <Column Name="DiggerIP" DataType="String" Length="15" Nullable="False" />
+      <Column Name="DiggDateTime" DataType="DateTime" Nullable="False" />
+    </Columns>
+  </Table>
+  <Table Name="Debate" Description="辩论" DbType="SqlServer" 实体分类="论坛">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Tid" DataType="Int32" Nullable="False" Description="主题编号" />
+      <Column Name="PositiveOpinion" DataType="String" Length="200" Nullable="False" />
+      <Column Name="NegativeOpinion" DataType="String" Length="200" Nullable="False" />
+      <Column Name="TerminalTime" DataType="DateTime" Nullable="False" />
+      <Column Name="PositiveDiggs" DataType="Int32" />
+      <Column Name="NegativeDiggs" DataType="Int32" />
+      <Column Name="PositiveVote" DataType="Int32" />
+      <Column Name="PositiveVoterids" DataType="String" Length="-1" Nullable="False" />
+      <Column Name="NegativeVote" DataType="Int32" Description="否决提案" />
+      <Column Name="NegativeVoterids" DataType="String" Length="-1" Nullable="False" />
+    </Columns>
+    <Indexes>
+      <Index Columns="Tid" Unique="True" />
+    </Indexes>
+  </Table>
+  <Table Name="PostDebateField" Description="辩论字段" DbType="SqlServer" 实体分类="论坛">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Tid" DataType="Int32" Description="主题编号" />
+      <Column Name="Pid" DataType="Int32" Description="帖子编号" />
+      <Column Name="Opinion" DataType="Int32" Description="选项" />
+      <Column Name="Diggs" DataType="Int32" Description="主将" />
+    </Columns>
+    <Indexes>
+      <Index Columns="tid,opinion" Unique="True" />
+    </Indexes>
+  </Table>
+  <Table Name="Favorite" Description="收藏" DbType="SqlServer" 实体分类="全局">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Uid" DataType="Int32" Description="用户编号" />
+      <Column Name="Tid" DataType="Int32" Description="主题编号" />
+      <Column Name="TypeID" DataType="Int32" Description="类型" />
+      <Column Name="FavTime" DataType="DateTime" Description="收藏时间" />
+      <Column Name="ViewTime" DataType="DateTime" Description="查看时间" />
+    </Columns>
+  </Table>
+  <Table Name="ForumField" Description="论坛字段" DbType="SqlServer" 实体分类="论坛">
+    <Columns>
+      <Column Name="Fid" DataType="Int32" PrimaryKey="True" Nullable="False" Description="论坛编号" />
+      <Column Name="Password" DataType="String" Length="16" Nullable="False" Description="登录密码" />
+      <Column Name="Icon" DataType="String" Length="255" Description="图标" />
+      <Column Name="PostcrEdits" DataType="String" Length="255" />
+      <Column Name="ReplycrEdits" DataType="String" Length="255" />
+      <Column Name="Redirect" DataType="String" Length="255" Description="重定向" />
+      <Column Name="Attachextensions" DataType="String" Length="255" />
+      <Column Name="Rules" DataType="String" Length="-1" Description="编码规则" />
+      <Column Name="TopicTypes" DataType="String" Length="-1" />
+      <Column Name="ViewPerm" DataType="String" Length="-1" />
+      <Column Name="PostPerm" DataType="String" Length="-1" />
+      <Column Name="ReplyPerm" DataType="String" Length="-1" />
+      <Column Name="GetattachPerm" DataType="String" Length="-1" />
+      <Column Name="PostattachPerm" DataType="String" Length="-1" />
+      <Column Name="Moderators" DataType="String" Length="-1" Description="版主" />
+      <Column Name="Description" DataType="String" Length="-1" Description="描述" />
+      <Column Name="ApplytopicType" DataType="SByte" />
+      <Column Name="PostbytopicType" DataType="SByte" />
+      <Column Name="ViewbytopicType" DataType="SByte" />
+      <Column Name="Topictypeprefix" DataType="SByte" />
+      <Column Name="Permuserlist" DataType="String" Length="-1" />
+      <Column Name="Seokeywords" DataType="String" Length="500" Description="SEO关键字" />
+      <Column Name="Seodescription" DataType="String" Length="500" Description="SEO描述" />
+      <Column Name="RewriteName" DataType="String" Length="20" Description="URL重写名称" />
+    </Columns>
+  </Table>
+  <Table Name="XForum" TableName="Forum" Description="论坛" DbType="SqlServer" 实体分类="论坛">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="ParentID" DataType="Int32" Description="父分类" />
+      <Column Name="Name" DataType="String" Master="True" Nullable="False" Description="名称" />
+      <Column Name="Status" DataType="Int32" Description="状态。0隐藏，1显示" />
+      <Column Name="ColCount" DataType="Int32" Description="列数" />
+      <Column Name="DisplayOrder" DataType="Int32" Description="显示顺序" />
+      <Column Name="TemplateID" DataType="Int32" Description="模板Id" />
+      <Column Name="Topics" DataType="Int32" Description="主题数" />
+      <Column Name="CurTopics" DataType="Int32" Description="当前主题数" />
+      <Column Name="Posts" DataType="Int32" Description="帖子数" />
+      <Column Name="TodayPosts" DataType="Int32" Description="今天发帖数" />
+      <Column Name="LastTID" DataType="Int32" Description="最后主题" />
+      <Column Name="LastTitle" DataType="String" Length="60" Description="最后主题标题" />
+      <Column Name="LastPost" DataType="DateTime" Description="最后发布时间" />
+      <Column Name="LastPosterID" DataType="Int32" Description="最后发布者编号" />
+      <Column Name="LastPoster" DataType="String" Description="最后发布者名称" />
+      <Column Name="AllowSmilies" DataType="Boolean" Description="允许表情" />
+      <Column Name="AllowRss" DataType="Boolean" Description="允许Rss" />
+      <Column Name="AllowHtml" DataType="Boolean" Description="允许HTML" />
+      <Column Name="AllowBbCode" DataType="Boolean" Description="允许BB代码" />
+      <Column Name="AllowImgCode" DataType="Boolean" Description="允许图片" />
+      <Column Name="AllowBlog" DataType="Boolean" Description="允许博客" />
+      <Column Name="IsTrade" DataType="Boolean" Description="是否交易" />
+      <Column Name="AllowPostSpecial" DataType="Int32" Description="发表特殊主题" />
+      <Column Name="AllowSpecialOnly" DataType="Boolean" Description="只允许专题" />
+      <Column Name="AllowEditRules" DataType="Boolean" Description="允许编辑规则" />
+      <Column Name="AllowThumbnail" DataType="Boolean" Description="允许缩略图" />
+      <Column Name="AllowTag" DataType="Boolean" Description="允许标签" />
+      <Column Name="Recyclebin" DataType="Int32" Description="回收站" />
+      <Column Name="Modnewposts" DataType="Int32" Description="新帖子模式" />
+      <Column Name="Modnewtopics" DataType="Int32" Description="新主题模式" />
+      <Column Name="Jammer" DataType="Int32" Description="干扰机" />
+      <Column Name="DisableWatermark" DataType="Boolean" Description="关闭水印" />
+      <Column Name="Inheritedmod" DataType="Int32" Description="继承模式" />
+      <Column Name="AutoClose" DataType="Int32" Description="自动关闭" />
+    </Columns>
+  </Table>
+  <Table Name="Moderator" Description="版主" DbType="SqlServer" 实体分类="论坛">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Uid" DataType="Int32" Description="用户编号" />
+      <Column Name="Fid" DataType="Int32" Description="论坛编号" />
+      <Column Name="DisplayOrder" DataType="Int32" Description="显示顺序" />
+      <Column Name="Inherited" DataType="Int32" Description="继承" />
+    </Columns>
+  </Table>
+  <Table Name="Poll" Description="投票" DbType="SqlServer" 实体分类="论坛">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Tid" DataType="Int32" Description="主题编号" />
+      <Column Name="DisplayOrder" DataType="Int32" Description="显示顺序" />
+      <Column Name="Multiple" DataType="Int32" Description="多个" />
+      <Column Name="Visible" DataType="Int32" Description="可见" />
+      <Column Name="AllowView" DataType="Boolean" Description="允许查看" />
+      <Column Name="MaxChoices" DataType="Int16" Description="最大选项" />
+      <Column Name="Expiration" DataType="DateTime" Description="过期时间" />
+      <Column Name="Uid" DataType="Int32" Description="用户编号" />
+      <Column Name="Voternames" DataType="String" Length="-1" Description="投票者" />
+    </Columns>
+    <Indexes>
+      <Index Columns="tid" Unique="True" />
+    </Indexes>
+  </Table>
+  <Table Name="PollOption" Description="投票项" DbType="SqlServer" 实体分类="论坛">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Tid" DataType="Int32" Description="主题编号" />
+      <Column Name="PollID" DataType="Int32" />
+      <Column Name="Votes" DataType="Int32" Description="投票" />
+      <Column Name="DisplayOrder" DataType="Int32" Description="显示顺序" />
+      <Column Name="Name" DataType="String" Master="True" Length="80" Nullable="False" Description="投票项" />
+      <Column Name="VoterNames" DataType="String" Length="-1" Nullable="False" Description="投票者" />
+    </Columns>
+    <Indexes>
+      <Index Columns="tid" />
+      <Index Columns="pollid" />
+    </Indexes>
+  </Table>
+  <Table Name="PostId" Description="帖子索引" DbType="SqlServer" 实体分类="论坛">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="PostDateTime" DataType="DateTime" Nullable="False" Description="发送时间" />
+    </Columns>
+  </Table>
+  <Table Name="Post" Description="帖子" DbType="SqlServer" 实体分类="论坛">
+    <Columns>
+      <Column Name="ID" DataType="Int32" PrimaryKey="True" Description="帖子编号" />
+      <Column Name="Fid" DataType="Int32" Description="论坛编号" />
+      <Column Name="Tid" DataType="Int32" Description="主题编号" />
+      <Column Name="ParentID" DataType="Int32" Description="父分类" />
+      <Column Name="Layer" DataType="Int32" Description="层级" />
+      <Column Name="Poster" DataType="String" Description="发帖人" />
+      <Column Name="PosterID" DataType="Int32" Description="发帖人" />
+      <Column Name="Title" DataType="String" Master="True" Length="60" Description="标题" />
+      <Column Name="PostDateTime" DataType="DateTime" Description="发送时间" />
+      <Column Name="IP" DataType="String" Length="15" Description="IP地址" />
+      <Column Name="LastEdit" DataType="String" Description="最后编辑" />
+      <Column Name="Invisible" DataType="Int32" Description="是否隐身" />
+      <Column Name="UseSig" DataType="Int32" Description="使用个人签名" />
+      <Column Name="HtmlOn" DataType="Int32" Description="开启Html" />
+      <Column Name="SmileyOff" DataType="Int32" Description="禁用表情" />
+      <Column Name="ParseUrlOff" DataType="Int32" Description="禁用网址自动识别" />
+      <Column Name="BBCodeOff" DataType="Int32" Description="禁用论坛代码" />
+      <Column Name="Attachment" DataType="Int32" Description="附件" />
+      <Column Name="Rate" DataType="Int32" Description="评分" />
+      <Column Name="RateTimes" DataType="Int32" Description="平分次数" />
+      <Column Name="Message" DataType="String" Length="-1" Description="内容" />
+    </Columns>
+    <Indexes>
+      <Index Columns="tid,posterid" />
+      <Index Columns="tid,invisible" />
+    </Indexes>
+  </Table>
+  <Table Name="Location" Description="位置" DbType="SqlServer" 实体分类="工具">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="City" DataType="String" Nullable="False" Description="收货人的城市" />
+      <Column Name="State" DataType="String" Nullable="False" Description="结算状态" />
+      <Column Name="Country" DataType="String" Nullable="False" Description="国家" />
+      <Column Name="ZipCode" DataType="String" Description="邮编" />
+    </Columns>
+  </Table>
+  <Table Name="Order" Description="订单" DbType="SqlServer" 实体分类="工具">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Code" DataType="String" Length="32" Nullable="False" Description="代码" />
+      <Column Name="Uid" DataType="Int32" Description="用户编号" />
+      <Column Name="Buyer" DataType="String" Description="购买者" />
+      <Column Name="PayType" DataType="Int32" Description="付款类型" />
+      <Column Name="TradeNo" DataType="String" Length="32" Description="交易号" />
+      <Column Name="Price" DataType="Decimal" Description="价格" />
+      <Column Name="Status" DataType="Int32" Description="订单状态1成功0未结算2失败" />
+      <Column Name="CreatedTime" DataType="DateTime" Description="创建时间" />
+      <Column Name="ConfirmedTime" DataType="DateTime" Description="确认时间" />
+      <Column Name="Credit" DataType="Int32" Description="信用值" />
+      <Column Name="Amount" DataType="Int32" Description="充值金额" />
+    </Columns>
+    <Indexes>
+      <Index Columns="Code" Unique="True" />
+    </Indexes>
+  </Table>
+  <Table Name="PaymentLog" Description="支付日志" DbType="SqlServer" 实体分类="工具">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Uid" DataType="Int32" Description="用户编号" />
+      <Column Name="Tid" DataType="Int32" Description="主题编号" />
+      <Column Name="AuthorID" DataType="Int32" Description="作者编号" />
+      <Column Name="BuyDate" DataType="DateTime" Nullable="False" Description="购买时间" />
+      <Column Name="Amount" DataType="Int16" Nullable="False" Description="充值金额" />
+      <Column Name="Netamount" DataType="Int16" Nullable="False" />
+    </Columns>
+  </Table>
+  <Table Name="ModeratorManageLog" Description="版主管理日志" DbType="SqlServer" 实体分类="工具">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="ModeratoruID" DataType="Int32" Description="版主编号" />
+      <Column Name="ModeratorName" DataType="String" Description="版主名称" />
+      <Column Name="GroupID" DataType="Int32" Description="聊天组" />
+      <Column Name="GroupTitle" DataType="String" Description="分组标签" />
+      <Column Name="IP" DataType="String" Length="15" NumOfByte="15" Description="IP地址" />
+      <Column Name="PostDateTime" DataType="DateTime" Description="发送时间" />
+      <Column Name="Fid" DataType="Int32" Description="论坛编号" />
+      <Column Name="FName" DataType="String" Length="100" Description="论坛名称" />
+      <Column Name="Tid" DataType="Int32" Description="主题编号" />
+      <Column Name="Title" DataType="String" Master="True" Length="200" Description="事项名称" />
+      <Column Name="Actions" DataType="String" Description="行动" />
+      <Column Name="Reason" DataType="String" Length="200" Description="原因" />
+    </Columns>
+    <Indexes>
+      <Index Columns="tid" />
+    </Indexes>
+  </Table>
+  <Table Name="PushfeedLog" Description="推送日志" DbType="SqlServer" 实体分类="工具">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Tid" DataType="Int32" Description="帖子编号" />
+      <Column Name="Uid" DataType="Int32" Description="用户编号" />
+      <Column Name="AuthorToken" DataType="String" Length="16" />
+      <Column Name="AuthorSecret" DataType="String" Length="16" />
+      <Column Name="PushDate" DataType="DateTime" />
+    </Columns>
+  </Table>
+  <Table Name="RateLog" Description="等级日志" DbType="SqlServer" 实体分类="工具">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Pid" DataType="Int32" Description="帖子编号" />
+      <Column Name="Uid" DataType="Int32" Description="用户编号" />
+      <Column Name="UserName" DataType="String" Description="登录账户" />
+      <Column Name="ExtCredits" DataType="Int32" />
+      <Column Name="PostDateTime" DataType="DateTime" Description="发送时间" />
+      <Column Name="Score" DataType="Int32" Description="评分" />
+      <Column Name="Reason" DataType="String" Nullable="False" Description="原因" />
+    </Columns>
+  </Table>
+  <Table Name="SearchCache" Description="搜索缓存" DbType="SqlServer" 实体分类="全局">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Keywords" DataType="String" Length="255" Nullable="False" Description="关键字" />
+      <Column Name="Searchstring" DataType="String" Length="255" Nullable="False" />
+      <Column Name="Ip" DataType="String" Length="15" Description="IP地址" />
+      <Column Name="Uid" DataType="Int32" Description="用户编号" />
+      <Column Name="GroupID" DataType="Int32" Description="聊天组" />
+      <Column Name="PostDateTime" DataType="DateTime" Description="发送时间" />
+      <Column Name="Expiration" DataType="DateTime" Description="过期时间" />
+      <Column Name="Topics" DataType="Int32" Description="主题" />
+      <Column Name="Tids" DataType="String" Length="-1" Nullable="False" />
+    </Columns>
+    <Indexes>
+      <Index Columns="searchstring,groupid" />
+    </Indexes>
+  </Table>
+  <Table Name="Statistic" Description="统计" DbType="SqlServer" 实体分类="工具">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="TotalTopic" DataType="Int32" />
+      <Column Name="TotalPost" DataType="Int32" />
+      <Column Name="TotalUsers" DataType="Int32" />
+      <Column Name="LastUserName" DataType="String" />
+      <Column Name="LastUserID" DataType="Int32" />
+      <Column Name="HighestOnlineUserCount" DataType="Int32" />
+      <Column Name="HighestOnlineUserTime" DataType="DateTime" />
+      <Column Name="YesterdayPosts" DataType="Int32" />
+      <Column Name="HighestPosts" DataType="Int32" />
+      <Column Name="HighestPostsDate" DataType="String" />
+    </Columns>
+  </Table>
+  <Table Name="Stat" Description="统计信息" DbType="SqlServer" 实体分类="工具">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Type" DataType="String" Description="类型" />
+      <Column Name="Variable" DataType="String" Description="变量" />
+      <Column Name="Count" DataType="Int32" Description="数量" />
+    </Columns>
+    <Indexes>
+      <Index Columns="Type,Variable" Unique="True" />
+    </Indexes>
+  </Table>
+  <Table Name="StatVar" Description="统计变量" DbType="SqlServer" 实体分类="工具">
+    <Columns>
+      <Column Name="ID" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+      <Column Name="Type" DataType="String" Description="类型" />
+      <Column Name="Variable" DataType="String" Description="变量" />
+      <Column Name="Value" DataType="String" Length="-1" Description="值" />
+    </Columns>
+    <Indexes>
+      <Index Columns="Type,Variable" Unique="True" />
+    </Indexes>
+  </Table>
+</Tables>

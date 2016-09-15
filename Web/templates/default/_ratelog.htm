@@ -1,0 +1,10 @@
+<%if {BBX.Config.GeneralConfigInfo.Current.DisplayRateCount}>0%>
+<div class="newrate cl" id="ratedd_{post.ID}">
+	<ul class="cl" id="rate_{post.ID}"></ul>
+	<div class="floatwrap" id="ratetable_{post.ID}"></div>
+	<p class="btn_rate"><span class="f_bold"><a title="本帖最近评分记录" href="#">已有<cite class="xi1" style="padding:0 0.4em;">{post.RateTimes}</cite>评分</a></span><span class="xg2"><a href="topicadmin.aspx?action=rate&forumid={forumid}&topicid={topic.ID}&postid={post.ID}&operat=rate" onclick="showWindow('mods', this.href);return false;">我要评分</a><a target="_blank" href="showratelist.aspx?pid={post.ID}" class="lightlink">查看所有评分</a></span></p>
+	<script type="text/javascript">
+        _attachEvent(window, "load", function(){ showrate({post.ID},{config.aspxrewrite},{post.RateTimes},{topic.ID},'{templatepath}',{config.Ratelisttype}); });
+	</script>
+</div>
+<%/if%>

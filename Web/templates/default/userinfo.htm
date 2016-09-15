@@ -1,0 +1,188 @@
+﻿<%template _header%>
+<div class="wrap cl pageinfo">
+	<div id="nav">
+		<%if {usergroupinfo.AllowSearch}%>
+			<%template _quicksearch%>
+		<%/if%>
+		<a href="{config.forumurl}" class="title">{config.forumtitle}</a>  &raquo; <strong>用户信息</strong>
+	</div>
+</div>
+<%if page_err==0%>
+<div class="wrap uc uc_info cl">
+	<div class="uc_app uc_side">
+	    <%set (string){avatarurl}=Avatars.GetAvatarUrl(user.ID) %>
+		<img src="{avatarurl}" onerror="this.onerror=null;this.src='{forumpath}images/common/noavatar_medium.gif';" class="user_avatar"/>
+		<ul class="tabs">
+		<%if {user.ShowEmail}%>
+			<li class="email"><a href="mailto:{user.email}">发送Email</a></li>
+		<%/if%>
+			<li class="pm"><a href="usercppostpm.aspx?msgtoid={user.ID}" onclick="showWindow('postpm', this.href, 'get',0);doane(event);">发送短消息</a></li>
+		<%if {useradminid}>0&&{admininfo.AllowBanUser}%>
+			<li class="userban"><a href="useradmin.aspx?action=banuser&uid={user.ID}" onclick="showWindow('mods', this.href,'get',0);doane(event);" title="禁止用户">禁止用户</a></li>
+		<%/if%>
+			<li class="userlink"><a href="search.aspx?posterid={user.ID}&searchsubmit=1">搜索帖子</a></li>
+		</ul>
+	</div>
+	<div class="uc_main">
+	<div class="uc_content">
+		<div class="itemtitle cl">
+			<h1 class="lightlink">{user.Name}</h1>
+			<ul>
+				<li>(UID: {user.ID})</li>
+			</ul>
+		</div>
+		<div id="baseprofile">
+			<table cellpadding="0" style="table-layout: fixed;" class="formtable">
+			<tbody>		
+			<tr>
+				<th width="150">性别: </th>
+				<td><%if {user.gender}==0%>保密<%/if%>
+					<%if {user.gender}==1%>男<%/if%>
+					<%if {user.gender}==2%>女<%/if%>
+				</td>
+			</tr>
+			<%if {user.Field.Location}!=""%>
+			<tr>
+				<th>来自: </th>
+				<td>{user.Field.Location}</td>
+			</tr>
+			<%/if%>
+			<%if {user.bday}!=""%>
+			<tr>
+				<th>生日: </th>
+				<td>{user.bday}</td>
+			</tr>
+			<%/if%>
+			<%if {user.website}!=""%>
+			<tr>
+				<th>个人主页: </th>
+				<td>{user.website}</td>
+			</tr>
+			<%/if%>
+			<%if {user.bio}!=""%>
+			<tr>
+				<th>自我介绍: </th>
+				<td>{user.bio}</td>
+			</tr>
+			<%/if%>
+			<%if {admininfo}!=null&&{admininfo.AllowViewrealName}%>
+			<%if {user.Field.RealName}!=""%>
+			<tr>
+				<th>真实姓名: </th>
+				<td>{user.Field.RealName}</td>
+			</tr>
+			<%/if%>
+			<%if {user.idcard}!=""%>
+			<tr>
+				<th>身份证号码: </th>
+				<td>{user.idcard}</td>
+			</tr>
+			<%/if%>
+			<%if {user.mobile}!=""%>
+			<tr>
+				<th>移动电话号码: </th>
+				<td>{user.mobile}</td>
+			</tr>
+			<%/if%>
+			<%if {user.phone}!=""%>		
+			<tr>
+				<th>固定电话号码: </th>
+				<td>{user.phone}</td>
+			</tr>
+			<%/if%>
+			<%/if%>
+			<%if {user.ShowEmail}%>
+			<tr>
+				<th>E-Mail: </th>
+				<td><a herf="#" onclick="javascript:location.href='mailto:{user.email}';">{user.email}</a></td>
+			</tr>
+			<%/if%>
+			<%if {user.qq}!=""%>
+			<tr>
+				<th>QQ: </th>
+				<td>{user.qq}</td>
+			</tr>
+			<%/if%>
+			<%if {user.msn}!=""%>		
+			<tr>
+				<th>MSN Messenger: </th>
+				<td>{user.msn}</td>
+			</tr>
+			<%/if%>
+			<%if {user.yahoo}!=""%>		
+			<tr>
+				<th>Yahoo Messenger: </th>
+				<td>{user.yahoo}</td>
+			</tr>
+			<%/if%>
+			<%if {user.skype}!=""%>		
+			<tr>
+				<th>Skype: </th>
+				<td>{user.skype}</td>
+			</tr>
+			<%/if%>
+			<%if {user.icq}!=""%>		
+			<tr>
+				<th>ICQ: </th>
+				<td>{user.icq}</td>
+			</tr>
+			<%/if%>
+			</tbody>
+			</table>
+		</div>
+		<hr class="dashline"/>
+		<h3 class="blocktitle lightlink">
+		    用户组: {group.GroupTitle}
+		    <%if {user.GroupID}==4||{user.GroupID}==5%>
+		        <%set (int){nowdateint} = Utils.StrToInt(DateTime.Now.ToString("yyyyMMdd"),0)%>
+	            <%if {user.GroupExpiry}==0||{user.GroupExpiry}==29990101%>
+	                <span class="xg2" style="font-size:12px">过期时间: 永久</span>
+	            <%else%>
+	                <%set (string){usergroupexpiry} = Utils.FormatDate({user.GroupExpiry},true)%>
+	                <span class="xg2" style="font-size:12px">过期时间: {usergroupexpiry}</span>
+	            <%/if%>
+		    <%/if%>
+		</h3>
+		<div class="cl">
+			<ul style="width: 50%;" class="commonlist y">
+			<%if {user.JoinDate}>DateTime.MinValue%>
+				<li><label>注册日期:</label>{user.JoinDate}</li>
+			<%/if%>
+			<%if {user.LastVisit}>DateTime.MinValue%>	
+				<li><label>最后访问(登录):</label>{user.LastVisit}</li>
+			<%/if%>
+			<%if {user.LastActivity}>DateTime.MinValue%>
+				<li><label>最后活动:</label>{user.LastActivity}</li>
+			<%/if%>
+				<%if {admininfo}!=null&&{admininfo.AllowViewIP}%>
+				<li><label>注册 IP:</label>{user.RegIP} {user.RegAddress}</li>
+				<%/if%>
+			</ul>
+			<ul class="commonlist">
+			<%if {user.NickName}!=""%>	
+				<li><label>昵称:</label>{user.NickName}</li>
+			<%/if%>
+			<%if {user.Customstatus}!=""%>	
+				<li><label>自定义头衔:</label>{user.Customstatus}</li>
+			<%/if%>
+				<li><label>阅读权限:</label>{group.readaccess}</li>
+				<li><label>发帖量:</label>{user.posts}</li>
+				<li><label>精华帖数:</label>{user.DigestPosts}</li>
+				<li><label>在线时间:</label>{user.OLTime}分钟</li>
+			</ul>
+		</div>
+		<hr class="dashline"/>
+		<h3 class="blocktitle lightlink">积分: {user.credits}</h3>
+		<p><%if {score[1]}!=""%>{score[1]}: {score1}<%/if%> <%if {score[2]}!=""%>, {score[2]}: {score2}<%/if%> <%if {score[3]}!=""%>, {score[3]}: {score3}<%/if%> <%if {score[4]}!=""%>, {score[4]}: {score4}<%/if%> <%if {score[5]}!=""%>, {score[5]}: {score5}<%/if%> <%if {score[6]}!=""%>, {score[6]}: {score6}<%/if%> <%if {score[7]}!=""%>, {score[7]}: {score7}<%/if%> <%if {score[8]}!=""%>, {score[8]}: {score8}<%/if%> </p>
+	</div>
+	</div>
+</div>
+<%else%>
+	<%if {needlogin}%>
+		<%template _login%>
+	<%else%>
+	<%template _errmsgbox%>
+	<%/if%>
+<%/if%>
+<%template _copyright%>
+<%template _footer%>
