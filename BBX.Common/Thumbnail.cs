@@ -9,65 +9,6 @@ namespace BBX.Common
 {
     public class Thumbnail
     {
-        private Image srcImage;
-        private string srcFileName;
-
-        //public bool SetImage(string FileName)
-        //{
-        //    this.srcFileName = Utils.GetMapPath(FileName);
-        //    try
-        //    {
-        //        this.srcImage = Image.FromFile(this.srcFileName);
-        //    }
-        //    catch
-        //    {
-        //        return false;
-        //    }
-        //    return true;
-        //}
-
-        //public bool ThumbnailCallback()
-        //{
-        //    return false;
-        //}
-
-        //public Image GetImage(int Width, int Height)
-        //{
-        //    Image.GetThumbnailImageAbort callback = new Image.GetThumbnailImageAbort(this.ThumbnailCallback);
-        //    return this.srcImage.GetThumbnailImage(Width, Height, callback, IntPtr.Zero);
-        //}
-
-        //public void SaveThumbnailImage(int Width, int Height)
-        //{
-        //    string a;
-        //    if ((a = Path.GetExtension(this.srcFileName).ToLower()) != null)
-        //    {
-        //        if (a == ".png")
-        //        {
-        //            this.SaveImage(Width, Height, ImageFormat.Png);
-        //            return;
-        //        }
-        //        if (a == ".gif")
-        //        {
-        //            this.SaveImage(Width, Height, ImageFormat.Gif);
-        //            return;
-        //        }
-        //    }
-        //    this.SaveImage(Width, Height, ImageFormat.Jpeg);
-        //}
-
-        //public void SaveImage(int Width, int Height, ImageFormat imgformat)
-        //{
-        //    if ((imgformat != ImageFormat.Gif && this.srcImage.Width > Width) || this.srcImage.Height > Height)
-        //    {
-        //        Image.GetThumbnailImageAbort callback = new Image.GetThumbnailImageAbort(this.ThumbnailCallback);
-        //        Image thumbnailImage = this.srcImage.GetThumbnailImage(Width, Height, callback, IntPtr.Zero);
-        //        this.srcImage.Dispose();
-        //        thumbnailImage.Save(this.srcFileName, imgformat);
-        //        thumbnailImage.Dispose();
-        //    }
-        //}
-
         private static void SaveImage(Image image, string savePath, ImageCodecInfo ici)
         {
             EncoderParameters encoderParameters = new EncoderParameters(1);

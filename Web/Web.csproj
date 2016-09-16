@@ -371,8 +371,6 @@
     <Content Include="admin\global\global_restoresetupinf.aspx" />
     <Content Include="admin\global\global_runsql.aspx" />
     <Content Include="admin\global\global_safecontrol.aspx" />
-    <Content Include="admin\global\global_schedulemanage.aspx" />
-    <Content Include="admin\global\global_schedulesetting.aspx" />
     <Content Include="admin\global\global_scoreset.aspx" />
     <Content Include="admin\global\global_screditset.aspx" />
     <Content Include="admin\global\global_searchengine.aspx" />
@@ -2210,9 +2208,7 @@
     <Content Include="config\myattachment.config" />
     <Content Include="config\mymenu.config" />
     <Content Include="config\QzoneConnect.config" />
-    <Content Include="config\schedule.config" />
     <Content Include="config\scoreset.config" />
-    <Content Include="config\scriptevent.config" />
     <Content Include="config\spread.config" />
     <Content Include="config\trade.config" />
     <Content Include="config\urls.config" />

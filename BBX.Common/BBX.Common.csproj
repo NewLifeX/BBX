@@ -60,8 +60,6 @@
     <Compile Include="Config\InvitationConfigInfo.cs" />
     <Compile Include="Config\MyAttachmentsTypeConfigInfo.cs" />
     <Compile Include="Config\QzoneConnectConfigInfo.cs" />
-    <Compile Include="Config\ScheduleConfigInfo.cs" />
-    <Compile Include="Config\ScriptEventConfigInfo.cs" />
     <Compile Include="Config\SpreadConfig.cs" />
     <Compile Include="Config\TradeConfigInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

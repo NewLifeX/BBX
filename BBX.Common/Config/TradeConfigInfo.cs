@@ -37,7 +37,7 @@ namespace BBX.Config
             {
                 if (value != null && value.Length > 50)
                 {
-                    throw new ArgumentOutOfRangeException("��Ч�� Input_Charset(���������ַ���)", value, value.ToString());
+                    throw new ArgumentOutOfRangeException("无效的 Input_Charset(参数编码字符集)", value, value.ToString());
                 }
                 this._inputCharset = value;
             }
@@ -57,7 +57,7 @@ namespace BBX.Config
             {
                 if (value != null && value.Length > 16)
                 {
-                    throw new ArgumentOutOfRangeException("��Ч�� Partner(�������ID)", value, value.ToString());
+                    throw new ArgumentOutOfRangeException("无效的 Partner(合作伙伴ID)", value, value.ToString());
                 }
                 this._partner = value;
             }
@@ -77,7 +77,7 @@ namespace BBX.Config
             {
                 if (value != null && value.Length > 50)
                 {
-                    throw new ArgumentOutOfRangeException("��Ч�� Sign(ǩ��)", value, value.ToString());
+                    throw new ArgumentOutOfRangeException("无效的 Sign(签名)", value, value.ToString());
                 }
                 this._sign = value;
             }
@@ -97,7 +97,7 @@ namespace BBX.Config
             {
                 if (value != null && value.Length > 16)
                 {
-                    throw new ArgumentOutOfRangeException("��Ч��֧�����ʺ�", value, value.ToString());
+                    throw new ArgumentOutOfRangeException("无效的支付宝帐号", value, value.ToString());
                 }
                 this._acount = value;
             }

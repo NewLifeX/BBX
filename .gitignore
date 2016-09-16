@@ -250,3 +250,8 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+/BBX.Common/.svn
+/BBX.Control/.svn
+/BBX.Forum/.svn
+/BBX.Plugin/.svn
+/BBX.Web/.svn

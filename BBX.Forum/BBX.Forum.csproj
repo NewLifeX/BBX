@@ -60,12 +60,6 @@
     <Compile Include="Common\PageTemplate.cs" />
     <Compile Include="PageHelper.cs" />
     <Compile Include="QzoneConnectContext.cs" />
-    <Compile Include="ScheduledEvents\AttachmentEvent.cs" />
-    <Compile Include="ScheduledEvents\ClearCatchEvent.cs" />
-    <Compile Include="ScheduledEvents\Event.cs" />
-    <Compile Include="ScheduledEvents\EventManager.cs" />
-    <Compile Include="ScheduledEvents\ForumEvent.cs" />
-    <Compile Include="ScheduledEvents\IEvent.cs" />
     <Compile Include="AdminForums.cs" />
     <Compile Include="AdminForumStats.cs" />
     <Compile Include="AdminTopics.cs" />
@@ -92,10 +86,6 @@
     </Compile>
     <Compile Include="Posts.cs" />
     <Compile Include="QZoneAvatar.cs" />
-    <Compile Include="ScheduledEvents\InvitationEvent.cs" />
-    <Compile Include="ScheduledEvents\NoticesEvent.cs" />
-    <Compile Include="ScheduledEvents\ScriptEvent.cs" />
-    <Compile Include="ScheduledEvents\StatEvent.cs" />
     <Compile Include="Scoresets.cs" />
     <Compile Include="SiteUrls.cs" />
     <Compile Include="Smilies.cs" />

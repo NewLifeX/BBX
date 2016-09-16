@@ -4,15 +4,18 @@
  * 时间：2013-09-11 09:31:00
  * 版权：版权所有 (C) 新生命开发团队 2002~2013
 */
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using BBX.Common;
 using BBX.Config;
+using NewLife.Log;
 using NewLife.Reflection;
+using NewLife.Threading;
 using XCode;
 
 namespace BBX.Entity
@@ -31,6 +34,8 @@ namespace BBX.Entity
         static Attachment()
         {
             Meta.Factory.AdditionalFields.Add(__.Downloads);
+
+            new TimerX(DeleteAllToday, null, 5000, 3600 * 1000);
         }
 
         /// <summary>验证数据，通过抛出异常的方式提示验证失败。</summary>
@@ -390,6 +395,18 @@ namespace BBX.Entity
             return list.Count > 0 ? list[0].FileSize : 0;
         }
 
+        private static void DeleteAllToday(Object state)
+        {
+            // 删除所有人今天未使用的附件
+            var list = Attachment.FindAllNoUsed(0, DateTime.MinValue);
+            if (list.Count > 0)
+            {
+                //XTrace.WriteLine("删除所有人今天未使用的附件：{0}", list.ToList().Join(",", e => e.ID + ""));
+                XTrace.WriteLine("删除所有人今天未使用的附件：{0}", list.Join("ID", ","));
+                list.Delete();
+            }
+        }
+
         public static EntityList<Attachment> FindAllNoUsed(Int32 userid, DateTime posttime, AttachmentFileType attachmentType = AttachmentFileType.All)
         {
             var exp = _.Tid == 0 & _.Pid == 0;
@@ -440,7 +457,7 @@ namespace BBX.Entity
         /// <summary>转为另一个实体类对象。快速反射</summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public virtual T Cast<T>() where T : class,new()
+        public virtual T Cast<T>() where T : class, new()
         {
             var entity = new T();
             var fs = GetAllFields();

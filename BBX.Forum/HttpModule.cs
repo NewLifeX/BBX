@@ -1,12 +1,10 @@
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Web;
 using BBX.Common;
 using BBX.Config;
 using BBX.Entity;
-using BBX.Forum.ScheduledEvents;
 using NewLife.Log;
 using NewLife.Threading;
 
@@ -14,7 +12,7 @@ namespace BBX.Forum
 {
     public class HttpModule : IHttpModule
     {
-        private static Timer eventTimer;
+        //private static Timer eventTimer;
 
         public void Init(HttpApplication context)
         {
@@ -22,33 +20,33 @@ namespace BBX.Forum
             context.Context.Items["StartTime"] = DateTime.Now;
 
             context.BeginRequest += ReUrl_BeginRequest;
-            if (eventTimer == null && ScheduleConfigInfo.Current.Enabled)
-            {
-                EventManager.RootPath = Utils.GetMapPath(BaseConfigs.GetForumPath);
+            //if (eventTimer == null && ScheduleConfigInfo.Current.Enabled)
+            //{
+            //    EventManager.RootPath = Utils.GetMapPath(BaseConfigs.GetForumPath);
 
-                // 一分钟后，指定时间间隔（分钟）执行事件处理
-                eventTimer = new Timer(ScheduledEventWorkCallback, context.Context, 60000, EventManager.TimerMinutesInterval * 60000);
-            }
+            //    // 一分钟后，指定时间间隔（分钟）执行事件处理
+            //    eventTimer = new Timer(ScheduledEventWorkCallback, context.Context, 60000, EventManager.TimerMinutesInterval * 60000);
+            //}
         }
 
-        private void ScheduledEventWorkCallback(object sender)
-        {
-            try
-            {
-                if (ScheduleConfigInfo.Current.Enabled)
-                {
-                    EventManager.Execute();
-                }
-            }
-            catch (Exception ex)
-            {
-                XTrace.WriteException(ex);
-            }
-        }
+        //private void ScheduledEventWorkCallback(object sender)
+        //{
+        //    try
+        //    {
+        //        if (ScheduleConfigInfo.Current.Enabled)
+        //        {
+        //            EventManager.Execute();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        XTrace.WriteException(ex);
+        //    }
+        //}
 
         public void Dispose()
         {
-            eventTimer = null;
+            //eventTimer = null;
         }
 
         private void ReUrl_BeginRequest(object sender, EventArgs e)

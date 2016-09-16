@@ -172,8 +172,6 @@
     <Compile Include="用户\管理日志.cs" />
     <Compile Include="用户\管理组.Biz.cs" />
     <Compile Include="用户\管理组.cs" />
-    <Compile Include="全局\计划任务.Biz.cs" />
-    <Compile Include="全局\计划任务.cs" />
     <Compile Include="论坛\论坛.Biz.cs" />
     <Compile Include="论坛\论坛.cs" />
     <Compile Include="论坛\论坛字段.Biz.cs" />
