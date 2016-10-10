@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -1070,7 +1070,7 @@ namespace BBX.Entity
             var ts = list.ToList().Where(
                 e => ps.Contains(e.Fid) ||  // 当前版面的父级
                     e.DisplayOrder >= 3 ||  // 全局置顶
-                    e.DisplayOrder == 2 && e.Forum.AllParents.Count > 0 && ps.Contains(e.Forum.AllParents[0].ID)    // 本分类置顶
+                    e.DisplayOrder == 2 && e.Forum != null && e.Forum.AllParents.Count > 0 && ps.Contains(e.Forum.AllParents[0].ID)    // 本分类置顶
                 )
                 .OrderByDescending(e => e.LastPost)
                 .OrderByDescending(e => e.DisplayOrder)
