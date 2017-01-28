@@ -173,7 +173,7 @@ namespace BBX.Entity
         /// <summary>属性说明</summary>
         public String ActionName { get { return Action == 0 ? "" : ((UserAction)Action).GetDescription(); } }
 
-        public String Address { get { return IPAddress.Parse(IP).GetAddress(); } }
+        public String Address { get { return IP.IPToAddress(); } }
 
         /// <summary>当前在线用户</summary>
         public static Online Current

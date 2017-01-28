@@ -255,3 +255,9 @@ paket-files/
 /BBX.Forum/.svn
 /BBX.Plugin/.svn
 /BBX.Web/.svn
+/Data
+/Web/App_Data
+/Web/aspx/Default
+/Web/config/Core.config
+/Web/config/XCode.config
+/Web/Plugins

@@ -1,17 +1,15 @@
 ﻿using System;
 using System.IO;
-using System.Web;
 using System.Web.UI;
 using BBX.Common;
 using BBX.Config;
 using BBX.Forum;
 using NewLife.Collections;
-using NewLife.Log;
 using NewLife.Web;
 
 namespace BBX.Web.UI
 {
-    public class Avatar : Page  // PageBase
+    public class Avatar : Page
     {
         public Avatar() { }
 
@@ -41,8 +39,8 @@ namespace BBX.Web.UI
             // 如果物理文件存在，直接返回
             var fi = Avatars.GetPhysicsAvatarPath(uid + "", avatarSize);
             // 如果没有缓存，文件也不在，那么直接返回默认
-            if (!_cache.ContainsKey(fi) && !File.Exists(fi)) fi = Utils.GetMapPath(BaseConfigs.GetForumPath.CombinePath("avatars/avatar_" + avatarSize.ToString().ToLower() + ".jpg"));
-            if (_cache.ContainsKey(fi) || File.Exists(fi))
+            if (!File.Exists(fi)) fi = Utils.GetMapPath(BaseConfigs.GetForumPath.CombinePath("avatars/avatar_" + avatarSize.ToString().ToLower() + ".jpg"));
+            if (File.Exists(fi))
             {
                 var ci = GetData(fi);
 
@@ -72,8 +70,7 @@ namespace BBX.Web.UI
 
         static DictionaryCache<String, CacheItem> _cache = new DictionaryCache<String, CacheItem>(StringComparer.OrdinalIgnoreCase)
         {
-            Expire = 10 * 60,
-            DelayLock = true,
+            Expire = 10 * 60
         };
         /// <summary>带缓存的获取头像</summary>
         /// <param name="file"></param>
@@ -85,6 +82,7 @@ namespace BBX.Web.UI
                 var ci = new CacheItem();
                 ci.Data = File.ReadAllBytes(f);
                 ci.ModifyTime = new FileInfo(f).LastWriteTime;
+
                 return ci;
             });
         }

@@ -1,52 +1,27 @@
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web;
 using BBX.Common;
 using BBX.Config;
 using BBX.Entity;
 using NewLife.Log;
-using NewLife.Threading;
 
 namespace BBX.Forum
 {
     public class HttpModule : IHttpModule
     {
-        //private static Timer eventTimer;
-
         public void Init(HttpApplication context)
         {
             // 记录页面开始时间
             context.Context.Items["StartTime"] = DateTime.Now;
 
             context.BeginRequest += ReUrl_BeginRequest;
-            //if (eventTimer == null && ScheduleConfigInfo.Current.Enabled)
-            //{
-            //    EventManager.RootPath = Utils.GetMapPath(BaseConfigs.GetForumPath);
-
-            //    // 一分钟后，指定时间间隔（分钟）执行事件处理
-            //    eventTimer = new Timer(ScheduledEventWorkCallback, context.Context, 60000, EventManager.TimerMinutesInterval * 60000);
-            //}
         }
-
-        //private void ScheduledEventWorkCallback(object sender)
-        //{
-        //    try
-        //    {
-        //        if (ScheduleConfigInfo.Current.Enabled)
-        //        {
-        //            EventManager.Execute();
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        XTrace.WriteException(ex);
-        //    }
-        //}
 
         public void Dispose()
         {
-            //eventTimer = null;
         }
 
         private void ReUrl_BeginRequest(object sender, EventArgs e)
@@ -268,7 +243,7 @@ namespace BBX.Forum
                 if (!rs.IsNullOrEmpty())
                 {
                     XTrace.WriteLine("异步生成该风格{0}所有模版", tmp.Name);
-                    ThreadPoolX.QueueUserWorkItem(() => ForumPageTemplate.BuildTemplate(tmp));
+                    Task.Run(() => ForumPageTemplate.BuildTemplate(tmp));
                 }
             }
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using BBX.Common;
 using BBX.Config;
@@ -134,21 +135,24 @@ namespace BBX.Forum
                 MyParam.Create("fid", fid)
             }.ToArray(), apiKey);
         }
+
         public static bool NeedAsyncLogin()
         {
             return Sync.GetAsyncTarget("login").Count > 0;
         }
+
         public static bool NeedAsyncLogout()
         {
             return Sync.GetAsyncTarget("logout").Count > 0;
         }
+
         private static void SendRequest(string action, MyParam[] data, string apiKey)
         {
             foreach (var current in Sync.GetAsyncTarget(action))
             {
                 if (current.APIKey != apiKey)
                 {
-                    ThreadPoolX.QueueUserWorkItem(s =>
+                    Task.Run(() =>
                     {
                         var url = Sync.GetUrl(current.SyncUrl, current.Secret, action, data);
                         Utils.GetHttpWebResponse(url);
@@ -278,16 +282,16 @@ namespace BBX.Forum
 
             private static string ConvertArrayToString(Array a)
             {
-                StringBuilder stringBuilder = new StringBuilder();
+                var sb = new StringBuilder();
                 for (int i = 0; i < a.Length; i++)
                 {
                     if (i > 0)
                     {
-                        stringBuilder.Append(",");
+                        sb.Append(",");
                     }
-                    stringBuilder.Append(a.GetValue(i).ToString());
+                    sb.Append(a.GetValue(i).ToString());
                 }
-                return stringBuilder.ToString();
+                return sb.ToString();
             }
         }
     }
