@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -51,8 +50,9 @@ namespace BBX.Entity
         #region 对象操作﻿
         static Online()
         {
-            Meta.Factory.AdditionalFields.Add(_.Newnotices);
-            Meta.Factory.AdditionalFields.Add(_.Newpms);
+            var df = Meta.Factory.AdditionalFields;
+            df.Add(_.Newnotices);
+            df.Add(_.Newpms);
         }
 
         protected override void OnLoad()
@@ -66,26 +66,14 @@ namespace BBX.Entity
         /// <param name="isNew"></param>
         public override void Valid(Boolean isNew)
         {
-            // 这里验证参数范围，建议抛出参数异常，指定参数名，前端用户界面可以捕获参数异常并聚焦到对应的参数输入框
-            //if (String.IsNullOrEmpty(Name)) throw new ArgumentNullException(_.Name, _.Name.DisplayName + "无效！");
-            //if (!isNew && ID < 1) throw new ArgumentOutOfRangeException(_.ID, _.ID.DisplayName + "必须大于0！");
-
             // 建议先调用基类方法，基类方法会对唯一索引的数据进行验证
             base.Valid(isNew);
 
-            // 在新插入数据或者修改了指定字段时进行唯一性验证，CheckExist内部抛出参数异常
-            //if (isNew || Dirtys[_.Name]) CheckExist(_.Name);
-
             if (isNew || HasDirty)
             {
-                //// 处理当前已登录用户信息
-                //var user = ManageProvider.Provider.Current;
-                //if (!Dirtys[_.UserID] && user != null) UserID = (Int32)user.ID;
-                //if (!Dirtys[_.UserName] && user != null) UserName = user.Account;
-
                 if (!Dirtys[__.LastUpdateTime]) LastUpdateTime = DateTime.Now;
                 if (!Dirtys[__.IP]) IP = WebHelper.UserHost;
-                if (!Dirtys[__.UserAgent]) UserAgent = HttpContext.Current.Request.UserAgent;
+                if (!Dirtys[__.UserAgent]) UserAgent = HttpContext.Current?.Request?.UserAgent;
 
                 // 限定UserAgent长度
                 if (UserAgent != null && UserAgent.Length > _.UserAgent.Length) UserAgent = UserAgent.Substring(0, _.UserAgent.Length);
@@ -120,24 +108,6 @@ namespace BBX.Entity
             }
         }
 
-        ///// <summary>已重载。在事务保护范围内处理业务，位于Valid之后</summary>
-        ///// <returns></returns>
-        //protected override Int32 OnInsert()
-        //{
-        //    // 关闭SQL日志
-        //    var f = DAL.ShowSQL;
-        //    DAL.ShowSQL = false;
-
-        //    try
-        //    {
-        //        return base.OnInsert();
-        //    }
-        //    finally
-        //    {
-        //        DAL.ShowSQL = f;
-        //    }
-        //}
-
         protected override int OnInsert()
         {
             // 关闭SQL日志
@@ -145,7 +115,6 @@ namespace BBX.Entity
             var f = session.ShowSQL;
             session.ShowSQL = false;
 
-            //XTrace.WriteLine("Online.Insert {0}", SessionID);
             try
             {
                 return base.OnInsert();
@@ -161,12 +130,6 @@ namespace BBX.Entity
                 session.ShowSQL = f;
             }
         }
-
-        //protected override int OnDelete()
-        //{
-        //    XTrace.WriteLine("Online.Delete {0}", SessionID);
-        //    return base.OnDelete();
-        //}
         #endregion
 
         #region 扩展属性﻿
@@ -206,15 +169,7 @@ namespace BBX.Entity
         }
 
         /// <summary>用户</summary>
-        public User User
-        {
-            get
-            {
-                if (UserID <= 0) return null;
-
-                return User.FindByID(UserID);
-            }
-        }
+        public User User { get { return User.FindByID(UserID); } }
 
         /// <summary>用户组</summary>
         public UserGroup Group
@@ -231,20 +186,6 @@ namespace BBX.Entity
         #region 扩展查询﻿
         const Int32 CacheCount = 10000;
 
-        ///// <summary>根据用户编号,外键、是否隐身、ForumID查找</summary>
-        ///// <param name="userid">用户编号,外键</param>
-        ///// <param name="invisible">是否隐身</param>
-        ///// <param name="forumid"></param>
-        ///// <returns></returns>
-        //[DataObjectMethod(DataObjectMethodType.Select, false)]
-        //public static EntityList<Online> FindAllByUserIDAndInvisibleAndForumID(Int32 userid, Int16 invisible, Int32 forumid)
-        //{
-        //    if (Meta.Count >= CacheCount)
-        //        return FindAll(new String[] { _.UserID, _.Invisible, _.ForumID }, new Object[] { userid, invisible, forumid });
-        //    else // 实体缓存
-        //        return Meta.Cache.Entities.FindAll(e => e.UserID == userid && e.Invisible == invisible && e.ForumID == forumid);
-        //}
-
         /// <summary>根据ForumID查找</summary>
         /// <param name="forumid"></param>
         /// <returns></returns>
@@ -256,27 +197,6 @@ namespace BBX.Entity
             else // 实体缓存
                 return Meta.Cache.Entities.FindAll(__.ForumID, forumid);
         }
-
-        //public static EntityList<Online> FindAllByIP(String ip)
-        //{
-        //    if (Meta.Count >= CacheCount)
-        //        return FindAll(__.IP, ip);
-        //    else // 实体缓存
-        //        return Meta.Cache.Entities.FindAll(__.IP, ip);
-        //}
-
-        ///// <summary>根据用户编号,外键、是否隐身查找</summary>
-        ///// <param name="userid">用户编号,外键</param>
-        ///// <param name="invisible">是否隐身</param>
-        ///// <returns></returns>
-        //[DataObjectMethod(DataObjectMethodType.Select, false)]
-        //public static EntityList<Online> FindAllByUserIDAndInvisible(Int32 userid, Int16 invisible)
-        //{
-        //    if (Meta.Count >= CacheCount)
-        //        return FindAll(new String[] { _.UserID, _.Invisible }, new Object[] { userid, invisible });
-        //    else // 实体缓存
-        //        return Meta.Cache.Entities.FindAll(e => e.UserID == userid && e.Invisible == invisible);
-        //}
 
         /// <summary>根据用户编号,外键、IP地址查找</summary>
         /// <param name="userid">用户编号,外键</param>
@@ -299,32 +219,6 @@ namespace BBX.Entity
                 //return Meta.Cache.Entities.Find(e => e.SessionID == sessionid);
                 return Meta.Cache.Entities.FindIgnoreCase(__.SessionID, sessionid);
         }
-
-        ///// <summary>根据用户编号,外键、IP地址查找</summary>
-        ///// <param name="userid">用户编号,外键</param>
-        ///// <param name="ip">IP地址</param>
-        ///// <returns></returns>
-        //[DataObjectMethod(DataObjectMethodType.Select, false)]
-        //public static Online FindByUserIDAndIP(Int32 userid, String ip)
-        //{
-        //    if (Meta.Count >= CacheCount)
-        //        return Find(new String[] { _.UserID, _.IP }, new Object[] { userid, ip });
-        //    else // 实体缓存
-        //        return Meta.Cache.Entities.Find(e => e.UserID == userid && e.IP == ip);
-        //}
-
-        ///// <summary>根据用户编号,外键、登录密码查找</summary>
-        ///// <param name="userid">用户编号,外键</param>
-        ///// <param name="password">登录密码</param>
-        ///// <returns></returns>
-        //[DataObjectMethod(DataObjectMethodType.Select, false)]
-        //public static Online FindByUserIDAndPassword(Int32 userid, String password)
-        //{
-        //    if (Meta.Count >= CacheCount)
-        //        return Find(new String[] { __.UserID, __.Password }, new Object[] { userid, password });
-        //    else // 实体缓存
-        //        return Meta.Cache.Entities.Find(e => e.UserID == userid && e.Password == password);
-        //}
 
         /// <summary>根据编号查找</summary>
         /// <param name="id">编号</param>
@@ -441,28 +335,6 @@ namespace BBX.Entity
             return list.Count;
         }
 
-        //public static void DeleteRowsByIP(String ip)
-        //{
-        //    //var list = FindAll(_.IP == ip, null, null, 0, 0);
-        //    var list = FindAllByIP(ip);
-        //    if (list.Count <= 0) return;
-
-        //    foreach (var item in list)
-        //    {
-        //        if (item.UserID > 0)
-        //        {
-        //            var user = User.FindByID(item.UserID);
-        //            if (user != null)
-        //            {
-        //                user.OnlineState = 0;
-        //                user.LastActivity = DateTime.Now;
-        //                user.Update();
-        //            }
-        //            item.Delete();
-        //        }
-        //    }
-        //}
-
         public static Boolean CheckUserVerifyCode(int olid, string verifycode)
         {
             var entity = FindByID(olid);
@@ -522,18 +394,6 @@ namespace BBX.Entity
         #endregion
 
         #region 创建在线用户
-        //private static EntityList<OnlineList> GetOnlineGroupIconTable()
-        //{
-        //    var cacheService = XCache.Current;
-        //    var list = cacheService.RetrieveObject(CacheKeys.FORUM_ONLINE_ICON_TABLE) as EntityList<OnlineList>;
-        //    if (list == null)
-        //    {
-        //        list = OnlineList.GetGroupIcons();
-        //        XCache.Add(CacheKeys.FORUM_ONLINE_ICON_TABLE, list);
-        //    }
-        //    return list;
-        //}
-
         public static string GetGroupImg(int groupid)
         {
             string text = "";
@@ -772,29 +632,6 @@ namespace BBX.Entity
         #endregion
 
         #region 在线列表
-
-        //public static EntityList<Online> GetOnlineUserList(int totaluser, String order, Boolean isdesc, out int guest, out int user, out int invisibleuser)
-        //{
-        //    var list = Online.FindAllWithCache();
-        //    if (!String.IsNullOrEmpty(order))
-        //    {
-        //        FieldItem fi = Meta.Table.FindByName(order);
-        //        if (fi != null) list = list.Sort(fi.Name, isdesc);
-        //    }
-
-        //    var st = Statistic.Current;
-        //    if (totaluser > st.HighestOnlineUserCount)
-        //    {
-        //        st.HighestOnlineUserCount = totaluser;
-        //        st.HighestOnlineUserTime = DateTime.Now;
-        //        st.Update();
-        //    }
-        //    user = list.Count;
-        //    invisibleuser = list.ToList().Count(e => e.Invisible == 1);
-        //    guest = totaluser > user ? totaluser - user : 0;
-        //    return list;
-        //}
-
         public static EntityList<Online> GetList(Int32 forumid = 0, String order = null, Boolean isdesc = false, Int32 start = 0, Int32 max = 200)
         {
             if (Meta.Count < CacheCount)
@@ -837,9 +674,6 @@ namespace BBX.Entity
                 return FindAll(null, dexp, null, start, max);
             }
         }
-
-        //static Statistics _stat;
-        //static DateTime _nextGetStat;
 
         static DictionaryCache<Int32, Statistics> _StatCache = new DictionaryCache<int, Statistics> { Expire = 10 };
 
@@ -1122,10 +956,9 @@ namespace BBX.Entity
     [Description("代理匹配配置")]
     public class AgentConfig : XmlConfig2<AgentConfig>
     {
-        private List<Item> _Agents;
         /// <summary>匹配代理集合</summary>
         [Description("Url为匹配请求地址的正则表达式，Target为要重写的目标地址，可以使用$1等匹配项，Name只是标识作用，不参与业务处理")]
-        public List<Item> Agents { get { return _Agents; } set { _Agents = value; } }
+        public List<Item> Agents { get; set; }
 
         public String GetName(String agent)
         {
@@ -1173,15 +1006,13 @@ namespace BBX.Entity
         /// <summary>Url重写地址配置项</summary>
         public class Item
         {
-            private String _Agent;
             /// <summary>名称</summary>
             [XmlAttribute]
-            public String Agent { get { return _Agent; } set { _Agent = value; } }
+            public String Agent { get; set; }
 
-            private String _Name;
             /// <summary>名称</summary>
             [XmlAttribute]
-            public String Name { get { return _Name; } set { _Name = value; } }
+            public String Name { get; set; }
 
             private Regex _reg;
             /// <summary>获取指定输入的重写Url</summary>
