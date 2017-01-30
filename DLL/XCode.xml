@@ -197,642 +197,6 @@
             <summary>填充关系</summary>
             <param name="relation"></param>
         </member>
-        <member name="T:XCode.Cache.CacheSetting">
-            <summary>全局缓存设置</summary>
-        </member>
-        <member name="P:XCode.Cache.CacheSetting.CacheDebug">
-            <summary>是否调试缓存模块</summary>
-        </member>
-        <member name="P:XCode.Cache.CacheSetting.Alone">
-            <summary>是否独占数据库，独占时将大大加大缓存权重，默认true（Debug时为false）</summary>
-        </member>
-        <member name="P:XCode.Cache.CacheSetting.Expiration">
-            <summary>一级缓存相对有效期。
-            -2	关闭缓存
-            -1	非独占数据库，有外部系统操作数据库，使用请求级缓存；
-             0	永久静态缓存；
-            >0	静态缓存时间，单位是秒；
-            </summary>
-        </member>
-        <member name="P:XCode.Cache.CacheSetting.EntityCacheExpire">
-            <summary>实体缓存过期时间，默认60秒</summary>
-        </member>
-        <member name="P:XCode.Cache.CacheSetting.SingleCacheExpire">
-            <summary>单对象缓存过期时间，默认60秒</summary>
-        </member>
-        <member name="M:XCode.Cache.CacheSetting.#ctor">
-            <summary>实例化缓存设置</summary>
-        </member>
-        <member name="M:XCode.Cache.CacheSetting.Init">
-            <summary>初始化</summary>
-        </member>
-        <member name="T:XCode.Cache.EntityDependency`1">
-            <summary>实体依赖。用于HttpRuntime.Cache，一旦指定的实体类数据改变，马上让缓存过期。</summary>
-            <typeparam name="TEntity"></typeparam>
-        </member>
-        <member name="M:XCode.Cache.EntityDependency`1.#ctor">
-            <summary>实例化一个实体依赖。</summary>
-        </member>
-        <member name="M:XCode.Cache.EntityDependency`1.#ctor(System.Int32)">
-            <summary>
-            通过指定一个检查周期实例化一个实体依赖。
-            利用线程池定期去检查该实体类的总记录数，一旦改变则让缓存过期。
-            这样子就避免了其它方式修改数据而没能及时更新缓存问题
-            </summary>
-            <param name="period">检查周期，单位毫秒。必须大于1000（1秒），以免误用。</param>
-        </member>
-        <member name="M:XCode.Cache.EntityDependency`1.DependencyDispose">
-            <summary>释放资源</summary>
-        </member>
-        <member name="T:XCode.Cache.IEntityCacheBase">
-            <summary>缓存基接口</summary>
-        </member>
-        <member name="P:XCode.Cache.IEntityCacheBase.ConnName">
-            <summary>连接名</summary>
-        </member>
-        <member name="P:XCode.Cache.IEntityCacheBase.TableName">
-            <summary>表名</summary>
-        </member>
-        <member name="T:XCode.Cache.IEntityCache">
-            <summary>实体缓存接口</summary>
-        </member>
-        <member name="P:XCode.Cache.IEntityCache.Entities">
-            <summary>实体集合。因为涉及一个转换，数据量大时很耗性能，建议不要使用。</summary>
-        </member>
-        <member name="M:XCode.Cache.IEntityCache.Find(System.String,System.Object)">
-            <summary>根据指定项查找</summary>
-            <param name="name">属性名</param>
-            <param name="value">属性值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.IEntityCache.FindAll(System.String,System.Object)">
-            <summary>根据指定项查找</summary>
-            <param name="name">属性名</param>
-            <param name="value">属性值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.IEntityCache.FindAll(System.Predicate{XCode.IEntity})">
-            <summary>检索与指定谓词定义的条件匹配的所有元素。</summary>
-            <param name="match">条件</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.IEntityCache.Clear(System.String)">
-            <summary>清除缓存</summary>
-        </member>
-        <member name="T:XCode.Cache.ISingleEntityCache">
-            <summary>单对象缓存接口</summary>
-        </member>
-        <member name="P:XCode.Cache.ISingleEntityCache.Expire">
-            <summary>过期时间。单位是秒，默认60秒</summary>
-        </member>
-        <member name="P:XCode.Cache.ISingleEntityCache.MaxEntity">
-            <summary>最大实体数。默认10000</summary>
-        </member>
-        <member name="P:XCode.Cache.ISingleEntityCache.AutoSave">
-            <summary>缓存到期时自动保存，默认true</summary>
-        </member>
-        <member name="P:XCode.Cache.ISingleEntityCache.AllowNull">
-            <summary>允许缓存空对象，默认false</summary>
-        </member>
-        <member name="P:XCode.Cache.ISingleEntityCache.HoldCache">
-            <summary>在数据修改时保持缓存，不再过期，独占数据库时默认打开，否则默认关闭</summary>
-        </member>
-        <member name="P:XCode.Cache.ISingleEntityCache.Using">
-            <summary>是否在使用缓存</summary>
-        </member>
-        <member name="P:XCode.Cache.ISingleEntityCache.Item(System.Object)">
-            <summary>获取数据</summary>
-            <param name="key"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.ISingleEntityCache.GetItemWithSlaveKey(System.String)">
-            <summary>根据从键获取实体数据</summary>
-            <param name="slaveKey"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.ISingleEntityCache.Initialize">
-            <summary>初始化单对象缓存，服务端启动时预载入实体记录集</summary>
-            <remarks>注意事项：
-            <para>调用方式：TEntity.Meta.Factory.Session.SingleCache.Initialize()，不要使用TEntity.Meta.Session.SingleCache.Initialize()；
-            因为Factory的调用会联级触发静态构造函数，确保单对象缓存设置成功</para>
-            <para>服务端启动时，如果使用异步方式初始化单对象缓存，请将同一数据模型（ConnName）下的实体类型放在同一异步方法内执行，否则实体类型的架构检查抛异常</para>
-            </remarks>
-        </member>
-        <member name="M:XCode.Cache.ISingleEntityCache.ContainsKey(System.Object)">
-            <summary>是否包含指定主键</summary>
-            <param name="key"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.ISingleEntityCache.ContainsSlaveKey(System.String)">
-            <summary>是否包含指定从键</summary>
-            <param name="key"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.ISingleEntityCache.Add(System.Object,XCode.IEntity)">
-            <summary>向单对象缓存添加项</summary>
-            <param name="key"></param>
-            <param name="value">实体对象</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.ISingleEntityCache.Add(XCode.IEntity)">
-            <summary>向单对象缓存添加项</summary>
-            <param name="value">实体对象</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.ISingleEntityCache.Remove(XCode.IEntity,System.Boolean)">
-            <summary>移除指定项</summary>
-            <param name="entity"></param>
-            <param name="save">是否自动保存实体对象</param>
-        </member>
-        <member name="M:XCode.Cache.ISingleEntityCache.RemoveKey(System.Object,System.Boolean)">
-            <summary>移除指定项</summary>
-            <param name="key">键值</param>
-            <param name="save">是否自动保存实体对象</param>
-        </member>
-        <member name="M:XCode.Cache.ISingleEntityCache.Clear(System.String)">
-            <summary>清除所有数据</summary>
-            <param name="reason">清除缓存原因</param>
-        </member>
-        <member name="T:XCode.Cache.ISingleEntityCache`2">
-            <summary></summary>
-            <typeparam name="TKey"></typeparam>
-            <typeparam name="TEntity"></typeparam>
-        </member>
-        <member name="P:XCode.Cache.ISingleEntityCache`2.Item(`0)">
-            <summary>获取数据</summary>
-            <param name="key"></param>
-            <returns></returns>
-        </member>
-        <member name="P:XCode.Cache.ISingleEntityCache`2.GetKeyMethod">
-            <summary>获取缓存主键的方法，默认方法为获取实体主键值</summary>
-        </member>
-        <member name="P:XCode.Cache.ISingleEntityCache`2.FindKeyMethod">
-            <summary>查找数据的方法</summary>
-        </member>
-        <member name="F:XCode.Cache.CacheItem._TableNames">
-            <summary>所依赖的表的表名</summary>
-        </member>
-        <member name="F:XCode.Cache.CacheItem.ExpireTime">
-            <summary>到期时间</summary>
-        </member>
-        <member name="M:XCode.Cache.CacheItem.#ctor(System.String[])">
-            <summary>构造函数</summary>
-            <param name="tableNames"></param>
-        </member>
-        <member name="M:XCode.Cache.CacheItem.#ctor(System.String[],System.Int32)">
-            <summary>构造函数</summary>
-            <param name="tableNames"></param>
-            <param name="time">缓存时间，单位秒</param>
-        </member>
-        <member name="M:XCode.Cache.CacheItem.IsDependOn(System.String)">
-            <summary>是否依赖于某个表</summary>
-            <param name="tableName">表名</param>
-            <returns></returns>
-        </member>
-        <member name="P:XCode.Cache.CacheItem`1.Value">
-            <summary>缓存的数据</summary>
-        </member>
-        <member name="M:XCode.Cache.CacheItem`1.#ctor(System.String[],`0)">
-            <summary>构造函数</summary>
-            <param name="tableNames"></param>
-            <param name="value">数值</param>
-        </member>
-        <member name="M:XCode.Cache.CacheItem`1.#ctor(System.String[],`0,System.Int32)">
-            <summary>构造函数</summary>
-            <param name="tableNames"></param>
-            <param name="value">数值</param>
-            <param name="time">缓存时间，单位秒</param>
-        </member>
-        <member name="T:XCode.Cache.XCache">
-            <summary>数据缓存类</summary>
-            <remarks>
-            以SQL为键对查询进行缓存，同时关联表。执行SQL时，根据关联表删除缓存。
-            </remarks>
-        </member>
-        <member name="P:XCode.Cache.XCache.Expiration">
-            <summary>缓存相对有效期。
-            -2	关闭缓存
-            -1	非独占数据库，有外部系统操作数据库，使用请求级缓存；
-             0	永久静态缓存；
-            >0	静态缓存时间，单位是秒；
-            </summary>
-        </member>
-        <member name="P:XCode.Cache.XCache.Kind">
-            <summary>数据缓存类型</summary>
-        </member>
-        <member name="M:XCode.Cache.XCache.#cctor">
-            <summary>初始化设置。读取配置</summary>
-        </member>
-        <member name="F:XCode.Cache.XCache.AutoCheckCacheTimer">
-            <summary>缓存维护定时器</summary>
-        </member>
-        <member name="M:XCode.Cache.XCache.CheckExpire(System.Object)">
-            <summary>维护</summary>
-            <param name="obj"></param>
-        </member>
-        <member name="M:XCode.Cache.XCache.CreateTimer">
-            <summary>
-            创建定时器。
-            因为定时器的原因，实际缓存时间可能要比Expiration要大
-            </summary>
-        </member>
-        <member name="M:XCode.Cache.XCache.Add``1(System.Collections.Generic.Dictionary{System.String,XCode.Cache.CacheItem{``0}},System.String,System.String,``0,System.String[])">
-            <summary>添加数据表缓存。</summary>
-            <param name="cache">缓存对象</param>
-            <param name="prefix">前缀</param>
-            <param name="sql">SQL语句</param>
-            <param name="value">待缓存记录集</param>
-            <param name="tableNames">表名数组</param>
-        </member>
-        <member name="M:XCode.Cache.XCache.Add(System.String,System.Data.DataSet,System.String[])">
-            <summary>添加数据表缓存。</summary>
-            <param name="sql">SQL语句</param>
-            <param name="value">待缓存记录集</param>
-            <param name="tableNames">表名数组</param>
-        </member>
-        <member name="M:XCode.Cache.XCache.Add(System.String,System.Int32,System.String[])">
-            <summary>添加Int32缓存。</summary>
-            <param name="sql">SQL语句</param>
-            <param name="value">待缓存整数</param>
-            <param name="tableNames">表名数组</param>
-        </member>
-        <member name="M:XCode.Cache.XCache.Remove(System.String)">
-            <summary>移除依赖于某个数据表的缓存</summary>
-            <param name="tableName">数据表</param>
-        </member>
-        <member name="M:XCode.Cache.XCache.Remove(System.String[])">
-            <summary>移除依赖于一组数据表的缓存</summary>
-            <param name="tableNames"></param>
-        </member>
-        <member name="M:XCode.Cache.XCache.RemoveAll">
-            <summary>清空缓存</summary>
-        </member>
-        <member name="M:XCode.Cache.XCache.TryGetItem``1(System.Collections.Generic.Dictionary{System.String,XCode.Cache.CacheItem{``0}},System.String,``0@)">
-            <summary>获取DataSet缓存</summary>
-            <param name="cache">缓存对象</param>
-            <param name="sql">SQL语句</param>
-            <param name="value">结果</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.XCache.TryGetItem(System.String,System.Data.DataSet@)">
-            <summary>获取DataSet缓存</summary>
-            <param name="sql">SQL语句</param>
-            <param name="ds">结果</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.XCache.TryGetItem(System.String,System.Int32@)">
-            <summary>获取Int32缓存</summary>
-            <param name="sql">SQL语句</param>
-            <param name="count">结果</param>
-            <returns></returns>
-        </member>
-        <member name="P:XCode.Cache.XCache.Count">
-            <summary>缓存个数</summary>
-        </member>
-        <member name="P:XCode.Cache.XCache.Items">
-            <summary>请求级缓存项</summary>
-        </member>
-        <member name="F:XCode.Cache.XCache.Total">
-            <summary>总次数</summary>
-        </member>
-        <member name="F:XCode.Cache.XCache.Shoot">
-            <summary>命中</summary>
-        </member>
-        <member name="F:XCode.Cache.XCache.NextShow">
-            <summary>下一次显示时间</summary>
-        </member>
-        <member name="M:XCode.Cache.XCache.CheckShowStatics(System.DateTime@,System.Int32@,System.Action)">
-            <summary>检查并显示统计信息</summary>
-            <param name="next"></param>
-            <param name="total"></param>
-            <param name="show"></param>
-        </member>
-        <member name="M:XCode.Cache.XCache.ShowStatics">
-            <summary>显示统计信息</summary>
-        </member>
-        <member name="T:XCode.Cache.XCache.CacheKinds">
-            <summary>数据缓存类型</summary>
-        </member>
-        <member name="F:XCode.Cache.XCache.CacheKinds.关闭缓存">
-            <summary>关闭缓存</summary>
-        </member>
-        <member name="F:XCode.Cache.XCache.CacheKinds.请求级缓存">
-            <summary>请求级缓存</summary>
-        </member>
-        <member name="F:XCode.Cache.XCache.CacheKinds.永久静态缓存">
-            <summary>永久静态缓存</summary>
-        </member>
-        <member name="F:XCode.Cache.XCache.CacheKinds.有效期缓存">
-            <summary>带有效期缓存</summary>
-        </member>
-        <member name="T:XCode.Cache.CacheBase`1">
-            <summary>缓存基类</summary>
-        </member>
-        <member name="P:XCode.Cache.CacheBase`1.ConnName">
-            <summary>连接名</summary>
-        </member>
-        <member name="P:XCode.Cache.CacheBase`1.TableName">
-            <summary>表名</summary>
-        </member>
-        <member name="M:XCode.Cache.CacheBase`1.Invoke``2(System.Func{``0,``1},``0)">
-            <summary>调用委托方法前设置连接名和表名，调用后还原</summary>
-        </member>
-        <member name="T:XCode.Cache.CacheBase">
-            <summary>缓存基类</summary>
-        </member>
-        <member name="P:XCode.Cache.CacheBase.Debug">
-            <summary>是否调试缓存模块</summary>
-        </member>
-        <member name="T:XCode.Cache.EntityCache`1">
-            <summary>实体缓存</summary>
-            <remarks>
-            关于异步缓存，非常有用！
-            第一次读取缓存的时候，同步从数据库读取，这样子手上有一份数据。
-            以后更新，都开异步线程去读取，而当前马上返回，让大家继续用着旧数据，这么做性能非常好。
-            </remarks>
-            <typeparam name="TEntity">实体类型</typeparam>
-        </member>
-        <member name="P:XCode.Cache.EntityCache`1.ExpiredTime">
-            <summary>缓存过期时间</summary>
-        </member>
-        <member name="P:XCode.Cache.EntityCache`1.Times">
-            <summary>缓存更新次数</summary>
-        </member>
-        <member name="P:XCode.Cache.EntityCache`1.Expire">
-            <summary>过期时间。单位是秒，默认60秒</summary>
-        </member>
-        <member name="P:XCode.Cache.EntityCache`1.FillListMethod">
-            <summary>填充数据的方法</summary>
-        </member>
-        <member name="P:XCode.Cache.EntityCache`1.WaitFirst">
-            <summary>是否等待第一次查询。如果不等待，第一次返回空集合。默认true</summary>
-        </member>
-        <member name="P:XCode.Cache.EntityCache`1.Using">
-            <summary>是否在使用缓存，在不触发缓存动作的情况下检查是否有使用缓存</summary>
-        </member>
-        <member name="M:XCode.Cache.EntityCache`1.#ctor">
-            <summary>实例化实体缓存</summary>
-        </member>
-        <member name="F:XCode.Cache.EntityCache`1._task">
-            <summary>当前更新任务</summary>
-        </member>
-        <member name="P:XCode.Cache.EntityCache`1.Entities">
-            <summary>实体集合。无数据返回空集合而不是null</summary>
-        </member>
-        <member name="M:XCode.Cache.EntityCache`1.Clear(System.String)">
-            <summary>清除缓存</summary>
-        </member>
-        <member name="F:XCode.Cache.EntityCache`1.Total">
-            <summary>总次数</summary>
-        </member>
-        <member name="F:XCode.Cache.EntityCache`1.Success">
-            <summary>命中</summary>
-        </member>
-        <member name="F:XCode.Cache.EntityCache`1.NextShow">
-            <summary>下一次显示时间</summary>
-        </member>
-        <member name="M:XCode.Cache.EntityCache`1.ShowStatics">
-            <summary>显示统计信息</summary>
-        </member>
-        <member name="M:XCode.Cache.EntityCache`1.Find(System.String,System.Object)">
-            <summary>根据指定项查找</summary>
-            <param name="name">属性名</param>
-            <param name="value">属性值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.EntityCache`1.FindAll(System.String,System.Object)">
-            <summary>根据指定项查找</summary>
-            <param name="name">属性名</param>
-            <param name="value">属性值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.EntityCache`1.FindAll(System.Predicate{XCode.IEntity})">
-            <summary>检索与指定谓词定义的条件匹配的所有元素。</summary>
-            <param name="match">条件</param>
-            <returns></returns>
-        </member>
-        <member name="T:XCode.Cache.SingleEntityCache`2">
-            <summary>单对象缓存</summary>
-            <remarks>
-            用一个值为实体的字典作为缓存（键一般就是主键），适用于单表大量互相没有关系的数据。
-            同时，AutoSave能够让缓存项在过期时自动保存数据，该特性特别适用于点击计数等场合。
-            </remarks>
-            <typeparam name="TKey">键值类型</typeparam>
-            <typeparam name="TEntity">实体类型</typeparam>
-        </member>
-        <member name="P:XCode.Cache.SingleEntityCache`2.Expire">
-            <summary>过期时间。单位是秒，默认60秒</summary>
-        </member>
-        <member name="P:XCode.Cache.SingleEntityCache`2.MaxEntity">
-            <summary>最大实体数。默认10000</summary>
-        </member>
-        <member name="P:XCode.Cache.SingleEntityCache`2.AutoSave">
-            <summary>缓存到期时自动保存，默认true</summary>
-        </member>
-        <member name="P:XCode.Cache.SingleEntityCache`2.AllowNull">
-            <summary>允许缓存空对象，默认false</summary>
-        </member>
-        <member name="P:XCode.Cache.SingleEntityCache`2.GetKeyMethod">
-            <summary>获取缓存主键的方法，默认方法为获取实体主键值</summary>
-        </member>
-        <member name="P:XCode.Cache.SingleEntityCache`2.FindKeyMethod">
-            <summary>查找数据的方法</summary>
-        </member>
-        <member name="P:XCode.Cache.SingleEntityCache`2.SlaveKeyIgnoreCase">
-            <summary>从键是否区分大小写</summary>
-        </member>
-        <member name="P:XCode.Cache.SingleEntityCache`2.FindSlaveKeyMethod">
-            <summary>根据从键查找数据的方法</summary>
-        </member>
-        <member name="P:XCode.Cache.SingleEntityCache`2.GetSlaveKeyMethod">
-            <summary>获取缓存从键的方法，默认为空</summary>
-        </member>
-        <member name="P:XCode.Cache.SingleEntityCache`2.InitializeMethod">
-            <summary>初始化缓存的方法，默认为空</summary>
-        </member>
-        <member name="P:XCode.Cache.SingleEntityCache`2.HoldCache">
-            <summary>在数据修改时保持缓存，不再过期，独占数据库时默认打开，否则默认关闭</summary>
-            <remarks>独占模式也需要用到定时器，否则无法自动保存</remarks>
-        </member>
-        <member name="P:XCode.Cache.SingleEntityCache`2.Using">
-            <summary>是否在使用缓存</summary>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.#ctor">
-            <summary>实例化一个实体缓存</summary>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.OnDispose(System.Boolean)">
-            <summary>子类重载实现资源释放逻辑时必须首先调用基类方法</summary>
-            <param name="disposing">从Dispose调用（释放所有资源）还是析构函数调用（释放非托管资源）。
-            因为该方法只会被调用一次，所以该参数的意义不太大。</param>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.CheckExpire(System.Object)">
-            <summary>定期检查实体，如果过期，则触发保存</summary>
-        </member>
-        <member name="T:XCode.Cache.SingleEntityCache`2.CacheItem">
-            <summary>缓存对象</summary>
-        </member>
-        <member name="F:XCode.Cache.SingleEntityCache`2.CacheItem.Key">
-            <summary>键</summary>
-        </member>
-        <member name="F:XCode.Cache.SingleEntityCache`2.CacheItem.SlaveKey">
-            <summary>从键</summary>
-        </member>
-        <member name="F:XCode.Cache.SingleEntityCache`2.CacheItem.Entity">
-            <summary>实体</summary>
-        </member>
-        <member name="P:XCode.Cache.SingleEntityCache`2.CacheItem.ExpireTime">
-            <summary>缓存过期时间</summary>
-        </member>
-        <member name="F:XCode.Cache.SingleEntityCache`2.CacheItem.NextSave">
-            <summary>下一次保存的时间</summary>
-        </member>
-        <member name="P:XCode.Cache.SingleEntityCache`2.CacheItem.Expired">
-            <summary>是否已经过期</summary>
-        </member>
-        <member name="F:XCode.Cache.SingleEntityCache`2.Entities">
-            <summary>单对象缓存</summary>
-        </member>
-        <member name="P:XCode.Cache.SingleEntityCache`2.SlaveEntities">
-            <summary>单对象缓存，从键查询使用</summary>
-        </member>
-        <member name="F:XCode.Cache.SingleEntityCache`2.Total">
-            <summary>总次数</summary>
-        </member>
-        <member name="F:XCode.Cache.SingleEntityCache`2.Shoot">
-            <summary>命中</summary>
-        </member>
-        <member name="F:XCode.Cache.SingleEntityCache`2.Shoot1">
-            <summary>第一次命中，加锁之前</summary>
-        </member>
-        <member name="F:XCode.Cache.SingleEntityCache`2.Shoot2">
-            <summary>第二次命中，加锁之后</summary>
-        </member>
-        <member name="F:XCode.Cache.SingleEntityCache`2.Invalid">
-            <summary>无效次数，不允许空但是查到对象又为空</summary>
-        </member>
-        <member name="F:XCode.Cache.SingleEntityCache`2.NextShow">
-            <summary>下一次显示时间</summary>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.ShowStatics">
-            <summary>显示统计信息</summary>
-        </member>
-        <member name="P:XCode.Cache.SingleEntityCache`2.Item(`0)">
-            <summary>根据主键获取实体数据</summary>
-            <param name="key"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.TryAdd(`1)">
-            <summary>尝试向两个字典加入数据</summary>
-            <param name="entity"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.GetItemWithSlaveKey(System.String)">
-            <summary>根据从键获取实体数据</summary>
-            <param name="slaveKey"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.GetData(XCode.Cache.SingleEntityCache{`0,`1}.CacheItem)">
-            <summary>内部处理返回对象。
-            把对象传进来，而不是只传键值然后查找，是为了避免别的线程移除该项
-            </summary>
-            <remarks>此方法只做更新操作，不再进行缓存新增操作</remarks>
-            <param name="item"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.ClearUp">
-            <summary>清理缓存队列</summary>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.RemoveFirst">
-            <summary>移除第一个缓存项</summary>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.AutoUpdate(XCode.Cache.SingleEntityCache{`0,`1}.CacheItem,System.String)">
-            <summary>自动更新，最主要是在原连接名和表名里面更新对象</summary>
-            <param name="item"></param>
-            <param name="reason"></param>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.Initialize">
-            <summary>初始化单对象缓存，服务端启动时预载入实体记录集</summary>
-            <remarks>注意事项：
-            <para>调用方式：TEntity.Meta.Factory.Session.SingleCache.Initialize()，不要使用TEntity.Meta.Session.SingleCache.Initialize()；
-            因为Factory的调用会联级触发静态构造函数，确保单对象缓存设置成功</para>
-            <para>服务端启动时，如果使用异步方式初始化单对象缓存，请将同一数据模型（ConnName）下的实体类型放在同一异步方法内执行，否则实体类型的架构检查抛异常</para>
-            </remarks>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.ContainsKey(`0)">
-            <summary>是否包含指定键</summary>
-            <param name="key"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.ContainsSlaveKey(System.String)">
-            <summary>是否包含指定从键</summary>
-            <param name="key"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.Add(`1)">
-            <summary>向单对象缓存添加项</summary>
-            <param name="entity">实体对象</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.Add(`0,`1)">
-            <summary>向单对象缓存添加项</summary>
-            <param name="key"></param>
-            <param name="entity">数值</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.RemoveKey(`0,System.Boolean)">
-            <summary>移除指定项</summary>
-            <param name="key">键值</param>
-            <param name="save">是否自动保存实体对象</param>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.Remove(`1,System.Boolean)">
-            <summary>根据主键移除指定项</summary>
-            <param name="entity"></param>
-            <param name="save">是否自动保存实体对象</param>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.Clear(System.String)">
-            <summary>清除所有数据</summary>
-            <param name="reason">清除缓存原因</param>
-        </member>
-        <member name="P:XCode.Cache.SingleEntityCache`2.XCode#Cache#ISingleEntityCache#Item(System.Object)">
-            <summary>获取数据</summary>
-            <param name="key"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.XCode#Cache#ISingleEntityCache#GetItemWithSlaveKey(System.String)">
-            <summary>根据从键获取实体数据</summary>
-            <param name="slaveKey"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.XCode#Cache#ISingleEntityCache#ContainsKey(System.Object)">
-            <summary>是否包含指定主键</summary>
-            <param name="key"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.XCode#Cache#ISingleEntityCache#RemoveKey(System.Object,System.Boolean)">
-            <summary>移除指定项</summary>
-            <param name="key">键值</param>
-            <param name="save">是否自动保存实体对象</param>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.XCode#Cache#ISingleEntityCache#Remove(XCode.IEntity,System.Boolean)">
-            <summary>移除指定项</summary>
-            <param name="entity"></param>
-            <param name="save">是否自动保存实体对象</param>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.XCode#Cache#ISingleEntityCache#Add(System.Object,XCode.IEntity)">
-            <summary>向单对象缓存添加项</summary>
-            <param name="key"></param>
-            <param name="value">实体对象</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.XCode#Cache#ISingleEntityCache#Add(XCode.IEntity)">
-            <summary>向单对象缓存添加项</summary>
-            <param name="value">实体对象</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.ToString">
-            <summary>已重载。</summary>
-            <returns></returns>
-        </member>
         <member name="T:XCode.Code.EntityAssembly">
             <summary>实体程序集</summary>
             <example>
@@ -1129,6 +493,67 @@
             <param name="newName">聚合后as的新名称，默认空，表示跟前面字段名一致</param>
             <returns></returns>
         </member>
+        <member name="T:XCode.DataAccessLayer.ITransaction">
+            <summary>事务对象</summary>
+        </member>
+        <member name="P:XCode.DataAccessLayer.ITransaction.Level">
+            <summary>事务隔离级别</summary>
+        </member>
+        <member name="P:XCode.DataAccessLayer.ITransaction.Count">
+            <summary>事务计数。当且仅当事务计数等于1时，才提交或回滚。</summary>
+        </member>
+        <member name="P:XCode.DataAccessLayer.ITransaction.Executes">
+            <summary>执行次数。其决定是否更新缓存</summary>
+        </member>
+        <member name="P:XCode.DataAccessLayer.ITransaction.Tran">
+            <summary>数据库事务</summary>
+        </member>
+        <member name="E:XCode.DataAccessLayer.ITransaction.Completed">
+            <summary>事务完成事件</summary>
+        </member>
+        <member name="M:XCode.DataAccessLayer.ITransaction.Check(System.Boolean)">
+            <summary>获取事务</summary>
+            <param name="execute">是否执行增删改</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.DataAccessLayer.ITransaction.Begin">
+            <summary>增加事务计数</summary>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.DataAccessLayer.ITransaction.Commit">
+            <summary>提交事务</summary>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.DataAccessLayer.ITransaction.Rollback">
+            <summary>回滚事务</summary>
+            <returns></returns>
+        </member>
+        <member name="T:XCode.DataAccessLayer.TransactionEventArgs">
+            <summary>事务完成事件参数</summary>
+        </member>
+        <member name="P:XCode.DataAccessLayer.TransactionEventArgs.Success">
+            <summary>事务是否成功</summary>
+        </member>
+        <member name="P:XCode.DataAccessLayer.TransactionEventArgs.Executes">
+            <summary>执行次数。其决定是否更新缓存</summary>
+        </member>
+        <member name="P:XCode.DataAccessLayer.Transaction.Executes">
+            <summary>执行次数。其决定是否更新缓存</summary>
+        </member>
+        <member name="P:XCode.DataAccessLayer.Transaction.ID">
+            <summary>事务唯一编号</summary>
+        </member>
+        <member name="P:XCode.DataAccessLayer.Transaction.Tran">
+            <summary>数据库事务。首次使用打开事务</summary>
+        </member>
+        <member name="M:XCode.DataAccessLayer.Transaction.Check(System.Boolean)">
+            <summary>获取事务</summary>
+            <param name="execute">是否执行增删改</param>
+            <returns></returns>
+        </member>
+        <member name="P:XCode.DataAccessLayer.Transaction.Log">
+            <summary>日志</summary>
+        </member>
         <member name="T:XCode.DataAccessLayer.IModelResolver">
             <summary>模型解析器接口。解决名称大小写、去前缀、关键字等多个问题</summary>
         </member>
@@ -1336,15 +761,7 @@
             每一个数据库链接字符串，对应唯一的一个DAL实例。
             数据库链接字符串可以写在配置文件中，然后在Create时指定名字；
             也可以直接把链接字符串作为AddConnStr的参数传入。
-            每一个数据库操作都必须指定表名以用于管理缓存，空表名或*将匹配所有缓存
             </remarks>
-        </member>
-        <member name="P:XCode.DataAccessLayer.DAL.EnableCache">
-            <summary>是否启用缓存</summary>
-            <remarks>设为false可清空缓存</remarks>
-        </member>
-        <member name="P:XCode.DataAccessLayer.DAL.CacheCount">
-            <summary>缓存个数</summary>
         </member>
         <member name="P:XCode.DataAccessLayer.DAL.QueryTimes">
             <summary>查询次数</summary>
@@ -1354,77 +771,73 @@
         </member>
         <member name="M:XCode.DataAccessLayer.DAL.PageSplit(XCode.DataAccessLayer.SelectBuilder,System.Int32,System.Int32)">
             <summary>根据条件把普通查询SQL格式化为分页SQL。</summary>
-            <remarks>
-            因为需要继承重写的原因，在数据类中并不方便缓存分页SQL。
-            所以在这里做缓存。
-            </remarks>
             <param name="builder">查询生成器</param>
             <param name="startRowIndex">开始行，0表示第一行</param>
             <param name="maximumRows">最大返回行数，0表示所有行</param>
             <returns>分页SQL</returns>
         </member>
-        <member name="M:XCode.DataAccessLayer.DAL.Select(System.String,System.String[])">
+        <member name="M:XCode.DataAccessLayer.DAL.Select(System.String)">
             <summary>执行SQL查询，返回记录集</summary>
             <param name="sql">SQL语句</param>
-            <param name="tableNames">所依赖的表的表名</param>
             <returns></returns>
         </member>
-        <member name="M:XCode.DataAccessLayer.DAL.Select(XCode.DataAccessLayer.SelectBuilder,System.Int32,System.Int32,System.String[])">
+        <member name="M:XCode.DataAccessLayer.DAL.Select(XCode.DataAccessLayer.SelectBuilder,System.Int32,System.Int32)">
             <summary>执行SQL查询，返回记录集</summary>
             <param name="builder">SQL语句</param>
             <param name="startRowIndex">开始行，0表示第一行</param>
             <param name="maximumRows">最大返回行数，0表示所有行</param>
-            <param name="tableNames">所依赖的表的表名</param>
             <returns></returns>
         </member>
-        <member name="M:XCode.DataAccessLayer.DAL.SelectCount(XCode.DataAccessLayer.SelectBuilder,System.String[])">
+        <member name="M:XCode.DataAccessLayer.DAL.SelectCount(XCode.DataAccessLayer.SelectBuilder)">
             <summary>执行SQL查询，返回总记录数</summary>
             <param name="sb">查询生成器</param>
-            <param name="tableNames">所依赖的表的表名</param>
             <returns></returns>
         </member>
-        <member name="M:XCode.DataAccessLayer.DAL.Execute(System.String,System.String[])">
+        <member name="M:XCode.DataAccessLayer.DAL.Execute(System.String)">
             <summary>执行SQL语句，返回受影响的行数</summary>
             <param name="sql">SQL语句</param>
-            <param name="tableNames">受影响的表的表名</param>
             <returns></returns>
         </member>
-        <member name="M:XCode.DataAccessLayer.DAL.InsertAndGetIdentity(System.String,System.String[])">
+        <member name="M:XCode.DataAccessLayer.DAL.InsertAndGetIdentity(System.String)">
             <summary>执行插入语句并返回新增行的自动编号</summary>
             <param name="sql"></param>
-            <param name="tableNames">受影响的表的表名</param>
             <returns>新增行的自动编号</returns>
         </member>
-        <member name="M:XCode.DataAccessLayer.DAL.Execute(System.String,System.Data.CommandType,System.Data.Common.DbParameter[],System.String[])">
+        <member name="M:XCode.DataAccessLayer.DAL.Execute(System.String,System.Data.CommandType,System.Data.Common.DbParameter[])">
             <summary>执行SQL语句，返回受影响的行数</summary>
             <param name="sql">SQL语句</param>
             <param name="type">命令类型，默认SQL文本</param>
             <param name="ps">命令参数</param>
-            <param name="tableNames">受影响的表的表名</param>
             <returns></returns>
         </member>
-        <member name="M:XCode.DataAccessLayer.DAL.InsertAndGetIdentity(System.String,System.Data.CommandType,System.Data.Common.DbParameter[],System.String[])">
+        <member name="M:XCode.DataAccessLayer.DAL.InsertAndGetIdentity(System.String,System.Data.CommandType,System.Data.Common.DbParameter[])">
             <summary>执行插入语句并返回新增行的自动编号</summary>
             <param name="sql"></param>
             <param name="type">命令类型，默认SQL文本</param>
             <param name="ps">命令参数</param>
-            <param name="tableNames">受影响的表的表名</param>
             <returns>新增行的自动编号</returns>
         </member>
-        <member name="M:XCode.DataAccessLayer.DAL.Select(System.Data.Common.DbCommand,System.String[])">
+        <member name="M:XCode.DataAccessLayer.DAL.Select(System.Data.Common.DbCommand)">
             <summary>执行CMD，返回记录集</summary>
             <param name="cmd">CMD</param>
-            <param name="tableNames">所依赖的表的表名</param>
             <returns></returns>
         </member>
-        <member name="M:XCode.DataAccessLayer.DAL.Execute(System.Data.Common.DbCommand,System.String[])">
+        <member name="M:XCode.DataAccessLayer.DAL.Execute(System.Data.Common.DbCommand)">
             <summary>执行CMD，返回受影响的行数</summary>
             <param name="cmd"></param>
-            <param name="tableNames"></param>
             <returns></returns>
         </member>
-        <member name="M:XCode.DataAccessLayer.DAL.BeginTransaction">
+        <member name="M:XCode.DataAccessLayer.DAL.BeginTransaction(System.Data.IsolationLevel)">
             <summary>开始事务</summary>
+            <remarks>
+            Read Uncommitted: 允许读取脏数据，一个事务能看到另一个事务还没有提交的数据。（不会阻止其它操作）
+            Read Committed: 确保事务读取的数据都必须是已经提交的数据。它限制了读取中间的，没有提交的，脏的数据。
+            但是它不能确保当事务重新去读取的时候，读的数据跟上次读的数据是一样的，也就是说当事务第一次读取完数据后，
+            该数据是可能被其他事务修改的，当它再去读取的时候，数据可能是不一样的。（数据隐藏，不阻止）
+            Repeatable Read: 是一个更高级别的隔离级别，如果事务再去读取同样的数据，先前的数据是没有被修改过的。（阻止其它修改）
+            Serializable: 它做出了最有力的保证，除了每次读取的数据是一样的，它还确保每次读取没有新的数据。（阻止其它添删改）
+            </remarks>
+            <param name="level">事务隔离等级</param>
             <returns>剩下的事务计数</returns>
         </member>
         <member name="M:XCode.DataAccessLayer.DAL.Commit">
@@ -1435,48 +848,16 @@
             <summary>回滚事务，忽略异常</summary>
             <returns>剩下的事务计数</returns>
         </member>
-        <member name="M:XCode.DataAccessLayer.DAL.AddDirtiedEntitySession(System.String,XCode.IEntitySession,System.Int32,System.Int32,System.Int32)">
-            <summary>添加脏实体会话</summary>
-            <param name="key">实体会话关键字</param>
-            <param name="entitySession">事务嵌套处理中，事务真正提交或回滚之前，进行了子事务提交的实体会话</param>
-            <param name="executeCount">实体操作次数</param>
-            <param name="updateCount">实体更新操作次数</param>
-            <param name="directExecuteSQLCount">直接执行SQL语句次数</param>
-        </member>
-        <member name="M:XCode.DataAccessLayer.DAL.RemoveDirtiedEntitySession(System.String)">
-            <summary>移除脏实体会话</summary>
-            <param name="key">实体会话关键字</param>
-        </member>
-        <member name="M:XCode.DataAccessLayer.DAL.TryGetDirtiedEntitySession(System.String,XCode.DirtiedEntitySession@)">
-            <summary>获取脏实体会话</summary>
-            <param name="key">实体会话关键字</param>
-            <param name="session">脏实体会话</param>
-            <returns></returns>
-        </member>
         <member name="P:XCode.DataAccessLayer.DAL.Queue">
             <summary>实体队列</summary>
         </member>
         <member name="P:XCode.DataAccessLayer.DAL.Debug">
             <summary>是否调试</summary>
         </member>
-        <member name="P:XCode.DataAccessLayer.DAL.ShowSQL">
-            <summary>是否输出SQL语句，默认为XCode调试开关XCode.Debug</summary>
-        </member>
-        <member name="P:XCode.DataAccessLayer.DAL.SQLPath">
-            <summary>设置SQL输出的单独目录，默认为空，SQL输出到当前日志中</summary>
-        </member>
-        <member name="M:XCode.DataAccessLayer.DAL.WriteLog(System.String)">
-            <summary>输出日志</summary>
-            <param name="msg"></param>
-        </member>
         <member name="M:XCode.DataAccessLayer.DAL.WriteLog(System.String,System.Object[])">
             <summary>输出日志</summary>
             <param name="format"></param>
             <param name="args"></param>
-        </member>
-        <member name="M:XCode.DataAccessLayer.DAL.WriteDebugLog(System.String)">
-            <summary>输出日志</summary>
-            <param name="msg"></param>
         </member>
         <member name="M:XCode.DataAccessLayer.DAL.WriteDebugLog(System.String,System.Object[])">
             <summary>输出日志</summary>
@@ -1770,10 +1151,6 @@
         <member name="M:XCode.DataAccessLayer.NetworkSession.Execute(System.Data.Common.DbCommand)">
             <summary>执行DbCommand，返回受影响的行数</summary>
             <param name="cmd">DbCommand</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.DataAccessLayer.NetworkSession.CreateCommand">
-            <summary>不支持</summary>
             <returns></returns>
         </member>
         <member name="M:XCode.DataAccessLayer.NetworkSession.GetSchema(System.String,System.String[])">
@@ -2508,7 +1885,7 @@
             <summary>是否只检查不操作，默认不启用。启用时，仅把更新SQL写入日志</summary>
         </member>
         <member name="P:XCode.DataAccessLayer.NegativeSetting.NoDelete">
-            <summary>是否启用不删除字段，默认不启用。删除字段的操作过于危险，这里可以通过设为true关闭</summary>
+            <summary>是否启用不删除字段，默认启用。删除字段的操作过于危险，这里可以通过设为true关闭</summary>
         </member>
         <member name="P:XCode.DataAccessLayer.NegativeSetting.Exclude">
             <summary>要排除的链接名和表名，多个用逗号分隔，默认空</summary>
@@ -2803,6 +2180,9 @@
         </member>
         <member name="P:XCode.DataAccessLayer.IDataTable.Description">
             <summary>说明</summary>
+        </member>
+        <member name="P:XCode.DataAccessLayer.IDataTable.InsertOnly">
+            <summary>仅插入的日志型数据</summary>
         </member>
         <member name="P:XCode.DataAccessLayer.IDataTable.Columns">
             <summary>数据列集合。可以是空集合，但不能为null。</summary>
@@ -3130,12 +2510,6 @@
         <member name="P:XCode.DataAccessLayer.DbSession.ThreadID">
             <summary>线程编号，每个数据库会话应该只属于一个线程，该属性用于检查错误的跨线程操作</summary>
         </member>
-        <member name="P:XCode.DataAccessLayer.DbSession.IsAutoClose">
-            <summary>是否自动关闭。
-            启用事务后，该设置无效。
-            在提交或回滚事务时，如果IsAutoClose为true，则会自动关闭
-            </summary>
-        </member>
         <member name="P:XCode.DataAccessLayer.DbSession.Opened">
             <summary>连接是否已经打开</summary>
         </member>
@@ -3146,10 +2520,7 @@
             <summary>关闭</summary>
         </member>
         <member name="M:XCode.DataAccessLayer.DbSession.AutoClose">
-            <summary>自动关闭。
-            启用事务后，不关闭连接。
-            在提交或回滚事务时，如果IsAutoClose为true，则会自动关闭
-            </summary>
+            <summary>自动关闭。启用事务后，不关闭连接。</summary>
         </member>
         <member name="P:XCode.DataAccessLayer.DbSession.DatabaseName">
             <summary>数据库名</summary>
@@ -3165,17 +2536,20 @@
             <param name="sql"></param>
             <returns></returns>
         </member>
-        <member name="P:XCode.DataAccessLayer.DbSession.Trans">
+        <member name="P:XCode.DataAccessLayer.DbSession.Transaction">
             <summary>数据库事务</summary>
         </member>
-        <member name="F:XCode.DataAccessLayer.DbSession.TransactionCount">
-            <summary>事务计数。当且仅当事务计数等于1时，才提交或回滚。</summary>
-        </member>
-        <member name="F:XCode.DataAccessLayer.DbSession._EntitySession">
-            <summary>脏实体会话</summary>
-        </member>
-        <member name="M:XCode.DataAccessLayer.DbSession.BeginTransaction">
+        <member name="M:XCode.DataAccessLayer.DbSession.BeginTransaction(System.Data.IsolationLevel)">
             <summary>开始事务</summary>
+            <remarks>
+            Read Uncommitted: 允许读取脏数据，一个事务能看到另一个事务还没有提交的数据。（不会阻止其它操作）
+            Read Committed: 确保事务读取的数据都必须是已经提交的数据。它限制了读取中间的，没有提交的，脏的数据。
+            但是它不能确保当事务重新去读取的时候，读的数据跟上次读的数据是一样的，也就是说当事务第一次读取完数据后，
+            该数据是可能被其他事务修改的，当它再去读取的时候，数据可能是不一样的。（数据隐藏，不阻止）
+            Repeatable Read: 是一个更高级别的隔离级别，如果事务再去读取同样的数据，先前的数据是没有被修改过的。（阻止其它修改）
+            Serializable: 它做出了最有力的保证，除了每次读取的数据是一样的，它还确保每次读取没有新的数据。（阻止其它添删改）
+            </remarks>
+            <param name="level">事务隔离等级</param>
             <returns>剩下的事务计数</returns>
         </member>
         <member name="M:XCode.DataAccessLayer.DbSession.Commit">
@@ -3186,24 +2560,6 @@
             <summary>回滚事务</summary>
             <param name="ignoreException">是否忽略异常</param>
             <returns>剩下的事务计数</returns>
-        </member>
-        <member name="M:XCode.DataAccessLayer.DbSession.AddDirtiedEntitySession(System.String,XCode.IEntitySession,System.Int32,System.Int32,System.Int32)">
-            <summary>添加脏实体会话</summary>
-            <param name="key">实体会话关键字</param>
-            <param name="entitySession">事务嵌套处理中，事务真正提交或回滚之前，进行了子事务提交的实体会话</param>
-            <param name="executeCount">实体操作次数</param>
-            <param name="updateCount">实体更新操作次数</param>
-            <param name="directExecuteSQLCount">直接执行SQL语句次数</param>
-        </member>
-        <member name="M:XCode.DataAccessLayer.DbSession.RemoveDirtiedEntitySession(System.String)">
-            <summary>移除脏实体会话</summary>
-            <param name="key">实体会话关键字</param>
-        </member>
-        <member name="M:XCode.DataAccessLayer.DbSession.TryGetDirtiedEntitySession(System.String,XCode.DirtiedEntitySession@)">
-            <summary>获取脏实体会话</summary>
-            <param name="key">实体会话关键字</param>
-            <param name="session">脏实体会话</param>
-            <returns></returns>
         </member>
         <member name="M:XCode.DataAccessLayer.DbSession.Query(System.String,System.Data.CommandType,System.Data.Common.DbParameter[])">
             <summary>执行SQL查询，返回记录集</summary>
@@ -3261,22 +2617,20 @@
             <param name="ps">命令参数</param>
             <returns></returns>
         </member>
-        <member name="M:XCode.DataAccessLayer.DbSession.CreateCommand">
-            <summary>
-            获取一个DbCommand。
+        <member name="M:XCode.DataAccessLayer.DbSession.CreateCommand(System.String,System.Data.CommandType,System.Data.Common.DbParameter[])">
+            <summary>获取一个DbCommand。</summary>
+            <remark>
             配置了连接，并关联了事务。
             连接已打开。
             使用完毕后，必须调用AutoClose方法，以使得在非事务及设置了自动关闭的情况下关闭连接
-            </summary>
+            </remark>
+            <param name="sql">SQL语句</param>
+            <param name="type">命令类型，默认SQL文本</param>
+            <param name="ps">命令参数</param>
             <returns></returns>
         </member>
-        <member name="M:XCode.DataAccessLayer.DbSession.CreateCommand(System.String,System.Data.CommandType,System.Data.Common.DbParameter[])">
-            <summary>
-            获取一个DbCommand。
-            配置了连接，并关联了事务。
-            连接已打开。
-            使用完毕后，必须调用AutoClose方法，以使得在非事务及设置了自动关闭的情况下关闭连接
-            </summary>
+        <member name="M:XCode.DataAccessLayer.DbSession.OnCreateCommand(System.String,System.Data.CommandType,System.Data.Common.DbParameter[])">
+            <summary>获取一个DbCommand。</summary>
             <param name="sql">SQL语句</param>
             <param name="type">命令类型，默认SQL文本</param>
             <param name="ps">命令参数</param>
@@ -3353,8 +2707,17 @@
             在提交或回滚事务时，如果IsAutoClose为true，则会自动关闭
             </summary>
         </member>
-        <member name="M:XCode.DataAccessLayer.IDbSession.BeginTransaction">
+        <member name="M:XCode.DataAccessLayer.IDbSession.BeginTransaction(System.Data.IsolationLevel)">
             <summary>开始事务</summary>
+            <remarks>
+            Read Uncommitted: 允许读取脏数据，一个事务能看到另一个事务还没有提交的数据。（不会阻止其它操作）
+            Read Committed: 确保事务读取的数据都必须是已经提交的数据。它限制了读取中间的，没有提交的，脏的数据。
+            但是它不能确保当事务重新去读取的时候，读的数据跟上次读的数据是一样的，也就是说当事务第一次读取完数据后，
+            该数据是可能被其他事务修改的，当它再去读取的时候，数据可能是不一样的。（数据隐藏，不阻止）
+            Repeatable Read: 是一个更高级别的隔离级别，如果事务再去读取同样的数据，先前的数据是没有被修改过的。（阻止其它修改）
+            Serializable: 它做出了最有力的保证，除了每次读取的数据是一样的，它还确保每次读取没有新的数据。（阻止其它添删改）
+            </remarks>
+            <param name="level">事务隔离等级</param>
             <returns>剩下的事务计数</returns>
         </member>
         <member name="M:XCode.DataAccessLayer.IDbSession.Commit">
@@ -3365,24 +2728,6 @@
             <summary>回滚事务</summary>
             <param name="ignoreException">是否忽略异常</param>
             <returns>剩下的事务计数</returns>
-        </member>
-        <member name="M:XCode.DataAccessLayer.IDbSession.AddDirtiedEntitySession(System.String,XCode.IEntitySession,System.Int32,System.Int32,System.Int32)">
-            <summary>添加脏实体会话</summary>
-            <param name="key">实体会话关键字</param>
-            <param name="entitySession">事务嵌套处理中，事务真正提交或回滚之前，进行了子事务提交的实体会话</param>
-            <param name="executeCount">实体操作次数</param>
-            <param name="updateCount">实体更新操作次数</param>
-            <param name="directExecuteSQLCount">直接执行SQL语句次数</param>
-        </member>
-        <member name="M:XCode.DataAccessLayer.IDbSession.RemoveDirtiedEntitySession(System.String)">
-            <summary>移除脏实体会话</summary>
-            <param name="key">实体会话关键字</param>
-        </member>
-        <member name="M:XCode.DataAccessLayer.IDbSession.TryGetDirtiedEntitySession(System.String,XCode.DirtiedEntitySession@)">
-            <summary>获取脏实体会话</summary>
-            <param name="key">实体会话关键字</param>
-            <param name="session">脏实体会话</param>
-            <returns></returns>
         </member>
         <member name="M:XCode.DataAccessLayer.IDbSession.Query(System.String,System.Data.CommandType,System.Data.Common.DbParameter[])">
             <summary>执行SQL查询，返回记录集</summary>
@@ -3438,15 +2783,6 @@
             <param name="sql">SQL语句</param>
             <param name="type">命令类型，默认SQL文本</param>
             <param name="ps">命令参数</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.DataAccessLayer.IDbSession.CreateCommand">
-            <summary>
-            获取一个DbCommand。
-            配置了连接，并关联了事务。
-            连接已打开。
-            使用完毕后，必须调用AutoClose方法，以使得在非事务及设置了自动关闭的情况下关闭连接
-            </summary>
             <returns></returns>
         </member>
         <member name="M:XCode.DataAccessLayer.IDbSession.CreateCommand(System.String,System.Data.CommandType,System.Data.Common.DbParameter[])">
@@ -3940,6 +3276,11 @@
             <param name="dateTime">时间值</param>
             <returns></returns>
         </member>
+        <member name="M:XCode.DataAccessLayer.SqlServer.FormatName(System.String)">
+            <summary>格式化名称，如果是关键字，则格式化后返回，否则原样返回</summary>
+            <param name="name">名称</param>
+            <returns></returns>
+        </member>
         <member name="M:XCode.DataAccessLayer.SqlServer.FormatKeyWord(System.String)">
             <summary>格式化关键字</summary>
             <param name="keyWord">关键字</param>
@@ -4178,6 +3519,9 @@
         <member name="P:XCode.DataAccessLayer.XTable.BaseType">
             <summary>基类</summary>
         </member>
+        <member name="P:XCode.DataAccessLayer.XTable.InsertOnly">
+            <summary>仅插入的日志型数据</summary>
+        </member>
         <member name="P:XCode.DataAccessLayer.XTable.Columns">
             <summary>字段集合。可以是空集合，但不能为null。</summary>
         </member>
@@ -4271,6 +3615,39 @@
             <summary>写入</summary>
             <param name="writer"></param>
         </member>
+        <member name="T:XCode.EntityExtend">
+            <summary>实体扩展</summary>
+        </member>
+        <member name="P:XCode.EntityExtend.Expire">
+            <summary>过期时间。单位是秒，默认60秒，0表示永不过期</summary>
+        </member>
+        <member name="M:XCode.EntityExtend.#ctor">
+            <summary>实例化一个不区分键大小写的实体扩展</summary>
+        </member>
+        <member name="M:XCode.EntityExtend.Get``1(System.String,System.Func{System.String,System.Object})">
+            <summary>扩展获取数据项，当数据项不存在时，通过调用委托获取数据项。线程安全。</summary>
+            <param name="key">键</param>
+            <param name="func">获取值的委托，该委托以键作为参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.EntityExtend.Set(System.String,System.Object)">
+            <summary>设置扩展属性项</summary>
+            <param name="key"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="T:XCode.EntityExtend.CacheItem">
+            <summary>缓存项</summary>
+        </member>
+        <member name="P:XCode.EntityExtend.CacheItem.Value">
+            <summary>数值</summary>
+        </member>
+        <member name="P:XCode.EntityExtend.CacheItem.ExpiredTime">
+            <summary>过期时间</summary>
+        </member>
+        <member name="P:XCode.EntityExtend.CacheItem.Expired">
+            <summary>是否过期</summary>
+        </member>
         <member name="T:XCode.EntityQueue">
             <summary>实体队列</summary>
         </member>
@@ -4292,7 +3669,7 @@
         <member name="M:XCode.EntityQueue.Add(XCode.IEntity)">
             <summary>添加实体对象进入队列</summary>
             <param name="entity"></param>
-            <returns></returns>
+            <returns>返回是否添加城南公馆，实体对象已存在于队列中则返回false</returns>
         </member>
         <member name="T:XCode.IEntityAddition">
             <summary>实体累加接口。实现Count+=1的效果</summary>
@@ -4358,42 +3735,6 @@
             <param name="sign">正负</param>
             <returns>是否获取指定字段的累加数据</returns>
         </member>
-        <member name="T:XCode.EntityExtend">
-            <summary>实体扩展</summary>
-        </member>
-        <member name="M:XCode.EntityExtend.#ctor">
-            <summary>实例化一个不区分键大小写的实体扩展</summary>
-        </member>
-        <member name="P:XCode.EntityExtend.Depends">
-            <summary>类型依赖</summary>
-        </member>
-        <member name="M:XCode.EntityExtend.GetExtend``2(System.String,System.Func{System.String,System.Object})">
-            <summary>获取扩展属性，获取数据时向指定的依赖实体类注册数据更改事件</summary>
-            <typeparam name="TDependEntity">依赖实体类，该实体类数据更改时清空所有依赖于实体类的扩展属性</typeparam>
-            <typeparam name="TResult">返回类型</typeparam>
-            <param name="key">键值</param>
-            <param name="func">回调</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityExtend.GetExtend``2(System.String,System.Func{System.String,System.Object},System.Boolean)">
-            <summary>获取扩展属性，获取数据时向指定的依赖实体类注册数据更改事件</summary>
-            <typeparam name="TDependEntity">依赖实体类，该实体类数据更改时清空所有依赖于实体类的扩展属性</typeparam>
-            <typeparam name="TResult">返回类型</typeparam>
-            <param name="key">键值</param>
-            <param name="func">回调</param>
-            <param name="cacheDefault">是否缓存默认值，可选参数，默认缓存</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.EntityExtend.RemoveExtend(System.Type)">
-            <summary>清理依赖于某类型的缓存</summary>
-            <param name="dependType">依赖类型</param>
-        </member>
-        <member name="M:XCode.EntityExtend.SetExtend``1(System.String,System.Object)">
-            <summary>设置扩展属性</summary>
-            <typeparam name="TDependEntity"></typeparam>
-            <param name="key"></param>
-            <param name="value">数值</param>
-        </member>
         <member name="T:XCode.EntitySession`1">
             <summary>实体会话。每个实体类、连接名和表名形成一个实体会话</summary>
         </member>
@@ -4440,9 +3781,7 @@
             <returns></returns>
         </member>
         <member name="P:XCode.EntitySession`1.SingleCache">
-            <summary>单对象实体缓存。
-            建议自定义查询数据方法，并从二级缓存中获取实体数据，以抵消因初次填充而带来的消耗。
-            </summary>
+            <summary>单对象实体缓存。</summary>
         </member>
         <member name="P:XCode.EntitySession`1.Count">
             <summary>总记录数，小于1000时是精确的，大于1000时缓存10秒</summary>
@@ -4464,18 +3803,6 @@
             6，如果大于1000，缓存数据
             7，检查数据初始化
             </remarks>
-        </member>
-        <member name="M:XCode.EntitySession`1.ClearCache(System.String,System.Boolean,System.Boolean)">
-            <summary>清除缓存</summary>
-            <param name="reason">原因</param>
-            <param name="isUpdateMode">是否执行更新实体操作</param>
-            <param name="isTransRoolback">是否在事务回滚时执行更新实体操作</param>
-        </member>
-        <member name="M:XCode.EntitySession`1.ForceClearCache(System.String,System.Boolean)">
-            <summary>清除缓存，直接执行SQl语句或事务回滚时使用</summary>
-            <param name="reason">原因</param>
-            <param name="isUpdateMode">是否执行更新实体操作</param>
-            <remarks>http://www.newlifex.com/showtopic-1216.aspx</remarks>
         </member>
         <member name="M:XCode.EntitySession`1.ClearCache(System.String)">
             <summary>清除缓存</summary>
@@ -4518,40 +3845,13 @@
             <param name="sql">SQL语句</param>
             <returns>影响的结果</returns>
         </member>
-        <member name="M:XCode.EntitySession`1.Execute(System.Boolean,System.Boolean,System.String)">
-            <summary>执行</summary>
-            <param name="forceClearCache">是否跨越实体操作，直接执行SQL语句</param>
-            <param name="isUpdateMode">是否执行更新实体操作</param>
-            <param name="sql">SQL语句</param>
-            <returns>影响的结果</returns>
-        </member>
-        <member name="M:XCode.EntitySession`1.Truncate(System.String)">
-            <summary>执行Truncate语句</summary>
-            <param name="sql">SQL语句</param>
-            <returns>影响的结果</returns>
-        </member>
         <member name="M:XCode.EntitySession`1.InsertAndGetIdentity(System.String)">
             <summary>执行插入语句并返回新增行的自动编号</summary>
             <param name="sql">SQL语句</param>
             <returns>新增行的自动编号</returns>
         </member>
-        <member name="M:XCode.EntitySession`1.InsertAndGetIdentity(System.Boolean,System.String)">
-            <summary>执行插入语句并返回新增行的自动编号</summary>
-            <param name="forceClearCache">是否跨越实体操作，直接执行SQL语句</param>
-            <param name="sql">SQL语句</param>
-            <returns>新增行的自动编号</returns>
-        </member>
         <member name="M:XCode.EntitySession`1.Execute(System.String,System.Data.CommandType,System.Data.Common.DbParameter[])">
             <summary>执行</summary>
-            <param name="sql">SQL语句</param>
-            <param name="type">命令类型，默认SQL文本</param>
-            <param name="ps">命令参数</param>
-            <returns>影响的结果</returns>
-        </member>
-        <member name="M:XCode.EntitySession`1.Execute(System.Boolean,System.Boolean,System.String,System.Data.CommandType,System.Data.Common.DbParameter[])">
-            <summary>执行</summary>
-            <param name="forceClearCache">是否跨越实体操作，直接执行SQL语句</param>
-            <param name="isUpdateMode">是否执行更新实体操作</param>
             <param name="sql">SQL语句</param>
             <param name="type">命令类型，默认SQL文本</param>
             <param name="ps">命令参数</param>
@@ -4564,32 +3864,12 @@
             <param name="ps">命令参数</param>
             <returns>新增行的自动编号</returns>
         </member>
-        <member name="M:XCode.EntitySession`1.InsertAndGetIdentity(System.Boolean,System.String,System.Data.CommandType,System.Data.Common.DbParameter[])">
-            <summary>执行插入语句并返回新增行的自动编号</summary>
-            <param name="forceClearCache">是否跨越实体操作，直接执行SQL语句</param>
-            <param name="sql">SQL语句</param>
-            <param name="type">命令类型，默认SQL文本</param>
-            <param name="ps">命令参数</param>
-            <returns>新增行的自动编号</returns>
-        </member>
         <member name="E:XCode.EntitySession`1.OnDataChange">
             <summary>数据改变后触发。参数指定触发该事件的实体类</summary>
         </member>
         <member name="M:XCode.EntitySession`1.Truncate">
             <summary>清空数据表，标识归零</summary>
             <returns></returns>
-        </member>
-        <member name="F:XCode.EntitySession`1._TransCount">
-            <summary>事务计数</summary>
-        </member>
-        <member name="F:XCode.EntitySession`1._ExecuteCount">
-            <summary>实体操作次数</summary>
-        </member>
-        <member name="F:XCode.EntitySession`1._UpdateCount">
-            <summary>实体更新操作次数</summary>
-        </member>
-        <member name="F:XCode.EntitySession`1._DirectExecuteSQLCount">
-            <summary>直接执行SQL语句次数</summary>
         </member>
         <member name="M:XCode.EntitySession`1.BeginTrans">
             <summary>开始事务</summary>
@@ -4602,19 +3882,6 @@
         <member name="M:XCode.EntitySession`1.Rollback">
             <summary>回滚事务，忽略异常</summary>
             <returns>剩下的事务计数</returns>
-        </member>
-        <member name="M:XCode.EntitySession`1.RaiseCommitDataChange(System.Int32,System.Int32)">
-            <summary>触发脏实体会话提交事务后的缓存更新操作</summary>
-            <param name="updateCount">实体更新操作次数</param>
-            <param name="directExecuteSQLCount">直接执行SQL语句次数</param>
-        </member>
-        <member name="M:XCode.EntitySession`1.RaiseRoolbackDataChange(System.Int32,System.Int32)">
-            <summary>触发脏实体会话回滚事务后的缓存更新操作</summary>
-            <param name="updateCount">实体更新操作次数</param>
-            <param name="directExecuteSQLCount">直接执行SQL语句次数</param>
-        </member>
-        <member name="P:XCode.EntitySession`1.UsingTrans">
-            <summary>是否在事务保护中</summary>
         </member>
         <member name="M:XCode.EntitySession`1.CreateParameter">
             <summary>创建参数</summary>
@@ -4639,10 +3906,6 @@
             <summary>从数据库中删除该对象，同时从实体缓存和单对象缓存中删除，扣减总数量</summary>
             <param name="entity">实体对象</param>
             <returns></returns>
-        </member>
-        <member name="T:XCode.DirtiedEntitySession">
-            <summary>脏实体会话，嵌套事务回滚时使用</summary>
-            <remarks>http://www.newlifex.com/showtopic-1216.aspx</remarks>
         </member>
         <member name="T:XCode.IEntityModule">
             <summary>实体处理模块</summary>
@@ -4719,6 +3982,9 @@
         <member name="P:XCode.IEntitySession.FormatedTableName">
             <summary>已格式化的表名，带有中括号等</summary>
         </member>
+        <member name="P:XCode.IEntitySession.Dal">
+            <summary>数据操作层</summary>
+        </member>
         <member name="M:XCode.IEntitySession.WaitForInitData(System.Int32)">
             <summary>检查并初始化数据。参数等待时间为0表示不等待</summary>
             <param name="ms">等待时间，-1表示不限，0表示不等待</param>
@@ -4785,35 +4051,13 @@
             <param name="sql">SQL语句</param>
             <returns>影响的结果</returns>
         </member>
-        <member name="M:XCode.IEntitySession.Execute(System.Boolean,System.Boolean,System.String)">
-            <summary>执行</summary>
-            <param name="forceClearCache">是否跨越实体操作，直接执行SQL语句</param>
-            <param name="isUpdateMode">是否执行更新实体操作</param>
-            <param name="sql">SQL语句</param>
-            <returns>影响的结果</returns>
-        </member>
         <member name="M:XCode.IEntitySession.InsertAndGetIdentity(System.String)">
             <summary>执行插入语句并返回新增行的自动编号</summary>
             <param name="sql">SQL语句</param>
             <returns>新增行的自动编号</returns>
         </member>
-        <member name="M:XCode.IEntitySession.InsertAndGetIdentity(System.Boolean,System.String)">
-            <summary>执行插入语句并返回新增行的自动编号</summary>
-            <param name="forceClearCache">是否跨越实体操作，直接执行SQL语句</param>
-            <param name="sql">SQL语句</param>
-            <returns>新增行的自动编号</returns>
-        </member>
         <member name="M:XCode.IEntitySession.Execute(System.String,System.Data.CommandType,System.Data.Common.DbParameter[])">
             <summary>执行</summary>
-            <param name="sql">SQL语句</param>
-            <param name="type">命令类型，默认SQL文本</param>
-            <param name="ps">命令参数</param>
-            <returns>影响的结果</returns>
-        </member>
-        <member name="M:XCode.IEntitySession.Execute(System.Boolean,System.Boolean,System.String,System.Data.CommandType,System.Data.Common.DbParameter[])">
-            <summary>执行</summary>
-            <param name="forceClearCache">是否跨越实体操作，直接执行SQL语句</param>
-            <param name="isUpdateMode">是否执行更新实体操作</param>
             <param name="sql">SQL语句</param>
             <param name="type">命令类型，默认SQL文本</param>
             <param name="ps">命令参数</param>
@@ -4826,17 +4070,8 @@
             <param name="ps">命令参数</param>
             <returns>新增行的自动编号</returns>
         </member>
-        <member name="M:XCode.IEntitySession.InsertAndGetIdentity(System.Boolean,System.String,System.Data.CommandType,System.Data.Common.DbParameter[])">
-            <summary>执行插入语句并返回新增行的自动编号</summary>
-            <param name="forceClearCache">是否跨越实体操作，直接执行SQL语句</param>
-            <param name="sql">SQL语句</param>
-            <param name="type">命令类型，默认SQL文本</param>
-            <param name="ps">命令参数</param>
-            <returns>新增行的自动编号</returns>
-        </member>
-        <member name="M:XCode.IEntitySession.Truncate(System.String)">
+        <member name="M:XCode.IEntitySession.Truncate">
             <summary>执行Truncate语句</summary>
-            <param name="sql">SQL语句</param>
             <returns>影响的结果</returns>
         </member>
         <member name="E:XCode.IEntitySession.OnDataChange">
@@ -4853,16 +4088,6 @@
         <member name="M:XCode.IEntitySession.Rollback">
             <summary>回滚事务，忽略异常</summary>
             <returns>剩下的事务计数</returns>
-        </member>
-        <member name="M:XCode.IEntitySession.RaiseCommitDataChange(System.Int32,System.Int32)">
-            <summary>触发脏实体会话提交事务后的缓存更新操作</summary>
-            <param name="updateCount">实体更新操作次数</param>
-            <param name="directExecuteSQLCount">直接执行SQL语句次数</param>
-        </member>
-        <member name="M:XCode.IEntitySession.RaiseRoolbackDataChange(System.Int32,System.Int32)">
-            <summary>触发脏实体会话回滚事务后的缓存更新操作</summary>
-            <param name="updateCount">实体更新操作次数</param>
-            <param name="directExecuteSQLCount">直接执行SQL语句次数</param>
         </member>
         <member name="M:XCode.IEntitySession.CreateParameter">
             <summary>创建参数</summary>
@@ -4912,17 +4137,522 @@
             <summary>初始化</summary>
             <param name="innerException"></param>
         </member>
-        <member name="M:XCode.EntityException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>初始化</summary>
-            <param name="info"></param>
-            <param name="context"></param>
+        <member name="T:XCode.Cache.FieldCache`1">
+            <summary>统计字段缓存</summary>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="P:XCode.Cache.FieldCache`1.MaxRows">
+            <summary>最大行数。默认20</summary>
+        </member>
+        <member name="P:XCode.Cache.FieldCache`1.GetDisplay">
+            <summary>获取显示名的委托</summary>
+        </member>
+        <member name="P:XCode.Cache.FieldCache`1.DisplayFormat">
+            <summary>显示名格式化字符串，两个参数是名称和个数</summary>
+        </member>
+        <member name="M:XCode.Cache.FieldCache`1.#ctor(XCode.Configuration.FieldItem)">
+            <summary>对指定字段使用实体缓存</summary>
+            <param name="field"></param>
+        </member>
+        <member name="M:XCode.Cache.FieldCache`1.FindAllName">
+            <summary>获取所有类别名称</summary>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.FieldCache`1.ToString">
+            <summary>输出名称</summary>
+            <returns></returns>
+        </member>
+        <member name="T:XCode.Cache.EntityDependency`1">
+            <summary>实体依赖。用于HttpRuntime.Cache，一旦指定的实体类数据改变，马上让缓存过期。</summary>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="M:XCode.Cache.EntityDependency`1.#ctor">
+            <summary>实例化一个实体依赖。</summary>
+        </member>
+        <member name="M:XCode.Cache.EntityDependency`1.#ctor(System.Int32)">
+            <summary>
+            通过指定一个检查周期实例化一个实体依赖。
+            利用线程池定期去检查该实体类的总记录数，一旦改变则让缓存过期。
+            这样子就避免了其它方式修改数据而没能及时更新缓存问题
+            </summary>
+            <param name="period">检查周期，单位毫秒。必须大于1000（1秒），以免误用。</param>
+        </member>
+        <member name="M:XCode.Cache.EntityDependency`1.DependencyDispose">
+            <summary>释放资源</summary>
+        </member>
+        <member name="T:XCode.Cache.IEntityCacheBase">
+            <summary>缓存基接口</summary>
+        </member>
+        <member name="P:XCode.Cache.IEntityCacheBase.ConnName">
+            <summary>连接名</summary>
+        </member>
+        <member name="P:XCode.Cache.IEntityCacheBase.TableName">
+            <summary>表名</summary>
+        </member>
+        <member name="T:XCode.Cache.IEntityCache">
+            <summary>实体缓存接口</summary>
+        </member>
+        <member name="P:XCode.Cache.IEntityCache.Entities">
+            <summary>实体集合。因为涉及一个转换，数据量大时很耗性能，建议不要使用。</summary>
+        </member>
+        <member name="M:XCode.Cache.IEntityCache.Find(System.String,System.Object)">
+            <summary>根据指定项查找</summary>
+            <param name="name">属性名</param>
+            <param name="value">属性值</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.IEntityCache.FindAll(System.String,System.Object)">
+            <summary>根据指定项查找</summary>
+            <param name="name">属性名</param>
+            <param name="value">属性值</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.IEntityCache.FindAll(System.Predicate{XCode.IEntity})">
+            <summary>检索与指定谓词定义的条件匹配的所有元素。</summary>
+            <param name="match">条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.IEntityCache.Clear(System.String)">
+            <summary>清除缓存</summary>
+        </member>
+        <member name="T:XCode.Cache.ISingleEntityCache">
+            <summary>单对象缓存接口</summary>
+        </member>
+        <member name="P:XCode.Cache.ISingleEntityCache.Expire">
+            <summary>过期时间。单位是秒，默认60秒</summary>
+        </member>
+        <member name="P:XCode.Cache.ISingleEntityCache.MaxEntity">
+            <summary>最大实体数。默认10000</summary>
+        </member>
+        <member name="P:XCode.Cache.ISingleEntityCache.AutoSave">
+            <summary>缓存到期时自动保存，默认true</summary>
+        </member>
+        <member name="P:XCode.Cache.ISingleEntityCache.AllowNull">
+            <summary>允许缓存空对象，默认false</summary>
+        </member>
+        <member name="P:XCode.Cache.ISingleEntityCache.HoldCache">
+            <summary>在数据修改时保持缓存，不再过期，独占数据库时默认打开，否则默认关闭</summary>
+        </member>
+        <member name="P:XCode.Cache.ISingleEntityCache.Using">
+            <summary>是否在使用缓存</summary>
+        </member>
+        <member name="P:XCode.Cache.ISingleEntityCache.Item(System.Object)">
+            <summary>获取数据</summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.ISingleEntityCache.GetItemWithSlaveKey(System.String)">
+            <summary>根据从键获取实体数据</summary>
+            <param name="slaveKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.ISingleEntityCache.Initialize">
+            <summary>初始化单对象缓存，服务端启动时预载入实体记录集</summary>
+            <remarks>注意事项：
+            <para>调用方式：TEntity.Meta.Factory.Session.SingleCache.Initialize()，不要使用TEntity.Meta.Session.SingleCache.Initialize()；
+            因为Factory的调用会联级触发静态构造函数，确保单对象缓存设置成功</para>
+            <para>服务端启动时，如果使用异步方式初始化单对象缓存，请将同一数据模型（ConnName）下的实体类型放在同一异步方法内执行，否则实体类型的架构检查抛异常</para>
+            </remarks>
+        </member>
+        <member name="M:XCode.Cache.ISingleEntityCache.ContainsKey(System.Object)">
+            <summary>是否包含指定主键</summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.ISingleEntityCache.ContainsSlaveKey(System.String)">
+            <summary>是否包含指定从键</summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.ISingleEntityCache.Add(System.Object,XCode.IEntity)">
+            <summary>向单对象缓存添加项</summary>
+            <param name="key"></param>
+            <param name="value">实体对象</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.ISingleEntityCache.Add(XCode.IEntity)">
+            <summary>向单对象缓存添加项</summary>
+            <param name="value">实体对象</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.ISingleEntityCache.Remove(XCode.IEntity,System.Boolean)">
+            <summary>移除指定项</summary>
+            <param name="entity"></param>
+            <param name="save">是否自动保存实体对象</param>
+        </member>
+        <member name="M:XCode.Cache.ISingleEntityCache.RemoveKey(System.Object,System.Boolean)">
+            <summary>移除指定项</summary>
+            <param name="key">键值</param>
+            <param name="save">是否自动保存实体对象</param>
+        </member>
+        <member name="M:XCode.Cache.ISingleEntityCache.Clear(System.String)">
+            <summary>清除所有数据</summary>
+            <param name="reason">清除缓存原因</param>
+        </member>
+        <member name="T:XCode.Cache.ISingleEntityCache`2">
+            <summary></summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="P:XCode.Cache.ISingleEntityCache`2.Item(`0)">
+            <summary>获取数据</summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="P:XCode.Cache.ISingleEntityCache`2.GetKeyMethod">
+            <summary>获取缓存主键的方法，默认方法为获取实体主键值</summary>
+        </member>
+        <member name="P:XCode.Cache.ISingleEntityCache`2.FindKeyMethod">
+            <summary>查找数据的方法</summary>
+        </member>
+        <member name="F:XCode.Cache.CacheItem._TableNames">
+            <summary>所依赖的表的表名</summary>
+        </member>
+        <member name="F:XCode.Cache.CacheItem.ExpireTime">
+            <summary>到期时间</summary>
+        </member>
+        <member name="M:XCode.Cache.CacheItem.#ctor(System.String[])">
+            <summary>构造函数</summary>
+            <param name="tableNames"></param>
+        </member>
+        <member name="M:XCode.Cache.CacheItem.#ctor(System.String[],System.Int32)">
+            <summary>构造函数</summary>
+            <param name="tableNames"></param>
+            <param name="time">缓存时间，单位秒</param>
+        </member>
+        <member name="M:XCode.Cache.CacheItem.IsDependOn(System.String)">
+            <summary>是否依赖于某个表</summary>
+            <param name="tableName">表名</param>
+            <returns></returns>
+        </member>
+        <member name="P:XCode.Cache.CacheItem`1.Value">
+            <summary>缓存的数据</summary>
+        </member>
+        <member name="M:XCode.Cache.CacheItem`1.#ctor(System.String[],`0)">
+            <summary>构造函数</summary>
+            <param name="tableNames"></param>
+            <param name="value">数值</param>
+        </member>
+        <member name="M:XCode.Cache.CacheItem`1.#ctor(System.String[],`0,System.Int32)">
+            <summary>构造函数</summary>
+            <param name="tableNames"></param>
+            <param name="value">数值</param>
+            <param name="time">缓存时间，单位秒</param>
+        </member>
+        <member name="T:XCode.Cache.CacheBase`1">
+            <summary>缓存基类</summary>
+        </member>
+        <member name="P:XCode.Cache.CacheBase`1.ConnName">
+            <summary>连接名</summary>
+        </member>
+        <member name="P:XCode.Cache.CacheBase`1.TableName">
+            <summary>表名</summary>
+        </member>
+        <member name="M:XCode.Cache.CacheBase`1.Invoke``2(System.Func{``0,``1},``0)">
+            <summary>调用委托方法前设置连接名和表名，调用后还原</summary>
+        </member>
+        <member name="T:XCode.Cache.CacheBase">
+            <summary>缓存基类</summary>
+        </member>
+        <member name="P:XCode.Cache.CacheBase.Debug">
+            <summary>是否调试缓存模块</summary>
+        </member>
+        <member name="M:XCode.Cache.CacheBase.CheckShowStatics(System.DateTime@,System.Int32@,System.Action)">
+            <summary>检查并显示统计信息</summary>
+            <param name="next"></param>
+            <param name="total"></param>
+            <param name="show"></param>
+        </member>
+        <member name="T:XCode.Cache.EntityCache`1">
+            <summary>实体缓存</summary>
+            <remarks>
+            关于异步缓存，非常有用！
+            第一次读取缓存的时候，同步从数据库读取，这样子手上有一份数据。
+            以后更新，都开异步线程去读取，而当前马上返回，让大家继续用着旧数据，这么做性能非常好。
+            </remarks>
+            <typeparam name="TEntity">实体类型</typeparam>
+        </member>
+        <member name="P:XCode.Cache.EntityCache`1.ExpiredTime">
+            <summary>缓存过期时间</summary>
+        </member>
+        <member name="P:XCode.Cache.EntityCache`1.Times">
+            <summary>缓存更新次数</summary>
+        </member>
+        <member name="P:XCode.Cache.EntityCache`1.Expire">
+            <summary>过期时间。单位是秒，默认60秒</summary>
+        </member>
+        <member name="P:XCode.Cache.EntityCache`1.FillListMethod">
+            <summary>填充数据的方法</summary>
+        </member>
+        <member name="P:XCode.Cache.EntityCache`1.WaitFirst">
+            <summary>是否等待第一次查询。如果不等待，第一次返回空集合。默认true</summary>
+        </member>
+        <member name="P:XCode.Cache.EntityCache`1.HoldCache">
+            <summary>在数据修改时保持缓存，不再过期，独占数据库时默认打开</summary>
+        </member>
+        <member name="P:XCode.Cache.EntityCache`1.Using">
+            <summary>是否在使用缓存，在不触发缓存动作的情况下检查是否有使用缓存</summary>
+        </member>
+        <member name="M:XCode.Cache.EntityCache`1.#ctor">
+            <summary>实例化实体缓存</summary>
+        </member>
+        <member name="F:XCode.Cache.EntityCache`1._task">
+            <summary>当前更新任务</summary>
+        </member>
+        <member name="P:XCode.Cache.EntityCache`1.Entities">
+            <summary>实体集合。无数据返回空集合而不是null</summary>
+        </member>
+        <member name="M:XCode.Cache.EntityCache`1.Clear(System.String)">
+            <summary>清除缓存</summary>
+        </member>
+        <member name="F:XCode.Cache.EntityCache`1.Total">
+            <summary>总次数</summary>
+        </member>
+        <member name="F:XCode.Cache.EntityCache`1.Success">
+            <summary>命中</summary>
+        </member>
+        <member name="F:XCode.Cache.EntityCache`1.NextShow">
+            <summary>下一次显示时间</summary>
+        </member>
+        <member name="M:XCode.Cache.EntityCache`1.ShowStatics">
+            <summary>显示统计信息</summary>
+        </member>
+        <member name="M:XCode.Cache.EntityCache`1.Find(System.String,System.Object)">
+            <summary>根据指定项查找</summary>
+            <param name="name">属性名</param>
+            <param name="value">属性值</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.EntityCache`1.FindAll(System.String,System.Object)">
+            <summary>根据指定项查找</summary>
+            <param name="name">属性名</param>
+            <param name="value">属性值</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.EntityCache`1.FindAll(System.Predicate{XCode.IEntity})">
+            <summary>检索与指定谓词定义的条件匹配的所有元素。</summary>
+            <param name="match">条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.EntityCache`1.ToString">
+            <summary>输出名称</summary>
+            <returns></returns>
+        </member>
+        <member name="T:XCode.Cache.SingleEntityCache`2">
+            <summary>单对象缓存</summary>
+            <remarks>
+            用一个值为实体的字典作为缓存（键一般就是主键），适用于单表大量互相没有关系的数据。
+            同时，AutoSave能够让缓存项在过期时自动保存数据，该特性特别适用于点击计数等场合。
+            </remarks>
+            <typeparam name="TKey">键值类型</typeparam>
+            <typeparam name="TEntity">实体类型</typeparam>
+        </member>
+        <member name="P:XCode.Cache.SingleEntityCache`2.Expire">
+            <summary>过期时间。单位是秒，默认60秒</summary>
+        </member>
+        <member name="P:XCode.Cache.SingleEntityCache`2.MaxEntity">
+            <summary>最大实体数。默认10000</summary>
+        </member>
+        <member name="P:XCode.Cache.SingleEntityCache`2.AutoSave">
+            <summary>缓存到期时自动保存，默认true</summary>
+        </member>
+        <member name="P:XCode.Cache.SingleEntityCache`2.AllowNull">
+            <summary>允许缓存空对象，默认false</summary>
+        </member>
+        <member name="P:XCode.Cache.SingleEntityCache`2.GetKeyMethod">
+            <summary>获取缓存主键的方法，默认方法为获取实体主键值</summary>
+        </member>
+        <member name="P:XCode.Cache.SingleEntityCache`2.FindKeyMethod">
+            <summary>查找数据的方法</summary>
+        </member>
+        <member name="P:XCode.Cache.SingleEntityCache`2.SlaveKeyIgnoreCase">
+            <summary>从键是否区分大小写</summary>
+        </member>
+        <member name="P:XCode.Cache.SingleEntityCache`2.FindSlaveKeyMethod">
+            <summary>根据从键查找数据的方法</summary>
+        </member>
+        <member name="P:XCode.Cache.SingleEntityCache`2.GetSlaveKeyMethod">
+            <summary>获取缓存从键的方法，默认为空</summary>
+        </member>
+        <member name="P:XCode.Cache.SingleEntityCache`2.InitializeMethod">
+            <summary>初始化缓存的方法，默认为空</summary>
+        </member>
+        <member name="P:XCode.Cache.SingleEntityCache`2.HoldCache">
+            <summary>在数据修改时保持缓存，不再过期，独占数据库时默认打开</summary>
+            <remarks>独占模式也需要用到定时器，否则无法自动保存</remarks>
+        </member>
+        <member name="P:XCode.Cache.SingleEntityCache`2.Using">
+            <summary>是否在使用缓存</summary>
+        </member>
+        <member name="M:XCode.Cache.SingleEntityCache`2.#ctor">
+            <summary>实例化一个实体缓存</summary>
+        </member>
+        <member name="M:XCode.Cache.SingleEntityCache`2.OnDispose(System.Boolean)">
+            <summary>子类重载实现资源释放逻辑时必须首先调用基类方法</summary>
+            <param name="disposing">从Dispose调用（释放所有资源）还是析构函数调用（释放非托管资源）。
+            因为该方法只会被调用一次，所以该参数的意义不太大。</param>
+        </member>
+        <member name="M:XCode.Cache.SingleEntityCache`2.CheckExpire(System.Object)">
+            <summary>定期检查实体，如果过期，则触发保存</summary>
+        </member>
+        <member name="T:XCode.Cache.SingleEntityCache`2.CacheItem">
+            <summary>缓存对象</summary>
+        </member>
+        <member name="P:XCode.Cache.SingleEntityCache`2.CacheItem.Key">
+            <summary>键</summary>
+        </member>
+        <member name="P:XCode.Cache.SingleEntityCache`2.CacheItem.SlaveKey">
+            <summary>从键</summary>
+        </member>
+        <member name="P:XCode.Cache.SingleEntityCache`2.CacheItem.Entity">
+            <summary>实体</summary>
+        </member>
+        <member name="P:XCode.Cache.SingleEntityCache`2.CacheItem.ExpireTime">
+            <summary>缓存过期时间</summary>
+        </member>
+        <member name="P:XCode.Cache.SingleEntityCache`2.CacheItem.NextSave">
+            <summary>下一次保存的时间</summary>
+        </member>
+        <member name="P:XCode.Cache.SingleEntityCache`2.CacheItem.Expired">
+            <summary>是否已经过期</summary>
+        </member>
+        <member name="F:XCode.Cache.SingleEntityCache`2.Entities">
+            <summary>单对象缓存</summary>
+        </member>
+        <member name="P:XCode.Cache.SingleEntityCache`2.SlaveEntities">
+            <summary>单对象缓存，从键查询使用</summary>
+        </member>
+        <member name="F:XCode.Cache.SingleEntityCache`2.Total">
+            <summary>总次数</summary>
+        </member>
+        <member name="F:XCode.Cache.SingleEntityCache`2.Success">
+            <summary>命中</summary>
+        </member>
+        <member name="F:XCode.Cache.SingleEntityCache`2.NextShow">
+            <summary>下一次显示时间</summary>
+        </member>
+        <member name="M:XCode.Cache.SingleEntityCache`2.ShowStatics">
+            <summary>显示统计信息</summary>
+        </member>
+        <member name="P:XCode.Cache.SingleEntityCache`2.Item(`0)">
+            <summary>根据主键获取实体数据</summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.SingleEntityCache`2.TryAdd(`1)">
+            <summary>尝试向两个字典加入数据</summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.SingleEntityCache`2.GetItemWithSlaveKey(System.String)">
+            <summary>根据从键获取实体数据</summary>
+            <param name="slaveKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.SingleEntityCache`2.GetData(XCode.Cache.SingleEntityCache{`0,`1}.CacheItem)">
+            <summary>内部处理返回对象。
+            把对象传进来，而不是只传键值然后查找，是为了避免别的线程移除该项
+            </summary>
+            <remarks>此方法只做更新操作，不再进行缓存新增操作</remarks>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.SingleEntityCache`2.ClearUp">
+            <summary>清理缓存队列</summary>
+        </member>
+        <member name="M:XCode.Cache.SingleEntityCache`2.AutoUpdate(XCode.Cache.SingleEntityCache{`0,`1}.CacheItem,System.String)">
+            <summary>自动更新，最主要是在原连接名和表名里面更新对象</summary>
+            <param name="item"></param>
+            <param name="reason"></param>
+        </member>
+        <member name="M:XCode.Cache.SingleEntityCache`2.Initialize">
+            <summary>初始化单对象缓存，服务端启动时预载入实体记录集</summary>
+            <remarks>注意事项：
+            <para>调用方式：TEntity.Meta.Factory.Session.SingleCache.Initialize()，不要使用TEntity.Meta.Session.SingleCache.Initialize()；
+            因为Factory的调用会联级触发静态构造函数，确保单对象缓存设置成功</para>
+            <para>服务端启动时，如果使用异步方式初始化单对象缓存，请将同一数据模型（ConnName）下的实体类型放在同一异步方法内执行，否则实体类型的架构检查抛异常</para>
+            </remarks>
+        </member>
+        <member name="M:XCode.Cache.SingleEntityCache`2.ContainsKey(`0)">
+            <summary>是否包含指定键</summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.SingleEntityCache`2.ContainsSlaveKey(System.String)">
+            <summary>是否包含指定从键</summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.SingleEntityCache`2.Add(`0,`1)">
+            <summary>向单对象缓存添加项</summary>
+            <param name="key"></param>
+            <param name="entity">数值</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.SingleEntityCache`2.RemoveKey(`0,System.Boolean)">
+            <summary>移除指定项</summary>
+            <param name="key">键值</param>
+            <param name="save">是否自动保存实体对象</param>
+        </member>
+        <member name="M:XCode.Cache.SingleEntityCache`2.Remove(`1,System.Boolean)">
+            <summary>根据主键移除指定项</summary>
+            <param name="entity"></param>
+            <param name="save">是否自动保存实体对象</param>
+        </member>
+        <member name="M:XCode.Cache.SingleEntityCache`2.Clear(System.String)">
+            <summary>清除所有数据</summary>
+            <param name="reason">清除缓存原因</param>
+        </member>
+        <member name="P:XCode.Cache.SingleEntityCache`2.XCode#Cache#ISingleEntityCache#Item(System.Object)">
+            <summary>获取数据</summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.SingleEntityCache`2.XCode#Cache#ISingleEntityCache#GetItemWithSlaveKey(System.String)">
+            <summary>根据从键获取实体数据</summary>
+            <param name="slaveKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.SingleEntityCache`2.XCode#Cache#ISingleEntityCache#ContainsKey(System.Object)">
+            <summary>是否包含指定主键</summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.SingleEntityCache`2.XCode#Cache#ISingleEntityCache#RemoveKey(System.Object,System.Boolean)">
+            <summary>移除指定项</summary>
+            <param name="key">键值</param>
+            <param name="save">是否自动保存实体对象</param>
+        </member>
+        <member name="M:XCode.Cache.SingleEntityCache`2.XCode#Cache#ISingleEntityCache#Remove(XCode.IEntity,System.Boolean)">
+            <summary>移除指定项</summary>
+            <param name="entity"></param>
+            <param name="save">是否自动保存实体对象</param>
+        </member>
+        <member name="M:XCode.Cache.SingleEntityCache`2.XCode#Cache#ISingleEntityCache#Add(System.Object,XCode.IEntity)">
+            <summary>向单对象缓存添加项</summary>
+            <param name="key"></param>
+            <param name="value">实体对象</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.SingleEntityCache`2.XCode#Cache#ISingleEntityCache#Add(XCode.IEntity)">
+            <summary>向单对象缓存添加项</summary>
+            <param name="value">实体对象</param>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Cache.SingleEntityCache`2.ToString">
+            <summary>已重载。</summary>
+            <returns></returns>
         </member>
         <member name="T:XCode.Membership.LogEntity`1">
             <summary>日志实体类基类</summary>
             <typeparam name="TEntity"></typeparam>
         </member>
-        <member name="M:XCode.Membership.LogEntity`1.Save">
-            <summary>已重载。调用Save时写日志，而调用Insert和Update时不写日志</summary>
+        <member name="M:XCode.Membership.LogEntity`1.Insert">
+            <summary>添加时写日志</summary>
+            <returns></returns>
+        </member>
+        <member name="M:XCode.Membership.LogEntity`1.Update">
+            <summary>修改时写日志</summary>
             <returns></returns>
         </member>
         <member name="M:XCode.Membership.LogEntity`1.Delete">
@@ -5144,6 +4874,12 @@
         <member name="T:XCode.Membership.LogProvider">
             <summary>日志提供者。提供业务日志输出到数据库的功能</summary>
         </member>
+        <member name="M:XCode.Membership.LogProvider.WriteLog(System.String,System.String,System.String)">
+            <summary>写日志</summary>
+            <param name="category">类型</param>
+            <param name="action">操作</param>
+            <param name="remark">备注</param>
+        </member>
         <member name="M:XCode.Membership.LogProvider.WriteLog(System.Type,System.String,System.String)">
             <summary>写日志</summary>
             <param name="type">类型</param>
@@ -5165,9 +4901,9 @@
             <summary>泛型日志提供者，使用泛型日志实体基类作为派生</summary>
             <typeparam name="TLog"></typeparam>
         </member>
-        <member name="M:XCode.Membership.LogProvider`1.WriteLog(System.Type,System.String,System.String)">
+        <member name="M:XCode.Membership.LogProvider`1.WriteLog(System.String,System.String,System.String)">
             <summary>写日志</summary>
-            <param name="type">类型</param>
+            <param name="category">类型</param>
             <param name="action">操作</param>
             <param name="remark">备注</param>
         </member>
@@ -5365,6 +5101,9 @@
         <member name="P:XCode.Membership.Log`1.Action">
             <summary>操作</summary>
         </member>
+        <member name="P:XCode.Membership.Log`1.LinkID">
+            <summary>链接</summary>
+        </member>
         <member name="P:XCode.Membership.Log`1.UserName">
             <summary>用户名</summary>
         </member>
@@ -5401,6 +5140,9 @@
         <member name="F:XCode.Membership.Log`1._.Action">
             <summary>操作</summary>
         </member>
+        <member name="F:XCode.Membership.Log`1._.LinkID">
+            <summary>链接</summary>
+        </member>
         <member name="F:XCode.Membership.Log`1._.UserName">
             <summary>用户名</summary>
         </member>
@@ -5428,6 +5170,9 @@
         <member name="F:XCode.Membership.Log`1.__.Action">
             <summary>操作</summary>
         </member>
+        <member name="F:XCode.Membership.Log`1.__.LinkID">
+            <summary>链接</summary>
+        </member>
         <member name="F:XCode.Membership.Log`1.__.UserName">
             <summary>用户名</summary>
         </member>
@@ -5454,6 +5199,9 @@
         <member name="M:XCode.Membership.Log`1.OnDelete">
             <summary></summary>
             <returns></returns>
+        </member>
+        <member name="P:XCode.Membership.Log`1.CreateUserName">
+            <summary>创建人名称</summary>
         </member>
         <member name="P:XCode.Membership.Log`1.CreateAddress">
             <summary>物理地址</summary>
@@ -5501,9 +5249,6 @@
             <param name="p"></param>
             <returns></returns>
         </member>
-        <member name="P:XCode.Membership.Log`1.CategoryCache">
-            <summary>类别名实体缓存，异步，缓存10分钟</summary>
-        </member>
         <member name="M:XCode.Membership.Log`1.FindAllCategory">
             <summary>查找所有类别名</summary>
             <returns></returns>
@@ -5511,30 +5256,6 @@
         <member name="M:XCode.Membership.Log`1.FindAllCategoryName">
             <summary>获取所有类别名称</summary>
             <returns></returns>
-        </member>
-        <member name="M:XCode.Membership.Log`1.Create(System.String,System.String)">
-            <summary>创建日志</summary>
-            <param name="category"></param>
-            <param name="action"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Membership.Log`1.Create(System.Type,System.String)">
-            <summary>创建日志</summary>
-            <param name="type">类型</param>
-            <param name="action"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Membership.Log`1.XCode#Membership#ILog#Create(System.Type,System.String)">
-            <summary>创建</summary>
-            <param name="type"></param>
-            <param name="action"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Membership.Log`1.WriteLog(System.Type,System.String,System.String)">
-            <summary>写日志</summary>
-            <param name="type">类型</param>
-            <param name="action">操作</param>
-            <param name="remark">备注</param>
         </member>
         <member name="M:XCode.Membership.Log`1.ToString">
             <summary>已重载。</summary>
@@ -5551,6 +5272,9 @@
         </member>
         <member name="P:XCode.Membership.ILog.Action">
             <summary>操作</summary>
+        </member>
+        <member name="P:XCode.Membership.ILog.LinkID">
+            <summary>链接</summary>
         </member>
         <member name="P:XCode.Membership.ILog.UserName">
             <summary>用户名</summary>
@@ -5571,18 +5295,6 @@
             <summary>获取/设置 字段值。</summary>
             <param name="name">字段名</param>
             <returns></returns>
-        </member>
-        <member name="M:XCode.Membership.ILog.Create(System.Type,System.String)">
-            <summary>创建</summary>
-            <param name="type"></param>
-            <param name="action"></param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Membership.ILog.WriteLog(System.Type,System.String,System.String)">
-            <summary>写日志</summary>
-            <param name="type">类型</param>
-            <param name="action">操作</param>
-            <param name="remark">备注</param>
         </member>
         <member name="M:XCode.Membership.ILog.Save">
             <summary>保存</summary>
@@ -5861,7 +5573,7 @@
             <summary>角色</summary>
         </member>
         <member name="F:XCode.Membership.User`1._.Enable">
-            <summary>是否启用</summary>
+            <summary>启用</summary>
         </member>
         <member name="F:XCode.Membership.User`1._.StartTime">
             <summary>开始时间</summary>
@@ -5921,7 +5633,7 @@
             <summary>角色</summary>
         </member>
         <member name="F:XCode.Membership.User`1.__.Enable">
-            <summary>是否启用</summary>
+            <summary>启用</summary>
         </member>
         <member name="F:XCode.Membership.User`1.__.StartTime">
             <summary>开始时间</summary>
@@ -6000,7 +5712,7 @@
             <summary>角色</summary>
         </member>
         <member name="P:XCode.Membership.IUser.Enable">
-            <summary>是否启用</summary>
+            <summary>启用</summary>
         </member>
         <member name="P:XCode.Membership.IUser.StartTime">
             <summary>开始时间</summary>
@@ -6837,7 +6549,7 @@
             <summary>设置SQL输出的单独目录，默认为空，SQL输出到当前日志中。生产环境建议输出到站点外单独的SqlLog目录</summary>
         </member>
         <member name="P:XCode.Setting.TraceSQLTime">
-            <summary>跟踪SQL执行时间，大于该阀值将输出日志，默认0毫秒不跟踪</summary>
+            <summary>跟踪SQL执行时间，大于该阀值将输出日志，默认500毫秒</summary>
         </member>
         <member name="P:XCode.Setting.ConnMaps">
             <summary>连接名映射#，表名映射@，把实体类中的Test2和Test3连接名映射到Test去</summary>
@@ -6849,13 +6561,22 @@
             <summary>实体类首次访问数据库时，是否执行数据初始化，默认true执行，导数据时建议关闭</summary>
         </member>
         <member name="P:XCode.Setting.TransactionDebug">
-            <summary>事务调试。打开时输出事务回滚日志，默认关闭</summary>
+            <summary>事务调试。默认关闭</summary>
         </member>
         <member name="P:XCode.Setting.SQLiteDbPath">
             <summary>SQLite数据库默认目录。没有设置连接字符串的连接默认创建SQLite连接，数据库放在该目录</summary>
         </member>
-        <member name="P:XCode.Setting.Cache">
-            <summary>缓存</summary>
+        <member name="P:XCode.Setting.CacheDebug">
+            <summary>缓存调试</summary>
+        </member>
+        <member name="P:XCode.Setting.Alone">
+            <summary>独占数据库。独占时将大大加大缓存权重，默认true</summary>
+        </member>
+        <member name="P:XCode.Setting.EntityCacheExpire">
+            <summary>实体缓存过期。默认60秒</summary>
+        </member>
+        <member name="P:XCode.Setting.SingleCacheExpire">
+            <summary>单对象缓存过期。默认60秒</summary>
         </member>
         <member name="P:XCode.Setting.Negative">
             <summary>反向工程</summary>
@@ -7834,9 +7555,10 @@
         <member name="P:XCode.EntityTransaction.Session">
             <summary>会话</summary>
         </member>
-        <member name="M:XCode.EntityTransaction.#ctor(XCode.DataAccessLayer.IDbSession)">
+        <member name="M:XCode.EntityTransaction.#ctor(XCode.DataAccessLayer.IDbSession,System.Data.IsolationLevel)">
             <summary>用数据库会话来实例化一个事务区域</summary>
             <param name="session"></param>
+            <param name="level">事务隔离等级</param>
         </member>
         <member name="M:XCode.EntityTransaction.#ctor(XCode.DataAccessLayer.DAL)">
             <summary>用数据访问对象来实例化一个事务区域</summary>
@@ -8116,10 +7838,6 @@
             <param name="values">值列表</param>
             <returns></returns>
         </member>
-        <member name="M:XCode.EntityPersistence.Truncate(System.Type)">
-            <summary>清除当前实体所在数据表所有数据，并重置标识列为该列的种子。</summary>
-            <returns></returns>
-        </member>
         <member name="M:XCode.EntityPersistence.GetSql(XCode.IEntity,System.ComponentModel.DataObjectMethodType)">
             <summary>把SQL模版格式化为SQL语句</summary>
             <param name="entity">实体对象</param>
@@ -8284,11 +8002,6 @@
             <summary>初始化</summary>
             <param name="innerException"></param>
         </member>
-        <member name="M:XCode.XCodeException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>初始化</summary>
-            <param name="info"></param>
-            <param name="context"></param>
-        </member>
         <member name="T:XCode.DirtyCollection">
             <summary>脏属性集合</summary>
             <remarks>实现IDictionary接口，为了让使用者能直接使用重载了的索引器</remarks>
@@ -8365,7 +8078,7 @@
             <remarks>
             调用平均耗时190.86ns，IPModule占38.89%，TimeModule占16.31%，UserModule占7.20%，Valid占14.36%
             </remarks>
-            <returns>是否成功加入异步队列</returns>
+            <returns>是否成功加入异步队列，实体对象已存在于队列中则返回false</returns>
         </member>
         <member name="M:XCode.Entity`1.Valid(System.Boolean)">
             <summary>验证数据，通过抛出异常的方式提示验证失败。</summary>
@@ -8743,26 +8456,6 @@
             <param name="fieldName"></param>
             <param name="newValue"></param>
             <returns></returns>
-        </member>
-        <member name="M:XCode.Entity`1.GetExtend``1(System.String,System.Func{System.String,System.Object})">
-            <summary>获取依赖于当前实体类的扩展属性</summary>
-            <typeparam name="TResult">返回类型</typeparam>
-            <param name="key">键</param>
-            <param name="func">回调</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Entity`1.GetExtend``1(System.String,System.Func{System.String,System.Object},System.Boolean)">
-            <summary>获取依赖于当前实体类的扩展属性</summary>
-            <typeparam name="TResult">返回类型</typeparam>
-            <param name="key">键</param>
-            <param name="func">回调</param>
-            <param name="cacheDefault">是否缓存默认值，可选参数，默认缓存</param>
-            <returns></returns>
-        </member>
-        <member name="M:XCode.Entity`1.SetExtend(System.String,System.Object)">
-            <summary>设置依赖于当前实体类的扩展属性</summary>
-            <param name="key">键</param>
-            <param name="value">值</param>
         </member>
         <member name="T:XCode.Entity`1.Meta">
             <summary>实体元数据</summary>

@@ -81,11 +81,20 @@ namespace BBX.Entity
 
             var rs = base.OnUpdate();
 
-            var myatt = MyAttachment.FindByKey(ID);
-            if (myatt == null) myatt = new MyAttachment();
-            myatt.CopyFrom(this);
-            myatt.ID = ID;
-            rs += myatt.Save();
+            var myatt = MyAttachment.FindByID(ID);
+            if (myatt == null)
+            {
+                myatt = new MyAttachment();
+                myatt.CopyFrom(this);
+                myatt.ID = ID;
+                rs += myatt.Insert();
+            }
+            else
+            {
+                myatt.CopyFrom(this);
+                myatt.ID = ID;
+                rs += myatt.Update();
+            }
 
             return rs;
         }
