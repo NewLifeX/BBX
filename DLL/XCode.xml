@@ -3808,10 +3808,6 @@
             <summary>清除缓存</summary>
             <param name="reason">原因</param>
         </member>
-        <member name="P:XCode.EntitySession`1.HoldCache">
-            <summary>在数据修改时保持缓存，直到数据过期，独占数据库时默认打开，否则默认关闭</summary>
-            <remarks>实体缓存和单对象缓存能够自动维护更新数据，保持缓存数据最新，在普通CURD中足够使用</remarks>
-        </member>
         <member name="M:XCode.EntitySession`1.Query(XCode.DataAccessLayer.SelectBuilder,System.Int32,System.Int32)">
             <summary>执行SQL查询，返回记录集</summary>
             <param name="builder">SQL语句</param>
@@ -4230,9 +4226,6 @@
         <member name="P:XCode.Cache.ISingleEntityCache.AllowNull">
             <summary>允许缓存空对象，默认false</summary>
         </member>
-        <member name="P:XCode.Cache.ISingleEntityCache.HoldCache">
-            <summary>在数据修改时保持缓存，不再过期，独占数据库时默认打开，否则默认关闭</summary>
-        </member>
         <member name="P:XCode.Cache.ISingleEntityCache.Using">
             <summary>是否在使用缓存</summary>
         </member>
@@ -4246,14 +4239,6 @@
             <param name="slaveKey"></param>
             <returns></returns>
         </member>
-        <member name="M:XCode.Cache.ISingleEntityCache.Initialize">
-            <summary>初始化单对象缓存，服务端启动时预载入实体记录集</summary>
-            <remarks>注意事项：
-            <para>调用方式：TEntity.Meta.Factory.Session.SingleCache.Initialize()，不要使用TEntity.Meta.Session.SingleCache.Initialize()；
-            因为Factory的调用会联级触发静态构造函数，确保单对象缓存设置成功</para>
-            <para>服务端启动时，如果使用异步方式初始化单对象缓存，请将同一数据模型（ConnName）下的实体类型放在同一异步方法内执行，否则实体类型的架构检查抛异常</para>
-            </remarks>
-        </member>
         <member name="M:XCode.Cache.ISingleEntityCache.ContainsKey(System.Object)">
             <summary>是否包含指定主键</summary>
             <param name="key"></param>
@@ -4264,12 +4249,6 @@
             <param name="key"></param>
             <returns></returns>
         </member>
-        <member name="M:XCode.Cache.ISingleEntityCache.Add(System.Object,XCode.IEntity)">
-            <summary>向单对象缓存添加项</summary>
-            <param name="key"></param>
-            <param name="value">实体对象</param>
-            <returns></returns>
-        </member>
         <member name="M:XCode.Cache.ISingleEntityCache.Add(XCode.IEntity)">
             <summary>向单对象缓存添加项</summary>
             <param name="value">实体对象</param>
@@ -4278,11 +4257,6 @@
         <member name="M:XCode.Cache.ISingleEntityCache.Remove(XCode.IEntity,System.Boolean)">
             <summary>移除指定项</summary>
             <param name="entity"></param>
-            <param name="save">是否自动保存实体对象</param>
-        </member>
-        <member name="M:XCode.Cache.ISingleEntityCache.RemoveKey(System.Object,System.Boolean)">
-            <summary>移除指定项</summary>
-            <param name="key">键值</param>
             <param name="save">是否自动保存实体对象</param>
         </member>
         <member name="M:XCode.Cache.ISingleEntityCache.Clear(System.String)">
@@ -4366,7 +4340,6 @@
         <member name="T:XCode.Cache.EntityCache`1">
             <summary>实体缓存</summary>
             <remarks>
-            关于异步缓存，非常有用！
             第一次读取缓存的时候，同步从数据库读取，这样子手上有一份数据。
             以后更新，都开异步线程去读取，而当前马上返回，让大家继续用着旧数据，这么做性能非常好。
             </remarks>
@@ -4386,9 +4359,6 @@
         </member>
         <member name="P:XCode.Cache.EntityCache`1.WaitFirst">
             <summary>是否等待第一次查询。如果不等待，第一次返回空集合。默认true</summary>
-        </member>
-        <member name="P:XCode.Cache.EntityCache`1.HoldCache">
-            <summary>在数据修改时保持缓存，不再过期，独占数据库时默认打开</summary>
         </member>
         <member name="P:XCode.Cache.EntityCache`1.Using">
             <summary>是否在使用缓存，在不触发缓存动作的情况下检查是否有使用缓存</summary>
@@ -4459,6 +4429,9 @@
         <member name="P:XCode.Cache.SingleEntityCache`2.AllowNull">
             <summary>允许缓存空对象，默认false</summary>
         </member>
+        <member name="P:XCode.Cache.SingleEntityCache`2.Using">
+            <summary>是否在使用缓存</summary>
+        </member>
         <member name="P:XCode.Cache.SingleEntityCache`2.GetKeyMethod">
             <summary>获取缓存主键的方法，默认方法为获取实体主键值</summary>
         </member>
@@ -4473,16 +4446,6 @@
         </member>
         <member name="P:XCode.Cache.SingleEntityCache`2.GetSlaveKeyMethod">
             <summary>获取缓存从键的方法，默认为空</summary>
-        </member>
-        <member name="P:XCode.Cache.SingleEntityCache`2.InitializeMethod">
-            <summary>初始化缓存的方法，默认为空</summary>
-        </member>
-        <member name="P:XCode.Cache.SingleEntityCache`2.HoldCache">
-            <summary>在数据修改时保持缓存，不再过期，独占数据库时默认打开</summary>
-            <remarks>独占模式也需要用到定时器，否则无法自动保存</remarks>
-        </member>
-        <member name="P:XCode.Cache.SingleEntityCache`2.Using">
-            <summary>是否在使用缓存</summary>
         </member>
         <member name="M:XCode.Cache.SingleEntityCache`2.#ctor">
             <summary>实例化一个实体缓存</summary>
@@ -4557,21 +4520,10 @@
             <param name="item"></param>
             <returns></returns>
         </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.ClearUp">
-            <summary>清理缓存队列</summary>
-        </member>
         <member name="M:XCode.Cache.SingleEntityCache`2.AutoUpdate(XCode.Cache.SingleEntityCache{`0,`1}.CacheItem,System.String)">
             <summary>自动更新，最主要是在原连接名和表名里面更新对象</summary>
             <param name="item"></param>
             <param name="reason"></param>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.Initialize">
-            <summary>初始化单对象缓存，服务端启动时预载入实体记录集</summary>
-            <remarks>注意事项：
-            <para>调用方式：TEntity.Meta.Factory.Session.SingleCache.Initialize()，不要使用TEntity.Meta.Session.SingleCache.Initialize()；
-            因为Factory的调用会联级触发静态构造函数，确保单对象缓存设置成功</para>
-            <para>服务端启动时，如果使用异步方式初始化单对象缓存，请将同一数据模型（ConnName）下的实体类型放在同一异步方法内执行，否则实体类型的架构检查抛异常</para>
-            </remarks>
         </member>
         <member name="M:XCode.Cache.SingleEntityCache`2.ContainsKey(`0)">
             <summary>是否包含指定键</summary>
@@ -4618,21 +4570,10 @@
             <param name="key"></param>
             <returns></returns>
         </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.XCode#Cache#ISingleEntityCache#RemoveKey(System.Object,System.Boolean)">
-            <summary>移除指定项</summary>
-            <param name="key">键值</param>
-            <param name="save">是否自动保存实体对象</param>
-        </member>
         <member name="M:XCode.Cache.SingleEntityCache`2.XCode#Cache#ISingleEntityCache#Remove(XCode.IEntity,System.Boolean)">
             <summary>移除指定项</summary>
             <param name="entity"></param>
             <param name="save">是否自动保存实体对象</param>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.XCode#Cache#ISingleEntityCache#Add(System.Object,XCode.IEntity)">
-            <summary>向单对象缓存添加项</summary>
-            <param name="key"></param>
-            <param name="value">实体对象</param>
-            <returns></returns>
         </member>
         <member name="M:XCode.Cache.SingleEntityCache`2.XCode#Cache#ISingleEntityCache#Add(XCode.IEntity)">
             <summary>向单对象缓存添加项</summary>
@@ -6568,9 +6509,6 @@
         </member>
         <member name="P:XCode.Setting.CacheDebug">
             <summary>缓存调试</summary>
-        </member>
-        <member name="P:XCode.Setting.Alone">
-            <summary>独占数据库。独占时将大大加大缓存权重，默认true</summary>
         </member>
         <member name="P:XCode.Setting.EntityCacheExpire">
             <summary>实体缓存过期。默认60秒</summary>

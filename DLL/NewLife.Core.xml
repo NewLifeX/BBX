@@ -9548,6 +9548,22 @@
             <param name="index"></param>
             <returns></returns>
         </member>
+        <member name="M:System.Collections.Generic.CollectionHelper.ToKeyArray``2(System.Collections.Generic.IDictionary{``0,``1},System.Int32)">
+            <summary>集合转为数组</summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <param name="collection"></param>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:System.Collections.Generic.CollectionHelper.ToValueArray``2(System.Collections.Generic.IDictionary{``0,``1},System.Int32)">
+            <summary>集合转为数组</summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+            <param name="collection"></param>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
         <member name="T:System.Utility">
             <summary>工具类</summary>
             <remarks>
