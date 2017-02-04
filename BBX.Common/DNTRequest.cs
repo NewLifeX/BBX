@@ -1,6 +1,5 @@
 using System;
 using System.Web;
-using NewLife.Web;
 
 namespace BBX.Common
 {
@@ -10,20 +9,6 @@ namespace BBX.Common
         {
             return HttpContext.Current.Request.HttpMethod.Equals("POST");
         }
-
-        //public static bool IsGet()
-        //{
-        //    return HttpContext.Current.Request.HttpMethod.Equals("GET");
-        //}
-
-        //public static string GetServerString(string strName)
-        //{
-        //    if (HttpContext.Current.Request.ServerVariables[strName] == null)
-        //    {
-        //        return "";
-        //    }
-        //    return HttpContext.Current.Request.ServerVariables[strName].ToString();
-        //}
 
         public static string GetUrlReferrer()
         {
@@ -53,15 +38,15 @@ namespace BBX.Common
 
         public static string GetQueryString(string strName, bool sqlSafeCheck)
         {
-            if (HttpContext.Current.Request.QueryString[strName] == null)
-            {
-                return "";
-            }
-            if (sqlSafeCheck && !Utils.IsSafeSqlString(HttpContext.Current.Request.QueryString[strName]))
-            {
-                return "unsafe string";
-            }
-            return HttpContext.Current.Request.QueryString[strName];
+            var req = HttpContext.Current?.Request;
+            if (req == null) return "";
+
+            var val = req.QueryString[strName];
+            if (val.IsNullOrEmpty()) return "";
+
+            if (sqlSafeCheck && !Utils.IsSafeSqlString(val)) return "unsafe string";
+
+            return val;
         }
 
         public static string GetPageName()
@@ -69,13 +54,6 @@ namespace BBX.Common
             string[] array = HttpContext.Current.Request.Url.AbsolutePath.Split('/');
             return array[array.Length - 1].ToLower();
         }
-
-        ///// <summary>参数个数，包括GET/POST</summary>
-        ///// <returns></returns>
-        //public static int GetParamCount()
-        //{
-        //    return HttpContext.Current.Request.Form.Count + HttpContext.Current.Request.QueryString.Count;
-        //}
 
         public static string GetFormString(string strName)
         {
@@ -124,11 +102,6 @@ namespace BBX.Common
             return GetQueryString(strName, sqlSafeCheck);
         }
 
-        //public static int GetQueryInt(string strName)
-        //{
-        //    return HttpContext.Current.Request.QueryString[strName].ToInt(0);
-        //}
-
         public static int GetQueryInt(string strName, int defValue)
         {
             return HttpContext.Current.Request.QueryString[strName].ToInt(defValue);
@@ -147,51 +120,5 @@ namespace BBX.Common
             }
             return GetQueryInt(strName, defValue);
         }
-
-        //public static float GetQueryFloat(string strName, float defValue)
-        //{
-        //    return Utils.StrToFloat(HttpContext.Current.Request.QueryString[strName], defValue);
-        //}
-
-        //public static float GetFormFloat(string strName, float defValue)
-        //{
-        //    return Utils.StrToFloat(HttpContext.Current.Request.Form[strName], defValue);
-        //}
-
-        //public static float GetFloat(string strName, float defValue)
-        //{
-        //    if (GetQueryFloat(strName, defValue) == defValue)
-        //    {
-        //        return GetFormFloat(strName, defValue);
-        //    }
-        //    return GetQueryFloat(strName, defValue);
-        //}
-
-        //public static string GetIP()
-        //{
-        //    //string text = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-        //    //if (string.IsNullOrEmpty(text))
-        //    //{
-        //    //    text = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-        //    //}
-        //    //if (string.IsNullOrEmpty(text))
-        //    //{
-        //    //    text = HttpContext.Current.Request.UserHostAddress;
-        //    //}
-        //    //if (string.IsNullOrEmpty(text) || !Utils.IsIP(text))
-        //    //{
-        //    //    return "127.0.0.1";
-        //    //}
-        //    //return text;
-        //    return WebHelper.UserHost;
-        //}
-
-        //public static void SaveRequestFile(string path)
-        //{
-        //    if (HttpContext.Current.Request.Files.Count > 0)
-        //    {
-        //        HttpContext.Current.Request.Files[0].SaveAs(path);
-        //    }
-        //}
     }
 }
