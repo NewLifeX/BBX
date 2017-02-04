@@ -27,7 +27,7 @@ namespace BBX.Forum
         private const string ATTACH_INFO_DTIMG = "<dt><img src=\"{0}images/attachicons/{1}\" alt=\"\"></dt>";
         private const string ATTACH_INFO_DD = "<dd>{0}</dd>";
         private const string ATTACH_INFO_EM = "<em class=\"xg1\">(<script type=\"text/javascript\">ShowFormatBytesStr({0});</script>, 下载次数:{1})</em>";
-        //private static bool appSquidAttachment = EntLibConfigInfo.Current != null && !Utils.StrIsNullOrEmpty(EntLibConfigInfo.Current.Attachmentdir);
+        //private static bool appSquidAttachment = EntLibConfigInfo.Current != null && !EntLibConfigInfo.Current.Attachmentdir.IsNullOrEmpty();
 
         public static int[] CreateAttachments(Attachment[] atts)
         {
@@ -568,7 +568,7 @@ namespace BBX.Forum
         public static List<Attachment> GetAttachmentList(PostpramsInfo postpramsInfo, string pidList)
         {
             var list = new List<Attachment>();
-            if (!Utils.StrIsNullOrEmpty(pidList))
+            if (!pidList.IsNullOrEmpty())
             {
                 //list = BBX.Data.Attachments.GetAttachmentListByPidList(pidList.ToString());
                 var atts = Attachment.FindAllByPids(pidList);

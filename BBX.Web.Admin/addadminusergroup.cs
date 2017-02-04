@@ -70,7 +70,7 @@ namespace BBX.Web.Admin
             this.maxattachsize.Text = userGroupInfo.MaxAttachSize.ToString();
             this.maxsizeperday.Text = userGroupInfo.MaxSizeperday.ToString();
             this.radminid.SelectedValue = userGroupInfo.RadminID.ToString();
-			var attachmentType = AttachType.FindAllWithCache().ToDataTable(false);
+            var attachmentType = AttachType.FindAllWithCache().ToDataTable(false);
             this.attachextensions.AddTableData(attachmentType, userGroupInfo.AttachExtensions);
             this.usergrouppowersetting.Bind(userGroupInfo);
 
@@ -122,7 +122,7 @@ namespace BBX.Web.Admin
                     base.RegisterStartupScript("", "<script>alert('用户组名称不能为空!');</script>");
                     return;
                 }
-                foreach (DictionaryEntry dictionaryEntry in new Hashtable
+                foreach (DictionaryEntry item in new Hashtable
                 {
                     {
                         "附件最大尺寸",
@@ -145,9 +145,9 @@ namespace BBX.Web.Admin
                     }
                 })
                 {
-                    if (!Utils.IsInt(dictionaryEntry.Value.ToString()))
+                    if (item.Value.ToInt(-1) < 0)
                     {
-                        base.RegisterStartupScript("", "<script>alert('输入错误," + dictionaryEntry.Key.ToString() + "只能是0或者正整数');window.location.href='addadminusergroup.aspx';</script>");
+                        base.RegisterStartupScript("", "<script>alert('输入错误," + item.Key + "只能是0或者正整数');window.location.href='addadminusergroup.aspx';</script>");
                         return;
                     }
                 }
@@ -256,8 +256,8 @@ namespace BBX.Web.Admin
             this.TabControl1.InitTabPage();
             this.AddUserGroupInf.Click += new EventHandler(this.AddUserGroupInf_Click);
             this.radminid.SelectedIndexChanged += new EventHandler(this.radminid_SelectedIndexChanged);
-			//DataTable attachmentType = Attachments.GetAttachmentType();
-			this.attachextensions.AddTableData(AttachType.FindAllWithCache());
+            //DataTable attachmentType = Attachments.GetAttachmentType();
+            this.attachextensions.AddTableData(AttachType.FindAllWithCache());
             this.radminid.Items.Add(new ListItem("请选择", "0"));
             var adminUserGroup = UserGroup.FindAll管理组();
             foreach (var current in adminUserGroup)

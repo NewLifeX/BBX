@@ -4,6 +4,7 @@ using System.Data;
 using BBX.Common;
 using BBX.Entity;
 using BBX.Forum;
+using System;
 
 namespace BBX.Web
 {
@@ -30,7 +31,7 @@ namespace BBX.Web
             {
                 this.orderby = "";
             }
-            if (!Utils.StrIsNullOrEmpty(this.orderby) && !Utils.InArray(this.orderby, "id,name,credits,posts,adminid,joindate,lastactivity"))
+            if (!this.orderby.IsNullOrEmpty() && !Utils.InArray(this.orderby, "id,name,credits,posts,adminid,joindate,lastactivity"))
             {
                 this.orderby = "id";
             }

@@ -132,7 +132,7 @@ namespace BBX.Web
             {
                 this.topictypeselectlink = Forums.GetCurrentTopicTypesLink(this.forum.Fid, this.forum.Topictypes, this.forumurl + "showforum.aspx");
             }
-            meta = PageHelper.UpdateMetaInfo(meta, Utils.StrIsNullOrEmpty(this.forum.Seokeywords) ? this.config.Seokeywords : this.forum.Seokeywords, Utils.StrIsNullOrEmpty(this.forum.Seodescription) ? this.forum.Description : this.forum.Seodescription, this.config.Seohead);
+            meta = PageHelper.UpdateMetaInfo(meta, this.forum.Seokeywords.IsNullOrEmpty() ? this.config.Seokeywords : this.forum.Seokeywords, this.forum.Seodescription.IsNullOrEmpty() ? this.forum.Description : this.forum.Seodescription, this.config.Seohead);
             this.SetEditorState();
             if (!UserAuthority.VisitAuthority(this.forum, this.usergroupinfo, this.userid, ref this.msg))
             {
@@ -259,7 +259,7 @@ namespace BBX.Web
 
         private bool JumpUrl(IXForum forumInfo)
         {
-            if (!Utils.StrIsNullOrEmpty(forumInfo.Redirect))
+            if (!forumInfo.Redirect.IsNullOrEmpty())
             {
                 HttpContext.Current.Response.Redirect(forumInfo.Redirect);
                 return true;
@@ -290,15 +290,15 @@ namespace BBX.Web
                 {
                     if (this.config.Aspxrewrite == 1)
                     {
-                        if (Utils.StrIsNullOrEmpty(this.filter))
+                        if (this.filter.IsNullOrEmpty())
                         {
                             if (this.config.Iisurlrewrite == 0)
                             {
-                                this.pagenumbers = Utils.GetStaticPageNumbers(this.pageid, this.pagecount, Utils.StrIsNullOrEmpty(this.forum.Rewritename) ? ("showforum-" + this.forumid) : (this.forumpath + this.forum.Rewritename), this.config.Extname, 8, (!Utils.StrIsNullOrEmpty(this.forum.Rewritename)) ? 1 : 0);
+                                this.pagenumbers = Utils.GetStaticPageNumbers(this.pageid, this.pagecount, this.forum.Rewritename.IsNullOrEmpty() ? ("showforum-" + this.forumid) : (this.forumpath + this.forum.Rewritename), this.config.Extname, 8, (!this.forum.Rewritename.IsNullOrEmpty()) ? 1 : 0);
                             }
                             else
                             {
-                                this.pagenumbers = Utils.GetStaticPageNumbers(this.pageid, this.pagecount, Utils.StrIsNullOrEmpty(this.forum.Rewritename) ? ("showforum-" + this.forumid) : (this.forumpath + this.forum.Rewritename), this.config.Extname, 8, (!Utils.StrIsNullOrEmpty(this.forum.Rewritename)) ? 2 : 0);
+                                this.pagenumbers = Utils.GetStaticPageNumbers(this.pageid, this.pagecount, this.forum.Rewritename.IsNullOrEmpty() ? ("showforum-" + this.forumid) : (this.forumpath + this.forum.Rewritename), this.config.Extname, 8, (!this.forum.Rewritename.IsNullOrEmpty()) ? 2 : 0);
                             }
                             if (this.pageid < this.pagecount)
                             {
@@ -324,14 +324,14 @@ namespace BBX.Web
                     }
                     else
                     {
-                        this.pagenumbers = Utils.GetPageNumbers(this.pageid, this.pagecount, string.Format("{0}showforum.aspx?forumid={1}{2}", this.forumpath, this.forumid, Utils.StrIsNullOrEmpty(this.filter) ? "" : ("&filter=" + this.filter)), 8);
+                        this.pagenumbers = Utils.GetPageNumbers(this.pageid, this.pagecount, string.Format("{0}showforum.aspx?forumid={1}{2}", this.forumpath, this.forumid, this.filter.IsNullOrEmpty() ? "" : ("&filter=" + this.filter)), 8);
                         if (this.pageid < this.pagecount)
                         {
                             this.nextpage = string.Format("<a href=\"{0}showforum.aspx?forumid={1}{2}&page={3}\" class=\"next\">下一页</a>", new object[]
                             {
                                 this.forumpath,
                                 this.forumid,
-                                Utils.StrIsNullOrEmpty(this.filter) ? "" : ("&filter=" + this.filter),
+                                this.filter.IsNullOrEmpty() ? "" : ("&filter=" + this.filter),
                                 this.pageid + 1
                             });
                             return;
@@ -345,7 +345,7 @@ namespace BBX.Web
                         this.forumpath,
                         this.forumid,
                         this.topictypeid,
-                        Utils.StrIsNullOrEmpty(this.filter) ? "" : ("&filter=" + this.filter)
+                        this.filter.IsNullOrEmpty() ? "" : ("&filter=" + this.filter)
                     }), 8);
                     if (this.pageid < this.pagecount)
                     {
@@ -354,7 +354,7 @@ namespace BBX.Web
                             this.forumpath,
                             this.forumid,
                             this.topictypeid,
-                            Utils.StrIsNullOrEmpty(this.filter) ? "" : ("&filter=" + this.filter),
+                            this.filter.IsNullOrEmpty() ? "" : ("&filter=" + this.filter),
                             this.pageid + 1
                         });
                         return;
@@ -372,7 +372,7 @@ namespace BBX.Web
                     this.forumid,
                     this.interval,
                     this.topictypeid,
-                    Utils.StrIsNullOrEmpty(this.filter) ? "" : ("&filter=" + this.filter)
+                    this.filter.IsNullOrEmpty() ? "" : ("&filter=" + this.filter)
                 }), 8);
                 if (this.pageid < this.pagecount)
                 {
@@ -385,7 +385,7 @@ namespace BBX.Web
                         this.forumid,
                         this.interval,
                         this.topictypeid,
-                        Utils.StrIsNullOrEmpty(this.filter) ? "" : ("&filter=" + this.filter),
+                        this.filter.IsNullOrEmpty() ? "" : ("&filter=" + this.filter),
                         this.pageid + 1
                     });
                 }
@@ -428,7 +428,7 @@ namespace BBX.Web
         private int IsShowForumLogin(IXForum forum)
         {
             int result = 1;
-            if (Utils.StrIsNullOrEmpty(forum.Password))
+            if (forum.Password.IsNullOrEmpty())
             {
                 result = 0;
             }

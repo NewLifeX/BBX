@@ -109,32 +109,32 @@ namespace BBX.Web.Admin
         {
             if (base.CheckCookie())
             {
-                foreach (DictionaryEntry dictionaryEntry in new Hashtable
-				{
-					{
-						"图片附件文字水印大小",
-						this.watermarkfontsize.Text
-					},
-
-					{
-						"JPG图片质量",
-						this.attachimgquality.Text
-					},
-
-					{
-						"图片最大高度",
-						this.attachimgmaxheight.Text
-					},
-
-					{
-						"图片最大宽度",
-						this.attachimgmaxwidth.Text
-					}
-				})
+                foreach (DictionaryEntry item in new Hashtable
                 {
-                    if (!Utils.IsInt(dictionaryEntry.Value.ToString()))
                     {
-                        base.RegisterStartupScript("", this.GetMessageScript("输入错误," + dictionaryEntry.Key.ToString() + "只能是0或者正整数"));
+                        "图片附件文字水印大小",
+                        this.watermarkfontsize.Text
+                    },
+
+                    {
+                        "JPG图片质量",
+                        this.attachimgquality.Text
+                    },
+
+                    {
+                        "图片最大高度",
+                        this.attachimgmaxheight.Text
+                    },
+
+                    {
+                        "图片最大宽度",
+                        this.attachimgmaxwidth.Text
+                    }
+                })
+                {
+                    if (item.Value.ToInt(-1) < 0)
+                    {
+                        base.RegisterStartupScript("", this.GetMessageScript("输入错误," + item.Key + "只能是0或者正整数"));
                         return;
                     }
                 }

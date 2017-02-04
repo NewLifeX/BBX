@@ -76,7 +76,7 @@ namespace BBX.Web
                 }
                 var scoreSet = Scoresets.GetScoreSet(DNTRequest.GetInt("extcredits1", 0));
                 var scoreSet2 = Scoresets.GetScoreSet(DNTRequest.GetInt("extcredits2", 0));
-                if (Utils.StrIsNullOrEmpty(scoreSet.Name) || Utils.StrIsNullOrEmpty(scoreSet2.Name))
+                if (scoreSet.Name.IsNullOrEmpty() || scoreSet2.Name.IsNullOrEmpty())
                 {
                     base.AddErrLine("错误的输入!");
                     return;

@@ -126,7 +126,7 @@ namespace BBX.Web
                 this.forum = new XForum();
                 return;
             }
-            if (!Utils.StrIsNullOrEmpty(this.forum.Password) && Utils.MD5(this.forum.Password) != ForumUtils.GetCookie("forum" + this.forumid + "password"))
+            if (!this.forum.Password.IsNullOrEmpty() && Utils.MD5(this.forum.Password) != ForumUtils.GetCookie("forum" + this.forumid + "password"))
             {
                 base.AddErrLine("本版块被管理员设置了密码");
                 base.SetBackLink(base.ShowForumAspxRewrite(this.forumid, 0));
@@ -361,12 +361,13 @@ namespace BBX.Web
         {
             if (this.postinfo.Layer == 0 && this.forum.ApplytopicType == 1 && this.forum.PostbytopicType == 1 && this.topictypeselectoptions != string.Empty)
             {
-                if (Utils.StrIsNullOrEmpty(DNTRequest.GetString("typeid")) || DNTRequest.GetString("typeid").Trim() == "0")
+                var typeid = Request["typeid"].ToInt();
+                if (typeid == 0)
                 {
                     base.AddErrLine("主题类型不能为空");
                     return;
                 }
-                if (!Forums.IsCurrentForumTopicType(DNTRequest.GetString("typeid").Trim(), this.forum.Topictypes))
+                if (!Forums.IsCurrentForumTopicType(typeid, this.forum.Topictypes))
                 {
                     base.AddErrLine("错误的主题类型");
                     return;
@@ -620,7 +621,7 @@ namespace BBX.Web
                 if (this.topic.Special == 1)
                 {
                     string text = Utils.HtmlEncode(DNTRequest.GetFormString("PollItemname").Trim());
-                    if (Utils.StrIsNullOrEmpty(text))
+                    if (text.IsNullOrEmpty())
                     {
                         base.AddErrLine("投票项为空");
                         return;
@@ -703,7 +704,7 @@ namespace BBX.Web
                 }
                 this.topic.TypeID = DNTRequest.GetFormInt("typeid", 0);
                 this.htmltitle = DNTRequest.GetString("htmltitle").Trim();
-                if (!Utils.StrIsNullOrEmpty(this.htmltitle) && Utils.HtmlDecode(this.htmltitle).Trim() != this.topic.Title)
+                if (!this.htmltitle.IsNullOrEmpty() && Utils.HtmlDecode(this.htmltitle).Trim() != this.topic.Title)
                 {
                     this.topic.Magic = 11000;
                 }
@@ -716,7 +717,7 @@ namespace BBX.Web
                 //Topics.DeleteRelatedTopics(this.topic.ID);
                 TopicTagCache.DeleteRelatedTopics(this.topic.ID);
                 string text2 = DNTRequest.GetString("tags").Trim();
-                if (this.enabletag && !Utils.StrIsNullOrEmpty(text2))
+                if (this.enabletag && !text2.IsNullOrEmpty())
                 {
                     if (ForumUtils.InBanWordArray(text2))
                     {
@@ -734,7 +735,7 @@ namespace BBX.Web
                 }
                 //Topics.UpdateTopic(this.topic);
                 topic.Update();
-                if (this.canhtmltitle && !Utils.StrIsNullOrEmpty(this.htmltitle) && this.htmltitle != this.topic.Title)
+                if (this.canhtmltitle && !this.htmltitle.IsNullOrEmpty() && this.htmltitle != this.topic.Title)
                 {
                     Topics.WriteHtmlTitleFile(Utils.RemoveUnsafeHtml(this.htmltitle), this.topic.ID);
                     return;

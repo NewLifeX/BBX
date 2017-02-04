@@ -132,7 +132,7 @@ namespace BBX.Forum
         {
             var cacheService = XCache.Current;
             string text = cacheService.RetrieveObject("/Forum/IsSetDownLoadAttachScore") as string;
-            if (Utils.StrIsNullOrEmpty(text))
+            if (text.IsNullOrEmpty())
             {
                 float[] userExtCredits = GetUserExtCredits(CreditsOperationType.DownloadAttachment);
                 float[] array = userExtCredits;
@@ -231,7 +231,7 @@ namespace BBX.Forum
         }
         public static bool BetweenTime(string timelist, out string vtime)
         {
-            if (!Utils.StrIsNullOrEmpty(timelist))
+            if (!timelist.IsNullOrEmpty())
             {
                 string[] array = Utils.SplitString(timelist, "\n");
                 if (array.Length > 0)

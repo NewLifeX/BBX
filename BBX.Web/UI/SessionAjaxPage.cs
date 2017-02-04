@@ -491,7 +491,7 @@ namespace BBX.Web.UI
                 xmlnode.AppendFormat("<error>主题最大长度为60个字符,当前为 {0} 个字符</error>", DNTRequest.GetString(config.Antispamposttitle).Length.ToString());
                 return false;
             }
-            if (Utils.StrIsNullOrEmpty(postmessage))
+            if (postmessage.IsNullOrEmpty())
             {
                 xmlnode.Append("<error>内容不能为空</error>");
                 return false;
@@ -857,9 +857,9 @@ namespace BBX.Web.UI
             var userInfo2 = BBX.Forum.Users.GetUserInfo(userid);
             Advertisement.GetInPostAdCount("", pi.Fid);
             new Random((int)DateTime.Now.Ticks);
-            var userGroupInfo = UserGroup.FindByID(Utils.StrToInt(usergroupid, CreditsFacade.GetCreditsUserGroupId((float)Utils.StrToInt(userInfo2.Credits.ToString(), 0)).ID));
-            string arg = (!Utils.StrIsNullOrEmpty(userGroupInfo.Color)) ? "<font color=\"" + userGroupInfo.Color + "\">" + userGroupInfo.GroupTitle + "</font>" : userGroupInfo.GroupTitle;
-            string arg2 = Utils.StrIsNullOrEmpty(userInfo2.Field.Medals) ? "" : Medal.GetMedalsList(userInfo2.Field.Medals);
+            var userGroupInfo = UserGroup.FindByID(usergroupid);
+            string arg = (!userGroupInfo.Color.IsNullOrEmpty()) ? "<font color=\"" + userGroupInfo.Color + "\">" + userGroupInfo.GroupTitle + "</font>" : userGroupInfo.GroupTitle;
+            string arg2 = userInfo2.Field.Medals.IsNullOrEmpty() ? "" : Medal.GetMedalsList(userInfo2.Field.Medals);
             xmlnode.Append("<post>\r\n\t");
             xmlnode.AppendFormat("<ismoder>{0}</ismoder>", BBX.Forum.Moderators.IsModer(useradminid, userid, topic.Fid) ? 1 : 0);
             xmlnode.AppendFormat(Advertisement.GetInPostAdXMLByFloor("", pi.Fid, (topic.Replies + 2) % 15), new object[0]);
@@ -1040,17 +1040,17 @@ namespace BBX.Web.UI
                     //PrivateMessageInfo msg = new PrivateMessageInfo();
                     string message = string.Format("下面的链接地址被举报,<br /><a href='{0}' target='_blank'>{0}</a><br />请检查<br/>举报理由：{1}", @string, Utils.HtmlEncode(string2));
                     string dateTime = Utils.GetDateTime();
-                    Hashtable reportUsers = BBX.Forum.Users.GetReportUsers();
-                    foreach (DictionaryEntry dictionaryEntry in reportUsers)
+                    var reportUsers = BBX.Forum.Users.GetReportUsers();
+                    foreach (var item in reportUsers)
                     {
-                        User userInfo = BBX.Forum.Users.GetUserInfo(Utils.StrToInt(dictionaryEntry.Key, 0));
+                        var userInfo = item;
                         if (BBX.Forum.Moderators.IsModer(userInfo.AdminID, userInfo.ID, @int))
                         {
                             var msg = new ShortMessage();
                             msg.Message = message;
                             msg.Subject = "举报信息";
-                            msg.Msgto = dictionaryEntry.Value.ToString();
-                            msg.MsgtoID = Utils.StrToInt(dictionaryEntry.Key, 0);
+                            msg.Msgto = item.Name;
+                            msg.MsgtoID = item.ID;
                             msg.Msgfrom = username;
                             msg.MsgfromID = userid;
                             //msg.New = 1;
@@ -1217,7 +1217,7 @@ namespace BBX.Web.UI
                     Aid = aid,
                     Amount = attachmentInfo.AttachPrice,
                     AuthorID = attachmentInfo.Uid,
-                    NetAmount = Utils.StrToInt((float)attachmentInfo.AttachPrice * (1f - Scoresets.GetCreditsTax()), 0),
+                    NetAmount = (Int32)((float)attachmentInfo.AttachPrice * (1f - Scoresets.GetCreditsTax())),
                     PostDateTime = DateTime.Now,
                     UserName = username,
                     Uid = userid
@@ -1464,16 +1464,16 @@ namespace BBX.Web.UI
         private void SendNoticeInfo(string message, int uid, int fromid)
         {
             var notice = new Notice
-             {
-                 New = 1,
-                 Note = message,
-                 PostDateTime = DateTime.Now,
-                 Type = (Int32)NoticeType.TopicAdmin,
-                 Poster = username,
-                 PosterID = userid,
-                 Uid = uid,
-                 FromID = fromid
-             };
+            {
+                New = 1,
+                Note = message,
+                PostDateTime = DateTime.Now,
+                Type = (Int32)NoticeType.TopicAdmin,
+                Poster = username,
+                PosterID = userid,
+                Uid = uid,
+                FromID = fromid
+            };
 
             notice.Insert();
         }

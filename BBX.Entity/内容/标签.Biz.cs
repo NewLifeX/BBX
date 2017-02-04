@@ -198,16 +198,16 @@ namespace BBX.Entity
 
         public static EntityList<Tag> GetForumTags(string tagName, int type, Int32 fcountbegin = 0, Int32 fcountend = 0, Int32 start = 0, Int32 max = 0)
         {
-            //string text = string.Format("SELECT {0} FROM [{1}tags]  {2} ", "[tagid],[tagname],[userid],[postdatetime],[orderid],[color],[count],[fcount],[pcount],[scount],[vcount],[gcount]", TablePrefix, (!Utils.StrIsNullOrEmpty(tagName)) ? (" WHERE [tagname] LIKE '%" + RegEsc(tagName) + "%'") : "");
+            //string text = string.Format("SELECT {0} FROM [{1}tags]  {2} ", "[tagid],[tagname],[userid],[postdatetime],[orderid],[color],[count],[fcount],[pcount],[scount],[vcount],[gcount]", TablePrefix, (!tagName.IsNullOrEmpty()) ? (" WHERE [tagname] LIKE '%" + RegEsc(tagName) + "%'") : "");
             //if (type == 1)
             //{
-            //    text += ((!Utils.StrIsNullOrEmpty(tagName)) ? " AND [orderid] < 0 " : " WHERE [orderid] < 0 ");
+            //    text += ((!tagName.IsNullOrEmpty()) ? " AND [orderid] < 0 " : " WHERE [orderid] < 0 ");
             //}
             //else
             //{
             //    if (type == 2)
             //    {
-            //        text += ((!Utils.StrIsNullOrEmpty(tagName)) ? " AND [orderid] >= 0" : " WHERE [orderid] >= 0 ");
+            //        text += ((!tagName.IsNullOrEmpty()) ? " AND [orderid] >= 0" : " WHERE [orderid] >= 0 ");
             //    }
             //}
             //text += " ORDER BY [fcount] DESC";

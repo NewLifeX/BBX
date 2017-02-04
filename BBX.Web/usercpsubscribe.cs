@@ -41,7 +41,7 @@ namespace BBX.Web
 				return;
 			}
 			string formString = DNTRequest.GetFormString("titemid");
-			if (Utils.StrIsNullOrEmpty(formString) || !Utils.IsNumericList(formString))
+			if (formString.IsNullOrEmpty() || !Utils.IsNumericList(formString))
 			{
 				base.AddErrLine("您未选中任何数据信息，当前操作失败！");
 				return;

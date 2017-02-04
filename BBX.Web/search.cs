@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Web;
 using BBX.Common;
@@ -140,7 +141,7 @@ namespace BBX.Web
         private int CheckSearchInfo(string searchforumid)
         {
             int num = (DNTRequest.GetString("posterid").ToLower().Trim() == "current") ? this.userid : DNTRequest.GetInt("posterid", -1);
-            if (Utils.StrIsNullOrEmpty(this.keyword) && Utils.StrIsNullOrEmpty(this.poster) && Utils.StrIsNullOrEmpty(DNTRequest.GetString("posterid")))
+            if (this.keyword.IsNullOrEmpty() && this.poster.IsNullOrEmpty() && Utils.StrIsNullOrEmpty(DNTRequest.GetString("posterid")))
             {
                 base.AddErrLine("关键字和用户名不能同时为空");
                 return num;
@@ -150,7 +151,7 @@ namespace BBX.Web
                 base.AddErrLine("指定的用户ID不存在");
                 return num;
             }
-            if (!Utils.StrIsNullOrEmpty(this.poster))
+            if (!this.poster.IsNullOrEmpty())
             {
                 num = Users.GetUserId(this.poster);
                 if (num == -1)
@@ -159,7 +160,7 @@ namespace BBX.Web
                     return num;
                 }
             }
-            if (!Utils.StrIsNullOrEmpty(searchforumid))
+            if (!searchforumid.IsNullOrEmpty())
             {
                 string[] array = Utils.SplitString(searchforumid, ",");
                 for (int i = 0; i < array.Length; i++)

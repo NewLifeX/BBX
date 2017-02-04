@@ -208,7 +208,7 @@ namespace BBX.Forum
         public static int GetUserCreditsByUserInfo(IUser shortUserInfo)
         {
             string text = Scoresets.GetScoreCalFormula();
-            if (Utils.StrIsNullOrEmpty(text))
+            if (text.IsNullOrEmpty())
             {
                 return 0;
             }
@@ -225,7 +225,7 @@ namespace BBX.Forum
             text = text.Replace("extcredits7", shortUserInfo.ExtCredits7.ToString());
             text = text.Replace("extcredits8", shortUserInfo.ExtCredits8.ToString());
             object strValue = Arithmetic.ComputeExpression(text);
-            return Utils.StrToInt(Math.Floor(strValue.ToDouble()), 0);
+            return (Int32)Math.Floor(strValue.ToDouble());
         }
 
         /// <summary>被扣除积分以后，可能会降低用户级别</summary>

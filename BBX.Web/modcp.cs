@@ -266,7 +266,7 @@ namespace BBX.Web
             }
             string cpname = DNTRequest.GetFormString("cpname");
             string cppwd = DNTRequest.GetFormString("cppwd");
-            if (Utils.StrIsNullOrEmpty(cpname) || Utils.StrIsNullOrEmpty(cppwd)) return;
+            if (cpname.IsNullOrEmpty() || cppwd.IsNullOrEmpty()) return;
 
             var userInfo = BBX.Entity.User.Login(cpname, cppwd);
             if (userInfo == null)
@@ -290,7 +290,7 @@ namespace BBX.Web
             {
                 string subject = DNTRequest.GetString("subject").Trim();
                 string message = DNTRequest.GetString("message").Trim();
-                if (Utils.StrIsNullOrEmpty(subject) || Utils.StrIsNullOrEmpty(message))
+                if (subject.IsNullOrEmpty() || message.IsNullOrEmpty())
                 {
                     base.AddErrLine("主题或内容不能为空");
                     return;
@@ -434,7 +434,7 @@ namespace BBX.Web
         {
             string subject = DNTRequest.GetString("subject").Trim();
             string message = DNTRequest.GetString("message").Trim();
-            if (Utils.StrIsNullOrEmpty(subject) || Utils.StrIsNullOrEmpty(message))
+            if (subject.IsNullOrEmpty() || message.IsNullOrEmpty())
             {
                 base.AddErrLine("主题或内容不能为空");
                 return false;
@@ -753,7 +753,7 @@ namespace BBX.Web
             //string perm = Users.SearchSpecialUser(forumid);
             var xf = XForum.FindByID(forumid) as IXForum;
             var perm = xf.Permuserlist;
-            if (!Utils.StrIsNullOrEmpty(perm))
+            if (!perm.IsNullOrEmpty())
             {
                 if (perm.Contains(formString))
                 {

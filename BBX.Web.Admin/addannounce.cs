@@ -21,7 +21,7 @@ namespace BBX.Web.Admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!this.Page.IsPostBack && !Utils.StrIsNullOrEmpty(this.username))
+            if (!this.Page.IsPostBack && !this.username.IsNullOrEmpty())
             {
                 this.poster.Text = this.username;
                 this.starttime.Text = DateTime.Now.ToString();

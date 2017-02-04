@@ -410,9 +410,9 @@ namespace BBX.Forum
                 //string text2 = BBX.Data.TopicAdmins.CheckRateState(userid, pid);
                 var rate = RateLog.FindByPidAndUid(pid.ToInt(), userid);
                 var text2 = rate != null ? rate.Pid + "" : "";
-                if (!Utils.StrIsNullOrEmpty(text2))
+                if (!text2.IsNullOrEmpty())
                 {
-                    if (!Utils.StrIsNullOrEmpty(text))
+                    if (!text.IsNullOrEmpty())
                     {
                         text += ",";
                     }

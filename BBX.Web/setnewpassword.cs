@@ -48,7 +48,7 @@ namespace BBX.Web
                 {
                     base.AddErrLine("两次密码输入不一致");
                 }
-                if (Utils.StrIsNullOrEmpty(this.Authstr) || !userInfo.Field.Authstr.Equals(this.Authstr))
+                if (this.Authstr.IsNullOrEmpty() || !userInfo.Field.Authstr.Equals(this.Authstr))
                 {
                     base.AddErrLine("您所提供的验证码与注册信息不符.");
                 }

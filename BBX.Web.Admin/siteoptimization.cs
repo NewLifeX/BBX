@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Web.UI.HtmlControls;
 using BBX.Cache;
 using BBX.Common;
@@ -80,23 +81,15 @@ namespace BBX.Web.Admin
         {
             if (base.CheckCookie())
             {
-                GeneralConfigInfo config = GeneralConfigInfo.Current;
-                foreach (DictionaryEntry dictionaryEntry in new Hashtable
-				{
-					{
-						"最大在线人数",
-						this.maxonlines.Text
-					},
-
-					{
-						"搜索时间限制",
-						this.searchctrl.Text
-					}
-				})
+                var config = GeneralConfigInfo.Current;
+                var dic = new Dictionary<String, Int32>();
+                dic["最大在线人数"] = maxonlines.Text.ToInt(-1);
+                dic["搜索时间限制"] = searchctrl.Text.ToInt(-1);
+                foreach (var item in dic)
                 {
-                    if (!Utils.IsInt(dictionaryEntry.Value.ToString()))
+                    if (item.Value < 0)
                     {
-                        base.RegisterStartupScript("", "<script>alert('输入错误:" + dictionaryEntry.Key.ToString().Trim() + ",只能是0或者正整数');window.location.href='global_safecontrol.aspx';</script>");
+                        base.RegisterStartupScript("", "<script>alert('输入错误:" + item.Key + ",只能是0或者正整数');window.location.href='global_safecontrol.aspx';</script>");
                         return;
                     }
                 }
@@ -110,18 +103,18 @@ namespace BBX.Web.Admin
                 {
                     config.Fulltextsearch = 0;
                 }
-                if (!Utils.IsInt(this.notificationreserveddays.Text) || Utils.StrToInt(this.notificationreserveddays.Text, -1) < 0)
+                if (notificationreserveddays.Text.ToInt(-1) < 0)
                 {
                     base.RegisterStartupScript("", "<script>alert('通知保留天数只能为正数或0!');</script>");
                 }
                 else
                 {
-                    if (!Utils.IsInt(this.maxindexsubforumcount.Text) || Utils.StrToInt(this.maxindexsubforumcount.Text, -1) < 0)
+                    if (maxindexsubforumcount.Text.ToInt(-1) < 0)
                     {
                         base.RegisterStartupScript("", "<script>alert('首页每个分类下最多显示版块数只能为正数或0!');</script>");
                         return;
                     }
-                    if (!Utils.IsInt(this.deletingexpireduserfrequency.Text) || Utils.StrToInt(this.deletingexpireduserfrequency.Text, 0) < 1)
+                    if (deletingexpireduserfrequency.Text.ToInt(0) < 1)
                     {
                         base.RegisterStartupScript("", "<script>alert('删除离线用户频率只能为正数!');</script>");
                         return;

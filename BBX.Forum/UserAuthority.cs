@@ -103,7 +103,7 @@ namespace BBX.Forum
         {
             if (!Forums.AllowGetAttachByUserID(forum.Permuserlist, userId))
             {
-                if (Utils.StrIsNullOrEmpty(forum.GetattachPerm) && !userGroupInfo.AllowGetattach)
+                if (forum.GetattachPerm.IsNullOrEmpty() && !userGroupInfo.AllowGetattach)
                 {
                     msg = string.Format("您当前的身份 \"{0}\" 没有下载或查看附件的权限", userGroupInfo.GroupTitle);
                 }
@@ -278,7 +278,7 @@ namespace BBX.Forum
         //    {
         //        if (userid > -1 && Forums.AllowReplyByUserID(permuserlist, userid)) return true;
 
-        //        if (Utils.StrIsNullOrEmpty(replyperm))
+        //        if (replyperm.IsNullOrEmpty())
         //        {
         //            if (usergroupinfo.AllowReply) return true;
         //        }
@@ -297,7 +297,7 @@ namespace BBX.Forum
             {
                 if (userid > -1 && Forums.AllowReplyByUserID(fi.Permuserlist, userid)) return true;
 
-                if (Utils.StrIsNullOrEmpty(fi.ReplyPerm))
+                if (fi.ReplyPerm.IsNullOrEmpty())
                 {
                     if (usergroupinfo.AllowReply) return true;
                 }
@@ -314,7 +314,7 @@ namespace BBX.Forum
             bool result = false;
             if (Forums.AllowGetAttachByUserID(forum.Permuserlist, userid)) return true;
 
-            if (Utils.StrIsNullOrEmpty(forum.Getattachperm))
+            if (forum.Getattachperm.IsNullOrEmpty())
             {
                 if (usergroupinfo.AllowGetattach) return true;
             }

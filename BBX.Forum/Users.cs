@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using BBX.Cache;
 using BBX.Common;
@@ -100,7 +101,7 @@ namespace BBX.Forum
         //    {
         //        var groupid = (Int32)dataRow["GroupID"];
         //        var userGroupInfo = UserGroup.FindByID(groupid);
-        //        if (Utils.StrIsNullOrEmpty(userGroupInfo.Color))
+        //        if (userGroupInfo.Color.IsNullOrEmpty())
         //        {
         //            dataRow["grouptitle"] = userGroupInfo.GroupTitle;
         //        }
@@ -307,62 +308,24 @@ namespace BBX.Forum
             return 1;
         }
 
-        //public static bool UpdateUserSpaceId(int spaceid, int userid)
-        //{
-        //    if (User.FindByID(userid) == null)
-        //    {
-        //        return false;
-        //    }
-        //    BBX.Data.Users.UpdateUserSpaceId(spaceid, userid);
-        //    return true;
-        //}
-
-        //public static void UpdateUserGroup(int uid, int groupId)
-        //{
-        //	Users.UpdateUserGroup(uid.ToString(), groupId);
-        //}
-
-        //public static void UpdateUserGroup(string uidList, int groupId)
-        //{
-        //	BBX.Data.Users.UpdateUserGroup(uidList, groupId);
-        //}
-
-        public static Hashtable GetReportUsers()
+        public static IList<User> GetReportUsers()
         {
             var cacheService = XCache.Current;
-            var ht = cacheService.RetrieveObject("/Forum/ReportUsers") as Hashtable;
+            var ht = cacheService.RetrieveObject("/Forum/ReportUsers") as IList<User>;
             if (ht == null)
             {
-                ht = new Hashtable();
+                ht = new List<User>();
                 string reportusergroup = GeneralConfigInfo.Current.Reportusergroup;
                 if (!Utils.IsNumericList(reportusergroup))
                 {
                     return ht;
                 }
-                //DataTable users = BBX.Data.Users.GetUsers(reportusergroup);
-                //for (int i = 0; i < users.Rows.Count; i++)
-                //{
-                //    ht[users.Rows[i]["uid"]] = users.Rows[i]["username"];
-                //}
                 var list = User.FindAllByGroupID(reportusergroup.ToInt());
-                foreach (var item in list)
-                {
-                    ht[item.ID] = item.Name;
-                }
+                ht = list;
                 XCache.Add("/Forum/ReportUsers", ht);
             }
             return ht;
         }
-
-        //public static int GetUserIdByRewriteName(string rewritename)
-        //{
-        //	return BBX.Data.Users.GetUserIdByRewriteName(rewritename);
-        //}
-
-        //public static void UpdateUserPMSetting(UserInfo user)
-        //{
-        //    BBX.Data.Users.UpdateUserPMSetting(user);
-        //}
 
         public static void UpdateBanUser(int groupid, string groupexpiry, int uid)
         {

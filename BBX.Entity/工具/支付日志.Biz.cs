@@ -291,7 +291,7 @@ namespace BBX.Entity
 
         public static int RecordCount(string condition)
         {
-            //if (!Utils.StrIsNullOrEmpty(condition))
+            //if (!condition.IsNullOrEmpty())
             //{
             //    return BBX.Data.PaymentLogs.RecordCount(condition);
             //}

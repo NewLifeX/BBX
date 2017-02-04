@@ -88,7 +88,7 @@ namespace BBX.Web
                 int num = (this.userid > 0) ? Attachment.GetUploadFileSizeByuserid(this.userid) : 0;
                 this.attachsize = this.usergroupinfo.MaxSizeperday - num;
                 this.canpostattach = UserAuthority.PostAttachAuthority(this.forum, this.usergroupinfo, this.userid, ref this.msg);
-                if (!Utils.StrIsNullOrEmpty(this.forum.Password) && Utils.MD5(this.forum.Password) != ForumUtils.GetCookie("forum" + this.forumid + "password"))
+                if (!this.forum.Password.IsNullOrEmpty() && Utils.MD5(this.forum.Password) != ForumUtils.GetCookie("forum" + this.forumid + "password"))
                 {
                     base.AddErrLine("本版块被管理员设置了密码");
                     base.SetBackLink(base.ShowForumAspxRewrite(this.forumid, 0));
@@ -447,7 +447,7 @@ namespace BBX.Web
 
         public void SendNotifyEmail(string email, Post postinfo, string jumpurl)
         {
-            if (Utils.StrIsNullOrEmpty(email)) return;
+            if (email.IsNullOrEmpty()) return;
 
             var sb = new StringBuilder("# 回复: <a href=\"" + jumpurl + "\" target=\"_blank\">" + this.topic.Title + "</a>");
             string text = "";

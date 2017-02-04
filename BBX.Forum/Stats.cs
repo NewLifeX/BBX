@@ -332,7 +332,7 @@ namespace BBX.Forum
             var total = 0;
             foreach (var key in list)
             {
-                total += Utils.StrToInt(statht[key], 0);
+                total += statht[key].ToInt();
             }
             var sb = new StringBuilder();
             foreach (var key in list)

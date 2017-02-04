@@ -132,7 +132,7 @@ namespace BBX.Web.UI
 
         public bool ValidateForumPassword()
         {
-            if (!Utils.StrIsNullOrEmpty(this.forum.Password) && Utils.MD5(this.forum.Password) != ForumUtils.GetCookie("forum" + this.forumid + "password"))
+            if (!this.forum.Password.IsNullOrEmpty() && Utils.MD5(this.forum.Password) != ForumUtils.GetCookie("forum" + this.forumid + "password"))
             {
                 base.AddErrLine("本版块被管理员设置了密码");
                 if (this.config.Aspxrewrite == 1)

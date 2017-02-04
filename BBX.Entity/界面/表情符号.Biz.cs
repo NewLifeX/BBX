@@ -324,7 +324,7 @@ namespace BBX.Entity
         public static string GetSmiliesCache()
         {
             string text = XCache.Retrieve<String>(CacheKeys.FORUM_UI_SMILIES_LIST);
-            if (Utils.StrIsNullOrEmpty(text))
+            if (text.IsNullOrEmpty())
             {
                 var sb = new StringBuilder();
                 //DataTable smiliesListDataTable = BBX.Data.Smilies.GetSmiliesListDataTable();

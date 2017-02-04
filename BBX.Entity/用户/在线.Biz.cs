@@ -531,7 +531,7 @@ namespace BBX.Entity
 
             string iP = WebHelper.UserHost;
             int userid = GetCookie("userid").ToInt(uid);
-            string pass = Utils.StrIsNullOrEmpty(passwd) ? GetCookiePassword(passwordkey) : GetCookiePassword(passwd, passwordkey);
+            string pass = passwd.IsNullOrEmpty() ? GetCookiePassword(passwordkey) : GetCookiePassword(passwd, passwordkey);
             if (pass.Length == 0 || !Utils.IsBase64String(pass)) userid = -1;
 
             var online = Current;

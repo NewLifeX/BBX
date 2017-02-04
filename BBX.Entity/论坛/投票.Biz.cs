@@ -321,7 +321,7 @@ namespace BBX.Entity
 
         public static int UpdatePoll(int tid, string selitemidlist, string username)
         {
-            if (Utils.StrIsNullOrEmpty(username))
+            if (username.IsNullOrEmpty())
             {
                 return -1;
             }
@@ -340,7 +340,7 @@ namespace BBX.Entity
             {
                 return -3;
             }
-            if (Utils.StrIsNullOrEmpty(pollInfo.Voternames))
+            if (pollInfo.Voternames.IsNullOrEmpty())
             {
                 pollInfo.Voternames = username;
             }
@@ -359,7 +359,7 @@ namespace BBX.Entity
                 {
                     if (a == current.ID.ToString())
                     {
-                        if (Utils.StrIsNullOrEmpty(current.VoterNames))
+                        if (current.VoterNames.IsNullOrEmpty())
                         {
                             current.VoterNames = username;
                         }
@@ -379,10 +379,10 @@ namespace BBX.Entity
         #region 判断用户名是否能够投票
         public static bool AllowVote(int tid, string username)
         {
-            if (Utils.StrIsNullOrEmpty(username)) return false;
+            if (username.IsNullOrEmpty()) return false;
 
             string pollUserNameList = FindByTid(tid).Voternames;
-            if (Utils.StrIsNullOrEmpty(pollUserNameList)) return true;
+            if (pollUserNameList.IsNullOrEmpty()) return true;
 
             string[] array = Utils.SplitString(pollUserNameList.Trim(), "\r\n");
             for (int i = 0; i < array.Length; i++)

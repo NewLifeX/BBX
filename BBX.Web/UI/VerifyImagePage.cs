@@ -15,10 +15,6 @@ namespace BBX.Web.UI
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            //}
-            //protected override void OnInit(EventArgs e)
-            //{
-            //    base.OnInit(e);
 
             var config = GeneralConfigInfo.Current;
             var text = DNTRequest.GetQueryString("bgcolor").Trim();
@@ -33,7 +29,7 @@ namespace BBX.Web.UI
             {
                 if (array.Length == 3)
                 {
-                    bgcolor = Color.FromArgb(Utils.StrToInt(array[0], 255), Utils.StrToInt(array[1], 255), Utils.StrToInt(array[2], 255));
+                    bgcolor = Color.FromArgb(array[0], array[1], array[2]);
                 }
             }
             var online = Online.UpdateInfo();

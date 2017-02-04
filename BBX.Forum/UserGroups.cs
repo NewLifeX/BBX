@@ -49,7 +49,7 @@ namespace BBX.Forum
             if (ug == null) return null;
 
             var dataTable = CreateGroupScoreTable();
-            if (Utils.StrIsNullOrEmpty(ug.Raterange)) return dataTable;
+            if (ug.Raterange.IsNullOrEmpty()) return dataTable;
 
             int num = 0;
             string[] array = ug.Raterange.Trim().Split('|');

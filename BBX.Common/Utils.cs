@@ -72,7 +72,9 @@ namespace BBX.Common
 
         public static bool IsEqualStr(string str, string stringarray, string strsplit)
         {
-            return !StrIsNullOrEmpty(stringarray) && !StrIsNullOrEmpty(str) && (strsplit + stringarray.ToLower() + strsplit).IndexOf(strsplit + str.ToLower() + strsplit) >= 0;
+            if (str.IsNullOrWhiteSpace() || stringarray.IsNullOrWhiteSpace()) return false;
+
+            return (strsplit + stringarray.ToLower() + strsplit).IndexOf(strsplit + str.ToLower() + strsplit) >= 0;
         }
 
         public static int GetInArrayID(string strSearch, string[] stringArray, bool caseInsensetive)
@@ -616,21 +618,23 @@ namespace BBX.Common
         //    fileStream.Close();
         //}
 
-        public static string[] SplitString(string strContent, string strSplit)
+        public static string[] SplitString(string str, string strSplit)
         {
+            if (str.IsNullOrEmpty()) return new String[0];
+
             if (strSplit == "\r\n" || strSplit == "\n")
             {
-                strContent = strContent.Replace("\r\n", "\n");
+                str = str.Replace("\r\n", "\n");
                 strSplit = "\n";
             }
-            if (strSplit == "\\n" && strContent.Contains("\\r"))
+            if (strSplit == "\\n" && str.Contains("\\r"))
             {
-                strContent = strContent.Replace("\\r\\n", "\\n");
+                str = str.Replace("\\r\\n", "\\n");
             }
-            if (StrIsNullOrEmpty(strContent)) return new string[0];
-            if (strContent.IndexOf(strSplit) < 0) return new string[] { strContent };
+            if (str.IsNullOrEmpty()) return new String[0];
+            if (str.IndexOf(strSplit) < 0) return new string[] { str };
 
-            return Regex.Split(strContent, Regex.Escape(strSplit), RegexOptions.IgnoreCase);
+            return Regex.Split(str, Regex.Escape(strSplit), RegexOptions.IgnoreCase);
         }
 
         public static string[] SplitString(string strContent, string strSplit, int count)
@@ -1414,66 +1418,13 @@ namespace BBX.Common
 
         public static bool IsNumeric(object Expression)
         {
-            //return Validator.IsNumeric(Expression);
             Int32 n = 0;
             return Int32.TryParse(Expression + "", out n);
-        }
-
-        //public static string GetTextFromHTML(string HTML)
-        //{
-        //    Regex regex = new Regex("</?(?!br|/?p|img)[^>]*>", RegexOptions.IgnoreCase);
-        //    return regex.Replace(HTML, "");
-        //}
-
-        //public static bool IsDouble(object Expression)
-        //{
-        //    return Validator.IsDouble(Expression);
-        //}
-
-        //public static bool StrToBool(object expression, bool defValue)
-        //{
-        //    return TypeConverter.StrToBool(expression, defValue);
-        //}
-
-        //public static bool StrToBool(string expression, bool defValue)
-        //{
-        //    return TypeConverter.StrToBool(expression, defValue);
-        //}
-
-        public static int StrToInt(object expression, int defValue)
-        {
-            //return TypeConverter.ObjectToInt(expression, defValue);
-            return expression.ToInt(defValue);
         }
 
         public static int StrToInt(string expression, int defValue)
         {
             return expression.ToInt(defValue);
-        }
-
-        //public static float StrToFloat(object strValue, float defValue)
-        //{
-        //    return TypeConverter.StrToFloat(strValue, defValue);
-        //}
-
-        //public static float StrToFloat(string strValue, float defValue)
-        //{
-        //    return TypeConverter.StrToFloat(strValue, defValue);
-        //}
-
-        //public static bool IsNumericArray(string[] strNumber)
-        //{
-        //    return Validator.IsNumericArray(strNumber);
-        //}
-
-        //public static string AdDeTime(int times)
-        //{
-        //    return DateTime.Now.AddMinutes((double)times).ToString();
-        //}
-
-        public static bool IsInt(string str)
-        {
-            return Regex.IsMatch(str, "^[0-9]*$");
         }
 
         public static bool IsRuleTip(Hashtable NewHash, string ruletype, out string key)
@@ -1653,7 +1604,7 @@ namespace BBX.Common
         public static string ConvertSimpleFileName(string fullname, string repstring, int leftnum, int rightnum, int charnum)
         {
             string fileExtName = GetFileExtName(fullname);
-            if (StrIsNullOrEmpty(fileExtName)) return fullname;
+            if (fileExtName.IsNullOrEmpty()) return fullname;
 
             int num = fullname.LastIndexOf('.');
             string text = fullname.Substring(0, num);
@@ -1908,7 +1859,7 @@ namespace BBX.Common
 
         public static string GetFileExtName(string fileName)
         {
-            if (StrIsNullOrEmpty(fileName) || fileName.IndexOf('.') <= 0)
+            if (fileName.IsNullOrEmpty() || fileName.IndexOf('.') <= 0)
             {
                 return "";
             }

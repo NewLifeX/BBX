@@ -18,7 +18,7 @@ namespace BBX.Forum
         {
             var cacheService = XCache.Current;
             string text = cacheService.RetrieveObject(CacheKeys.FORUM_UI_FORUM_LIST_BOX_OPTIONS) as string;
-            if (Utils.StrIsNullOrEmpty(text))
+            if (text.IsNullOrEmpty())
             {
                 StringBuilder stringBuilder = new StringBuilder();
                 //Caches.AddOptionTree(BBX.Data.Forums.GetVisibleForumList(), "0", cateUnselectable, stringBuilder);
@@ -69,7 +69,7 @@ namespace BBX.Forum
         {
             var cacheService = XCache.Current;
             string text = cacheService.RetrieveObject(CacheKeys.FORUM_FORUM_LIST_MENU_DIV) as string;
-            if (Utils.StrIsNullOrEmpty(text))
+            if (text.IsNullOrEmpty())
             {
                 var sb = new StringBuilder();
                 var forumList = XForum.Root.Childs;
@@ -106,7 +106,7 @@ namespace BBX.Forum
                 var key1 = CacheKeys.FORUM_UI_TEMPLATE_LIST_BOX_OPTIONS_FOR_FORUMINDEX;
                 var key2 = CacheKeys.FORUM_UI_TEMPLATE_LIST_BOX_OPTIONS;
                 string text = topMenu ? XCache.Retrieve<String>(key1) : XCache.Retrieve<String>(key2);
-                if (Utils.StrIsNullOrEmpty(text))
+                if (text.IsNullOrEmpty())
                 {
                     var sb = new StringBuilder();
                     //var validTemplateList = Templates.GetValidTemplateList();
@@ -137,7 +137,7 @@ namespace BBX.Forum
         //public static string GetSmiliesCache()
         //{
         //    string text = XCache.Retrieve<String>(CacheKeys.FORUM_UI_SMILIES_LIST);
-        //    if (Utils.StrIsNullOrEmpty(text))
+        //    if (text.IsNullOrEmpty())
         //    {
         //        var sb = new StringBuilder();
         //        //DataTable smiliesListDataTable = BBX.Data.Smilies.GetSmiliesListDataTable();
@@ -176,7 +176,7 @@ namespace BBX.Forum
         //public static string GetSmiliesFirstPageCache()
         //{
         //	string text = XCache.Retrieve<String>("/Forum/UI/SmiliesListFirstPage");
-        //	if (Utils.StrIsNullOrEmpty(text))
+        //	if (text.IsNullOrEmpty())
         //	{
         //		var sb = new StringBuilder();
         //		//DataTable smiliesListDataTable = BBX.Data.Smilies.GetSmiliesListDataTable();
@@ -277,7 +277,7 @@ namespace BBX.Forum
         //{
         //    var cacheService = XCache.Current;
         //    string text = cacheService.RetrieveObject(CacheKeys.FORUM_UI_ONLINE_ICON_LIST) as string;
-        //    if (Utils.StrIsNullOrEmpty(text))
+        //    if (text.IsNullOrEmpty())
         //    {
         //        StringBuilder stringBuilder = new StringBuilder();
         //        IDataReader onlineGroupIconList = DatabaseProvider.GetInstance().GetOnlineGroupIconList();
@@ -399,7 +399,7 @@ namespace BBX.Forum
         //            {
         //                if (!Utils.StrIsNullOrEmpty(dataRow["image"].ToString()))
         //                {
-        //                    //if (EntLibConfigInfo.Current != null && !Utils.StrIsNullOrEmpty(EntLibConfigInfo.Current.Medaldir))
+        //                    //if (EntLibConfigInfo.Current != null && !EntLibConfigInfo.Current.Medaldir.IsNullOrEmpty())
         //                    //{
         //                    //    dataRow["image"] = "<img border=\"0\" src=\"" + EntLibConfigInfo.Current.Medaldir + dataRow["image"] + "\" alt=\"" + dataRow["name"] + "\" title=\"" + dataRow["name"] + "\" />";
         //                    //}
@@ -452,7 +452,7 @@ namespace BBX.Forum
         //{
         //    var cacheService = DNTCache.Current;
         //    string text = cacheService.RetrieveObject("/Forum/TopicIndentifysJsArray") as string;
-        //    if (Utils.StrIsNullOrEmpty(text))
+        //    if (text.IsNullOrEmpty())
         //    {
         //        Caches.GetTopicIdentifyCollection();
         //        text = (cacheService.RetrieveObject("/Forum/TopicIndentifysJsArray") as string);

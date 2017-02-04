@@ -42,7 +42,7 @@ namespace BBX.Web.Archiver
                 return;
             }
             var forum = Forums.GetForumInfo(topic.Fid);
-            if (Utils.StrIsNullOrEmpty(forum.ViewPerm))
+            if (forum.ViewPerm.IsNullOrEmpty())
             {
                 if (!this.usergroupinfo.AllowVisit)
                 {

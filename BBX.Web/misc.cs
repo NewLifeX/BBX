@@ -131,7 +131,7 @@ namespace BBX.Web
             var poll = Poll.FindByTid(tid);
             string pollUserNameList = poll == null ? "" : poll.Voternames;// BBX.Data.Polls.GetPollUserNameList(tid);
             allowvote = true;
-            if (Utils.StrIsNullOrEmpty(pollUserNameList))
+            if (pollUserNameList.IsNullOrEmpty())
             {
                 return "<li>暂无人投票</li>";
             }

@@ -78,7 +78,7 @@ namespace BBX.Web
             this.pagetitle = string.Format("{0} - {1}", this.topic.Title, Utils.RemoveHtml(this.forum.Name));
             base.GetForumAds(this.forum.Fid);
             TopicType.GetTopicTypeArray().TryGetValue(this.topic.TypeID, out this.topictypes);
-            this.topictypes = (Utils.StrIsNullOrEmpty(this.topictypes) ? "" : ("[" + this.topictypes + "]"));
+            this.topictypes = (this.topictypes.IsNullOrEmpty() ? "" : ("[" + this.topictypes + "]"));
             this.userextcreditsinfo = Scoresets.GetScoreSet(Scoresets.GetTopicAttachCreditsTrans());
             this.score = Scoresets.GetValidScoreName();
             this.scoreunit = Scoresets.GetValidScoreUnit();
@@ -274,7 +274,7 @@ namespace BBX.Web
             string text = (this.typeid == -1) ? "" : ("&typeid=" + this.typeid);
             string text2 = (this.stand == 0) ? "" : ("&stand=" + this.stand);
             string text3 = (string.IsNullOrEmpty(this.onlyauthor) || this.onlyauthor == "0") ? "" : "onlyauthor=" + this.onlyauthor + "&posterid=" + this.posterid;
-            if (Utils.StrIsNullOrEmpty(this.onlyauthor) || this.onlyauthor == "0")
+            if (this.onlyauthor.IsNullOrEmpty() || this.onlyauthor == "0")
             {
                 if (this.config.Aspxrewrite == 1 && this.typeid <= -1 && this.stand == 0)
                 {

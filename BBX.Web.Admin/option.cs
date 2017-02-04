@@ -108,9 +108,9 @@ namespace BBX.Web.Admin
             };
             for (int i = 0; i < array[0].Length; i++)
             {
-                if (!Utils.IsInt(array[0][i].ToString()))
+                if (array[0][i].ToInt(-1) < 0)
                 {
-                    base.RegisterStartupScript("", "<script>alert('输入错误:" + array[1][i].ToString() + ",只能是0或者正整数');window.location.href='forum_option.aspx';</script>");
+                    base.RegisterStartupScript("", "<script>alert('输入错误:" + array[1][i] + ",只能是0或者正整数');window.location.href='forum_option.aspx';</script>");
                     return;
                 }
             }

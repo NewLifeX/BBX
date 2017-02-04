@@ -337,7 +337,7 @@ namespace BBX.Forum
 
         public static string GetPostPramsInfoCondition(string onlyauthor, int topicid, int posterid)
         {
-            if (!Utils.StrIsNullOrEmpty(onlyauthor) && !onlyauthor.Equals("0"))
+            if (!onlyauthor.IsNullOrEmpty() && !onlyauthor.Equals("0"))
             {
                 return string.Format(" posterid={0}", posterid);
             }
@@ -375,7 +375,7 @@ namespace BBX.Forum
                 if (ppi.Jammer == 1) msg = ForumUtils.AddJammer(msg);
                 pi.Html = msg;
 
-                if (Utils.StrToInt(pi["showemail"], 0) == 1)
+                if (!pi["showemail"].ToBoolean())
                 {
                     pi["email"] = "";
                 }

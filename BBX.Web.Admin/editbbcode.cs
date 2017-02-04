@@ -65,7 +65,7 @@ namespace BBX.Web.Admin
         {
             if (base.CheckCookie())
             {
-                foreach (DictionaryEntry dictionaryEntry in new SortedList
+                foreach (DictionaryEntry item in new SortedList
                 {
                     {
                         "参数个数",
@@ -78,9 +78,9 @@ namespace BBX.Web.Admin
                     }
                 })
                 {
-                    if (!Utils.IsInt(dictionaryEntry.Value.ToString()))
+                    if (item.Value.ToInt(-1) < 0)
                     {
-                        base.RegisterStartupScript("", "<script>alert('输入错误:" + dictionaryEntry.Key.ToString() + ",只能是0或者正整数');window.location.href='forum_editbbcode.aspx';</script>");
+                        base.RegisterStartupScript("", "<script>alert('输入错误:" + item.Key + ",只能是0或者正整数');window.location.href='forum_editbbcode.aspx';</script>");
                         return;
                     }
                 }

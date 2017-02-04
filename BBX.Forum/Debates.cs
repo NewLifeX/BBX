@@ -42,7 +42,7 @@ namespace BBX.Forum
             {
                 if (Utils.IsNumericList(tidlist))
                 {
-                    if (Utils.StrIsNullOrEmpty(tidlist))
+                    if (tidlist.IsNullOrEmpty())
                     {
                         tidlist = GeneralConfigInfo.Current.Recommenddebates;
                     }
@@ -53,7 +53,7 @@ namespace BBX.Forum
             }
             else if (callback == "gethotdebatetopic")
             {
-                string[] array = Utils.StrIsNullOrEmpty(tidlist) ? new string[0] : tidlist.Split(',');
+                string[] array = tidlist.IsNullOrEmpty() ? new string[0] : tidlist.Split(',');
                 if (array.Length >= 3 && (!(array[0] != "views") || !(array[0] != "replies") || !Utils.IsNumeric(array[1]) || !Utils.IsNumeric(array[2])))
                 {
                     var list = Topic.GetHotDebatesList(array[0], array[1].ToInt(), array[2].ToInt());

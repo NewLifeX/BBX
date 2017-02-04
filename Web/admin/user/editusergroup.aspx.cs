@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using BBX.Cache;
 using BBX.Common;
@@ -83,14 +84,14 @@ namespace BBX.Web.Admin
         {
             if (base.CheckCookie())
             {
-                Hashtable ht = new Hashtable();
-                ht.Add("附件最大尺寸", this.maxattachsize.Text);
-                ht.Add("每天最大附件总尺寸", this.maxsizeperday.Text);
-                foreach (DictionaryEntry dictionaryEntry in ht)
+                var dic = new Dictionary<String, Int32>();
+                dic.Add("附件最大尺寸", this.maxattachsize.Text.ToInt(-1));
+                dic.Add("每天最大附件总尺寸", this.maxsizeperday.Text.ToInt(-1));
+                foreach (var item in dic)
                 {
-                    if (!Utils.IsInt(dictionaryEntry.Value.ToString()))
+                    if (item.Value < 0)
                     {
-                        base.RegisterStartupScript("", "<script>alert('输入错误," + dictionaryEntry.Key.ToString() + "只能是0或者正整数');window.location.href='editusergroup.aspx';</script>");
+                        base.RegisterStartupScript("", "<script>alert('输入错误," + item.Key + "只能是0或者正整数');window.location.href='editusergroup.aspx';</script>");
                         return;
                     }
                 }

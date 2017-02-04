@@ -542,7 +542,7 @@ namespace BBX.Forum
 
         public static bool IsBanUsername(string str, string stringarray)
         {
-            if (Utils.StrIsNullOrEmpty(stringarray)) return false;
+            if (stringarray.IsNullOrEmpty()) return false;
 
             stringarray = Regex.Escape(stringarray).Replace("\\*", "[\\s\\S]*");
             string[] array = Utils.SplitString(stringarray, "\\n");
@@ -584,7 +584,7 @@ namespace BBX.Forum
 
         public static string ConvertDateTime(string date, DateTime currentDateTime)
         {
-            if (Utils.StrIsNullOrEmpty(date))
+            if (date.IsNullOrEmpty())
             {
                 return "";
             }

@@ -185,7 +185,7 @@ namespace BBX.Web
                 base.AddErrLine("固定电话号码中含有非法字符");
             }
             string text = DNTRequest.GetString("email").Trim().ToLower();
-            if (Utils.StrIsNullOrEmpty(text))
+            if (text.IsNullOrEmpty())
             {
                 base.AddErrLine("Email不能为空");
                 return;
@@ -195,12 +195,12 @@ namespace BBX.Web
                 base.AddErrLine("Email格式不正确");
                 return;
             }
-            if (!Utils.StrIsNullOrEmpty(this.config.Accessemail) && !Utils.InArray(Utils.GetEmailHostName(text), this.config.Accessemail.Replace("\r\n", "\n"), "\n"))
+            if (!this.config.Accessemail.IsNullOrEmpty() && !Utils.InArray(Utils.GetEmailHostName(text), this.config.Accessemail.Replace("\r\n", "\n"), "\n"))
             {
                 base.AddErrLine("Email: \"" + text + "\" 不在本论坛允许范围之类, 本论坛只允许用户使用这些Email地址注册: " + this.config.Accessemail.Replace("\n", ",&nbsp;"));
                 return;
             }
-            if (!Utils.StrIsNullOrEmpty(this.config.Censoremail) && Utils.InArray(Utils.GetEmailHostName(text), this.config.Censoremail.Replace("\r\n", "\n"), "\n"))
+            if (!this.config.Censoremail.IsNullOrEmpty() && Utils.InArray(Utils.GetEmailHostName(text), this.config.Censoremail.Replace("\r\n", "\n"), "\n"))
             {
                 base.AddErrLine("Email: \"" + text + "\" 不允许在本论坛使用, 本论坛不允许用户使用的Email地址包括: " + this.config.Censoremail.Replace("\n", ",&nbsp;"));
                 return;

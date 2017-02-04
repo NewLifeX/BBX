@@ -132,7 +132,7 @@ namespace BBX.Forum
 
         private static bool HasPerm(string perm, int usergroupid)
         {
-            return Utils.StrIsNullOrEmpty(perm) || Utils.InArray(usergroupid.ToString(), perm);
+            return perm.IsNullOrEmpty() || Utils.InArray(usergroupid.ToString(), perm);
         }
 
         public static bool AllowGetAttach(string getattachperm, int usergroupid)
@@ -248,7 +248,7 @@ namespace BBX.Forum
                 {
                     if (item.Layer <= 0 || list.Find(info => info.Fid == item.ParentID) != null)
                     {
-                        if (Utils.StrIsNullOrEmpty(item.Viewperm))
+                        if (item.Viewperm.IsNullOrEmpty())
                         {
                             if (!guest.AllowVisit) continue;
                         }
@@ -256,7 +256,7 @@ namespace BBX.Forum
                         {
                             if (!item.AllowView(7)) continue;
                         }
-                        if (Utils.StrIsNullOrEmpty(item.Password))
+                        if (item.Password.IsNullOrEmpty())
                         {
                             list.Add(item);
                         }
@@ -268,7 +268,7 @@ namespace BBX.Forum
 
         public static string GetCurrentTopicTypesOption(int fid, string topictypes)
         {
-            if (Utils.StrIsNullOrEmpty(topictypes) || topictypes == "|") return "";
+            if (topictypes.IsNullOrEmpty() || topictypes == "|") return "";
 
             var cacheService = XCache.Current;
             string text = cacheService.RetrieveObject("/Forum/TopicTypesOption" + fid) as string;
@@ -292,7 +292,7 @@ namespace BBX.Forum
 
         public static string GetCurrentTopicTypesLink(int fid, string topictypes, string fullpagename)
         {
-            if (Utils.StrIsNullOrEmpty(topictypes)) return "";
+            if (topictypes.IsNullOrEmpty()) return "";
 
             var cacheService = XCache.Current;
             string text = cacheService.RetrieveObject("/Forum/TopicTypesLink" + fid) as string;
@@ -354,7 +354,7 @@ namespace BBX.Forum
             for (int i = 0; i < array.Length; i++)
             {
                 string text = array[i];
-                if (!Utils.StrIsNullOrEmpty(text) && text.Split(',')[1] == userid.ToString())
+                if (!text.IsNullOrEmpty() && text.Split(',')[1] == userid.ToString())
                 {
                     return text.Split(',')[2].ToInt();
                 }
@@ -364,7 +364,7 @@ namespace BBX.Forum
 
         private static bool ValidateSpecialUserPerm(string permUserList, int userId, ForumSpecialUserPower forumSpecialUserPower)
         {
-            if (!Utils.StrIsNullOrEmpty(permUserList))
+            if (!permUserList.IsNullOrEmpty())
             {
                 ForumSpecialUserPower forumSpecialUserPower2 = (ForumSpecialUserPower)Forums.GetForumSpecialUserPower(permUserList, userId);
                 if ((forumSpecialUserPower2 & forumSpecialUserPower) > (ForumSpecialUserPower)0)
@@ -400,114 +400,18 @@ namespace BBX.Forum
             return Forums.ValidateSpecialUserPerm(permUserList, userId, ForumSpecialUserPower.PostAttachByUser);
         }
 
-        public static bool IsCurrentForumTopicType(string typeid, string topictypes)
+        public static bool IsCurrentForumTopicType(Int32 typeid, string topictypes)
         {
-            if (Utils.StrIsNullOrEmpty(topictypes))
-            {
-                return true;
-            }
+            if (topictypes.IsNullOrEmpty()) return true;
+
             string[] array = topictypes.Split('|');
             for (int i = 0; i < array.Length; i++)
             {
-                string text = array[i];
-                if (!Utils.StrIsNullOrEmpty(text.Trim()) && typeid.Trim() == text.Split(',')[0].Trim())
-                {
-                    return true;
-                }
+                var tids = array[i].SplitAsInt(",");
+                if (tids[0] == typeid) return true;
             }
             return false;
         }
-
-        //static void UpdateForumLastPost(IXForum foruminfo, Post postInfo)
-        //{
-        //	foruminfo.LastTID = postInfo.ID;
-        //	foruminfo.LastPosterID = postInfo.PosterID;
-        //	foruminfo.LastPost = postInfo.PostDateTime;
-        //	foruminfo.LastPosterID = postInfo.PosterID;
-        //	foruminfo.LastPoster = postInfo.Poster;
-        //}
-
-        //public static void UpdateLastPost(IXForum foruminfo)
-        //{
-        //	Post pi = null;
-        //	//int lastPostTid = BBX.Data.Topics.GetLastPostTid(foruminfo, Forums.GetVisibleForum());
-        //	int lastPostTid = Topic.GetLastPostTid(foruminfo.Fid, Forums.GetVisibleForum());
-        //	if (lastPostTid > 0)
-        //	{
-        //		//pi = BBX.Data.Posts.GetLastPostByTid(lastPostTid, TableList.GetPostTableName(lastPostTid));
-        //		pi = Post.FindByTid(lastPostTid);
-        //	}
-        //	else
-        //	{
-        //		pi = new Post();
-        //		//pi.Pid = (pi.Tid = 0);
-        //		pi.Title = pi.TopicTitle = "从未";
-        //		//pi.Postdatetime = "1900-1-1";
-        //		//pi.Poster = "";
-        //		//pi.Posterid = 0;
-        //	}
-        //	//BBX.Data.Forums.UpdateForumLastPost(foruminfo, postInfo);
-        //	UpdateForumLastPost(foruminfo, pi);
-        //	if (foruminfo.Layer > 1)
-        //	{
-        //		UpdateParentForumLastPost(foruminfo, pi);
-        //	}
-        //}
-
-        //private static void UpdateParentForumLastPost(IXForum foruminfo, Post pi)
-        //{
-        //	int num = Utils.StrToInt(foruminfo.Parentidlist.Split(',')[1], 0);
-        //	if (num > 0)
-        //	{
-        //		//string text = "";
-        //		var fids = AdminForums.FindChildNode(num.ToString()).SplitAsInt(",");
-        //		//for (int i = 0; i < array.Length; i++)
-        //		//{
-        //		//	string text2 = array[i];
-        //		//	if (!(text2 == "0"))
-        //		//	{
-        //		//		foreach (DataRow dataRow in Forums.GetOpenForumList().Rows)
-        //		//		{
-        //		//			if (dataRow["fid"].ToString().Trim() == text2.Trim())
-        //		//			{
-        //		//				text = text + text2 + ",";
-        //		//				break;
-        //		//			}
-        //		//		}
-        //		//	}
-        //		//}
-        //		//if (string.IsNullOrEmpty(text)) return;
-        //		if (fids == null || fids.Length == 0) return;
-        //		// 过滤只要开放论坛
-        //		var ids = XForum.GetOpenForumList().Select(e => e.ID).ToArray();
-        //		fids = fids.Where(e => ids.Contains(e)).ToArray();
-        //		if (fids.Length == 0) return;
-
-        //		//int forumsLastPostTid = BBX.Data.Forums.GetForumsLastPostTid(String.Join(",", fids));
-        //		var tp = Topic.GetForumsLastPostTid(fids);
-        //		//if (forumsLastPostTid > 0)
-        //		if (tp != null)
-        //		{
-        //			//postinfo = BBX.Data.Posts.GetLastPostByTid(forumsLastPostTid, TableList.GetPostTableName(forumsLastPostTid));
-        //			pi = Post.FindByTid(tp.ID);
-        //		}
-        //		else
-        //		{
-        //			//pi.Pid = (pi.Tid = 0);
-        //			pi.Title = pi.TopicTitle = "从未";
-        //			//pi.Postdatetime = "1900-1-1";
-        //			//pi.Poster = "";
-        //			//pi.Posterid = 0;
-        //		}
-        //		//BBX.Data.Forums.UpdateForumLastPost(Forums.GetForumInfo(num), postinfo);
-        //		UpdateForumLastPost(Forums.GetForumInfo(num), pi);
-        //	}
-        //}
-
-        //public static void ResetLastPostInfo()
-        //{
-        //	BBX.Data.Forums.ResetLastPostInfo();
-        //}
 
         private static List<IXForum> GetRealForumIndexCollection(List<IXForum> forums)
         {
@@ -545,7 +449,7 @@ namespace BBX.Forum
             //foreach (var current in BBX.Data.Forums.GetForumIndexList())
             foreach (var frm in XForum.GetForumIndexList())
             {
-                if (!Utils.StrIsNullOrEmpty(frm.Viewperm) && !Utils.InArray(userGroupId.ToString(), frm.Viewperm))
+                if (!frm.Viewperm.IsNullOrEmpty() && !Utils.InArray(userGroupId.ToString(), frm.Viewperm))
                 {
                     if (hidePrivate != 0) continue;
 
@@ -575,7 +479,7 @@ namespace BBX.Forum
                 {
                     frm.TodayPosts = 0;
                 }
-                //if (!Utils.StrIsNullOrEmpty(frm.Viewperm) && !Utils.InArray(userGroupId.ToString(), frm.Viewperm) && hidePrivate == 0)
+                //if (!frm.Viewperm.IsNullOrEmpty() && !Utils.InArray(userGroupId.ToString(), frm.Viewperm) && hidePrivate == 0)
                 //{
                 //    frm.LastTitle = "";
                 //    frm.LastPoster = "";
@@ -615,7 +519,7 @@ namespace BBX.Forum
                     {
                         forum.TodayPosts = 0;
                     }
-                    //if (!Utils.StrIsNullOrEmpty(forum.Viewperm) && !Utils.InArray(usergroupid.ToString(), forum.Viewperm) && hideprivate == 0)
+                    //if (!forum.Viewperm.IsNullOrEmpty() && !Utils.InArray(usergroupid.ToString(), forum.Viewperm) && hideprivate == 0)
                     //{
                     //    forum.LastTitle = "";
                     //    forum.LastPoster = "";
@@ -782,7 +686,7 @@ namespace BBX.Forum
         public static float[] GetValues(string credits)
         {
             float[] array = new float[8];
-            if (!Utils.StrIsNullOrEmpty(credits))
+            if (!credits.IsNullOrEmpty())
             {
                 int num = 0;
                 string[] array2 = Utils.SplitString(credits, ",");

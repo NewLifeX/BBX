@@ -379,7 +379,7 @@ namespace BBX.Web
             }
             if (!Utils.InArray(this.operation, "identify,bonus") && this.isreason)
             {
-                if (Utils.StrIsNullOrEmpty(reason))
+                if (reason.IsNullOrEmpty())
                 {
                     this.titlemessage = true;
                     base.AddErrLine("操作原因不能为空");
@@ -732,7 +732,7 @@ namespace BBX.Web
             noticeInfo.PosterID = this.userid;
             noticeInfo.Uid = uid;
             reason = (string.IsNullOrEmpty(reason) ? reason : ("理由:" + reason));
-            if (subjecttype == "主题" || Utils.StrToInt(entity["layer"], -1) == 0)
+            if (subjecttype == "主题" || entity["layer"].ToInt(-1) == 0)
             {
                 string text = (this.operation != "delete") ? this.GetOperatePostUrl(tp.ID, tp.Title) : tp.Title;
                 noticeInfo.Note = Utils.HtmlEncode(string.Format("您发表的主题 {0} 被 {1} 执行了{2}操作 {3}", new object[]
@@ -764,7 +764,7 @@ namespace BBX.Web
             {
                 return false;
             }
-            if (Utils.StrIsNullOrEmpty(this.postidlist))
+            if (this.postidlist.IsNullOrEmpty())
             {
                 this.titlemessage = true;
                 base.AddErrLine("您没有选择要评分的帖子");
@@ -797,9 +797,10 @@ namespace BBX.Web
                 base.AddErrLine("分值超过限制.");
                 return false;
             }
-            foreach (DataRow dataRow in this.scorelist.Rows)
+            foreach (DataRow dr in this.scorelist.Rows)
             {
-                if (dataRow["ScoreCode"].ToString().Equals(array2[num]) && (Utils.StrToInt(dataRow["MaxInDay"], 0) < Math.Abs(Utils.StrToInt(array[num], 0)) || Utils.StrToInt(dataRow["Max"], 0) < Utils.StrToInt(array[num], 0) || (Utils.StrToInt(array[num], 0) != 0 && Utils.StrToInt(dataRow["Min"], 0) > Utils.StrToInt(array[num], 0))))
+                var sc = array[num].ToInt();
+                if (dr["ScoreCode"].ToString().Equals(array2[num]) && (dr["MaxInDay"].ToInt() < Math.Abs(sc) || dr["Max"].ToInt() < sc || (sc != 0 && dr["Min"].ToInt() > sc)))
                 {
                     this.titlemessage = true;
                     base.AddErrLine("分值超过限制.");

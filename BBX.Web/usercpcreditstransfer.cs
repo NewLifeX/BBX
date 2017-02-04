@@ -65,7 +65,7 @@ namespace BBX.Web
 					return;
 				}
 				string text = Scoresets.GetScoreSet(int2).Name.Trim();
-				if (Utils.StrIsNullOrEmpty(text))
+				if (text.IsNullOrEmpty())
 				{
 					base.AddErrLine("错误的输入!");
 					return;

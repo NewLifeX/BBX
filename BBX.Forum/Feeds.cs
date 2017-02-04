@@ -24,7 +24,7 @@ namespace BBX.Forum
                 {
                     if (item.AllowRss)
                     {
-                        if (!Utils.StrIsNullOrEmpty(item.Viewperm))
+                        if (!item.Viewperm.IsNullOrEmpty())
                         {
                             if (Utils.InArray("7", item.Viewperm, ","))
                             {
@@ -129,7 +129,7 @@ namespace BBX.Forum
             sb.Append("<?xml-stylesheet type=\"text/xsl\" href=\"rss.xsl\" media=\"screen\"?>\r\n");
             sb.Append("<rss version=\"2.0\">\r\n");
             sb.Append("  <channel>\r\n");
-            sb.AppendFormat("    <title>{0}{1}</title>\r\n", Utils.HtmlEncode(config.Forumtitle), (!Utils.StrIsNullOrEmpty(forumname)) ? (" - " + Utils.HtmlEncode(forumname)) : "");
+            sb.AppendFormat("    <title>{0}{1}</title>\r\n", Utils.HtmlEncode(config.Forumtitle), (!forumname.IsNullOrEmpty()) ? (" - " + Utils.HtmlEncode(forumname)) : "");
             sb.AppendFormat("    <link>{0}", forumurl);
             // 如果只有一个论坛版面，则显示完整路径
             if (fids.Length == 1)

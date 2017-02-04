@@ -32,7 +32,7 @@ namespace BBX.Web.Admin
 
         private void ResetUserPWs_Click(object sender, EventArgs e)
         {
-            if (!Utils.StrIsNullOrEmpty(this.password.Text) && this.password.Text == this.passwordagain.Text)
+            if (!this.password.Text.IsNullOrEmpty() && this.password.Text == this.passwordagain.Text)
             {
                 User userInfo = Users.GetUserInfo(int.Parse(Request["uid"]));
                 userInfo.Password = this.password.Text.Trim();

@@ -90,22 +90,22 @@ namespace BBX.Web.Admin
         {
             if (base.CheckCookie())
             {
-                foreach (DictionaryEntry dictionaryEntry in new Hashtable
-				{
-					{
-						"发帖灌水预防",
-						this.postinterval.Text
-					},
-
-					{
-						"60 秒最大搜索次数",
-						this.maxspm.Text
-					}
-				})
+                foreach (DictionaryEntry item in new Hashtable
                 {
-                    if (!Utils.IsInt(dictionaryEntry.Value.ToString()))
                     {
-                        base.RegisterStartupScript("", "<script>alert('输入错误:" + dictionaryEntry.Key.ToString().Trim() + ",只能是0或者正整数');window.location.href='global_safecontrol.aspx';</script>");
+                        "发帖灌水预防",
+                        this.postinterval.Text
+                    },
+
+                    {
+                        "60 秒最大搜索次数",
+                        this.maxspm.Text
+                    }
+                })
+                {
+                    if (item.Value.ToInt(-1) < 0)
+                    {
+                        base.RegisterStartupScript("", "<script>alert('输入错误:" + item.Key + ",只能是0或者正整数');window.location.href='global_safecontrol.aspx';</script>");
                         return;
                     }
                 }
@@ -113,12 +113,12 @@ namespace BBX.Web.Admin
                 {
                     string text = ("|" + this.antispamusername.Text + "|" + this.antispamemail.Text + "|" + this.antispamtitle.Text + "|" + this.antispammessage.Text + "|");
                     string[] array = new string[]
-					{
-						"|" + this.antispamusername.Text + "|",
-						"|" + this.antispamemail.Text + "|",
-						"|" + this.antispamtitle.Text + "|",
-						"|" + this.antispammessage.Text + "|"
-					};
+                    {
+                        "|" + this.antispamusername.Text + "|",
+                        "|" + this.antispamemail.Text + "|",
+                        "|" + this.antispamtitle.Text + "|",
+                        "|" + this.antispammessage.Text + "|"
+                    };
                     string[] array2 = array;
                     for (int i = 0; i < array2.Length; i++)
                     {

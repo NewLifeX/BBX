@@ -378,7 +378,7 @@ namespace BBX.Entity
             {
                 return ReplaceCurrentCssClass(text);
             }
-            if (!Utils.StrIsNullOrEmpty(url) && HttpContext.Current.Request.RawUrl.ToString().Contains(url))
+            if (!url.IsNullOrEmpty() && HttpContext.Current.Request.RawUrl.ToString().Contains(url))
             {
                 return ReplaceCurrentCssClass(text);
             }

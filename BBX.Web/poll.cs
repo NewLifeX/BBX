@@ -27,7 +27,7 @@ namespace BBX.Web
                 base.AddErrLine("不存在的主题ID");
                 return;
             }
-            this.topictitle = (Utils.StrIsNullOrEmpty(this.topic.Title) ? "" : this.topic.Title);
+            this.topictitle = (this.topic.Title.IsNullOrEmpty() ? "" : this.topic.Title);
             this.forumid = this.topic.Fid;
             var forumInfo = Forums.GetForumInfo(this.forumid);
             this.pagetitle = Utils.RemoveHtml(forumInfo.Name);

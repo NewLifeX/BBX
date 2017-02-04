@@ -25,7 +25,7 @@ namespace BBX.Web
                 base.AddErrLine("请先登录");
                 return;
             }
-            if (ForumUtils.IsCrossSitePost() || Utils.StrIsNullOrEmpty(this.action))
+            if (ForumUtils.IsCrossSitePost() || this.action.IsNullOrEmpty())
             {
                 base.AddErrLine("非法提交");
                 return;

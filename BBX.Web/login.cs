@@ -131,7 +131,7 @@ namespace BBX.Web
 						this.loginsubmit = false;
 						return;
 					}
-					if (!Utils.StrIsNullOrEmpty(user.Secques) && this.loginsubmit && Utils.StrIsNullOrEmpty(DNTRequest.GetString("loginauth")))
+					if (!user.Secques.IsNullOrEmpty() && this.loginsubmit && Utils.StrIsNullOrEmpty(DNTRequest.GetString("loginauth")))
 					{
 						this.loginauth = DES.Encode(DNTRequest.GetString("password"), this.config.Passwordkey).Replace("+", "[");
 					}
@@ -208,15 +208,15 @@ namespace BBX.Web
 
 		private IUser GetShortUserInfo()
 		{
-			this.postpassword = ((!Utils.StrIsNullOrEmpty(this.loginauth)) ? DES.Decode(this.loginauth.Replace("[", "+"), this.config.Passwordkey) : DNTRequest.GetString("password"));
-			this.postusername = (Utils.StrIsNullOrEmpty(this.postusername) ? DNTRequest.GetString("username") : this.postusername);
+			this.postpassword = ((!this.loginauth.IsNullOrEmpty()) ? DES.Decode(this.loginauth.Replace("[", "+"), this.config.Passwordkey) : DNTRequest.GetString("password"));
+			this.postusername = (this.postusername.IsNullOrEmpty() ? DNTRequest.GetString("username") : this.postusername);
 			//int num;
 
 			IUser user = null;
 			//switch (this.config.Passwordmode)
 			//{
 			//    case 0:
-			if (this.config.Secques == 1 && (!Utils.StrIsNullOrEmpty(this.loginauth) || !this.loginsubmit))
+			if (this.config.Secques == 1 && (!this.loginauth.IsNullOrEmpty() || !this.loginsubmit))
 			{
 				//num = Users.CheckPasswordAndSecques(this.postusername, this.postpassword, true, DNTRequest.GetFormInt("question", 0), DNTRequest.GetString("answer"));
 				user = BBX.Entity.User.Login(this.postusername, this.postpassword, true, DNTRequest.GetFormInt("question", 0), DNTRequest.GetString("answer"));
@@ -228,7 +228,7 @@ namespace BBX.Web
 			}
 			//break;
 			//    case 1:
-			//        if (this.config.Secques == 1 && (!Utils.StrIsNullOrEmpty(this.loginauth) || !this.loginsubmit))
+			//        if (this.config.Secques == 1 && (!this.loginauth.IsNullOrEmpty() || !this.loginsubmit))
 			//        {
 			//            num = Users.CheckDvBbsPasswordAndSecques(this.postusername, this.postpassword, DNTRequest.GetFormInt("question", 0), DNTRequest.GetString("answer"));
 			//        }
@@ -288,7 +288,7 @@ namespace BBX.Web
 		{
 			string text = DNTRequest.GetFormString("expires");
 			DateTime date;
-			if (Utils.StrIsNullOrEmpty(text))
+			if (text.IsNullOrEmpty())
 			{
 				date = BBX.Entity.User.FindByID(this.userid).LastVisit.ToUniversalTime().AddSeconds(Convert.ToDouble(Utils.GetCookie("bbx", "expires")));
 			}

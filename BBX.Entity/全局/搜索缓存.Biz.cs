@@ -230,7 +230,7 @@ namespace BBX.Entity
                     sql = Topic.GetSearchTopicTitleSQL(posterId, fids, resultOrder, resultOrderType, searchTime, searchTimeType, 0, keyWord);
                     break;
             }
-            if (Utils.StrIsNullOrEmpty(sql)) return -1;
+            if (sql.IsNullOrEmpty()) return -1;
 
             var list = SearchCache.FindAllBySearchstringAndGroupID(sql, userGroupId);
             if (list.Count > 0) return list[0].ID;
@@ -360,7 +360,7 @@ namespace BBX.Entity
             if (match.Success)
             {
                 string tids = GetCurrentPageTids(match.Groups[1].Value, out topiccount, pagesize, pageindex);
-                if (Utils.StrIsNullOrEmpty(tids)) return list;
+                if (tids.IsNullOrEmpty()) return list;
 
                 if (searchType == SearchType.DigestTopic)
                     return GetSearchDigestTopicsList(pagesize, tids);

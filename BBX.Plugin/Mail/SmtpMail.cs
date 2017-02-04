@@ -278,7 +278,7 @@ namespace BBX.Plugin.Mail
 
             var sb = new StringBuilder();
             sb.AppendLine("From:" + FromName + "<" + From + ">");
-            sb.AppendLine("To:=?" + Charset.ToUpper() + "?B?" + (Utils.StrIsNullOrEmpty(RecipientName) ? "" : Base64Encode(RecipientName)) + "?=<" + Recipient[0] + ">");
+            sb.AppendLine("To:=?" + Charset.ToUpper() + "?B?" + (RecipientName.IsNullOrEmpty() ? "" : Base64Encode(RecipientName)) + "?=<" + Recipient[0] + ">");
             sb.Append("CC:");
             for (int j = 1; j < Recipient.Count; j++)
             {

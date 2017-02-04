@@ -134,7 +134,7 @@ namespace BBX.Web.UI
             }
             if (DNTRequest.GetString("Filename") != "" && DNTRequest.GetString("Upload") != "")
             {
-                var uid = DecodeUid(DNTRequest.GetString("input")).Split(',')[0];
+                var uid = DecodeUid(DNTRequest.GetString("input")).Split(',')[0].ToInt(-1);
                 this.ResponseText(this.UploadTempAvatar(uid));
                 return;
             }
@@ -248,12 +248,10 @@ namespace BBX.Web.UI
             return array;
         }
 
-        private string UploadTempAvatar(string uid)
+        private string UploadTempAvatar(Int32 uid)
         {
-            if (!Utils.IsInt(uid))
-            {
-                return "unvaliable request!";
-            }
+            if (uid <= 0) return "unvaliable request!";
+
             string str = "avatar_" + uid + ".jpg";
             string str2 = Utils.GetRootUrl(BaseConfigs.GetForumPath) + "upload/";
             string mapPath = Utils.GetMapPath(BaseConfigs.GetForumPath + "upload\\");

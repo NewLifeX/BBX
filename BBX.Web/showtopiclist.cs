@@ -192,7 +192,7 @@ namespace BBX.Web
                 string text2 = array[i];
                 int num = Utils.StrToInt(text2, 0);
                 var forumInfo = Forums.GetForumInfo(num);
-                if (forumInfo != null && forumInfo.Layer != 0 && forumInfo.Visible && forumInfo.AllowView(usergroupid) && (Utils.StrIsNullOrEmpty(forumInfo.Password) || Utils.MD5(forumInfo.Password.Trim()) == ForumUtils.GetCookie("forum" + text2.Trim() + "password")))
+                if (forumInfo != null && forumInfo.Layer != 0 && forumInfo.Visible && forumInfo.AllowView(usergroupid) && (forumInfo.Password.IsNullOrEmpty() || Utils.MD5(forumInfo.Password.Trim()) == ForumUtils.GetCookie("forum" + text2.Trim() + "password")))
                 {
                     text += string.Format(",{0}", num);
                 }

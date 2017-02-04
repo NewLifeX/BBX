@@ -483,9 +483,9 @@ namespace BBX.Web
             this.mempostpercent = Math.Round((double)(this.mempost * 100) / (double)this.members, 2);
             this.postsaddavg = Math.Round((double)this.posts / (double)this.runtime, 2);
             this.membersaddavg = (double)(this.members / this.runtime);
-            int num = Utils.StrToInt(this.totalstats["members"], 0) + Utils.StrToInt(this.totalstats["guests"], 0);
+            int num = totalstats["members"].ToInt() + totalstats["guests"].ToInt();
             this.totalstats["visitors"] = num;
-            this.pageviewavg = Math.Round((double)Utils.StrToInt(this.totalstats["hits"], 0) / (double)((num == 0) ? 1 : num), 2);
+            this.pageviewavg = Math.Round((double)totalstats["hits"].ToInt() / (double)((num == 0) ? 1 : num), 2);
             this.activeindex = ((Math.Round(this.membersaddavg / (double)((this.members == 0) ? 1 : this.members), 2) + Math.Round(this.postsaddavg / (double)((this.posts == 0) ? 1 : this.posts), 2)) * 1500.0 + this.topicreplyavg * 10.0 + this.mempostavg + Math.Round(this.mempostpercent / 10.0, 2) + this.pageviewavg).ToString();
             if (this.statstatus)
             {

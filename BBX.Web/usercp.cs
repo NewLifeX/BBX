@@ -44,7 +44,7 @@ namespace BBX.Web
                 this.admingroupinfo = AdminGroup.FindByID(this.usergroupid);
             }
 			//var stringBuilder = new StringBuilder();
-			//if (!Utils.StrIsNullOrEmpty(this.usergroupinfo.AttachExtensions))
+			//if (!this.usergroupinfo.AttachExtensions.IsNullOrEmpty())
 			//{
 			//	stringBuilder.AppendFormat("[id] in ({0})", this.usergroupinfo.AttachExtensions);
 			//}

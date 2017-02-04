@@ -157,7 +157,7 @@ namespace BBX.Forum
         }
         public static string ShowForumAspxRewrite(int forumid, int pageid, string rewritename)
         {
-            if (!Utils.StrIsNullOrEmpty(rewritename))
+            if (!rewritename.IsNullOrEmpty())
             {
                 if (config.Iisurlrewrite == 1)
                 {

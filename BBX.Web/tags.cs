@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using BBX.Common;
 using BBX.Entity;
@@ -43,7 +44,7 @@ namespace BBX.Web
                 return;
             }
             this.pagetitle = this.tag.Name;
-            if (Utils.StrIsNullOrEmpty(this.listtype))
+            if (this.listtype.IsNullOrEmpty())
             {
                 this.listtype = "topic";
             }
