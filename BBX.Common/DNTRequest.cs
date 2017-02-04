@@ -126,17 +126,17 @@ namespace BBX.Common
 
         //public static int GetQueryInt(string strName)
         //{
-        //    return Utils.StrToInt(HttpContext.Current.Request.QueryString[strName], 0);
+        //    return HttpContext.Current.Request.QueryString[strName].ToInt(0);
         //}
 
         public static int GetQueryInt(string strName, int defValue)
         {
-            return Utils.StrToInt(HttpContext.Current.Request.QueryString[strName], defValue);
+            return HttpContext.Current.Request.QueryString[strName].ToInt(defValue);
         }
 
         public static int GetFormInt(string strName, int defValue)
         {
-            return Utils.StrToInt(HttpContext.Current.Request.Form[strName], defValue);
+            return HttpContext.Current.Request.Form[strName].ToInt(defValue);
         }
 
         public static int GetInt(string strName, int defValue = 0)

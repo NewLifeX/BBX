@@ -140,7 +140,7 @@ namespace BBX.Web
                                             if (item.Count > this.maxhour)
                                             {
                                                 this.maxhour = item.Count;
-                                                this.maxhourfrom = Utils.StrToInt(item.Variable, 0);
+                                                this.maxhourfrom = item.Variable.ToInt(0);
                                                 this.maxhourto = this.maxhourfrom + 1;
                                             }
                                         }
@@ -161,8 +161,8 @@ namespace BBX.Web
                                     if (item.Count > this.maxmonth)
                                     {
                                         this.maxmonth = item.Count;
-                                        this.yearofmaxmonth = Utils.StrToInt(item.Variable, 0) / 100;
-                                        this.monthofmaxmonth = Utils.StrToInt(item.Variable, 0) - this.yearofmaxmonth * 100;
+                                        this.yearofmaxmonth = item.Variable.ToInt(0) / 100;
+                                        this.monthofmaxmonth = item.Variable.ToInt(0) - this.yearofmaxmonth * 100;
                                     }
                                 }
                             }
@@ -414,7 +414,7 @@ namespace BBX.Web
             this.members = st.TotalUsers;
             if (this.statvars.ContainsKey("runtime"))
             {
-                this.runtime = Utils.StrToInt(this.statvars["runtime"], 0);
+                this.runtime = this.statvars["runtime"].ToInt(0);
             }
             else
             {
@@ -450,7 +450,7 @@ namespace BBX.Web
             }
             if (this.statvars.ContainsKey("memnonpost"))
             {
-                this.memnonpost = Utils.StrToInt(this.statvars["memnonpost"], 0);
+                this.memnonpost = this.statvars["memnonpost"].ToInt(0);
             }
             else
             {
@@ -469,7 +469,7 @@ namespace BBX.Web
             if (this.statvars.ContainsKey("bestmem") && this.statvars.ContainsKey("bestmemposts"))
             {
                 this.bestmem = this.statvars["bestmem"];
-                this.bestmemposts = Utils.StrToInt(this.statvars["bestmemposts"], 0);
+                this.bestmemposts = this.statvars["bestmemposts"].ToInt(0);
             }
             else
             {

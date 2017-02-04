@@ -43,7 +43,7 @@ namespace BBX.Control
                 object obj = this.ViewState["TextBox_MaxLength"];
                 if (obj != null)
                 {
-                    int result = Utils.StrToInt(obj.ToString(), 4);
+                    int result = obj.ToString().ToInt(4);
                     this.AddAttributes("maxlength", result.ToString());
                     return result;
                 }

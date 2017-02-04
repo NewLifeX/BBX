@@ -164,7 +164,7 @@ namespace BBX.Forum
             for (int i = 0; i < array.Length; i++)
             {
                 string expression = array[i];
-                if (pid == Utils.StrToInt(expression, 0))
+                if (pid == expression.ToInt(0))
                 {
                     return true;
                 }

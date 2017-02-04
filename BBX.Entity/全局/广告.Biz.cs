@@ -411,7 +411,7 @@ namespace BBX.Entity
                 foreach (var item in ads)
                 {
                     string[] array = Utils.SplitString(item.Parameters.Trim(), "|", 9);
-                    if (Utils.StrToInt(array[7], -1) == inPostAdType && (Utils.InArray(i.ToString(), array[8], ",") || array[8] == "0"))
+                    if (array[7].ToInt(-1) == inPostAdType && (Utils.InArray(i.ToString(), array[8], ",") || array[8] == "0"))
                     {
                         list.Add(item);
                     }
@@ -467,7 +467,7 @@ namespace BBX.Entity
             foreach (var item in ads)
             {
                 string[] array = Utils.SplitString(item.Parameters.ToString().Trim(), "|", 9);
-                if (Utils.StrToInt(array[7], -1) == inPostAdType && (Utils.InArray(floor.ToString(), array[8], ",") || array[8] == "0"))
+                if (array[7].ToInt(-1) == inPostAdType && (Utils.InArray(floor.ToString(), array[8], ",") || array[8] == "0"))
                 {
                     list.Add(item);
                 }

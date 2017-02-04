@@ -125,8 +125,8 @@ namespace BBX.Web.Admin
             }
             foreach (DataRow dataRow in scorePaySet.Rows)
             {
-                this.extCreditsName[Utils.StrToInt(dataRow["id"].ToString(), 0) - 1] = dataRow["name"] + ":";
-                var textBox2 = this.FindControl("invitecodeprice" + (Utils.StrToInt(dataRow[0].ToString(), 0) - 1).ToString()) as BBX.Control.TextBox;
+                this.extCreditsName[dataRow["id"].ToString().ToInt(0) - 1] = dataRow["name"] + ":";
+                var textBox2 = this.FindControl("invitecodeprice" + (dataRow[0].ToString().ToInt(0) - 1).ToString()) as BBX.Control.TextBox;
                 textBox2.Visible = true;
             }
         }
@@ -165,9 +165,9 @@ namespace BBX.Web.Admin
                 config.CookieDomain = this.CookieDomain.Text;
                 config.Verifyregisterexpired = (int)Convert.ToInt16(this.verifyregisterexpired.Text);
                 config.Verifyregisteremailtemp = this.RepairEmailTemplateCodeParameter(Request["verifyemailtempmessage_hidden"]);
-                config2.InviteCodePayCount = Utils.StrToInt(this.addextcreditsline.Text, 0);
-                config2.InviteCodeExpireTime = Utils.StrToInt(this.invitecodeexpiretime.Text, 0);
-                config2.InviteCodeMaxCount = Utils.StrToInt(this.invitecodemaxcount.Text, 0);
+                config2.InviteCodePayCount = this.addextcreditsline.Text.ToInt(0);
+                config2.InviteCodeExpireTime = this.invitecodeexpiretime.Text.ToInt(0);
+                config2.InviteCodeMaxCount = this.invitecodemaxcount.Text.ToInt(0);
                 config2.InviteCodePrice = this.CreateInviteCodePriceString();
                 config2.InvitationLoginUserDescription = Request["invitationuserdescriptionmessage_hidden"];
                 config2.InvitationVisitorDescription = Request["invitationvisitordescriptionmessage_hidden"];

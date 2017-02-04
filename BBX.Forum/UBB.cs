@@ -102,10 +102,10 @@ namespace BBX.Forum
                 text = Regex.Replace(text, "(\\[SHADOW=)(\\d*?),(#*\\w*?),(\\d*?)\\]([\\s]||[\\s\\S]+?)(\\[\\/SHADOW\\])", "<table width='$2'  style='filter:SHADOW(COLOR=$3, STRENGTH=$4)'>$5</table>", options);
                 text = Regex.Replace(text, "(\\[glow=)(\\d*?),(#*\\w*?),(\\d*?)\\]([\\s]||[\\s\\S]+?)(\\[\\/glow\\])", "<table width='$2'  style='filter:GLOW(COLOR=$3, STRENGTH=$4)'>$5</table>", options);
                 text = Regex.Replace(text, "\\[center\\]([\\s]||[\\s\\S]+?)\\[\\/center\\]", "<center>$1</center>", options);
-                MatchCollection matchCollection = rs[12].Matches(text);
+                var matchCollection = rs[12].Matches(text);
                 foreach (Match match2 in matchCollection)
                 {
-                    text = text.Replace(match2.Groups[0].Value, ParseMedia(match2.Groups[1].Value, Utils.StrToInt(match2.Groups[2].Value, 64), Utils.StrToInt(match2.Groups[3].Value, 48), match2.Groups[4].Value == "1", match2.Groups[6].Value));
+                    text = text.Replace(match2.Groups[0].Value, ParseMedia(match2.Groups[1].Value, match2.Groups[2].Value.ToInt(64), match2.Groups[3].Value.ToInt(48), match2.Groups[4].Value == "1", match2.Groups[6].Value));
                 }
                 matchCollection = rs[17].Matches(text);
                 foreach (Match match3 in matchCollection)
@@ -510,7 +510,7 @@ namespace BBX.Forum
                 while (match.Success)
                 {
                     string text = match.Groups[1].ToString();
-                    text = (Utils.CutString(text, text.Length - 1, text.Length).Equals("%") ? ((Utils.StrToInt(Utils.CutString(text, 0, text.Length - 1), 100) <= 98) ? text : "98%") : ((Utils.StrToInt(text, 560) <= 560) ? text : "560"));
+                    text = (Utils.CutString(text, text.Length - 1, text.Length).Equals("%") ? ((Utils.CutString(text, 0, text.Length - 1).ToInt(100) <= 98) ? text : "98%") : ((text.ToInt(560) <= 560) ? text : "560"));
                     string text2 = match.Groups[2].ToString();
                     string text3 = "<table class=\"t_table\" cellspacing=\"1\" cellpadding=\"4\" style=\"";
                     text3 += String.IsNullOrEmpty(text) ? "" : ("width:" + text + ";");

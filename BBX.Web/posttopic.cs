@@ -313,7 +313,7 @@ namespace BBX.Web
                 {
                     tp.Magic = 10000;
                 }
-                tp.Magic = Utils.StrToInt(tp.Magic.ToString() + "1", 0);
+                tp.Magic = (tp.Magic + "1").ToInt();
             }
             if (isbonus)
             {
@@ -529,7 +529,7 @@ namespace BBX.Web
             string @string = DNTRequest.GetString("topicprice");
             if (Regex.IsMatch(@string, "^[0-9]*[0-9][0-9]*$") || String.IsNullOrEmpty(@string))
             {
-                topicprice = ((Utils.StrToInt(@string, 0) > 32767) ? 32767 : Utils.StrToInt(@string, 0));
+                topicprice = ((@string.ToInt(0) > 32767) ? 32767 : @string.ToInt(0));
                 if (!isbonus)
                 {
                     if (topicprice > this.usergroupinfo.MaxPrice && this.usergroupinfo.MaxPrice > 0)

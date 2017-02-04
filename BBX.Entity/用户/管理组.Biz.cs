@@ -219,7 +219,7 @@ namespace BBX.Entity
                 {
                     if (list.Count != 1) throw new Exception("当前用户组为系统中唯一的用户组,因此系统无法删除");
 
-                    //UserGroup.UpdateUserGroupLowerAndHigherToLimit(Utils.StrToInt(userGroupExceptGroupid.Rows[0][0], 0));
+                    //UserGroup.UpdateUserGroupLowerAndHigherToLimit(userGroupExceptGroupid.Rows[0][0].ToInt(0));
                     //UserGroup.UpdateUserGroupLowerAndHigherToLimit(list[0].ID);
                     var ug2 = list[0];
                     ug2.Creditshigher = -9999999;

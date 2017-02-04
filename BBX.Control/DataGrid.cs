@@ -198,7 +198,7 @@ namespace BBX.Control
                         this.LoadCurrentPageIndex(0);
                         return;
                     }
-                    int num = Utils.StrToInt(this.GoToPagerInputText.Value.Trim(), 1);
+                    int num = this.GoToPagerInputText.Value.Trim().ToInt(1);
                     if (num < 0)
                     {
                         this.LoadCurrentPageIndex(0);
@@ -228,7 +228,7 @@ namespace BBX.Control
                     base.CurrentPageIndex = 0;
                     return;
                 }
-                int num = Utils.StrToInt(this.GoToPagerInputText.Value.Trim(), 1);
+                int num = this.GoToPagerInputText.Value.Trim().ToInt(1);
                 if (num < 0)
                 {
                     base.CurrentPageIndex = 0;

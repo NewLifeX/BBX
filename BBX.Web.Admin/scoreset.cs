@@ -184,7 +184,7 @@ namespace BBX.Web.Admin
             {
                 //foreach (DataRow dataRow2 in UserGroups.GetRateRange(scoreid).Rows)
                 //{
-                //	UserGroups.UpdateRateRange(dataRow2["raterange"].ToString().Replace(scoreid + ",True,", scoreid + ",False,"), Utils.StrToInt(dataRow2["groupid"], 0));
+                //	UserGroups.UpdateRateRange(dataRow2["raterange"].ToString().Replace(scoreid + ",True,", scoreid + ",False,"), dataRow2["groupid"].ToInt(0));
                 //}
                 foreach (var item in UserGroup.FindAllWithCache())
                 {

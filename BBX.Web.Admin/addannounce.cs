@@ -36,7 +36,7 @@ namespace BBX.Web.Admin
         {
             if (base.CheckCookie())
             {
-                //Announcements.CreateAnnouncement(this.username, this.userid, this.title.Text, Utils.StrToInt(this.displayorder.Text, 0), this.starttime.Text, this.endtime.Text, Request["announcemessage_hidden"]);
+                //Announcements.CreateAnnouncement(this.username, this.userid, this.title.Text, this.displayorder.Text.ToInt(0), this.starttime.Text, this.endtime.Text, Request["announcemessage_hidden"]);
                 Announcement.Create(userid, username, title.Text, Request["announcemessage_hidden"], Utility.ToDateTime(starttime.Text), Utility.ToDateTime(endtime.Text),Int32.Parse(displayorder.Text));
                 XCache.Remove(CacheKeys.FORUM_ANNOUNCEMENT_LIST);
                 XCache.Remove(CacheKeys.FORUM_SIMPLIFIED_ANNOUNCEMENT_LIST);

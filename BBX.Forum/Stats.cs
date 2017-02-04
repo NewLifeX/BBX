@@ -97,7 +97,7 @@ namespace BBX.Forum
             }
             //ArrayList arrayList = new ArrayList(daypostsstats.Values);
             //arrayList.Sort(new StatVarSorter());
-            //daypostsstats["maxcount"] = ((arrayList.Count < 1) ? 0 : Utils.StrToInt(arrayList[arrayList.Count - 1], 0));
+            //daypostsstats["maxcount"] = ((arrayList.Count < 1) ? 0 : arrayList[arrayList.Count - 1].ToInt(0));
             daypostsstats["maxcount"] = max;
             return daypostsstats;
         }

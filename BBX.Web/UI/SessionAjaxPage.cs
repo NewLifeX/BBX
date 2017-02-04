@@ -32,7 +32,7 @@ namespace BBX.Web.UI
 
         public SessionAjaxPage()
         {
-            userid = Utils.StrToInt(ForumUtils.GetCookie("userid"), -1);
+            userid = ForumUtils.GetCookie("userid").ToInt(-1);
             if (config.Nocacheheaders == 1)
             {
                 Response.BufferOutput = false;

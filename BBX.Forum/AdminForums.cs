@@ -74,7 +74,7 @@ namespace BBX.Forum
         //    //                array[i].Permuserlist = array[i].Permuserlist.ToString().Substring(0, array[i].Permuserlist.ToString().Length - 1);
         //    //            }
         //    //        }
-        //    //        array[i].Fid = Utils.StrToInt(dataTable.Rows[i]["fid"].ToString(), 0);
+        //    //        array[i].Fid = dataTable.Rows[i]["fid"].ToString().ToInt(0);
         //    //        array[i].Name = dataTable.Rows[i]["name"].ToString();
         //    //        array[i].Moderators = dataTable.Rows[i]["moderators"].ToString();
         //    //    }
@@ -112,7 +112,7 @@ namespace BBX.Forum
             //                }
             //                array[i].Permuserlist = array[i].Permuserlist.ToString().Substring(0, array[i].Permuserlist.ToString().Length - 1);
             //            }
-            //            array[i].Fid = Utils.StrToInt(forumTableWithSpecialUser.Rows[i]["fid"].ToString(), 0);
+            //            array[i].Fid = forumTableWithSpecialUser.Rows[i]["fid"].ToString().ToInt(0);
             //            array[i].Name = forumTableWithSpecialUser.Rows[i]["name"].ToString();
             //            array[i].Moderators = forumTableWithSpecialUser.Rows[i]["moderators"].ToString();
             //        }
@@ -181,8 +181,8 @@ namespace BBX.Forum
         //        string text = "";
         //        if (dataRow["parentidlist"].ToString().Trim() == "0")
         //        {
-        //            //text = "<a href=\"" + ((dataRow["rewritename"].ToString().Trim() == string.Empty) ? string.Empty : getForumPath) + Urls.ShowForumAspxRewrite(Utils.StrToInt(dataRow["fid"], 0), 0, dataRow["rewritename"].ToString()) + "\">" + dataRow["name"].ToString().Trim() + "</a>";
-        //            text = "<a href=\"" + (string.Empty) + Urls.ShowForumAspxRewrite(Utils.StrToInt(dataRow["fid"], 0), 0, "") + "\">" + dataRow["name"].ToString().Trim() + "</a>";
+        //            //text = "<a href=\"" + ((dataRow["rewritename"].ToString().Trim() == string.Empty) ? string.Empty : getForumPath) + Urls.ShowForumAspxRewrite(dataRow["fid"].ToInt(0), 0, dataRow["rewritename"].ToString()) + "\">" + dataRow["name"].ToString().Trim() + "</a>";
+        //            text = "<a href=\"" + (string.Empty) + Urls.ShowForumAspxRewrite(dataRow["fid"].ToInt(0), 0, "") + "\">" + dataRow["name"].ToString().Trim() + "</a>";
         //        }
         //        else
         //        {
@@ -196,14 +196,14 @@ namespace BBX.Forum
         //                    if (array2.Length > 0)
         //                    {
         //                        string text3 = text;
-        //                        text = text3 + "<a href=\"" + (string.Empty) + Urls.ShowForumAspxRewrite(Utils.StrToInt(array2[0]["fid"], 0), 0, "") + "\">" + array2[0]["name"].ToString().Trim() + "</a>";
+        //                        text = text3 + "<a href=\"" + (string.Empty) + Urls.ShowForumAspxRewrite(array2[0]["fid"].ToInt(0), 0, "") + "\">" + array2[0]["name"].ToString().Trim() + "</a>";
         //                    }
         //                }
         //            }
-        //            //Urls.ShowForumAspxRewrite(Utils.StrToInt(dataRow["fid"], 0), 0, dataRow["rewritename"].ToString());
-        //            Urls.ShowForumAspxRewrite(Utils.StrToInt(dataRow["fid"], 0), 0, "");
+        //            //Urls.ShowForumAspxRewrite(dataRow["fid"].ToInt(0), 0, dataRow["rewritename"].ToString());
+        //            Urls.ShowForumAspxRewrite(dataRow["fid"].ToInt(0), 0, "");
         //            string text4 = text;
-        //            text = text4 + "<a href=\"" + ("") + Urls.ShowForumAspxRewrite(Utils.StrToInt(dataRow["fid"], 0), 0, "") + "\">" + dataRow["name"].ToString().Trim() + "</a>";
+        //            text = text4 + "<a href=\"" + ("") + Urls.ShowForumAspxRewrite(dataRow["fid"].ToInt(0), 0, "") + "\">" + dataRow["name"].ToString().Trim() + "</a>";
         //        }
         //        //foreach (var item in BBX.Entity.Forum.FindAllWithCache())
         //        //{

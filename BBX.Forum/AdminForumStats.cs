@@ -34,8 +34,8 @@ namespace BBX.Forum
         //    //{
         //    //    if (maxAndMinTid.Read())
         //    //    {
-        //    //        maxtid = Utils.StrToInt(maxAndMinTid["maxtid"], 0);
-        //    //        mintid = Utils.StrToInt(maxAndMinTid["mintid"], 0);
+        //    //        maxtid = maxAndMinTid["maxtid"].ToInt(0);
+        //    //        mintid = maxAndMinTid["mintid"].ToInt(0);
         //    //    }
         //    //    maxAndMinTid.Close();
         //    //}
@@ -85,8 +85,8 @@ namespace BBX.Forum
             //{
             //    if (maxAndMinTidByUid.Read())
             //    {
-            //        maxtid = Utils.StrToInt(maxAndMinTidByUid["maxtid"], 0);
-            //        mintid = Utils.StrToInt(maxAndMinTidByUid["mintid"], 0);
+            //        maxtid = maxAndMinTidByUid["maxtid"].ToInt(0);
+            //        mintid = maxAndMinTidByUid["mintid"].ToInt(0);
             //    }
             //    maxAndMinTidByUid.Close();
             //}
@@ -223,7 +223,7 @@ namespace BBX.Forum
             {
                 foreach (var user in users)
                 {
-                    //int num = Utils.StrToInt(users["uid"], -1);
+                    //int num = users["uid"].ToInt(-1);
                     int postsCountByUid = GetPostsCountByUid(user.ID);
                     //BBX.Data.Users.UpdateUserPostCount(postsCountByUid, user.ID);
                     user.Posts = postsCountByUid;
@@ -277,15 +277,15 @@ namespace BBX.Forum
         //	{
         //		while (topics.Read())
         //		{
-        //			int tid = Utils.StrToInt(topics["tid"], -1);
+        //			int tid = topics["tid"].ToInt(-1);
         //			string postTableId = TableList.GetPostTableId(tid);
         //			int postCount = Post.GetPostCount(tid);
         //			PostInfo lastPostByTid = BBX.Data.Posts.GetLastPostByTid(tid, BaseConfigs.GetTablePrefix + "posts" + postTableId);
         //			if (lastPostByTid != null)
         //			{
-        //				if (Utils.StrToInt(lastPostByTid.Pid, 0) != 0)
+        //				if (lastPostByTid.Pid.ToInt(0) != 0)
         //				{
-        //					BBX.Data.Topics.UpdateTopic(tid, postCount, Utils.StrToInt(lastPostByTid.Pid, 0), lastPostByTid.Postdatetime.ToString(), Utils.StrToInt(lastPostByTid.Posterid, 0), lastPostByTid.Poster.ToString());
+        //					BBX.Data.Topics.UpdateTopic(tid, postCount, lastPostByTid.Pid.ToInt(0), lastPostByTid.Postdatetime.ToString(), lastPostByTid.Posterid.ToInt(0), lastPostByTid.Poster.ToString());
         //				}
         //				else
         //				{
@@ -342,7 +342,7 @@ namespace BBX.Forum
         //		//}
         //		//while (reader.Read())
         //		//{
-        //		//fid = Utils.StrToInt(reader["fid"], -1);
+        //		//fid = reader["fid"].ToInt(-1);
         //		int tcount = BBX.Data.Topics.GetTopicCountOfForumWithSub(SubForumList(fid));
         //		int pcount = GetPostsCountByFid(fid, out todaypostcount);
         //		if (fixTopicCount)

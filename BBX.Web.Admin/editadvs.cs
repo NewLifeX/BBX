@@ -103,7 +103,7 @@ namespace BBX.Web.Admin
                     for (int j = 0; j < array2.Length; j++)
                     {
                         string text2 = array2[j];
-                        if (Utils.StrToInt(text2, 0) > config.Ppp)
+                        if (text2.ToInt(0) > config.Ppp)
                         {
                             text += text2 + ",";
                         }

@@ -287,7 +287,7 @@ namespace BBX.Forum
         public PageBase()
         {
             LoadUrlConfig();
-            userid = Utils.StrToInt(ForumUtils.GetCookie("userid"), -1);
+            userid = ForumUtils.GetCookie("userid").ToInt(-1);
             if (this.userid == -1 && this.config.Guestcachepagetimeout > 0 && this.GetUserCachePage(this.pagename))
             {
                 return;
@@ -367,12 +367,12 @@ namespace BBX.Forum
                 this.useravatar = Avatars.GetAvatarUrl(this.userid, AvatarSize.Small);
             }
 
-            this.pmsound = Utils.StrToInt(ForumUtils.GetCookie("pmsound"), 0);
+            this.pmsound = ForumUtils.GetCookie("pmsound").ToInt(0);
             if (this.usergroupid == 4 || this.usergroupid == 5)
             {
                 var user = BBX.Entity.User.FindByID(this.userid);
                 //var user2 = user as IUser;
-                if (user.GroupExpiry != 0 && user.GroupExpiry <= Utils.StrToInt(DateTime.Now.ToString("yyyyMMdd"), 0))
+                if (user.GroupExpiry != 0 && user.GroupExpiry <= DateTime.Now.ToString("yyyyMMdd").ToInt(0))
                 {
                     var creditsUserGroupId = CreditsFacade.GetCreditsUserGroupId((float)user.Credits);
                     this.usergroupid = ((creditsUserGroupId.ID != 0) ? creditsUserGroupId.ID : this.usergroupid);
@@ -476,7 +476,7 @@ namespace BBX.Forum
                 var cookie = Utils.GetCookie(Utils.GetTemplateCookieName());
                 if (Template.Has(cookie))
                 {
-                    sid = Utils.StrToInt(cookie, this.config.Templateid);
+                    sid = cookie.ToInt(this.config.Templateid);
                 }
             }
             if (sid == 0) sid = this.config.Templateid;
@@ -767,7 +767,7 @@ namespace BBX.Forum
         #region 页面重写
         protected string ShowForumAspxRewrite(string forumid, int pageid)
         {
-            return this.ShowForumAspxRewrite(Utils.StrToInt(forumid, 0), (pageid <= 0) ? 0 : pageid);
+            return this.ShowForumAspxRewrite(forumid.ToInt(0), (pageid <= 0) ? 0 : pageid);
         }
 
         protected string ShowForumAspxRewrite(int forumid, int pageid)
@@ -787,7 +787,7 @@ namespace BBX.Forum
 
         protected string ShowTopicAspxRewrite(string topicid, int pageid)
         {
-            return this.ShowTopicAspxRewrite(Utils.StrToInt(topicid, 0), (pageid <= 0) ? 0 : pageid);
+            return this.ShowTopicAspxRewrite(topicid.ToInt(0), (pageid <= 0) ? 0 : pageid);
         }
 
         protected string ShowTopicAspxRewrite(int topicid, int pageid)
@@ -797,7 +797,7 @@ namespace BBX.Forum
 
         //protected string ShowDebateAspxRewrite(string topicid)
         //{
-        //    return this.ShowDebateAspxRewrite(Utils.StrToInt(topicid, 0));
+        //    return this.ShowDebateAspxRewrite(topicid.ToInt(0));
         //}
 
         //protected string ShowDebateAspxRewrite(int topicid)
@@ -807,7 +807,7 @@ namespace BBX.Forum
 
         //protected string ShowBonusAspxRewrite(string topicid, int pageid)
         //{
-        //    return this.ShowBonusAspxRewrite(Utils.StrToInt(topicid, 0), (pageid <= 0) ? 0 : pageid);
+        //    return this.ShowBonusAspxRewrite(topicid.ToInt(0), (pageid <= 0) ? 0 : pageid);
         //}
 
         //protected string ShowBonusAspxRewrite(int topicid, int pageid)
@@ -822,7 +822,7 @@ namespace BBX.Forum
 
         protected string UserInfoAspxRewrite(string userid)
         {
-            return this.UserInfoAspxRewrite(Utils.StrToInt(userid, 0));
+            return this.UserInfoAspxRewrite(userid.ToInt(0));
         }
 
         //protected string RssAspxRewrite(int forumid)
@@ -832,12 +832,12 @@ namespace BBX.Forum
 
         //protected string RssAspxRewrite(string forumid)
         //{
-        //    return this.RssAspxRewrite(Utils.StrToInt(forumid, 0));
+        //    return this.RssAspxRewrite(forumid.ToInt(0));
         //}
 
         //protected string ShowGoodsAspxRewrite(string goodsid)
         //{
-        //    return this.ShowGoodsAspxRewrite(Utils.StrToInt(goodsid, 0));
+        //    return this.ShowGoodsAspxRewrite(goodsid.ToInt(0));
         //}
 
         //protected string ShowGoodsAspxRewrite(int goodsid)
@@ -847,7 +847,7 @@ namespace BBX.Forum
 
         //protected string ShowGoodsListAspxRewrite(string categoryid, int pageid)
         //{
-        //    return this.ShowGoodsListAspxRewrite(Utils.StrToInt(categoryid, 0), (pageid <= 0) ? 0 : pageid);
+        //    return this.ShowGoodsListAspxRewrite(categoryid.ToInt(0), (pageid <= 0) ? 0 : pageid);
         //}
 
         //protected string ShowGoodsListAspxRewrite(int categoryid, int pageid)

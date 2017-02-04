@@ -30,7 +30,7 @@ namespace BBX.Web
         public int pagecount;
         public string pagenumbers = "";
         //public int toptopiccount;
-        public int tpp = Utils.StrToInt(ForumUtils.GetCookie("tpp"), GeneralConfigInfo.Current.Tpp);
+        public int tpp = ForumUtils.GetCookie("tpp").ToInt(GeneralConfigInfo.Current.Tpp);
         public int order = DNTRequest.GetInt("order", 2);
         public int direct = DNTRequest.GetInt("direct", 1);
         public string type = DNTRequest.GetString("type", true);
@@ -190,7 +190,7 @@ namespace BBX.Web
             for (int i = 0; i < array.Length; i++)
             {
                 string text2 = array[i];
-                int num = Utils.StrToInt(text2, 0);
+                int num = text2.ToInt(0);
                 var forumInfo = Forums.GetForumInfo(num);
                 if (forumInfo != null && forumInfo.Layer != 0 && forumInfo.Visible && forumInfo.AllowView(usergroupid) && (forumInfo.Password.IsNullOrEmpty() || Utils.MD5(forumInfo.Password.Trim()) == ForumUtils.GetCookie("forum" + text2.Trim() + "password")))
                 {

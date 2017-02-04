@@ -57,7 +57,7 @@ namespace BBX.Web
         public string endtime = Utils.GetDateTime(1);
         public string op = DNTRequest.GetString("op");
         //public List<TableList> posttablelist = new List<TableList>();
-        //public int tableid = DNTRequest.GetInt("tablelist", Utils.StrToInt(TableList.GetPostTableId(), 1));
+        //public int tableid = DNTRequest.GetInt("tablelist", TableList.GetPostTableId().ToInt(1));
         public string forumliststr = "";
         public bool banusersubmit;
         public bool editusersubmit;
@@ -253,7 +253,7 @@ namespace BBX.Web
                     this.DelUserPost();
                     break;
 
-                //return;
+                    //return;
             }
         }
 
@@ -688,25 +688,27 @@ namespace BBX.Web
             string text = permuserlist;
             for (int i = 0; i < text.Split('|').Length; i++)
             {
-                this.uid = Utils.StrToInt(text.Split('|')[i].Split(',')[1].ToString(), 0);
+                var pus = text.Split('|');
+                var pms = pus[i].Split(',');
+                this.uid = pms[1].ToInt();
                 if (this.uid == sid)
                 {
-                    string newValue = text.Split('|')[i].Split(',')[0] + "," + this.uid + "," + this.Cheked_Access(Utils.StrToInt(text.Split('|')[i].Split(',')[2], 0)).ToString();
+                    string newValue = pms[0] + "," + this.uid + "," + this.Cheked_Access(pms[2].ToInt());
                     if (filter == "updatepermuserlistuser")
                     {
-                        text = text.Replace(text.Split('|')[i], newValue);
+                        text = text.Replace(pus[i], newValue);
                         return text;
                     }
                     if (!(filter == "del"))
                     {
-                        return text.Split('|')[i];
+                        return pus[i];
                     }
                     ArrayList arrayList = new ArrayList(permuserlist.Split('|'));
-                    string[] array = text.Split('|');
+                    string[] array = pus;
                     for (int j = 0; j < array.Length; j++)
                     {
                         string text2 = array[j];
-                        if (Utils.StrToInt(text2.Split(',')[1], 0) == sid)
+                        if (text2.Split(',')[1].ToInt() == sid)
                         {
                             arrayList.Remove(text2);
                         }
@@ -1007,7 +1009,7 @@ namespace BBX.Web
             {
                 this.forumnav = base.ShowForumAspxRewrite(this.foruminfo.Pathlist.Trim(), this.forumid, 1);
             }
-            //this.tableid = DNTRequest.GetInt("tablelist", Utils.StrToInt(TableList.GetPostTableId(), 1));
+            //this.tableid = DNTRequest.GetInt("tablelist", TableList.GetPostTableId().ToInt(1));
             this.postlist = Post.GetUnauditPost(fidList, this.filter, this.pageid, 16);
             this.counts = Posts.GetUnauditNewPostCount(fidList, this.filter);
             this.last = ((this.counts >= 16) ? 15 : this.counts);
@@ -1053,7 +1055,7 @@ namespace BBX.Web
                 //for (int j = 0; j < array2.Length; j++)
                 //{
                 //    string text = array2[j];
-                //    //string postTableId = TableList.GetPostTableId(Utils.StrToInt(text, 0));
+                //    //string postTableId = TableList.GetPostTableId(text.ToInt(0));
                 //    dic2[postTableId] = ((!dic2.ContainsKey(postTableId)) ? "" : dic2[postTableId].ToString()) + text + ",";
                 //}
                 //foreach (var item in dic2)
@@ -1171,7 +1173,7 @@ namespace BBX.Web
                         {
                             dictionary.Add("帖子ID为<A href=\"" + this.config.Forumurl + "showtopic.aspx?pid=" + array[j] + "\">" + array[j] + "</a>  " + (DNTRequest.GetString("pm_" + array[j])), "审核通过帖子");
                             text = text + "," + array[j];
-                            this.UpdateUserCredits(Utils.StrToInt(array2[j], 0), array[j]);
+                            this.UpdateUserCredits(array2[j].ToInt(0), array[j]);
                         }
                     }
                 }

@@ -274,7 +274,7 @@ namespace BBX.Common
             }
             foreach (Match m in r[8].Matches(str))
             {
-                str = str.Replace(m.Groups[0].ToString(), "Utils.StrToInt(" + m.Groups[2] + ", 0)");
+                str = str.Replace(m.Groups[0].ToString(), "" + m.Groups[2] + ".ToInt(0)");
             }
             foreach (Match m in r[9].Matches(str))
             {

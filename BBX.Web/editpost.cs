@@ -228,7 +228,7 @@ namespace BBX.Web
                     base.AddErrLine("您的请求来路不正确，无法提交。如果您安装了某种默认屏蔽来路信息的个人防火墙软件(如 Norton Internet Security)，请设置其不要禁止来路信息后再试。");
                     return;
                 }
-                this.SetPostInfo(adminGroupInfo, this.userinfo, Utils.StrToInt(DNTRequest.GetString("htmlon"), 0) == 1);
+                this.SetPostInfo(adminGroupInfo, this.userinfo, DNTRequest.GetString("htmlon").ToInt(0) == 1);
                 if (base.IsErr())
                 {
                     return;
@@ -467,7 +467,7 @@ namespace BBX.Web
                 }
                 if (Regex.IsMatch(@string, "^[0-9]*[0-9][0-9]*$") || @string == string.Empty)
                 {
-                    num = ((Utils.StrToInt(@string, 0) > 32767) ? 32767 : Utils.StrToInt(@string, 0));
+                    num = ((@string.ToInt(0) > 32767) ? 32767 : @string.ToInt(0));
                     if (this.topic.Special != 2)
                     {
                         if (num > this.usergroupinfo.MaxPrice && this.usergroupinfo.MaxPrice > 0)
@@ -600,7 +600,7 @@ namespace BBX.Web
             {
                 this.postinfo.LastEdit = this.username + " 最后编辑于 " + Utils.GetDateTime();
             }
-            this.postinfo.UseSig = Utils.StrToInt(DNTRequest.GetString("usesig"), 0);
+            this.postinfo.UseSig = DNTRequest.GetString("usesig").ToInt(0);
             this.postinfo.HtmlOn = ((this.usergroupinfo.AllowHtml && ishtmlon) ? 1 : 0);
             this.postinfo.SmileyOff = ((this.smileyoff == 0) ? DNTRequest.GetInt("smileyoff") : this.smileyoff);
             this.postinfo.BBCodeOff = ((this.usergroupinfo.AllowCusbbCode) ? DNTRequest.GetInt("bbcodeoff") : 1);

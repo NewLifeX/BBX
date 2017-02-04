@@ -119,9 +119,9 @@ namespace BBX.Web.Admin
                         base.RegisterStartupScript("", "<script>alert('删除离线用户频率只能为正数!');</script>");
                         return;
                     }
-                    config.DeletingExpiredUserFrequency = Utils.StrToInt(this.deletingexpireduserfrequency.Text, 1);
-                    config.Maxindexsubforumcount = Utils.StrToInt(this.maxindexsubforumcount.Text, 0);
-                    config.Notificationreserveddays = Utils.StrToInt(this.notificationreserveddays.Text, 0);
+                    config.DeletingExpiredUserFrequency = this.deletingexpireduserfrequency.Text.ToInt(1);
+                    config.Maxindexsubforumcount = this.maxindexsubforumcount.Text.ToInt(0);
+                    config.Notificationreserveddays = this.notificationreserveddays.Text.ToInt(0);
                     //config.TopicQueueStatsCount = this.topicqueuestatscount.Text.ToInt();
                     config.Nocacheheaders = (int)Convert.ToInt16(this.nocacheheaders.SelectedValue);
                     config.Maxonlines = this.maxonlines.Text.ToInt();

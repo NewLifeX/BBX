@@ -182,7 +182,7 @@ namespace BBX.Forum
             string[] array = Utils.SplitString(tidlist, ",");
             for (int i = 0; i < array.Length; i++)
             {
-                //BBX.Data.Attachments.UpdateTopicAttachment(Utils.StrToInt(array[i].Trim(), -1));
+                //BBX.Data.Attachments.UpdateTopicAttachment(array[i].Trim().ToInt(-1));
                 var tid = array[i].ToInt();
                 var tp = Topic.FindByID(tid);
                 if (tp != null)
@@ -290,9 +290,9 @@ namespace BBX.Forum
                     atts[i].Pid = postId;
                     atts[i].PostDateTime = DateTime.Now;
                     atts[i].ReadPerm = 0;
-                    int num2 = Utils.StrToInt(DNTRequest.GetString("attachprice_" + str), 0);
+                    int num2 = DNTRequest.GetString("attachprice_" + str).ToInt(0);
                     atts[i].AttachPrice = num2 == 0 ? 0 : userGroupInfo.CheckMaxPrice(num2);
-                    int num3 = Utils.StrToInt(DNTRequest.GetString("readperm_" + str), 0);
+                    int num3 = DNTRequest.GetString("readperm_" + str).ToInt(0);
                     if (num3 != 0)
                     {
                         int num4 = num3;
@@ -537,16 +537,16 @@ namespace BBX.Forum
         //		int num2 = 0;
         //		while (num2 < array.Length && num2 <= GeneralConfigInfo.Current.Maxattachments)
         //		{
-        //			int aid = Utils.StrToInt(array[num2], 0);
+        //			int aid = array[num2].ToInt(0);
         //			if (aid > 0 && Utils.IsSafeSqlString(descs[num2]))
         //			{
         //				//var att = Attachments.GetAttachmentInfo(aid);
         //				var att = Attachment.FindByID(aid);
         //				att.Description = descs[num2];
-        //				att.ReadPerm = ((readpeams.Length == array.Length) ? Utils.StrToInt(readpeams[num2], 0) : 0);
+        //				att.ReadPerm = ((readpeams.Length == array.Length) ? readpeams[num2].ToInt(0) : 0);
         //				att.Tid = topicid;
         //				att.Pid = postid;
-        //				att.AttachPrice = ((prices.Length == array.Length) ? UserGroups.CheckUserGroupMaxPrice(usergroupinfo, Utils.StrToInt(prices[num2], 0)) : 0);
+        //				att.AttachPrice = ((prices.Length == array.Length) ? UserGroups.CheckUserGroupMaxPrice(usergroupinfo, prices[num2].ToInt(0)) : 0);
         //				//Attachments.UpdateAttachment(att);
         //				att.Save();
         //				num = (att.FileType.ToLower().StartsWith("image") ? 2 : 1);

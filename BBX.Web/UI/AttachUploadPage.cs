@@ -233,7 +233,7 @@ namespace BBX.Web.UI
             for (int i = 0; i < array.Length; i++)
             {
                 types[i] = Utils.CutString(array[i], 0, array[i].LastIndexOf(","));
-                sizes[i] = Utils.StrToInt(Utils.CutString(array[i], array[i].LastIndexOf(",") + 1), 0);
+                sizes[i] = Utils.CutString(array[i], array[i].LastIndexOf(",") + 1).ToInt();
             }
 
             var keys = Request.Files.Keys;

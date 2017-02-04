@@ -191,7 +191,7 @@ namespace BBX.Forum
                 var deftid = 0;
                 //if (Utils.InArray(cookie, Templates.GetValidTemplateIDList()))
                 if (Template.Has(cookie))
-                    deftid = Utils.StrToInt(cookie, config.Templateid);
+                    deftid = cookie.ToInt(config.Templateid);
 
                 var array = newUrl.Split('&');
                 for (int i = 0; i < array.Length; i++)
@@ -200,13 +200,13 @@ namespace BBX.Forum
                     var value = item.Split('=')[1];
                     if (item.IndexOf("forumid=") >= 0 && value != "")
                     {
-                        forumid = Utils.StrToInt(value, 0);
+                        forumid = value.ToInt(0);
                     }
                     else
                     {
                         if (item.IndexOf("topicid=") >= 0 && value != "")
                         {
-                            var topicInfo = Topic.FindByID(Utils.StrToInt(value, 0));
+                            var topicInfo = Topic.FindByID(value.ToInt(0));
                             if (topicInfo != null) forumid = topicInfo.Fid;
                         }
                         else

@@ -91,7 +91,7 @@ namespace BBX.Forum
         //				{
         //					if (TypeConverter.ObjectToInt(dataRow["subforumcount"]) > 0 && TypeConverter.ObjectToInt(dataRow["colcount"]) > 0)
         //					{
-        //						num2 = Utils.StrToInt(dataRow["colcount"].ToString(), 0);
+        //						num2 = dataRow["colcount"].ToString().ToInt(0);
         //						num = num2;
         //						dataRow["status"] = num + 1;
         //					}

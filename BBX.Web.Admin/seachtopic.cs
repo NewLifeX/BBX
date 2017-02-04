@@ -47,7 +47,7 @@ namespace BBX.Web.Admin
         {
             if (base.CheckCookie())
             {
-                //string searchTopicsCondition = Topics.GetSearchTopicsCondition(Utils.StrToInt(this.forumid.SelectedValue, 0), this.keyword.Text, this.displayorder.SelectedValue, this.digest.SelectedValue, this.attachment.SelectedValue, this.poster.Text, this.lowerupper.Checked, this.viewsmin.Text, this.viewsmax.Text, this.repliesmax.Text, this.repliesmin.Text, this.rate.Text, this.lastpost.Text, this.postdatetimeStart.SelectedDate, this.postdatetimeEnd.SelectedDate);
+                //string searchTopicsCondition = Topics.GetSearchTopicsCondition(this.forumid.SelectedValue.ToInt(0), this.keyword.Text, this.displayorder.SelectedValue, this.digest.SelectedValue, this.attachment.SelectedValue, this.poster.Text, this.lowerupper.Checked, this.viewsmin.Text, this.viewsmax.Text, this.repliesmax.Text, this.repliesmin.Text, this.rate.Text, this.lastpost.Text, this.postdatetimeStart.SelectedDate, this.postdatetimeEnd.SelectedDate);
                 //this.Session["topicswhere"] = searchTopicsCondition;
                 this.Session["topicswhere"] = Topic.SearchWhere(forumid.SelectedValue.ToInt(), this.keyword.Text, this.displayorder.SelectedValue, this.digest.SelectedValue, this.attachment.SelectedValue, this.poster.Text, this.viewsmin.Text.ToInt(), this.viewsmax.Text.ToInt(), this.repliesmax.Text.ToInt(), this.repliesmin.Text.ToInt(), this.rate.Text.ToInt(), this.lastpost.Text.ToInt(), this.postdatetimeStart.SelectedDate, this.postdatetimeEnd.SelectedDate);
                 base.Response.Redirect("forum_topicsgrid.aspx");

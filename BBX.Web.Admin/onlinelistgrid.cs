@@ -87,8 +87,8 @@ namespace BBX.Web.Admin
 
 		protected void DataGrid_Update(object sender, DataGridCommandEventArgs E)
 		{
-			int groupid = Utils.StrToInt(this.DataGrid1.DataKeys[E.Item.ItemIndex].ToString(), 0);
-			int num = Utils.StrToInt(((TextBox)E.Item.Cells[2].Controls[0]).Text, 0);
+			int groupid = this.DataGrid1.DataKeys[E.Item.ItemIndex].ToString().ToInt(0);
+			int num = ((TextBox)E.Item.Cells[2].Controls[0]).Text.ToInt(0);
 			if (num < 0) num = 0;
 
 			string text = ((TextBox)E.Item.Cells[3].Controls[0]).Text;

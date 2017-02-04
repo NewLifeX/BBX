@@ -26,7 +26,7 @@ namespace BBX.Web.Admin
         {
             if (base.CheckCookie())
             {
-                AdminForums.CreateSmilies(Utils.StrToInt(this.displayorder.Text, 0), 1, this.code.Text, this.url.UpdateFile(), this.userid, this.username, this.usergroupid, this.grouptitle, this.ip);
+                AdminForums.CreateSmilies(this.displayorder.Text.ToInt(0), 1, this.code.Text, this.url.UpdateFile(), this.userid, this.username, this.usergroupid, this.grouptitle, this.ip);
                 base.RegisterStartupScript("PAGE", "window.location.href='forum_iconfilegrid.aspx';");
             }
         }

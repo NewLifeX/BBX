@@ -163,7 +163,7 @@ namespace BBX.Entity
                 var user = User.FindByID(uid);
                 if ((useradminid == 1 || userid == user.ID) && expiration[i] != hiddenexpiration[i])
                 {
-                    //BBX.Data.Ips.EditBanIp(Utils.StrToInt(hiddenid[i].ToString(), -1), expiration[i]);
+                    //BBX.Data.Ips.EditBanIp(hiddenid[i].ToString().ToInt(-1), expiration[i]);
                     var ban = FindByID((Int16)uid);
                     if (ban != null)
                     {

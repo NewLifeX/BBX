@@ -92,7 +92,7 @@ namespace BBX.Web
 				IUser user = this.GetShortUserInfo();
 				if (user != null)
 				{
-					if ((user.GroupID == 4 || user.GroupID == 5) && user.GroupExpiry != 0 && user.GroupExpiry <= Utils.StrToInt(DateTime.Now.ToString("yyyyMMdd"), 0))
+					if ((user.GroupID == 4 || user.GroupID == 5) && user.GroupExpiry != 0 && user.GroupExpiry <= DateTime.Now.ToString("yyyyMMdd").ToInt(0))
 					{
 						var creditsUserGroupId = CreditsFacade.GetCreditsUserGroupId((float)user.Credits);
 						this.usergroupid = ((creditsUserGroupId.ID != 0) ? creditsUserGroupId.ID : this.usergroupid);

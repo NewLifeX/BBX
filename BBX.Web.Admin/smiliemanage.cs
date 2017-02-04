@@ -160,7 +160,7 @@ namespace BBX.Web.Admin
                     }
                     else
                     {
-                        AdminForums.UpdateSmilies(int.Parse(s), int.Parse(controlValue2), Utils.StrToInt(controlValue3, 0), controlValue, controlValue4, this.userid, this.username, this.usergroupid, this.grouptitle, this.ip);
+                        AdminForums.UpdateSmilies(int.Parse(s), int.Parse(controlValue2), controlValue3.ToInt(0), controlValue, controlValue4, this.userid, this.username, this.usergroupid, this.grouptitle, this.ip);
                     }
                 }
                 if (flag)

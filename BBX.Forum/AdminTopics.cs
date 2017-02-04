@@ -46,7 +46,7 @@ namespace BBX.Forum
         //    {
         //        if (dataRow["attachment"].ToString().Equals("1"))
         //        {
-        //            dataRow["attachment"] = Attachment.FindCountByPid(Utils.StrToInt(dataRow["pid"], 0));
+        //            dataRow["attachment"] = Attachment.FindCountByPid(dataRow["pid"].ToInt(0));
         //        }
         //    }
         //    return dataSet;

@@ -286,7 +286,7 @@ namespace BBX.Entity
                         {
                             current.PollID = pollInfo.ID;
                             current.Name = Utils.GetSubString(array[num], 80, "");
-                            current.DisplayOrder = (Utils.StrIsNullOrEmpty(array2[num]) ? (num + 1) : Utils.StrToInt(array2[num], 0));
+                            current.DisplayOrder = (Utils.StrIsNullOrEmpty(array2[num]) ? (num + 1) : array2[num].ToInt(0));
                             //BBX.Data.Polls.UpdatePollOption(current);
                             current.Update();
                             flag2 = true;
@@ -297,7 +297,7 @@ namespace BBX.Entity
                     {
                         new PollOption()
                         {
-                            DisplayOrder = Utils.StrIsNullOrEmpty(array2[num]) ? (num + 1) : Utils.StrToInt(array2[num], 0),
+                            DisplayOrder = Utils.StrIsNullOrEmpty(array2[num]) ? (num + 1) : array2[num].ToInt(0),
                             PollID = pollInfo.ID,
                             Name = Utils.GetSubString(array[num], 80, ""),
                             Tid = tid,
@@ -330,7 +330,7 @@ namespace BBX.Entity
             for (int i = 0; i < array2.Length; i++)
             {
                 string expression = array2[i];
-                if (Utils.StrToInt(expression, -1) == -1)
+                if (expression.ToInt(-1) == -1)
                 {
                     return -1;
                 }

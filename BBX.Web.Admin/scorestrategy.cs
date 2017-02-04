@@ -61,7 +61,7 @@ namespace BBX.Web.Admin
 			{
 				this.Literal1.Text = "发回复积分策略";
 			}
-			//DataTable forumField = Forums.GetForumField(Utils.StrToInt(fid, 0), fieldName);
+			//DataTable forumField = Forums.GetForumField(fid.ToInt(0), fieldName);
 			//if (forumField.Rows.Count == 0)
 			var f = XForum.FindByID(fid.ToInt());
 			if (f == null)

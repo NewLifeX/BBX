@@ -178,7 +178,7 @@ namespace BBX.Web.Admin
                 if (this.targetforumid.SelectedValue != "0")
                 {
                     var f = XForum.FindByID(this.targetforumid.SelectedValue.ToInt());
-                    //var forumInfo = Forums.GetForumInfo(Utils.StrToInt(this.targetforumid.SelectedValue, 0));
+                    //var forumInfo = Forums.GetForumInfo(this.targetforumid.SelectedValue.ToInt(0));
                     var forumInfo = f as IXForum;
                     //string parentidlist;
                     //if (forumInfo.Parentidlist == "0")
@@ -186,7 +186,7 @@ namespace BBX.Web.Admin
                     //else
                     //    parentidlist = (forumInfo.Parentidlist + "").Trim() + "," + forumInfo.ID;
 
-                    //DataTable forumList = Forums.GetForumList(Utils.StrToInt(this.targetforumid.SelectedValue, 0));
+                    //DataTable forumList = Forums.GetForumList(this.targetforumid.SelectedValue.ToInt(0));
                     var forumList = f.AllChilds;
                     int afterDisplayOrder;
                     //if (forumList.Rows.Count > 0)

@@ -291,7 +291,7 @@ namespace BBX.Web
             pi.Layer++;
             //pi.Poster = this.username;
             //pi.Posterid = this.userid;
-            bool flag = Utils.StrToInt(DNTRequest.GetString("htmlon"), 0) == 1;
+            bool flag = DNTRequest.GetString("htmlon").ToInt(0) == 1;
             var msg = pi.Message;
             if (this.useradminid == 1)
             {

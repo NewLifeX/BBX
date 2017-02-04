@@ -1,3 +1,4 @@
+using System;
 using System.Web;
 using BBX.Common;
 using BBX.Config;
@@ -17,7 +18,7 @@ namespace BBX.Web
             }
             else
             {
-                num = Utils.StrToInt(ForumUtils.GetCookie("isframe"), -1);
+                num = ForumUtils.GetCookie("isframe").ToInt(-1);
                 num = ((num == -1) ? this.config.Isframeshow : num);
             }
             if (num == 0)

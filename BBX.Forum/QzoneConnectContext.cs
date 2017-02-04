@@ -48,7 +48,7 @@ namespace BBX.Forum
                 if (connect == null)
                 {
                     connect = new QzoneConnectContext();
-                    //var uid = Utils.StrToInt(ForumUtils.GetCookie("userid"), -1);
+                    //var uid = ForumUtils.GetCookie("userid").ToInt(-1);
                     //connect.Token = QzoneConnectToken.FindByUid(ForumUtils.GetCookie("userid").ToInt());
                 }
 
@@ -80,7 +80,7 @@ namespace BBX.Forum
 
             Current = this;
 
-            //var uid = Utils.StrToInt(ForumUtils.GetCookie("userid"), -1);
+            //var uid = ForumUtils.GetCookie("userid").ToInt(-1);
             Token = QzoneConnectToken.FindByUid(ForumUtils.GetCookie("userid").ToInt());
         }
         #endregion

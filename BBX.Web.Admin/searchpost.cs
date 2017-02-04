@@ -37,7 +37,7 @@ namespace BBX.Web.Admin
         {
             if (base.CheckCookie())
             {
-                string value = Post.SearchSQL(Utils.StrToInt(this.forumid.SelectedValue, 0), this.postdatetimeStart.SelectedDate, this.postdatetimeEnd.SelectedDate, this.poster.Text, this.lowerupper.Checked, this.Ip.Text, this.message.Text);
+                string value = Post.SearchSQL(this.forumid.SelectedValue.ToInt(0), this.postdatetimeStart.SelectedDate, this.postdatetimeEnd.SelectedDate, this.poster.Text, this.lowerupper.Checked, this.Ip.Text, this.message.Text);
                 this.Session["seachpost_fid"] = this.forumid.SelectedValue;
                 //this.Session["posttablename"] = BaseConfigs.GetTablePrefix + "posts" + Request["postlist:postslist"];
                 this.Session["postswhere"] = value;

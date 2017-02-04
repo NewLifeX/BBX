@@ -141,7 +141,7 @@ namespace BBX.Control
                 object obj = this.ViewState["LeftOffSetX"];
                 if (obj != null)
                 {
-                    return Utils.StrToInt(obj.ToString(), 0);
+                    return obj.ToString().ToInt(0);
                 }
                 return 0;
             }

@@ -63,7 +63,7 @@ namespace BBX.Web.Admin
                     base.Response.Redirect("../user/editsysadminusergroup.aspx?groupid=" + this.Usergroupid.SelectedValue);
                     return;
                 }
-                int radminid = UserGroup.FindByID(Utils.StrToInt(this.Usergroupid.SelectedValue, 0)).RadminID;
+                int radminid = UserGroup.FindByID(this.Usergroupid.SelectedValue.ToInt(0)).RadminID;
                 if (radminid == 0)
                 {
                     base.Response.Redirect("../user/editusergroup.aspx?groupid=" + this.Usergroupid.SelectedValue);

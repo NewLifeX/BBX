@@ -41,7 +41,7 @@ namespace BBX.Web.Admin
                     base.RegisterStartupScript("", "<script>alert('请选择相应的目标论坛!');</script>");
                     return;
                 }
-                var forumInfo = Forums.GetForumInfo(Utils.StrToInt(this.targetforumid.SelectedValue, 0));
+                var forumInfo = Forums.GetForumInfo(this.targetforumid.SelectedValue.ToInt(0));
                 if (forumInfo != null && forumInfo.ParentID == 0 && forumInfo.Layer == 0)
                 {
                     base.RegisterStartupScript("", "<script>alert('您所选择的目标论坛是\"论坛分类\"而不是\"论坛版块\",因此合并无效!');</script>");

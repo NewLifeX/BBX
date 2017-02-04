@@ -87,7 +87,7 @@ namespace BBX.Web.Admin
                     base.RegisterStartupScript("", "<script>alert('您选择的结束日期已过期,请重新选择一个大于今天的日期');showadhint(Form1.type.value);showparameters(Form1.parameters.value);</script>");
                     return;
                 }
-                Advertisement.CreateAd(Utils.StrToInt(available.SelectedValue, 0), type.SelectedValue, Utils.StrToInt(this.displayorder.Text, 0), title.Text, TargetFID, GetParameters(), GetCode(), text, text2);
+                Advertisement.CreateAd(available.SelectedValue.ToInt(0), type.SelectedValue, this.displayorder.Text.ToInt(0), title.Text, TargetFID, GetParameters(), GetCode(), text, text2);
                 XCache.Remove(CacheKeys.FORUM_ADVERTISEMENTS);
                 base.RegisterStartupScript("PAGE", "window.location.href='advsgrid.aspx';");
             }

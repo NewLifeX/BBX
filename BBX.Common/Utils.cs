@@ -9,39 +9,17 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
-using System.Web.UI;
 using System.Xml;
 using NewLife.Log;
-using NewLife.Reflection;
 
 namespace BBX.Common
 {
     public class Utils
     {
-        //public class VersionInfo
-        //{
-        //    public int FileMajorPart { get { return 1; } }
-
-        //    public int FileMinorPart { get { return 0; } }
-
-        //    public int FileBuildPart { get { return 1031; } }
-
-        //    public string ProductName { get { return "BBX"; } }
-
-        //    public string LegalCopyright { get { return "2012, NewLife"; } }
-        //}
-
-        //public const string ASSEMBLY_VERSION = "1.0.1031";
-        //public const string ASSEMBLY_YEAR = "2012";
-        //private const string unreservedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.";
         private static Regex RegexBr = new Regex("(\\r\\n)", RegexOptions.IgnoreCase);
         public static Regex RegexFont = new Regex("<font color=\".*?\">([\\s\\S]+?)</font>", GetRegexCompiledOptions());
-        //static readonly VersionInfo AssemblyFileVersion = new VersionInfo();
-        //private static string TemplateCookieName = string.Format("bbxtemplateid_{0}_{1}_{2}", AssemblyFileVersion.FileMajorPart, AssemblyFileVersion.FileMinorPart, AssemblyFileVersion.FileBuildPart);
 
         private static string[] browerNames = new string[] { "MSIE", "Firefox", "Opera", "Netscape", "Safari", "Lynx", "Konqueror", "Mozilla" };
-
-        //public static string[] Monthes { get { return new string[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }; } }
 
         public static String Version { get { return Assembly.GetExecutingAssembly().GetName().Version.ToString(); } }
 
@@ -52,16 +30,6 @@ namespace BBX.Common
         public static String CompanyName { get { return "NewLife Team"; } }
 
         public static String CompanyUrl { get { return "http://www.NewLifeX.com"; } }
-
-        //public static string GetAssemblyVersion()
-        //{
-        //    return string.Format("{0}.{1}.{2}", AssemblyFileVersion.FileMajorPart, AssemblyFileVersion.FileMinorPart, AssemblyFileVersion.FileBuildPart);
-        //}
-
-        //public static string GetAssemblyProductName()
-        //{
-        //    return AssemblyFileVersion.ProductName;
-        //}
 
         public static RegexOptions GetRegexCompiledOptions() { return RegexOptions.None; }
 
@@ -123,23 +91,6 @@ namespace BBX.Common
         {
             return InArray(str, SplitString(stringarray, strsplit), false);
         }
-
-        //public static bool InArray(string str, string stringarray, string strsplit, bool caseInsensetive)
-        //{
-        //    return InArray(str, SplitString(stringarray, strsplit), caseInsensetive);
-        //}
-
-        //public static string RTrim(string str)
-        //{
-        //    for (int i = str.Length; i >= 0; i--)
-        //    {
-        //        if (str[i].Equals(" ") || str[i].Equals("\r") || str[i].Equals("\n"))
-        //        {
-        //            str.Remove(i, 1);
-        //        }
-        //    }
-        //    return str;
-        //}
 
         public static string ClearBR(string str)
         {
@@ -266,22 +217,6 @@ namespace BBX.Common
             HttpContext.Current.Response.End();
         }
 
-        //public static bool IsImgFilename(string filename)
-        //{
-        //    filename = filename.Trim();
-        //    if (filename.EndsWith(".") || filename.IndexOf(".") == -1)
-        //    {
-        //        return false;
-        //    }
-        //    string a = filename.Substring(filename.LastIndexOf(".") + 1).ToLower();
-        //    return a == "jpg" || a == "jpeg" || a == "png" || a == "bmp" || a == "gif";
-        //}
-
-        //public static string IntToStr(int intValue)
-        //{
-        //    return Convert.ToString(intValue);
-        //}
-
         public static string MD5(string str)
         {
             byte[] array = Encoding.UTF8.GetBytes(str);
@@ -293,14 +228,6 @@ namespace BBX.Common
             }
             return text;
         }
-
-        //public static string SHA256(string str)
-        //{
-        //    byte[] bytes = Encoding.UTF8.GetBytes(str);
-        //    SHA256Managed sHA256Managed = new SHA256Managed();
-        //    byte[] inArray = sHA256Managed.ComputeHash(bytes);
-        //    return Convert.ToBase64String(inArray);
-        //}
 
         public static string GetSubString(string p_SrcString, int p_Length, string p_TailString)
         {
@@ -421,11 +348,6 @@ namespace BBX.Common
             return text;
         }
 
-        public static string ReplaceString(string SourceString, string SearchString, string ReplaceString, bool IsCaseInsensetive)
-        {
-            return Regex.Replace(SourceString, Regex.Escape(SearchString), ReplaceString, IsCaseInsensetive ? RegexOptions.IgnoreCase : RegexOptions.None);
-        }
-
         public static string GetSpacesString(int spacesCount)
         {
             StringBuilder stringBuilder = new StringBuilder();
@@ -444,11 +366,6 @@ namespace BBX.Common
         public static bool IsValidDoEmail(string strEmail)
         {
             return Regex.IsMatch(strEmail, "^@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([\\w-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$");
-        }
-
-        public static bool IsURL(string strUrl)
-        {
-            return Regex.IsMatch(strUrl, "^(http|https)\\://([a-zA-Z0-9\\.\\-]+(\\:[a-zA-Z0-9\\.&%\\$\\-]+)*@)*((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|localhost|([a-zA-Z0-9\\-]+\\.)*[a-zA-Z0-9\\-]+\\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{1,10}))(\\:[0-9]+)*(/($|[a-zA-Z0-9\\.\\,\\?\\'\\\\\\+&%\\$#\\=~_\\-]+))*$");
         }
 
         public static string GetEmailHostName(string strEmail)
@@ -474,11 +391,6 @@ namespace BBX.Common
         {
             return !Regex.IsMatch(str, "^\\s*$|^c:\\\\con\\\\con$|[%,\\*\"\\s\\t\\<\\>\\&]|游客|^Guest");
         }
-
-        //public static string CleanInput(string strIn)
-        //{
-        //    return Regex.Replace(strIn.Trim(), "[^\\w\\.@-]", "");
-        //}
 
         public static string GetFilename(string url)
         {
@@ -506,31 +418,6 @@ namespace BBX.Common
             return result;
         }
 
-        //public static string GetDate()
-        //{
-        //    return DateTime.Now.ToString("yyyy-MM-dd");
-        //}
-
-        //public static string GetDate(string datetimestr, string replacestr)
-        //{
-        //    if (String.IsNullOrEmpty(datetimestr)) return replacestr;
-
-        //    try
-        //    {
-        //        datetimestr = datetimestr.ToDateTime().ToString("yyyy-MM-dd").Replace("1900-01-01", replacestr);
-        //    }
-        //    catch
-        //    {
-        //        return replacestr;
-        //    }
-        //    return datetimestr;
-        //}
-
-        //public static string GetTime()
-        //{
-        //    return DateTime.Now.ToString("HH:mm:ss");
-        //}
-
         public static string GetDateTime()
         {
             return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -540,11 +427,6 @@ namespace BBX.Common
         {
             return DateTime.Now.AddDays((double)relativeday).ToString("yyyy-MM-dd HH:mm:ss");
         }
-
-        //public static string GetDateTimeF()
-        //{
-        //    return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fffffff");
-        //}
 
         public static string GetStandardDateTime(string fDateTime, string formatStr)
         {
@@ -565,58 +447,10 @@ namespace BBX.Common
             return GetStandardDateTime(fDateTime, "yyyy-MM-dd HH:mm:ss");
         }
 
-        //public static string GetStandardDate(string fDate)
-        //{
-        //    return GetStandardDateTime(fDate, "yyyy-MM-dd");
-        //}
-
         public static bool IsTime(string timeval)
         {
             return Regex.IsMatch(timeval, "^((([0-1]?[0-9])|(2[0-3])):([0-5]?[0-9])(:[0-5]?[0-9])?)$");
         }
-
-        //public static string GetRealIP()
-        //{
-        //    return WebHelper.UserHost;
-        //}
-
-        //public static string mashSQL(string str)
-        //{
-        //    if (str != null)
-        //    {
-        //        return str.Replace("'", "'");
-        //    }
-        //    return "";
-        //}
-
-        //public static string ChkSQL(string str)
-        //{
-        //    if (str != null)
-        //    {
-        //        return str.Replace("'", "''");
-        //    }
-        //    return "";
-        //}
-
-        //public void transHtml(string path, string outpath)
-        //{
-        //    Page page = new Page();
-        //    StringWriter stringWriter = new StringWriter();
-        //    page.Server.Execute(path, stringWriter);
-        //    FileStream fileStream;
-        //    if (File.Exists(page.Server.MapPath("") + "\\" + outpath))
-        //    {
-        //        File.Delete(page.Server.MapPath("") + "\\" + outpath);
-        //        fileStream = File.Create(page.Server.MapPath("") + "\\" + outpath);
-        //    }
-        //    else
-        //    {
-        //        fileStream = File.Create(page.Server.MapPath("") + "\\" + outpath);
-        //    }
-        //    byte[] bytes = Encoding.Default.GetBytes(stringWriter.ToString());
-        //    fileStream.Write(bytes, 0, bytes.Length);
-        //    fileStream.Close();
-        //}
 
         public static string[] SplitString(string str, string strSplit)
         {
@@ -752,18 +586,6 @@ namespace BBX.Common
             return strHtml;
         }
 
-        //public static string StrFilter(string str, string bantext)
-        //{
-        //    string[] array = SplitString(bantext, "\r\n");
-        //    for (int i = 0; i < array.Length; i++)
-        //    {
-        //        string oldValue = array[i].Substring(0, array[i].IndexOf("="));
-        //        string newValue = array[i].Substring(array[i].IndexOf("=") + 1);
-        //        str = str.Replace(oldValue, newValue);
-        //    }
-        //    return str;
-        //}
-
         public static string GetStaticPageNumbers(int curPage, int countPage, string url, string expname, int extendPage)
         {
             return GetStaticPageNumbers(curPage, countPage, url, expname, extendPage, 0);
@@ -877,67 +699,6 @@ namespace BBX.Common
             stringBuilder.Append(value2);
             return stringBuilder.ToString();
         }
-
-        //public static string GetPostPageNumbers(int countPage, string url, string expname, int extendPage)
-        //{
-        //    int num = 1;
-        //    int num2 = 1;
-        //    string value = "<a href=\"" + url + "-1" + expname + "\">&laquo;</a>";
-        //    string value2 = "<a href=\"" + url + "-" + countPage + expname + "\">&raquo;</a>";
-        //    if (countPage < 1)
-        //    {
-        //        countPage = 1;
-        //    }
-        //    if (extendPage < 3)
-        //    {
-        //        extendPage = 2;
-        //    }
-        //    int num3;
-        //    if (countPage > extendPage)
-        //    {
-        //        if (num2 - extendPage / 2 > 0)
-        //        {
-        //            if (num2 + extendPage / 2 < countPage)
-        //            {
-        //                num = num2 - extendPage / 2;
-        //                num3 = num + extendPage - 1;
-        //            }
-        //            else
-        //            {
-        //                num3 = countPage;
-        //                num = num3 - extendPage + 1;
-        //                value2 = "";
-        //            }
-        //        }
-        //        else
-        //        {
-        //            num3 = extendPage;
-        //            value = "";
-        //        }
-        //    }
-        //    else
-        //    {
-        //        num = 1;
-        //        num3 = countPage;
-        //        value = "";
-        //        value2 = "";
-        //    }
-        //    StringBuilder stringBuilder = new StringBuilder("");
-        //    stringBuilder.Append(value);
-        //    for (int i = num; i <= num3; i++)
-        //    {
-        //        stringBuilder.Append("<a href=\"");
-        //        stringBuilder.Append(url);
-        //        stringBuilder.Append("-");
-        //        stringBuilder.Append(i);
-        //        stringBuilder.Append(expname);
-        //        stringBuilder.Append("\">");
-        //        stringBuilder.Append(i);
-        //        stringBuilder.Append("</a>");
-        //    }
-        //    stringBuilder.Append(value2);
-        //    return stringBuilder.ToString();
-        //}
 
         public static string GetPageNumbers(int curPage, int countPage, string url, int extendPage)
         {
@@ -1056,213 +817,8 @@ namespace BBX.Common
             return HttpUtility.UrlDecode(str);
         }
 
-        //public static string PHPUrlEncode(string oriString)
-        //{
-        //    StringBuilder stringBuilder = new StringBuilder();
-        //    for (int i = 0; i < oriString.Length; i++)
-        //    {
-        //        char c = oriString[i];
-        //        if ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.".IndexOf(c) != -1)
-        //        {
-        //            stringBuilder.Append(c);
-        //        }
-        //        else
-        //        {
-        //            if (c == ' ')
-        //            {
-        //                stringBuilder.Append("+");
-        //            }
-        //            else
-        //            {
-        //                byte[] bytes = Encoding.UTF8.GetBytes(c.ToString());
-        //                byte[] array = bytes;
-        //                for (int j = 0; j < array.Length; j++)
-        //                {
-        //                    byte value = array[j];
-        //                    stringBuilder.Append('%' + Convert.ToString(value, 16).ToUpper());
-        //                }
-        //            }
-        //        }
-        //    }
-        //    return stringBuilder.ToString();
-        //}
-
-        //public static string[] FindNoUTF8File(string Path)
-        //{
-        //    StringBuilder stringBuilder = new StringBuilder();
-        //    DirectoryInfo directoryInfo = new DirectoryInfo(Path);
-        //    FileInfo[] files = directoryInfo.GetFiles();
-        //    for (int i = 0; i < files.Length; i++)
-        //    {
-        //        if (files[i].Extension.ToLower().Equals(".htm"))
-        //        {
-        //            FileStream fileStream = new FileStream(files[i].FullName, FileMode.Open, FileAccess.Read);
-        //            bool flag = IsUTF8(fileStream);
-        //            fileStream.Close();
-        //            if (!flag)
-        //            {
-        //                stringBuilder.Append(files[i].FullName);
-        //                stringBuilder.Append("\r\n");
-        //            }
-        //        }
-        //    }
-        //    return SplitString(stringBuilder.ToString(), "\r\n");
-        //}
-
-        //private static bool IsUTF8(FileStream sbInputStream)
-        //{
-        //    bool flag = true;
-        //    long length = sbInputStream.Length;
-        //    byte b = 0;
-        //    int num = 0;
-        //    while ((long)num < length)
-        //    {
-        //        byte b2 = (byte)sbInputStream.ReadByte();
-        //        if ((b2 & 128) != 0)
-        //        {
-        //            flag = false;
-        //        }
-        //        if (b == 0)
-        //        {
-        //            if (b2 >= 128)
-        //            {
-        //                do
-        //                {
-        //                    b2 = (byte)(b2 << 1);
-        //                    b += 1;
-        //                }
-        //                while ((b2 & 128) != 0);
-        //                b -= 1;
-        //                if (b == 0)
-        //                {
-        //                    return false;
-        //                }
-        //            }
-        //        }
-        //        else
-        //        {
-        //            if ((b2 & 192) != 128)
-        //            {
-        //                return false;
-        //            }
-        //            b -= 1;
-        //        }
-        //        num++;
-        //    }
-        //    return b <= 0 && !flag;
-        //}
-
-        //public static string FormatBytesStr(int bytes)
-        //{
-        //    if (bytes > 1073741824)
-        //    {
-        //        return ((double)(bytes / 1073741824)).ToString("0") + "G";
-        //    }
-        //    if (bytes > 1048576)
-        //    {
-        //        return ((double)(bytes / 1048576)).ToString("0") + "M";
-        //    }
-        //    if (bytes > 1024)
-        //    {
-        //        return ((double)(bytes / 1024)).ToString("0") + "K";
-        //    }
-        //    return bytes.ToString() + "Bytes";
-        //}
-
-        //public static int SafeInt32(object objNum)
-        //{
-        //    if (objNum == null)
-        //    {
-        //        return 0;
-        //    }
-        //    string text = objNum.ToString();
-        //    if (!IsNumeric(text))
-        //    {
-        //        return 0;
-        //    }
-        //    if (text.ToString().Length <= 9)
-        //    {
-        //        return int.Parse(text);
-        //    }
-        //    if (text.StartsWith("-"))
-        //    {
-        //        return -2147483648;
-        //    }
-        //    return 2147483647;
-        //}
-
-        //public static int StrDateDiffSeconds(string time, int Sec)
-        //{
-        //    if (StrIsNullOrEmpty(time))
-        //    {
-        //        return 1;
-        //    }
-        //    DateTime dateTime = TypeConverter.StrToDateTime(time, DateTime.Parse("1900-01-01"));
-        //    if (dateTime.ToString("yyyy-MM-dd") == "1900-01-01")
-        //    {
-        //        return 1;
-        //    }
-        //    TimeSpan timeSpan = DateTime.Now - dateTime.AddSeconds((double)Sec);
-        //    if (timeSpan.TotalSeconds > 2147483647.0)
-        //    {
-        //        return 2147483647;
-        //    }
-        //    if (timeSpan.TotalSeconds < -2147483648.0)
-        //    {
-        //        return -2147483648;
-        //    }
-        //    return (int)timeSpan.TotalSeconds;
-        //}
-
-        //public static int StrDateDiffMinutes(string time, int minutes)
-        //{
-        //    if (StrIsNullOrEmpty(time))
-        //    {
-        //        return 1;
-        //    }
-        //    DateTime dateTime = TypeConverter.StrToDateTime(time, DateTime.Parse("1900-01-01"));
-        //    if (dateTime.ToString("yyyy-MM-dd") == "1900-01-01")
-        //    {
-        //        return 1;
-        //    }
-        //    TimeSpan timeSpan = DateTime.Now - dateTime.AddMinutes((double)minutes);
-        //    if (timeSpan.TotalMinutes > 2147483647.0)
-        //    {
-        //        return 2147483647;
-        //    }
-        //    if (timeSpan.TotalMinutes < -2147483648.0)
-        //    {
-        //        return -2147483648;
-        //    }
-        //    return (int)timeSpan.TotalMinutes;
-        //}
-
-        //public static int StrDateDiffHours(string time, int hours)
-        //{
-        //    if (StrIsNullOrEmpty(time))
-        //    {
-        //        return 1;
-        //    }
-        //    DateTime dateTime = TypeConverter.StrToDateTime(time, DateTime.Parse("1900-01-01"));
-        //    if (dateTime.ToString("yyyy-MM-dd") == "1900-01-01")
-        //    {
-        //        return 1;
-        //    }
-        //    TimeSpan timeSpan = DateTime.Now - dateTime.AddHours((double)hours);
-        //    if (timeSpan.TotalHours > 2147483647.0)
-        //    {
-        //        return 2147483647;
-        //    }
-        //    if (timeSpan.TotalHours < -2147483648.0)
-        //    {
-        //        return -2147483648;
-        //    }
-        //    return (int)timeSpan.TotalHours;
-        //}
-
         public static bool CreateDir(string name)
         {
-            //return MakeSureDirectoryPathExists(name);
             try
             {
                 Directory.CreateDirectory(name);
@@ -1319,7 +875,6 @@ namespace BBX.Common
 
         public static string GetAssemblyCopyright()
         {
-            //return AssemblyFileVersion.LegalCopyright;
             return "2012-{0}, NewLife".F(DateTime.Now.Year);
         }
 
@@ -1333,17 +888,6 @@ namespace BBX.Common
             httpCookie.Value = strValue;
             HttpContext.Current.Response.AppendCookie(httpCookie);
         }
-
-        //public static void WriteCookie(string strName, string key, string strValue)
-        //{
-        //    HttpCookie httpCookie = HttpContext.Current.Request.Cookies[strName];
-        //    if (httpCookie == null)
-        //    {
-        //        httpCookie = new HttpCookie(strName);
-        //    }
-        //    httpCookie[key] = strValue;
-        //    HttpContext.Current.Response.AppendCookie(httpCookie);
-        //}
 
         public static void WriteCookie(string strName, string strValue, int expires)
         {
@@ -1422,11 +966,6 @@ namespace BBX.Common
             return Int32.TryParse(Expression + "", out n);
         }
 
-        public static int StrToInt(string expression, int defValue)
-        {
-            return expression.ToInt(defValue);
-        }
-
         public static bool IsRuleTip(Hashtable NewHash, string ruletype, out string key)
         {
             key = "";
@@ -1481,13 +1020,6 @@ namespace BBX.Common
             }
             return true;
         }
-
-        //public static string ClearLastChar(string str)
-        //{
-        //    if (String.IsNullOrEmpty(str)) return String.Empty;
-
-        //    return str.Substring(0, str.Length - 1);
-        //}
 
         public static bool BackupFile(string sourceFileName, string destFileName, bool overwrite)
         {
@@ -1550,8 +1082,6 @@ namespace BBX.Common
 
         public static string GetTemplateCookieName()
         {
-            //return TemplateCookieName;
-
             var asm = Assembly.GetExecutingAssembly();
             var ver = asm.GetName().Version;
             return "bbxtemplateid_{0}_{1}_{2}_{3}".F(ver.Major, ver.Minor, ver.Build, ver.Revision);
@@ -1709,19 +1239,8 @@ namespace BBX.Common
 
         public static bool IsNumericList(string numList)
         {
-            //return !StrIsNullOrEmpty(numList) && IsNumericArray(numList.Split(','));
             return !numList.IsNullOrWhiteSpace() && numList.SplitAsInt(",").Length > 0;
         }
-
-        //public static bool CheckColorValue(string color)
-        //{
-        //    if (StrIsNullOrEmpty(color))
-        //    {
-        //        return false;
-        //    }
-        //    color = color.Trim().Trim('#');
-        //    return (color.Length == 3 || color.Length == 6) && !Regex.IsMatch(color, "[^0-9a-f]", RegexOptions.IgnoreCase);
-        //}
 
         public static string GetAjaxPageNumbers(int curPage, int countPage, string callback, int extendPage)
         {
@@ -1829,24 +1348,6 @@ namespace BBX.Common
             return sourceStr.Replace("\"", "\\\"");
         }
 
-        //public static string MergeString(string source, string target)
-        //{
-        //    return MergeString(source, target, ",");
-        //}
-
-        //public static string MergeString(string source, string target, string mergechar)
-        //{
-        //    if (StrIsNullOrEmpty(target))
-        //    {
-        //        target = source;
-        //    }
-        //    else
-        //    {
-        //        target = target + mergechar + source;
-        //    }
-        //    return target;
-        //}
-
         public static string ClearUBB(string sDetail)
         {
             return Regex.Replace(sDetail, "\\[[^\\]]*?\\]", string.Empty, RegexOptions.IgnoreCase);
@@ -1871,11 +1372,6 @@ namespace BBX.Common
         {
             return GetHttpWebResponse(url, "POST", string.Empty);
         }
-
-        //public static string GetHttpWebResponse(string url, string postData)
-        //{
-        //    return GetHttpWebResponse(url, "POST", postData);
-        //}
 
         public static string GetHttpWebResponse(string url, string method, string postData)
         {
@@ -1916,20 +1412,6 @@ namespace BBX.Common
             }
             return result;
         }
-
-        //public static T GetEnum<T>(string value, T defValue)
-        //{
-        //    T result;
-        //    try
-        //    {
-        //        result = (T)((object)Enum.Parse(typeof(T), value, true));
-        //    }
-        //    catch (ArgumentException)
-        //    {
-        //        result = defValue;
-        //    }
-        //    return result;
-        //}
 
         public static string FormatDate(int date, bool chnType)
         {
@@ -2052,24 +1534,5 @@ namespace BBX.Common
             {
             }
         }
-
-        //public static bool IsIE()
-        //{
-        //    return HttpContext.Current.Request.ServerVariables["HTTP_USER_AGENT"].IndexOf("MSIE") >= 0;
-        //}
-
-        //public static int BKDEHash(string str, int hashKey)
-        //{
-        //    str = ((str.Length > 1000) ? str.Substring(0, 1000) : str);
-        //    byte[] bytes = Encoding.Default.GetBytes(str);
-        //    int num = 0;
-        //    byte[] array = bytes;
-        //    for (int i = 0; i < array.Length; i++)
-        //    {
-        //        byte value = array[i];
-        //        num = num + hashKey + value.ToInt();
-        //    }
-        //    return num;
-        //}
     }
 }

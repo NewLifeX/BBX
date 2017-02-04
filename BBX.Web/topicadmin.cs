@@ -169,12 +169,12 @@ namespace BBX.Web
             {
                 //case "split":
                 //    this.operationtitle = "分割主题";
-                //    if (Utils.StrToInt(this.topiclist, 0) <= 0)
+                //    if (this.topiclist.ToInt(0) <= 0)
                 //    {
                 //        base.AddErrLine(string.Format("您的身份 \"{0}\" 没有分割主题的权限.", this.usergroupinfo.GroupTitle));
                 //        return false;
                 //    }
-                //    this.postlist = BBX.Forum.Posts.GetPostListTitle(Utils.StrToInt(this.topiclist, 0));
+                //    this.postlist = BBX.Forum.Posts.GetPostListTitle(this.topiclist.ToInt(0));
                 //    if (this.postlist != null && this.postlist.Rows.Count > 0)
                 //    {
                 //        this.postlist.Rows[0].Delete();
@@ -244,7 +244,7 @@ namespace BBX.Web
                         DataTable scoreSet = Scoresets.GetScoreSet();
                         foreach (DataRow dataRow in ratelog.Rows)
                         {
-                            int num2 = Utils.StrToInt(dataRow["extcredits"].ToString(), 0);
+                            int num2 = dataRow["extcredits"].ToString().ToInt(0);
                             if ((num2 > 0 && num2 < 9) || scoreSet.Columns.Count > num2 + 1)
                             {
                                 dataRow["extcreditname"] = scoreSet.Rows[0][num2 + 1].ToString();
@@ -259,7 +259,7 @@ namespace BBX.Web
                 case "bonus":
                     {
                         this.operationtitle = "结帖";
-                        int tid = Utils.StrToInt(this.topiclist, 0);
+                        int tid = this.topiclist.ToInt(0);
                         this.postlist = Post.FindAllByTid(tid);
                         // 不明白为什么要删掉第一个帖子
                         //if (this.postlist != null && this.postlist.Rows.Count > 0)
@@ -639,14 +639,14 @@ namespace BBX.Web
                 }
                 else
                 {
-                    int tid = Utils.StrToInt(this.topiclist, -1);
+                    int tid = this.topiclist.ToInt(-1);
                     var topicInfo2 = Topic.FindByID(tid);
                     string[] array2 = this.postidlist.Split(',');
                     for (int j = 0; j < array2.Length; j++)
                     {
                         string text5 = array2[j];
                         //var postInfo = new PostInfo();
-                        string text6 = dictionary[Utils.StrToInt(text5, 0)];
+                        string text6 = dictionary[text5.ToInt(0)];
                         subjecttype = "回复的主题";
                         string text7 = text6.Replace(" ", "").Replace("|", "");
                         if (text7.Length > 100)
@@ -712,7 +712,7 @@ namespace BBX.Web
 
         private void MessagePost(IEntity entity, string operationName, string subjecttype, string reason)
         {
-            //int uid = Utils.StrToInt(entity["posterid"], -1);
+            //int uid = entity["posterid"].ToInt(-1);
             //if (uid == -1) return;
 
             var tp = entity as Topic;
@@ -808,8 +808,8 @@ namespace BBX.Web
                 }
                 num++;
             }
-            BBX.Forum.TopicAdmins.RatePosts(Utils.StrToInt(this.topiclist, 0), this.postidlist, text, text2, this.userid, this.username, reason);
-            BBX.Forum.Posts.UpdatePostRateTimes(Utils.StrToInt(this.topiclist, 0), this.postidlist);
+            BBX.Forum.TopicAdmins.RatePosts(this.topiclist.ToInt(0), this.postidlist, text, text2, this.userid, this.username, reason);
+            BBX.Forum.Posts.UpdatePostRateTimes(this.topiclist.ToInt(0), this.postidlist);
             this.RateIsReady = 1;
             return true;
         }
@@ -838,8 +838,8 @@ namespace BBX.Web
                 base.AddErrLine("您未选择要撤销评分的记录");
                 return false;
             }
-            BBX.Forum.TopicAdmins.CancelRatePosts(DNTRequest.GetFormString("ratelogid"), Utils.StrToInt(this.topiclist, 0), this.postidlist, this.userid, this.username, this.usergroupinfo.ID, this.usergroupinfo.GroupTitle, this.forumid, this.forumname, reason);
-            BBX.Forum.Posts.UpdatePostRateTimes(Utils.StrToInt(this.topiclist, 0), this.postidlist);
+            BBX.Forum.TopicAdmins.CancelRatePosts(DNTRequest.GetFormString("ratelogid"), this.topiclist.ToInt(0), this.postidlist, this.userid, this.username, this.usergroupinfo.ID, this.usergroupinfo.GroupTitle, this.forumid, this.forumname, reason);
+            BBX.Forum.Posts.UpdatePostRateTimes(this.topiclist.ToInt(0), this.postidlist);
             return true;
         }
 
@@ -857,7 +857,7 @@ namespace BBX.Web
         //        base.AddErrLine("您没有输入要合并的主题ID");
         //        return false;
         //    }
-        //    if (DNTRequest.GetFormInt("othertid", 0) == Utils.StrToInt(this.topiclist, 0))
+        //    if (DNTRequest.GetFormInt("othertid", 0) == this.topiclist.ToInt(0))
         //    {
         //        this.titlemessage = true;
         //        base.AddErrLine("不能对同一主题进行合并操作");
@@ -869,7 +869,7 @@ namespace BBX.Web
         //        base.AddErrLine("目标主题不存在");
         //        return false;
         //    }
-        //    if (TableList.GetPostTableId(DNTRequest.GetFormInt("othertid", 0)) != TableList.GetPostTableId(Utils.StrToInt(this.topiclist, 0)))
+        //    if (TableList.GetPostTableId(DNTRequest.GetFormInt("othertid", 0)) != TableList.GetPostTableId(this.topiclist.ToInt(0)))
         //    {
         //        this.titlemessage = true;
         //        base.AddErrLine("不允许跨分表合并主题");
@@ -1183,7 +1183,7 @@ namespace BBX.Web
                 base.AddErrLine("无效的主题ID");
                 return false;
             }
-            var topicInfo = Topic.FindByID(Utils.StrToInt(this.topiclist, 0));
+            var topicInfo = Topic.FindByID(this.topiclist.ToInt(0));
             if (topicInfo == null)
             {
                 this.titlemessage = true;
@@ -1226,7 +1226,7 @@ namespace BBX.Web
                 base.AddErrLine("无效的主题ID");
                 return false;
             }
-            var topicInfo = Topic.FindByID(Utils.StrToInt(this.topiclist, 0));
+            var topicInfo = Topic.FindByID(this.topiclist.ToInt(0));
             if (topicInfo == null)
             {
                 this.titlemessage = true;
@@ -1283,7 +1283,7 @@ namespace BBX.Web
                         //        text = "negativediggs";
                         //        break;
                         //}
-                        Debate.DeleteDebatePost(topicInfo.ID, opinion, Utils.StrToInt(expression, -1));
+                        Debate.DeleteDebatePost(topicInfo.ID, opinion, expression.ToInt(-1));
                     }
                     result = true;
                     i++;
@@ -1346,7 +1346,7 @@ namespace BBX.Web
             for (int i = 0; i < array2.Length; i++)
             {
                 string expression = array2[i];
-                num += Utils.StrToInt(expression, 0);
+                num += expression.ToInt(0);
             }
             if (num != this.topicinfo.Price)
             {
@@ -1362,7 +1362,7 @@ namespace BBX.Web
             for (int j = 0; j < array7.Length; j++)
             {
                 string text = array7[j];
-                if (Utils.StrToInt(text.Split('|')[0], 0) == this.topicinfo.PosterID)
+                if (text.Split('|')[0].ToInt(0) == this.topicinfo.PosterID)
                 {
                     this.titlemessage = true;
                     base.AddErrLine("不能向悬赏者发放积分奖励");
@@ -1381,8 +1381,8 @@ namespace BBX.Web
             }
             for (int k = 0; k < array3.Length; k++)
             {
-                array4[k] = Utils.StrToInt(array3[k].Split('|')[0], 0);
-                array5[k] = Utils.StrToInt(array3[k].Split('|')[1], 0);
+                array4[k] = array3[k].Split('|')[0].ToInt(0);
+                array5[k] = array3[k].Split('|')[1].ToInt(0);
                 array6[k] = array3[k].Split('|')[2];
             }
             BonusLog.CloseBonus(this.topicinfo, this.userid, array5, array4, array6, array, DNTRequest.GetFormString("valuableAnswers").Split(','), DNTRequest.GetFormInt("bestAnswer", 0));

@@ -32,7 +32,7 @@ namespace BBX.Web.UI
         public int topicviews;
         public string[] pagewordad = new string[0];
         public bool allowvote;
-        public int parseurloff = Utils.StrToInt(DNTRequest.GetString("parseurloff"), 0);
+        public int parseurloff = DNTRequest.GetString("parseurloff").ToInt(0);
         public int smileyoff;
         public int bbcodeoff = 1;
         public int usesig = (ForumUtils.GetCookie("sigstatus") == "0") ? 0 : 1;
@@ -47,7 +47,7 @@ namespace BBX.Web.UI
         public string inpostad = "";
         public string quickeditorad = "";
         public List<Topic> relatedtopics = new List<Topic>();
-        public int ppp = Utils.StrToInt(ForumUtils.GetCookie("ppp"), GeneralConfigInfo.Current.Ppp);
+        public int ppp = ForumUtils.GetCookie("ppp").ToInt(GeneralConfigInfo.Current.Ppp);
         public bool enabletag;
         public string postleaderboardad = "";
         public int replynotificationstatus = GeneralConfigInfo.Current.Replynotificationstatus;

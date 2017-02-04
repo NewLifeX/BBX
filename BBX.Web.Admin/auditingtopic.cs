@@ -34,7 +34,7 @@ namespace BBX.Web.Admin
         {
             if (base.CheckCookie())
             {
-                string topicAuditCondition = Topic.SearchTopicAudit(Utils.StrToInt(this.forumid.SelectedValue, 0), this.poster.Text, this.title.Text, this.moderatorname.Text, this.postdatetimeStart.SelectedDate, this.postdatetimeEnd.SelectedDate, this.deldatetimeStart.SelectedDate, this.deldatetimeEnd.SelectedDate);
+                string topicAuditCondition = Topic.SearchTopicAudit(this.forumid.SelectedValue.ToInt(0), this.poster.Text, this.title.Text, this.moderatorname.Text, this.postdatetimeStart.SelectedDate, this.postdatetimeEnd.SelectedDate, this.deldatetimeStart.SelectedDate, this.deldatetimeEnd.SelectedDate);
                 this.Session["audittopicswhere"] = topicAuditCondition;
                 base.Response.Redirect("forum_audittopicgrid.aspx");
             }
