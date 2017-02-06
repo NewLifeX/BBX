@@ -4,7 +4,7 @@
  * 时间：2013-08-26 18:03:30
  * 版权：版权所有 (C) 新生命开发团队 2002~2013
 */
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -168,46 +168,23 @@ namespace BBX.Entity
 
             if (XTrace.Debug) XTrace.WriteLine("完成初始化{0}[{1}]数据！", typeof(User).Name, Meta.Table.DataTable.DisplayName);
         }
-
-
-        ///// <summary>已重载。基类先调用Valid(true)验证数据，然后在事务保护内调用OnInsert</summary>
-        ///// <returns></returns>
-        //public override Int32 Insert()
-        //{
-        //    return base.Insert();
-        //}
-
-        ///// <summary>已重载。在事务保护范围内处理业务，位于Valid之后</summary>
-        ///// <returns></returns>
-        //protected override Int32 OnInsert()
-        //{
-        //    return base.OnInsert();
-        //}
         #endregion
 
         #region 扩展属性﻿
         private List<String> hasLoad = new List<String>();
-        private UserField _Field;
         /// <summary>扩展字段</summary>
         public UserField Field
         {
             get
             {
-                if (_Field == null && !hasLoad.Contains("Field"))
-                {
-                    _Field = UserField.FindByUid(ID);
-                    if (_Field == null) _Field = new UserField();
-                    hasLoad.Add("Field");
-                }
-                return _Field;
+                return Extends.Get(nameof(Field), k => UserField.FindByUid(ID) ?? new UserField());
             }
-            set { _Field = value; }
         }
 
         IUserField IUser.Field { get { return Field; } }
 
         /// <summary>属性说明</summary>
-        public String Ignorepm { get { return Field != null ? Field.Ignorepm + "" : ""; } set { if (Field != null)Field.Ignorepm = value; } }
+        public String Ignorepm { get { return Field != null ? Field.Ignorepm + "" : ""; } set { if (Field != null) Field.Ignorepm = value; } }
 
         /// <summary>注册地址</summary>
         public String RegAddress

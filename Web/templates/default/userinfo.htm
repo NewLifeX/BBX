@@ -134,7 +134,7 @@
 		<h3 class="blocktitle lightlink">
 		    用户组: {group.GroupTitle}
 		    <%if {user.GroupID}==4||{user.GroupID}==5%>
-		        <%set (int){nowdateint} = Utils.StrToInt(DateTime.Now.ToString("yyyyMMdd"),0)%>
+		        <%set (int){nowdateint} = DateTime.Now.ToString("yyyyMMdd").ToInt()%>
 	            <%if {user.GroupExpiry}==0||{user.GroupExpiry}==29990101%>
 	                <span class="xg2" style="font-size:12px">过期时间: 永久</span>
 	            <%else%>

@@ -233,6 +233,8 @@ namespace BBX.Forum
 
         private void CreateTemplate(String forumpath, Template tmp, String pagename)
         {
+            if (tmp == null) return;
+
             var path = String.Format("{0}aspx/{1}/{2}", forumpath, tmp.Name, pagename).GetFullPath();
             if (!File.Exists(path))
             {
