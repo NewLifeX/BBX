@@ -208,6 +208,7 @@ namespace BBX.Web.Archiver
             Response.Write("</div>\r\n");
             //Topic.UpdateViewCount(topicid, 1);
             topic.Views++;
+            topic.SaveAsync(10000);
             if (this.config.Aspxrewrite == 1)
             {
                 Response.Write(string.Format("<div class=\"fullversion\">查看完整版本: <a href=\"../showtopic-{0}{1}\">{2}</a></div>\r\n", topicid, this.config.Extname, topic.Title));

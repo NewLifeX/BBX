@@ -108,6 +108,7 @@ namespace BBX.Web
             this.IsGuestCachePage();
             //Topic.UpdateViewCount(this.topicid, 1);
             topic.Views++;
+            topic.SaveAsync(10000);
             Topics.MarkOldTopic(this.topic);
             this.topicviews = this.topic.Views;
             Online.UpdateAction(this.olid, UserAction.ShowTopic, this.forumid, this.forum.Name, this.topicid, this.topic.Title);

@@ -508,6 +508,9 @@
         <member name="P:XCode.DataAccessLayer.ITransaction.Tran">
             <summary>数据库事务</summary>
         </member>
+        <member name="P:XCode.DataAccessLayer.ITransaction.Attachs">
+            <summary>事务依赖对象</summary>
+        </member>
         <member name="E:XCode.DataAccessLayer.ITransaction.Completed">
             <summary>事务完成事件</summary>
         </member>
@@ -539,6 +542,9 @@
         </member>
         <member name="P:XCode.DataAccessLayer.Transaction.Executes">
             <summary>执行次数。其决定是否更新缓存</summary>
+        </member>
+        <member name="P:XCode.DataAccessLayer.Transaction.Attachs">
+            <summary>事务依赖对象</summary>
         </member>
         <member name="P:XCode.DataAccessLayer.Transaction.ID">
             <summary>事务唯一编号</summary>
@@ -3624,7 +3630,7 @@
         <member name="M:XCode.EntityExtend.#ctor">
             <summary>实例化一个不区分键大小写的实体扩展</summary>
         </member>
-        <member name="M:XCode.EntityExtend.Get``1(System.String,System.Func{System.String,System.Object})">
+        <member name="M:XCode.EntityExtend.Get``1(System.String,System.Func{System.String,``0})">
             <summary>扩展获取数据项，当数据项不存在时，通过调用委托获取数据项。线程安全。</summary>
             <param name="key">键</param>
             <param name="func">获取值的委托，该委托以键作为参数</param>
@@ -3651,6 +3657,12 @@
         <member name="T:XCode.EntityQueue">
             <summary>实体队列</summary>
         </member>
+        <member name="P:XCode.EntityQueue.Entities">
+            <summary>需要近实时保存的实体队列</summary>
+        </member>
+        <member name="P:XCode.EntityQueue.DelayEntities">
+            <summary>需要延迟保存的实体队列</summary>
+        </member>
         <member name="P:XCode.EntityQueue.Debug">
             <summary>调试开关，默认false</summary>
         </member>
@@ -3666,10 +3678,11 @@
         <member name="M:XCode.EntityQueue.#ctor">
             <summary>实例化实体队列</summary>
         </member>
-        <member name="M:XCode.EntityQueue.Add(XCode.IEntity)">
+        <member name="M:XCode.EntityQueue.Add(XCode.IEntity,System.Int32)">
             <summary>添加实体对象进入队列</summary>
-            <param name="entity"></param>
-            <returns>返回是否添加城南公馆，实体对象已存在于队列中则返回false</returns>
+            <param name="entity">实体对象</param>
+            <param name="msDelay">延迟保存的时间</param>
+            <returns>返回是否添加成功，实体对象已存在于队列中则返回false</returns>
         </member>
         <member name="T:XCode.IEntityAddition">
             <summary>实体累加接口。实现Count+=1的效果</summary>
@@ -4220,12 +4233,6 @@
         <member name="P:XCode.Cache.ISingleEntityCache.MaxEntity">
             <summary>最大实体数。默认10000</summary>
         </member>
-        <member name="P:XCode.Cache.ISingleEntityCache.AutoSave">
-            <summary>缓存到期时自动保存，默认true</summary>
-        </member>
-        <member name="P:XCode.Cache.ISingleEntityCache.AllowNull">
-            <summary>允许缓存空对象，默认false</summary>
-        </member>
         <member name="P:XCode.Cache.ISingleEntityCache.Using">
             <summary>是否在使用缓存</summary>
         </member>
@@ -4254,10 +4261,9 @@
             <param name="value">实体对象</param>
             <returns></returns>
         </member>
-        <member name="M:XCode.Cache.ISingleEntityCache.Remove(XCode.IEntity,System.Boolean)">
+        <member name="M:XCode.Cache.ISingleEntityCache.Remove(XCode.IEntity)">
             <summary>移除指定项</summary>
             <param name="entity"></param>
-            <param name="save">是否自动保存实体对象</param>
         </member>
         <member name="M:XCode.Cache.ISingleEntityCache.Clear(System.String)">
             <summary>清除所有数据</summary>
@@ -4278,6 +4284,15 @@
         </member>
         <member name="P:XCode.Cache.ISingleEntityCache`2.FindKeyMethod">
             <summary>查找数据的方法</summary>
+        </member>
+        <member name="P:XCode.Cache.ISingleEntityCache`2.SlaveKeyIgnoreCase">
+            <summary>从键是否区分大小写</summary>
+        </member>
+        <member name="P:XCode.Cache.ISingleEntityCache`2.FindSlaveKeyMethod">
+            <summary>根据从键查找数据的方法</summary>
+        </member>
+        <member name="P:XCode.Cache.ISingleEntityCache`2.GetSlaveKeyMethod">
+            <summary>获取缓存从键的方法，默认为空</summary>
         </member>
         <member name="F:XCode.Cache.CacheItem._TableNames">
             <summary>所依赖的表的表名</summary>
@@ -4331,9 +4346,8 @@
         <member name="P:XCode.Cache.CacheBase.Debug">
             <summary>是否调试缓存模块</summary>
         </member>
-        <member name="M:XCode.Cache.CacheBase.CheckShowStatics(System.DateTime@,System.Int32@,System.Action)">
+        <member name="M:XCode.Cache.CacheBase.CheckShowStatics(System.Int32@,System.Action)">
             <summary>检查并显示统计信息</summary>
-            <param name="next"></param>
             <param name="total"></param>
             <param name="show"></param>
         </member>
@@ -4381,9 +4395,6 @@
         <member name="F:XCode.Cache.EntityCache`1.Success">
             <summary>命中</summary>
         </member>
-        <member name="F:XCode.Cache.EntityCache`1.NextShow">
-            <summary>下一次显示时间</summary>
-        </member>
         <member name="M:XCode.Cache.EntityCache`1.ShowStatics">
             <summary>显示统计信息</summary>
         </member>
@@ -4412,7 +4423,6 @@
             <summary>单对象缓存</summary>
             <remarks>
             用一个值为实体的字典作为缓存（键一般就是主键），适用于单表大量互相没有关系的数据。
-            同时，AutoSave能够让缓存项在过期时自动保存数据，该特性特别适用于点击计数等场合。
             </remarks>
             <typeparam name="TKey">键值类型</typeparam>
             <typeparam name="TEntity">实体类型</typeparam>
@@ -4422,12 +4432,6 @@
         </member>
         <member name="P:XCode.Cache.SingleEntityCache`2.MaxEntity">
             <summary>最大实体数。默认10000</summary>
-        </member>
-        <member name="P:XCode.Cache.SingleEntityCache`2.AutoSave">
-            <summary>缓存到期时自动保存，默认true</summary>
-        </member>
-        <member name="P:XCode.Cache.SingleEntityCache`2.AllowNull">
-            <summary>允许缓存空对象，默认false</summary>
         </member>
         <member name="P:XCode.Cache.SingleEntityCache`2.Using">
             <summary>是否在使用缓存</summary>
@@ -4454,9 +4458,6 @@
             <summary>子类重载实现资源释放逻辑时必须首先调用基类方法</summary>
             <param name="disposing">从Dispose调用（释放所有资源）还是析构函数调用（释放非托管资源）。
             因为该方法只会被调用一次，所以该参数的意义不太大。</param>
-        </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.CheckExpire(System.Object)">
-            <summary>定期检查实体，如果过期，则触发保存</summary>
         </member>
         <member name="T:XCode.Cache.SingleEntityCache`2.CacheItem">
             <summary>缓存对象</summary>
@@ -4491,9 +4492,6 @@
         <member name="F:XCode.Cache.SingleEntityCache`2.Success">
             <summary>命中</summary>
         </member>
-        <member name="F:XCode.Cache.SingleEntityCache`2.NextShow">
-            <summary>下一次显示时间</summary>
-        </member>
         <member name="M:XCode.Cache.SingleEntityCache`2.ShowStatics">
             <summary>显示统计信息</summary>
         </member>
@@ -4520,11 +4518,6 @@
             <param name="item"></param>
             <returns></returns>
         </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.AutoUpdate(XCode.Cache.SingleEntityCache{`0,`1}.CacheItem,System.String)">
-            <summary>自动更新，最主要是在原连接名和表名里面更新对象</summary>
-            <param name="item"></param>
-            <param name="reason"></param>
-        </member>
         <member name="M:XCode.Cache.SingleEntityCache`2.ContainsKey(`0)">
             <summary>是否包含指定键</summary>
             <param name="key"></param>
@@ -4541,15 +4534,13 @@
             <param name="entity">数值</param>
             <returns></returns>
         </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.RemoveKey(`0,System.Boolean)">
+        <member name="M:XCode.Cache.SingleEntityCache`2.RemoveKey(`0)">
             <summary>移除指定项</summary>
             <param name="key">键值</param>
-            <param name="save">是否自动保存实体对象</param>
         </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.Remove(`1,System.Boolean)">
+        <member name="M:XCode.Cache.SingleEntityCache`2.Remove(`1)">
             <summary>根据主键移除指定项</summary>
             <param name="entity"></param>
-            <param name="save">是否自动保存实体对象</param>
         </member>
         <member name="M:XCode.Cache.SingleEntityCache`2.Clear(System.String)">
             <summary>清除所有数据</summary>
@@ -4570,10 +4561,9 @@
             <param name="key"></param>
             <returns></returns>
         </member>
-        <member name="M:XCode.Cache.SingleEntityCache`2.XCode#Cache#ISingleEntityCache#Remove(XCode.IEntity,System.Boolean)">
+        <member name="M:XCode.Cache.SingleEntityCache`2.XCode#Cache#ISingleEntityCache#Remove(XCode.IEntity)">
             <summary>移除指定项</summary>
             <param name="entity"></param>
-            <param name="save">是否自动保存实体对象</param>
         </member>
         <member name="M:XCode.Cache.SingleEntityCache`2.XCode#Cache#ISingleEntityCache#Add(XCode.IEntity)">
             <summary>向单对象缓存添加项</summary>
@@ -5241,8 +5231,9 @@
             <summary>保存</summary>
             <returns></returns>
         </member>
-        <member name="M:XCode.Membership.ILog.SaveAsync">
+        <member name="M:XCode.Membership.ILog.SaveAsync(System.Int32)">
             <summary>异步保存</summary>
+            <param name="msDelay">延迟保存的时间。默认0ms近实时保存</param>
             <returns></returns>
         </member>
         <member name="T:XCode.Membership.Log">
@@ -7358,8 +7349,9 @@
             <summary>不需要验证的保存</summary>
             <returns></returns>
         </member>
-        <member name="M:XCode.EntityBase.SaveAsync">
+        <member name="M:XCode.EntityBase.SaveAsync(System.Int32)">
             <summary>异步保存。实现延迟保存，大事务保存。主要面向日志表和频繁更新的在线记录表</summary>
+            <param name="msDelay">延迟保存的时间。默认0ms近实时保存</param>
             <returns>是否成功加入异步队列</returns>
         </member>
         <member name="P:XCode.EntityBase.Item(System.String)">
@@ -8011,8 +8003,9 @@
             <summary>不需要验证的保存，不执行Valid，一般用于快速导入数据</summary>
             <returns></returns>
         </member>
-        <member name="M:XCode.Entity`1.SaveAsync">
+        <member name="M:XCode.Entity`1.SaveAsync(System.Int32)">
             <summary>异步保存。实现延迟保存，大事务保存。主要面向日志表和频繁更新的在线记录表</summary>
+            <param name="msDelay">延迟保存的时间。默认0ms近实时保存</param>
             <remarks>
             调用平均耗时190.86ns，IPModule占38.89%，TimeModule占16.31%，UserModule占7.20%，Valid占14.36%
             </remarks>
@@ -8473,9 +8466,7 @@
             <returns></returns>
         </member>
         <member name="P:XCode.Entity`1.Meta.SingleCache">
-            <summary>单对象实体缓存。
-            建议自定义查询数据方法，并从二级缓存中获取实体数据，以抵消因初次填充而带来的消耗。
-            </summary>
+            <summary>单对象实体缓存。</summary>
         </member>
         <member name="P:XCode.Entity`1.Meta.Count">
             <summary>总记录数，小于1000时是精确的，大于1000时缓存10分钟</summary>
@@ -9206,8 +9197,9 @@
             <summary>不需要验证的保存，不执行Valid，一般用于快速导入数据</summary>
             <returns></returns>
         </member>
-        <member name="M:XCode.IEntity.SaveAsync">
+        <member name="M:XCode.IEntity.SaveAsync(System.Int32)">
             <summary>异步保存。实现延迟保存，大事务保存。主要面向日志表和频繁更新的在线记录表</summary>
+            <param name="msDelay">延迟保存的时间。默认0ms近实时保存</param>
             <returns>是否成功加入异步队列</returns>
         </member>
         <member name="M:XCode.IEntity.SetItem(System.String,System.Object)">
@@ -9740,9 +9732,6 @@
         <member name="P:XCode.IEntityTreeSetting.Text">
             <summary>文本键名</summary>
         </member>
-        <member name="P:XCode.IEntityTreeSetting.EnableCaching">
-            <summary>是否缓存Childs、AllChilds、Parent等</summary>
-        </member>
         <member name="P:XCode.IEntityTreeSetting.BigSort">
             <summary>是否大排序，较大排序值在前面</summary>
         </member>
@@ -9770,9 +9759,6 @@
         </member>
         <member name="P:XCode.EntityTreeSetting`1.Text">
             <summary>文本键名</summary>
-        </member>
-        <member name="P:XCode.EntityTreeSetting`1.EnableCaching">
-            <summary>是否缓存Childs、AllChilds、Parent等</summary>
         </member>
         <member name="P:XCode.EntityTreeSetting`1.BigSort">
             <summary>是否大排序，较大排序值在前面</summary>

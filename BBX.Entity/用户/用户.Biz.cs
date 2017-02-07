@@ -11,7 +11,6 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using NewLife.Log;
-using NewLife.Security;
 using NewLife.Web;
 using XCode;
 using XCode.Configuration;
@@ -19,9 +18,6 @@ using XCode.Membership;
 
 namespace BBX.Entity
 {
-    ///// <summary>用户。该类等同User类，仅为了规避Web中的User命名</summary>
-    //public class XUser : User { }
-
     /// <summary>用户</summary>
     public partial class User : EntityBase<User>, IManageUser
     {
@@ -44,7 +40,9 @@ namespace BBX.Entity
             fs.Add(__.ExtCredits7);
             fs.Add(__.ExtCredits8);
 
-            Meta.SingleCache.AllowNull = false;
+            var sc = Meta.SingleCache;
+            sc.FindSlaveKeyMethod = k => Find(__.Name, k);
+            sc.GetSlaveKeyMethod = k => k.Name;
         }
 
         protected override void OnLoad()
@@ -107,15 +105,8 @@ namespace BBX.Entity
         /// <param name="isNew"></param>
         public override void Valid(Boolean isNew)
         {
-            // 这里验证参数范围，建议抛出参数异常，指定参数名，前端用户界面可以捕获参数异常并聚焦到对应的参数输入框
-            //if (String.IsNullOrEmpty(Name)) throw new ArgumentNullException(_.Name, _.Name.DisplayName + "无效！");
-            //if (!isNew && ID < 1) throw new ArgumentOutOfRangeException(_.ID, _.ID.DisplayName + "必须大于0！");
-
             // 建议先调用基类方法，基类方法会对唯一索引的数据进行验证
             base.Valid(isNew);
-
-            // 在新插入数据或者修改了指定字段时进行唯一性验证，CheckExist内部抛出参数异常
-            //if (isNew || Dirtys[__.Name]) CheckExist(__.Name);
 
             if (!HasDirty) return;
 
@@ -127,22 +118,10 @@ namespace BBX.Entity
                 // 可能有别的目的保存用户对象，所以在Update里面不更新这两个字段，但是Insert里面可以更新
                 if (!Dirtys[__.LastVisit]) LastVisit = DateTime.Now;
                 if (!Dirtys[__.LastActivity]) LastActivity = DateTime.Now;
-                //if (!Dirtys[__.LastPost]) LastPost = DateTime.Now;
             }
             if (!Dirtys[__.LastIP] && !String.IsNullOrEmpty(ip)) LastIP = ip;
-            //if (!Dirtys[__.LastVisit]) LastVisit = DateTime.Now;
-            //if (!Dirtys[__.LastActivity]) LastActivity = DateTime.Now;
-            //if (!Dirtys[__.LastPost]) LastPost = DateTime.Now;
         }
 
-        //protected override void OnLoad()
-        //{
-        //    base.OnLoad();
-
-        //    // 干掉两头空格
-        //    if (!String.IsNullOrEmpty(Name)) Name = Name.Trim();
-        //    if (!String.IsNullOrEmpty(NickName)) NickName = NickName.Trim();
-        //}
 
         /// <summary>首次连接数据库时初始化数据，仅用于实体类重载，用户不应该调用该方法</summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -205,19 +184,7 @@ namespace BBX.Entity
         #region 用户组属性
         private UserGroup _Group;
         /// <summary>用户组</summary>
-        public UserGroup Group
-        {
-            get
-            {
-                if (_Group == null && !hasLoad.Contains("Group"))
-                {
-                    _Group = UserGroup.FindByID(GroupID);
-                    hasLoad.Add("Group");
-                }
-                return _Group;
-            }
-            set { _Group = value; }
-        }
+        public UserGroup Group { get { return Extends.Get(nameof(Group), k => UserGroup.FindByID(GroupID)); } set { Extends.Set(nameof(Group), value); } }
 
         /// <summary>用户组标题，带彩色</summary>
         public String GroupTitle
@@ -238,6 +205,38 @@ namespace BBX.Entity
         #endregion
 
         #region 扩展查询﻿
+        /// <summary>根据编号查找</summary>
+        /// <param name="id">编号</param>
+        /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public static User FindByID(Int32 id)
+        {
+            if (id <= 0) return null;
+
+            //if (Meta.Count >= 1000)
+            //    return Find(__.ID, id);
+            //else // 实体缓存
+            //    return Meta.Cache.Entities.Find(__.ID, id);
+            // 单对象缓存
+            //return Meta.SingleCache[id];
+            // 临时解决单对象缓存带来的问题
+            var user = Meta.SingleCache[id];
+            if (user == null)
+            {
+                user = Find(__.ID, id);
+                if (user != null) XTrace.WriteLine("单对象缓存有问题，查不到ID={0}的用户，而直接数据库查询能查到", id);
+            }
+            return user;
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
+        public static User FindByName(String name)
+        {
+            if (name.IsNullOrEmpty()) return null;
+
+            return Meta.SingleCache.GetItemWithSlaveKey(name) as User;
+        }
+
         /// <summary>根据邮件查找</summary>
         /// <param name="email">邮件</param>
         /// <returns></returns>
@@ -305,30 +304,6 @@ namespace BBX.Entity
                 return Meta.Cache.Entities.FindAll(e => e.Name == name && e.Password == password);
         }
 
-        /// <summary>根据编号查找</summary>
-        /// <param name="id">编号</param>
-        /// <returns></returns>
-        [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public static User FindByID(Int32 id)
-        {
-            if (id <= 0) return null;
-
-            //if (Meta.Count >= 1000)
-            //    return Find(__.ID, id);
-            //else // 实体缓存
-            //    return Meta.Cache.Entities.Find(__.ID, id);
-            // 单对象缓存
-            //return Meta.SingleCache[id];
-            // 临时解决单对象缓存带来的问题
-            var user = Meta.SingleCache[id];
-            if (user == null)
-            {
-                user = Find(__.ID, id);
-                if (user != null) XTrace.WriteLine("单对象缓存有问题，查不到ID={0}的用户，而直接数据库查询能查到", id);
-            }
-            return user;
-        }
-
         public static EntityList<User> FindAllByIDs(String ids)
         {
             return FindAll(_.ID.In(ids.SplitAsInt()), null, null, 0, 0);
@@ -337,15 +312,6 @@ namespace BBX.Entity
         public static EntityList<User> FindAllByIDs(Int32[] ids)
         {
             return FindAll(_.ID.In(ids), null, null, 0, 0);
-        }
-
-        [DataObjectMethod(DataObjectMethodType.Select, false)]
-        public static User FindByName(String name)
-        {
-            if (Meta.Count >= 1000)
-                return Find(__.Name, name);
-            else // 实体缓存
-                return Meta.Cache.Entities.Find(__.Name, name);
         }
 
         public static EntityList<User> FindAllByNames(String[] names)

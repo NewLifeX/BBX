@@ -600,7 +600,7 @@ namespace BBX.Web.Admin
                 //if (UserGroups.IsCreditUserGroup(this.userInfo.GroupID))
                 if (userInfo.Group.IsCreditUserGroup)
                 {
-                    UserGroup g = CreditsFacade.GetCreditsUserGroupId((float)this.userInfo.Credits);
+                    var g = CreditsFacade.GetCreditsUserGroupId((float)this.userInfo.Credits);
                     this.userInfo.GroupID = g.ID;
                     userInfo.Group = g;
                 }

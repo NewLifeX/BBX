@@ -1,12 +1,6 @@
-﻿﻿using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
-using System.Text;
-using System.Xml.Serialization;
-using NewLife.Log;
-using NewLife.Web;
 using XCode;
-using XCode.Configuration;
 
 namespace BBX.Entity
 {
@@ -16,27 +10,17 @@ namespace BBX.Entity
         #region 对象操作﻿
         static TrendStat()
         {
-            //AdditionalFields.Add(__.Login);
-            //AdditionalFields.Add(__.Register);
-            //AdditionalFields.Add(__.Topic);
-            //AdditionalFields.Add(__.Post);
-            //AdditionalFields.Add(__.Poll);
-            //AdditionalFields.Add(__.Debate);
-            //AdditionalFields.Add(__.Bonus);
-
-            var eop = Meta.Factory;
-            eop.AdditionalFields.Add(__.Login);
-            eop.AdditionalFields.Add(__.Register);
-            eop.AdditionalFields.Add(__.Topic);
-            eop.AdditionalFields.Add(__.Post);
-            eop.AdditionalFields.Add(__.Poll);
-            eop.AdditionalFields.Add(__.Debate);
-            eop.AdditionalFields.Add(__.Bonus);
+            var df = Meta.Factory.AdditionalFields;
+            df.Add(__.Login);
+            df.Add(__.Register);
+            df.Add(__.Topic);
+            df.Add(__.Post);
+            df.Add(__.Poll);
+            df.Add(__.Debate);
+            df.Add(__.Bonus);
 
             // 自动保存，不允许缓存空
 			var sc = Meta.SingleCache;
-			sc.AutoSave = true;
-			sc.AllowNull = false;
 			sc.FindKeyMethod = key => Find(__.DayTime, key);
         }
 
@@ -55,48 +39,6 @@ namespace BBX.Entity
             //if (isNew || Dirtys[_.Name]) CheckExist(_.Name);
 
         }
-
-        ///// <summary>首次连接数据库时初始化数据，仅用于实体类重载，用户不应该调用该方法</summary>
-        //[EditorBrowsable(EditorBrowsableState.Never)]
-        //protected override void InitData()
-        //{
-        //    base.InitData();
-
-        //    // InitData一般用于当数据表没有数据时添加一些默认数据，该实体类的任何第一次数据库操作都会触发该方法，默认异步调用
-        //    // Meta.Count是快速取得表记录数
-        //    if (Meta.Count > 0) return;
-
-        //    // 需要注意的是，如果该方法调用了其它实体类的首次数据库操作，目标实体类的数据初始化将会在同一个线程完成
-        //    if (XTrace.Debug) XTrace.WriteLine("开始初始化{0}趋势统计数据……", typeof(TrendStat).Name);
-
-        //    var entity = new TrendStat();
-        //    entity.DayTime = 0;
-        //    entity.Login = 0;
-        //    entity.Register = 0;
-        //    entity.Topic = 0;
-        //    entity.Post = 0;
-        //    entity.Poll = 0;
-        //    entity.Debate = 0;
-        //    entity.Bonus = 0;
-        //    entity.Insert();
-
-        //    if (XTrace.Debug) XTrace.WriteLine("完成初始化{0}趋势统计数据！", typeof(TrendStat).Name);
-        //}
-
-
-        ///// <summary>已重载。基类先调用Valid(true)验证数据，然后在事务保护内调用OnInsert</summary>
-        ///// <returns></returns>
-        //public override Int32 Insert()
-        //{
-        //    return base.Insert();
-        //}
-
-        ///// <summary>已重载。在事务保护范围内处理业务，位于Valid之后</summary>
-        ///// <returns></returns>
-        //protected override Int32 OnInsert()
-        //{
-        //    return base.OnInsert();
-        //}
         #endregion
 
         #region 扩展属性﻿

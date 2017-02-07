@@ -843,7 +843,7 @@ namespace BBX.Entity
             {
                 t.Views += viewcount;
                 // 不再实时保存浏览数，让单对象缓存自动保存
-                //t.Save();
+                t.SaveAsync(10000);
             }
         }
 
