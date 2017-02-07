@@ -83,11 +83,19 @@
 				<div class="postarea cl">
 					<div class="postinner">
 					<%if {canreply}%>
-					<%if {infloat}==1%>
-					  <textarea rows="7" cols="80" name="{config.antispampostmessage}" id="message" tabindex="3" style="background:url({quickbgad[1]}) no-repeat 50% 50%;" <%if {quickbgad[0]}!=""%> onfocus="$('adlinkbtn').style.display='';$('closebtn').style.display='';this.onfocus=null;"<%/if%> onkeydown="ajaxctlent(event, this.form, {topicid}, isendpage, '{imagedir}','{seditorid}',{hide});"></textarea>
-					<%else%>
-					  <textarea rows="5" cols="80" name="{config.antispampostmessage}" id="quickpostmessage" tabindex="6"  style="background-image:url({quickbgad[1]});background-repeat:no-repeat;background-position:50% 50%;" <%if {quickbgad[0]}!=""%> onfocus="$('adlinkbtn').style.display='';$('closebtn').style.display='';this.onfocus=null;"<%/if%> onkeydown="ajaxctlent(event, this.form, {topicid}, isendpage, '{imagedir}','{seditorid}',{hide});"></textarea>
-					<%/if%>
+                        <%if {quickbgad[1]}!=""%>
+					        <%if {infloat}==1%>
+					        <textarea rows="7" cols="80" name="{config.antispampostmessage}" id="message" tabindex="3" style="background:url({quickbgad[1]}) no-repeat 50% 50%;" <%if {quickbgad[0]}!=""%> onfocus="$('adlinkbtn').style.display='';$('closebtn').style.display='';this.onfocus=null;"<%/if%> onkeydown="ajaxctlent(event, this.form, {topicid}, isendpage, '{imagedir}','{seditorid}',{hide});"></textarea>
+					        <%else%>
+					        <textarea rows="5" cols="80" name="{config.antispampostmessage}" id="quickpostmessage" tabindex="6"  style="background-image:url({quickbgad[1]});background-repeat:no-repeat;background-position:50% 50%;" <%if {quickbgad[0]}!=""%> onfocus="$('adlinkbtn').style.display='';$('closebtn').style.display='';this.onfocus=null;"<%/if%> onkeydown="ajaxctlent(event, this.form, {topicid}, isendpage, '{imagedir}','{seditorid}',{hide});"></textarea>
+					        <%/if%>
+                        <%else%>
+                            <%if {infloat}==1%>
+                            <textarea rows="7" cols="80" name="{config.antispampostmessage}" id="message" tabindex="3" <%if {quickbgad[0]}!=""%> onfocus="$('adlinkbtn').style.display='';$('closebtn').style.display='';this.onfocus=null;"<%/if%> onkeydown="ajaxctlent(event, this.form, {topicid}, isendpage, '{imagedir}','{seditorid}',{hide});"></textarea>
+                            <%else%>
+                            <textarea rows="5" cols="80" name="{config.antispampostmessage}" id="quickpostmessage" tabindex="6" style="background-position:50% 50%;" <%if {quickbgad[0]}!=""%> onfocus="$('adlinkbtn').style.display='';$('closebtn').style.display='';this.onfocus=null;"<%/if%> onkeydown="ajaxctlent(event, this.form, {topicid}, isendpage, '{imagedir}','{seditorid}',{hide});"></textarea>
+                            <%/if%>
+                        <%/if%>
 					<%else%>
 					<div class="hm p_login cl">你需要登录后才可以发帖 <a class="xg2" onclick="hideWindow('register');showWindow('login', this.href);" href="{forumpath}login.aspx">登录</a> | <a class="xg2" onclick="hideWindow('login');showWindow('register', this.href);" href="{forumpath}register.aspx">注册</a></div>
 					<%/if%>
