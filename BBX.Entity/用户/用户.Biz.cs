@@ -182,7 +182,6 @@ namespace BBX.Entity
         #endregion
 
         #region 用户组属性
-        private UserGroup _Group;
         /// <summary>用户组</summary>
         public UserGroup Group { get { return Extends.Get(nameof(Group), k => UserGroup.FindByID(GroupID)); } set { Extends.Set(nameof(Group), value); } }
 
